@@ -41,7 +41,6 @@ public class Assets {
 
 
     public static Texture mainMenuBackground;
-    public static Texture mainMenuText;
     public static Texture pauseMenu;
     public static Sound carHorn;
     public static Texture ice;
@@ -84,7 +83,6 @@ public class Assets {
 
         //--- stuff that will probably be deleted
         mainMenuBackground = loadTexture("mainMenuBackground.jpg");
-        mainMenuText = loadTexture("mainMenuText.png");
         pauseMenu = loadTexture("pauseMenu.png");
         carHorn = Gdx.audio.newSound(Gdx.files.internal("carHorn.wav"));
         ice = loadTexture("ice.png");
