@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Lasse on 2015-03-31.
  */
 public class Car {
-    List<Tire> tires;
+    private List<Tire> tires;
     public Body body;
 
     RevoluteJoint frontLeft, frontRight;
@@ -76,7 +76,7 @@ public class Car {
 
         Tire tire = new Tire(world,tireWidth, tireHeight);
         tire.setCharacteristics(driveForceFront, maxImpulseFront);
-        jointDef.bodyB = tire.body;
+        jointDef.bodyB = tire.getBody();
 
         jointDef.localAnchorA.set(new Vector2(-3f/scale, 8.5f/scale));
 
@@ -96,7 +96,7 @@ public class Car {
         Tire tire2 = new Tire(world, tireWidth, tireHeight);
 
         tire2.setCharacteristics(driveForceFront, maxImpulseFront);
-        jointDef.bodyB = tire2.body;
+        jointDef.bodyB = tire2.getBody();
 
         jointDef.localAnchorA.set(new Vector2(3f/scale, 8.5f/scale));
 
@@ -117,7 +117,7 @@ public class Car {
         Tire tire3 = new Tire(world, tireWidth, tireHeight);
 
         tire3.setCharacteristics(driveForceBack, maxImpulseBack);
-        jointDef.bodyB = tire3.body;
+        jointDef.bodyB = tire3.getBody();
 
         jointDef.localAnchorA.set(new Vector2(-3f/scale, 0/scale));
 
@@ -137,7 +137,7 @@ public class Car {
         Tire tire4 = new Tire(world, tireWidth, tireHeight);
 
         tire4.setCharacteristics(driveForceBack, maxImpulseBack);
-        jointDef.bodyB = tire4.body;
+        jointDef.bodyB = tire4.getBody();
 
         jointDef.localAnchorA.set(new Vector2(3f/scale, 0/scale));
 
@@ -188,6 +188,10 @@ public class Car {
 
 
 
+    }
+
+    public List<Tire> getTires(){
+        return tires;
     }
 
 }

@@ -21,14 +21,14 @@ public class Tire {
     float maxDriveForce;
     float maxLateralImpulse;
 
-    float dragForceMagnitude;
+    float dragForceMagnitude = -0.02f;
 
 
     public float newImp;
     public float newSpeed;
     public float newDrag;
 
-    Body body;
+    private Body body;
     public List<GroundMaterial> grounds = new ArrayList<GroundMaterial>();
 
 
@@ -155,5 +155,9 @@ public class Tire {
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0,1));
         Vector2 copy = new Vector2(currentForwardNormal.x, currentForwardNormal.y);
         return copy.scl(copy.dot(body.getLinearVelocity()));
+    }
+
+    public Body getBody(){
+        return body;
     }
 }

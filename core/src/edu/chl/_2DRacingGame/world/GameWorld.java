@@ -10,6 +10,7 @@ import edu.chl._2DRacingGame.Dirt;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Wall;
 import edu.chl._2DRacingGame.helperClasses.MyContactListener;
 
@@ -27,19 +28,28 @@ public class GameWorld {
         b2World = new World(new Vector2(0, 0), true);
 
         car = new Car(b2World);
+
+
         //car.body.setTransform(0, 0, 0);
 
-        float width = (Gdx.graphics.getWidth() - 20) / PIXELS_PER_METER;
-        float height = (Gdx.graphics.getHeight() - 30) / PIXELS_PER_METER;
 
 
-        new Wall(b2World, new Vector2(-width / 2, height / 2), new Vector2(width / 2, height / 2));
-        new Wall(b2World, new Vector2(-width / 2, height / 2), new Vector2(-width / 2, -height / 2));
-        new Wall(b2World, new Vector2(width / 2, height / 2), new Vector2(width / 2, -height / 2));
-        new Wall(b2World, new Vector2(-width / 2, -height / 2), new Vector2(width / 2, -height / 2));
+        float width = Gdx.graphics.getWidth()/PIXELS_PER_METER;
+        float height = Gdx.graphics.getHeight()/PIXELS_PER_METER;
+
+
+        car.body.setTransform(width / 2, height / 2, 0);
+        for(Tire t : car.getTires()){
+            t.getBody().setTransform(width/2, height/2, 0);
+        }
+
+        new Wall(b2World, new Vector2(0,0), new Vector2(0,height));
+        new Wall(b2World, new Vector2(0,0), new Vector2(width,0));
+        new Wall(b2World, new Vector2(0,height), new Vector2(width,height));
+        new Wall(b2World, new Vector2(width,0), new Vector2(width,height));
 
         PolygonShape dirtShape = new PolygonShape();
-        dirtShape.setAsBox(100/PIXELS_PER_METER, 200/PIXELS_PER_METER, new Vector2(0,0),0);
+        dirtShape.setAsBox(100/PIXELS_PER_METER, 200/PIXELS_PER_METER, new Vector2(width/2,height/2),0);
         new TrackSection(b2World, dirtShape, new Ice());
 
         b2World.setContactListener(new MyContactListener());

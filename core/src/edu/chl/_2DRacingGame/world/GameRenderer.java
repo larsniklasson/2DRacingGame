@@ -20,7 +20,8 @@ public class GameRenderer {
     public GameRenderer(GameWorld world){
         this.gameWorld = world;
 
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
 
