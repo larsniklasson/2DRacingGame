@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="20">
+ <tileset firstgid="1" name="mario" tilewidth="32" tileheight="32">
+  <image source="mario.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="ful" tilewidth="32" tileheight="32">
+  <image source="ful.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="261" name="ful2" tilewidth="32" tileheight="32">
+  <image source="ful2.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt0zEOgCAMheFW8Srehtm7cVpjXIgppW2CaPKGfyLwvYVCRAUhhBBCny1XMRNtjxa+z0b7kl1v8L57NJJ8zY5usPoWO7LB6q8OPw3wrRs8ttfvbfDaV3sj7Y60IQX/X8TPSvDfa6YNf77/9076rh4U
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="1" name="dirt" x="32" y="544" width="192" height="160"/>
+  <object id="2" name="ice" x="32" y="704" width="192" height="128"/>
+  <object id="13" name="icet1" x="352" y="608">
+   <polygon points="0,0 128,128 128,-128"/>
+  </object>
+  <object id="14" name="icet2" x="608" y="480">
+   <polygon points="0,0 0,256 128,128"/>
+  </object>
+  <object id="19" name="icerekt" x="480" y="480" width="128" height="256"/>
+ </objectgroup>
+</map>

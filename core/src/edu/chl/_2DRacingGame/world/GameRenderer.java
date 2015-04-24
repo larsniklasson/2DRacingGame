@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
@@ -16,9 +18,12 @@ public class GameRenderer {
     private SpriteBatch batch;
 
     private Box2DDebugRenderer debugRenderer;
+    private TiledMapRenderer tiledMapRenderer;
 
     public GameRenderer(GameWorld world){
         this.gameWorld = world;
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -40,6 +45,9 @@ public class GameRenderer {
         batch.end();
 
         camera.update();
+
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
         debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(gameWorld.PIXELS_PER_METER, gameWorld.PIXELS_PER_METER, 0));
 
 
