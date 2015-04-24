@@ -21,7 +21,7 @@ public class GameWorld {
         b2World = new World(new Vector2(0, 0), true);
 
         car = new Car(b2World);
-        car.body.setTransform(0, 0, 0);
+        //car.body.setTransform(0, 0, 0);
 
         float width = (Gdx.graphics.getWidth() - 20) / PIXELS_PER_METER;
         float height = (Gdx.graphics.getHeight() - 30) / PIXELS_PER_METER;
