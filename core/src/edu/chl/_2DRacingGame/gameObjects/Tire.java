@@ -6,6 +6,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.GroundMaterial;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lasse on 2015-03-30.
@@ -17,7 +21,16 @@ public class Tire {
     float maxDriveForce;
     float maxLateralImpulse;
 
+    float dragForceMagnitude;
+
+
+    public float newImp;
+    public float newSpeed;
+    public float newDrag;
+
     Body body;
+    public List<GroundMaterial> grounds = new ArrayList<GroundMaterial>();
+
 
 
 
@@ -50,9 +63,9 @@ public class Tire {
         return copy.scl(copy.dot(body.getLinearVelocity()));
     }
 
-    void updateFriction(float angle){
+    void updateFriction(){
         Vector2 impulse = getLateralVelocity().cpy().scl(body.getMass() * -1);
-        //System.out.println("impulse length " + impulse.len());
+
 
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
@@ -60,12 +73,8 @@ public class Tire {
 
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
-        float newImp = maxLateralImpulse;
-        //System.out.println("hastighet " + getForwardVelocity().len());
-        //System.out.println("newImp = " + newImp);
-        //System.out.println("oldIMp = " + maxLateralImpulse);
 
-        //System.out.println("maybe " +  currentSpeed *(1+angle));
+
 
 
         if(impulse.len() > newImp){
@@ -77,7 +86,7 @@ public class Tire {
 
         currentForwardNormal = getForwardVelocity();
 
-        float dragForceMagnitude = -0.02f;
+
         body.applyForceToCenter(currentForwardNormal.scl(dragForceMagnitude), true);
 
 
@@ -88,7 +97,7 @@ public class Tire {
 
         float desiredSpeed = 0;
         if(key == Input.Keys.UP){
-            desiredSpeed = maxForwardSpeed;
+            desiredSpeed = newSpeed;
         } else if(key == Input.Keys.DOWN){
             desiredSpeed = maxBackwardSpeed;
         } else {
@@ -120,6 +129,26 @@ public class Tire {
 
     }
 
+
+    public void update(int key){
+
+
+        if(grounds.isEmpty()){
+
+            newImp = maxLateralImpulse;
+            newDrag = dragForceMagnitude;
+            newSpeed = maxForwardSpeed;
+        } else {
+            GroundMaterial gm = grounds.get(grounds.size()-1);
+            newImp = gm.getDrift() * maxLateralImpulse;
+
+            newSpeed = gm.getSpeed() * maxForwardSpeed;
+            newDrag = gm.getDrag() * dragForceMagnitude;
+        }
+
+        updateFriction();
+        updateDrive(key);
+    }
 
 
     private Vector2 getForwardVelocity() {

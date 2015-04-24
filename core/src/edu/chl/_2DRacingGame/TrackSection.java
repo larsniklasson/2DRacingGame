@@ -50,4 +50,8 @@ public class TrackSection {
         body.createFixture(fixtureDef);
     }
 
+    public GroundMaterial getGroundMaterial(){
+        return groundMaterial;
+    }
+
 }

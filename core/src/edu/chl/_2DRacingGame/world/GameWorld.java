@@ -2,10 +2,16 @@ package edu.chl._2DRacingGame.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.Dirt;
+import edu.chl._2DRacingGame.Ice;
+import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Wall;
+import edu.chl._2DRacingGame.helperClasses.MyContactListener;
 
 /**
  * Created by Lasse on 2015-04-21.
@@ -31,6 +37,12 @@ public class GameWorld {
         new Wall(b2World, new Vector2(-width / 2, height / 2), new Vector2(-width / 2, -height / 2));
         new Wall(b2World, new Vector2(width / 2, height / 2), new Vector2(width / 2, -height / 2));
         new Wall(b2World, new Vector2(-width / 2, -height / 2), new Vector2(width / 2, -height / 2));
+
+        PolygonShape dirtShape = new PolygonShape();
+        dirtShape.setAsBox(100/PIXELS_PER_METER, 200/PIXELS_PER_METER, new Vector2(0,0),0);
+        new TrackSection(b2World, dirtShape, new Ice());
+
+        b2World.setContactListener(new MyContactListener());
 
     }
 
@@ -67,5 +79,9 @@ public class GameWorld {
 
 
 
+    }
+
+    public Car getCar(){
+        return car;
     }
 }

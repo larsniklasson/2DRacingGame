@@ -152,10 +152,7 @@ public class Car {
 
 
     public void update(){
-        for(Tire t : tires){
-            t.updateFriction(frontLeft.getLowerLimit());
-            t.updateDrive(key);
-        }
+
 
 
         float lockAngle = MathUtils.degreesToRadians * maxAngle;
@@ -183,6 +180,11 @@ public class Car {
 
         frontLeft.setLimits(newAngle, newAngle);
         frontRight.setLimits(newAngle, newAngle);
+
+        for(Tire t : tires){
+
+            t.update(key);
+        }
 
 
 
