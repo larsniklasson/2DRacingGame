@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="20">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="22" tilewidth="32" tileheight="32" nextobjectid="31">
  <tileset firstgid="1" name="mario" tilewidth="32" tileheight="32">
   <image source="mario.png" width="512" height="512"/>
  </tileset>
@@ -9,20 +9,26 @@
  <tileset firstgid="261" name="ful2" tilewidth="32" tileheight="32">
   <image source="ful2.png" width="32" height="32"/>
  </tileset>
- <layer name="Tile Layer 1" width="32" height="32">
+ <tileset firstgid="262" name="circle" tilewidth="32" tileheight="32">
+  <image source="circle.png" width="320" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="30" height="22">
   <data encoding="base64" compression="zlib">
-   eJzt0zEOgCAMheFW8Srehtm7cVpjXIgppW2CaPKGfyLwvYVCRAUhhBBCny1XMRNtjxa+z0b7kl1v8L57NJJ8zY5usPoWO7LB6q8OPw3wrRs8ttfvbfDaV3sj7Y60IQX/X8TPSvDfa6YNf77/9076rh4U
+   eJzt01dPwlAchvFTxagIieIiojhAcIsDwT3ADS4wLvTC+Z34tD4NXBgC9RzSf+KFF7+kSdP3aU7aslKq/Ee0W0p1oBNedMEHvyXX7Ga7BwH0og/9GMAggkLtIXZDGMYIwhjFGMYxgYhAO8rmJGKIYwrTmMEs5jAv0F1gcxEJLGEZK1hFEmtICXTTbK5jA5vYwjZ2sIs97At0D9jMIItDHOEYJzjFGc4Fujk287jAJa5wjRsUUMSt0Dd9x+49HvCIJ5TwjBfBf9j2yv4b3vGBT3zZZ6EqLK7barRU77v9Lk7Nn23tc22gXtepadrW7eo0Tdq63VaDrsfFrm5bp2na/a2t27TFGnB6pl7bY/gfNdPNO/jvuq/Z5jfLaCRX
   </data>
  </layer>
  <objectgroup name="objects">
-  <object id="1" name="dirt" x="32" y="544" width="192" height="160"/>
-  <object id="2" name="ice" x="32" y="704" width="192" height="128"/>
-  <object id="13" name="icet1" x="352" y="608">
+  <object id="1" name="dirt" x="32" y="384" width="192" height="160"/>
+  <object id="2" name="ice" x="32" y="544" width="192" height="128"/>
+  <object id="13" name="icet1" x="352" y="448">
    <polygon points="0,0 128,128 128,-128"/>
   </object>
-  <object id="14" name="icet2" x="608" y="480">
+  <object id="14" name="icet2" x="608" y="320">
    <polygon points="0,0 0,256 128,128"/>
   </object>
-  <object id="19" name="icerekt" x="480" y="480" width="128" height="256"/>
+  <object id="19" name="icerekt" x="480" y="320" width="128" height="256"/>
+  <object id="30" name="circle" x="128" y="32" width="320" height="320">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

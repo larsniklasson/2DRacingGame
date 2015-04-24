@@ -3,13 +3,14 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.Dirt;
@@ -155,6 +156,18 @@ public class GameWorld {
         new TrackSection(b2World, iceShape, new Ice());
 
 
+        //dirt circle
+
+        Ellipse cm = ((EllipseMapObject)mo.get("circle")).getEllipse();
+
+
+
+
+        CircleShape cs = new CircleShape();
+        cs.setRadius(cm.width/2/PIXELS_PER_METER);
+        cs.setPosition(new Vector2(cm.x/PIXELS_PER_METER + cs.getRadius(), cm.y/PIXELS_PER_METER + cs.getRadius()));
+
+        new TrackSection(b2World, cs, new Dirt());
 
         b2World.setContactListener(new MyContactListener());
 
