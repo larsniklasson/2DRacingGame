@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.*;
 /**
  * Created by Lasse on 2015-04-21.
  */
-public class Wall {
+public class Immovable {
 
     Body body;
 
-    public Wall(World world, Vector2 start, Vector2 end){
+    public Immovable(World world, Vector2 start, Vector2 end){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
