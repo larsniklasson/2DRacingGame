@@ -47,12 +47,23 @@ public class Checkpoint {
 
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
+        body.setUserData(this);
 
         return body;
     }
 
     public void addAllowedPassingDirection(CheckpointDirection direction) {
         allowedPassingDirections.add(direction);
+    }
+
+    public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
+        for (CheckpointDirection direction : allowedPassingDirections) {
+            if (direction.isValidEntry(beginContactPosition, endContactPosition)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
