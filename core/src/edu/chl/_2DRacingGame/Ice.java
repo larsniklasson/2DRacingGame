@@ -10,7 +10,7 @@ public class Ice implements GroundMaterial{
     }
 
     @Override
-    public float getSpeed() {
+    public float getSpeedFactor() {
         return 0.9f;
     }
 

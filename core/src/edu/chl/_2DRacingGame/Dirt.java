@@ -10,7 +10,7 @@ public class Dirt implements GroundMaterial{
     }
 
     @Override
-    public float getSpeed() {
+    public float getSpeedFactor() {
         return 0.5f;
     }
 

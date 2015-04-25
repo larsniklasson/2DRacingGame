@@ -2,6 +2,9 @@ package edu.chl._2DRacingGame.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
@@ -12,8 +15,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.Dirt;
+import edu.chl._2DRacingGame.GroundMaterial;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Car;
@@ -21,6 +26,8 @@ import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Wall;
 import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.MyContactListener;
+
+import java.util.Iterator;
 
 /**
  * Created by Lasse on 2015-04-21.
@@ -61,7 +68,10 @@ public class GameWorld {
         new Wall(b2World, new Vector2(0,height), new Vector2(width,height));
         new Wall(b2World, new Vector2(width,0), new Vector2(width,height));
 
-        //adding studd from tilemap. hardcoding
+        createShapesFromMap();
+
+        /*
+        //adding stuff from tilemap. hardcoding
         MapObjects mo = tiledMap.getLayers().get("objects").getObjects();
 
         //dirt rectangle
@@ -169,6 +179,8 @@ public class GameWorld {
 
         new TrackSection(b2World, cs, new Dirt());
 
+        */
+
         b2World.setContactListener(new MyContactListener());
 
     }
@@ -205,6 +217,83 @@ public class GameWorld {
         }
 
 
+
+    }
+
+    private void createShapesFromMap(){
+
+        MapLayers ml = tiledMap.getLayers();
+        Iterator<MapLayer> it = ml.iterator();
+
+        while(it.hasNext()){
+            MapLayer layer = it.next();
+            MapObjects mo = layer.getObjects();
+            Iterator<MapObject> it2 = mo.iterator();
+
+            while(it2.hasNext()){
+                MapObject object = it2.next();
+
+                if(object.getName().equals("dirt")){
+                    createTrackSection(object, new Dirt());
+                } else if(object.getName().equals("ice")){
+
+                    createTrackSection(object, new Ice());
+                }
+
+            }
+        }
+
+    }
+
+    private void createTrackSection(MapObject object, GroundMaterial gm) {
+        if(object instanceof RectangleMapObject){
+
+            Rectangle r = ((RectangleMapObject)object).getRectangle();
+            MathHelper.scaleRect(r, 1/PIXELS_PER_METER);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(r.getWidth()/2, r.getHeight()/2, r.getCenter(new Vector2()), 0);
+            new TrackSection(b2World, shape, gm);
+
+        }
+
+
+
+        if(object instanceof PolygonMapObject){
+            Polygon p = ((PolygonMapObject)object).getPolygon();
+            float x = p.getX()/PIXELS_PER_METER;
+            float y = p.getY()/PIXELS_PER_METER;
+
+            float[] vertices = p.getVertices();
+            for(int i = 0; i < vertices.length; i ++){
+                vertices[i] = vertices[i] / PIXELS_PER_METER;
+                if(i % 2 == 0){
+                    vertices[i] += x;
+                } else {
+                    vertices[i] += y;
+                }
+            }
+
+            PolygonShape shape = new PolygonShape();
+            shape.set(vertices);
+            new TrackSection(b2World, shape, gm);
+
+
+
+        }
+
+        //only works for circles
+
+        if(object instanceof EllipseMapObject){
+            Ellipse e = ((EllipseMapObject)object).getEllipse();
+
+            CircleShape shape = new CircleShape();
+
+            shape.setRadius(e.width / 2 / PIXELS_PER_METER);
+            shape.setPosition(new Vector2(e.x / PIXELS_PER_METER + shape.getRadius(), e.y / PIXELS_PER_METER + shape.getRadius()));
+
+            new TrackSection(b2World, shape, gm);
+
+        }
 
     }
 

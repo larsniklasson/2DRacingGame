@@ -20,14 +20,14 @@
  <objectgroup name="objects">
   <object id="1" name="dirt" x="32" y="384" width="192" height="160"/>
   <object id="2" name="ice" x="32" y="544" width="192" height="128"/>
-  <object id="13" name="icet1" x="352" y="448">
+  <object id="13" name="ice" x="352" y="448">
    <polygon points="0,0 128,128 128,-128"/>
   </object>
-  <object id="14" name="icet2" x="608" y="320">
+  <object id="14" name="ice" x="608" y="320">
    <polygon points="0,0 0,256 128,128"/>
   </object>
-  <object id="19" name="icerekt" x="480" y="320" width="128" height="256"/>
-  <object id="30" name="circle" x="128" y="32" width="320" height="320">
+  <object id="19" name="ice" x="480" y="320" width="128" height="256"/>
+  <object id="30" name="dirt" x="128" y="32" width="320" height="320">
    <ellipse/>
   </object>
  </objectgroup>

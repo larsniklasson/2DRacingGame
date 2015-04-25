@@ -5,7 +5,9 @@ package edu.chl._2DRacingGame;
  */
 public interface GroundMaterial {
     float getDrift();
-    float getSpeed();
+    float getSpeedFactor();
+
     float getDrag();
+
 
 }

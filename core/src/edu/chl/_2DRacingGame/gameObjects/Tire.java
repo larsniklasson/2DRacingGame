@@ -25,8 +25,9 @@ public class Tire {
 
 
     public float newImp;
-    public float newSpeed;
+    public float newForwardSpeed;
     public float newDrag;
+    public float newBackwardSpeed;
 
     private Body body;
     public List<GroundMaterial> grounds = new ArrayList<GroundMaterial>();
@@ -97,9 +98,9 @@ public class Tire {
 
         float desiredSpeed = 0;
         if(key == Input.Keys.UP){
-            desiredSpeed = newSpeed;
+            desiredSpeed = newForwardSpeed;
         } else if(key == Input.Keys.DOWN){
-            desiredSpeed = maxBackwardSpeed;
+            desiredSpeed = newBackwardSpeed;
         } else {
             return;
         }
@@ -137,13 +138,15 @@ public class Tire {
 
             newImp = maxLateralImpulse;
             newDrag = dragForceMagnitude;
-            newSpeed = maxForwardSpeed;
+            newForwardSpeed = maxForwardSpeed;
+            newBackwardSpeed = maxBackwardSpeed;
         } else {
             GroundMaterial gm = grounds.get(grounds.size()-1);
             newImp = gm.getDrift() * maxLateralImpulse;
 
-            newSpeed = gm.getSpeed() * maxForwardSpeed;
+            newForwardSpeed = gm.getSpeedFactor() * maxForwardSpeed;
             newDrag = gm.getDrag() * dragForceMagnitude;
+            newBackwardSpeed = gm.getSpeedFactor() * maxBackwardSpeed;
         }
 
         updateFriction();
