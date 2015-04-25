@@ -39,7 +39,7 @@ public class GameWorld {
 
     public GameWorld(){
 
-        tiledMap = new TmxMapLoader().load("map.tmx");
+        tiledMap = new TmxMapLoader().load("map2.tmx");
 
 
         b2World = new World(new Vector2(0, 0), true);
@@ -319,6 +319,10 @@ public class GameWorld {
             Polyline pl = ((PolylineMapObject) object).getPolyline();
 
             float[] vertices = pl.getVertices();
+
+            for(int i = 0; i < vertices.length; i ++){
+                vertices[i] = vertices[i]/PIXELS_PER_METER;
+            }
 
             float x = pl.getX()/PIXELS_PER_METER;
             float y = pl.getY()/PIXELS_PER_METER;

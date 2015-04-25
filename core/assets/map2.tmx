@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="70">
+ <tileset firstgid="1" name="spritesheet_fixed" tilewidth="32" tileheight="32">
+  <image source="spritesheet_fixed.png" width="576" height="576"/>
+ </tileset>
+ <tileset firstgid="325" name="mario" tilewidth="32" tileheight="32">
+  <image source="mario.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="581" name="ice" tilewidth="32" tileheight="32">
+  <image source="ice.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="585" name="dirt" tilewidth="32" tileheight="32">
+  <image source="dirt.png" width="64" height="64"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJzVl7FxwjAUhh+sQEq3ZIWwBGwQoim4IyskTQ7acK+hokhaF3AagRXiFZwB8r88KacoBixMwBT/yWBZfP4sS48pET0i05a2T8hzi1vPuSEyW2RAZCV3LuHxObJWlj/+8L15I+JX5Bb9+i7h8X/nHQGD3Vb4m4AP53mB4NieIhnGynTsWv0XysnwaGJ/wif3sNK+VODzJ9Jk/owx1jihP7jY88X+Sj334/oDfcrgPuq2I1xjEHCZB4w5ROpeH/LF/uCKC/ds4ZD66pFTvQ2VS/gYnAxePoW/sPXPWvhS/YHJgs8O1WXSerfPX9iGfKn+RsomjMKaNF/P4c+39/T9frTOn2893zX6myFzJMf4kiUyU659768t3dq3cmtNE39d/MYN0sMYnWgc8NBLlHnEF/srdM37td8UR3jzbUfZhJG70XPIK/hy3etlbz20f5iJuhSnR9cdHXVI4LPgtOF5uDIx31Lrg53+wjl3irqtp2zCaMFqo/lnwGNyF/DaWcS3yx/2aDq2NgprsUxjUmq0hTKYKn9brW1kX6OotuIDOViLJdRoBAazDuar50RNKLWh3Ac1zaBBf3jiTfC+X/r/xbX///gChE1A7g==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2BwgVmMDAdgeKDdgg0A3QXH0ThwNRbsiYZhII+ROEwOCAPqyyASe+KwA2Z/Fh5MqfuIAcjug4U/pe5rZcTE1HQfcvwNJvfBwGBzH668gc9ttHDfRTxuJifv0iP8iHUfNQGl7oOBKEYEpiYg133I5ctIcx+2NEkqRge0Cj9KwWBuZ4yCUUAIAADLdV6Z
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJADAIwEDdtIsJjtLR6g75WMhB/qmMroy7tDN1LOUf4x/jH+Mf4x/jH+Mf4x/jH/PL3xRbe77DfDE=
+  </data>
+ </layer>
+ <layer name="Tile Layer 4" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztl1EKgCAQRLe9m2nmIbyY4FE8WhMkQuRnOYEP5kd/HqsOmBYpQkoidptMvsaoiEVWHW3yjNUWRpxKPt0cqd+k4VWiJz4nuBUkj/aY/IPa3Yb0zrB3N+YWr/mV+96G9b0Thg7pudWMht0v4M303MLLfviD0AK3eAAC2hkB
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="28" name="solid" x="4" y="3">
+   <polyline points="0,0 1270,2"/>
+  </object>
+  <object id="29" name="solid" x="3" y="8">
+   <polyline points="0,0 0,688"/>
+  </object>
+  <object id="30" name="solid" x="5" y="697">
+   <polyline points="0,0 1265,1"/>
+  </object>
+  <object id="31" name="solid" x="1273" y="699">
+   <polyline points="0,0 3,-693"/>
+  </object>
+  <object id="36" name="solid" x="1261" y="120" rotation="0.439375">
+   <polyline points="41.9988,-0.322075 98.9922,-1.03064"/>
+  </object>
+  <object id="41" name="solid" x="256" y="160" width="384" height="352"/>
+  <object id="42" name="solid" x="640" y="160" width="96" height="32"/>
+  <object id="43" name="solid" x="640" y="320" width="64" height="224"/>
+  <object id="44" name="solid" x="160" y="512" width="480" height="32"/>
+  <object id="45" name="solid" x="800" y="160" width="320" height="224"/>
+  <object id="46" name="solid" x="768" y="256" width="160" height="160"/>
+  <object id="47" name="solid" x="832" y="416" width="96" height="128"/>
+  <object id="48" name="solid" x="0" y="256" width="160" height="160"/>
+  <object id="49" name="dirt" x="288" y="544" width="256" height="128"/>
+  <object id="50" name="ice" x="1120" y="160" width="96" height="96"/>
+  <object id="51" name="dirt" x="704" y="320" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="60" name="solid" x="161" y="140" width="94" height="8"/>
+  <object id="61" name="solid" x="160" y="172" width="95" height="8"/>
+  <object id="62" name="solid" x="702" y="235" width="65" height="8"/>
+  <object id="63" name="solid" x="705" y="268" width="61" height="6"/>
+  <object id="64" name="solid" x="705" y="460" width="62" height="7"/>
+  <object id="65" name="solid" x="706" y="492" width="60" height="7"/>
+  <object id="66" name="solid" x="769" y="556" width="62" height="7"/>
+  <object id="69" name="ice" x="64" y="480" width="96" height="96"/>
+ </objectgroup>
+</map>
