@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="22" tilewidth="32" tileheight="32" nextobjectid="31">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="22" tilewidth="32" tileheight="32" nextobjectid="44">
  <tileset firstgid="1" name="mario" tilewidth="32" tileheight="32">
   <image source="mario.png" width="512" height="512"/>
  </tileset>
@@ -29,6 +29,24 @@
   <object id="19" name="ice" x="480" y="320" width="128" height="256"/>
   <object id="30" name="dirt" x="128" y="32" width="320" height="320">
    <ellipse/>
+  </object>
+  <object id="34" name="solid" x="0" y="0">
+   <polyline points="0,0 960,0"/>
+  </object>
+  <object id="36" name="solid" x="960" y="0">
+   <polyline points="0,0 0,704"/>
+  </object>
+  <object id="38" name="solid" x="0" y="0">
+   <polyline points="0,0 0,704"/>
+  </object>
+  <object id="40" name="solid" x="0" y="704">
+   <polyline points="0,0 960,0"/>
+  </object>
+  <object id="42" name="solid" x="544" y="128" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="43" name="solid" x="507" y="211">
+   <polygon points="0,0 64,96 20,58 -11,13"/>
   </object>
  </objectgroup>
 </map>

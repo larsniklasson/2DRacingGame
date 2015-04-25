@@ -6,24 +6,21 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.Dirt;
 import edu.chl._2DRacingGame.GroundMaterial;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Tire;
-import edu.chl._2DRacingGame.gameObjects.Wall;
+import edu.chl._2DRacingGame.gameObjects.Immovable;
 import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.MyContactListener;
 
@@ -63,10 +60,10 @@ public class GameWorld {
             t.getBody().setTransform(width / 2, height / 2, 0);
         }
 
-        new Wall(b2World, new Vector2(0,0), new Vector2(0,height));
-        new Wall(b2World, new Vector2(0,0), new Vector2(width,0));
-        new Wall(b2World, new Vector2(0,height), new Vector2(width,height));
-        new Wall(b2World, new Vector2(width,0), new Vector2(width,height));
+        //new Immovable(b2World, new Vector2(0,0), new Vector2(0,height));
+        //new Immovable(b2World, new Vector2(0,0), new Vector2(width,0));
+        //new Immovable(b2World, new Vector2(0,height), new Vector2(width,height));
+        //new Immovable(b2World, new Vector2(width,0), new Vector2(width,height));
 
         createShapesFromMap();
 
@@ -234,10 +231,16 @@ public class GameWorld {
                 MapObject object = it2.next();
 
                 if(object.getName().equals("dirt")){
-                    createTrackSection(object, new Dirt());
-                } else if(object.getName().equals("ice")){
 
-                    createTrackSection(object, new Ice());
+
+                    new TrackSection(b2World, objectToShape(object), new Dirt());
+                    //createTrackSection(object, new Dirt());
+                } else if(object.getName().equals("ice")){
+                    new TrackSection(b2World, objectToShape(object), new Ice());
+                    //createTrackSection(object, new Ice());
+                } else if (object.getName().equals("solid")){
+                    new Immovable(b2World, objectToShape(object));
+
                 }
 
             }
@@ -245,14 +248,27 @@ public class GameWorld {
 
     }
 
-    private void createTrackSection(MapObject object, GroundMaterial gm) {
+
+
+    public Car getCar(){
+        return car;
+    }
+
+    public TiledMap getTiledMap(){
+        return tiledMap;
+    }
+
+    public Shape objectToShape(MapObject object){
+
+
         if(object instanceof RectangleMapObject){
 
             Rectangle r = ((RectangleMapObject)object).getRectangle();
             MathHelper.scaleRect(r, 1/PIXELS_PER_METER);
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(r.getWidth()/2, r.getHeight()/2, r.getCenter(new Vector2()), 0);
-            new TrackSection(b2World, shape, gm);
+            return shape;
+
 
         }
 
@@ -275,7 +291,8 @@ public class GameWorld {
 
             PolygonShape shape = new PolygonShape();
             shape.set(vertices);
-            new TrackSection(b2World, shape, gm);
+            return shape;
+
 
 
 
@@ -290,18 +307,38 @@ public class GameWorld {
 
             shape.setRadius(e.width / 2 / PIXELS_PER_METER);
             shape.setPosition(new Vector2(e.x / PIXELS_PER_METER + shape.getRadius(), e.y / PIXELS_PER_METER + shape.getRadius()));
+            return shape;
 
-            new TrackSection(b2World, shape, gm);
+
 
         }
 
-    }
+        //only works for a straight line with only 2 vertices
 
-    public Car getCar(){
-        return car;
-    }
+        if(object instanceof PolylineMapObject){
+            Polyline pl = ((PolylineMapObject) object).getPolyline();
 
-    public TiledMap getTiledMap(){
-        return tiledMap;
+            float[] vertices = pl.getVertices();
+
+            float x = pl.getX()/PIXELS_PER_METER;
+            float y = pl.getY()/PIXELS_PER_METER;
+
+            for(int i = 0; i < vertices.length; i++){
+                if(i%2 == 0){
+                    vertices[i] += x;
+                } else {
+                    vertices[i] += y;
+                }
+            }
+            EdgeShape shape = new EdgeShape();
+            shape.set(vertices[0], vertices[1], vertices[2], vertices[3]);
+
+            return shape;
+
+        }
+
+        return null;
+
+
     }
 }
