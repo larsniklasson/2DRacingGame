@@ -15,29 +15,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lasse on 2015-03-31.
+ * Created by Lars Niklasson on 2015-03-31.
  */
 public class Car {
     private List<Tire> tires;
     public Body body;
 
-    RevoluteJoint frontLeft, frontRight;
+    private RevoluteJoint frontLeft, frontRight;
 
     public int key = 0;
     public int turn = 0;
 
-    float scale = 0.4f* GameWorld.PIXELS_PER_METER;
-    float tireWidth = 0.5f *2 / scale;
-    float tireHeight = 1.25f *2 / scale;
+    private float scale = 0.4f* GameWorld.PIXELS_PER_METER;
+    private float tireWidth = 0.5f *2 / scale;
+    private float tireHeight = 1.25f *2 / scale;
 
 
-    float driveForceFront = 2f;
-    float driveForceBack = 1f;
+    private float driveForceFront = 2f;
+    private float driveForceBack = 1f;
 
-    float maxImpulseFront = 0.05f;
-    float maxImpulseBack = 0.05f;
+    private float maxImpulseFront = 0.05f;
+    private float maxImpulseBack = 0.05f;
 
-    float maxAngle = 50f;
+    private float maxAngle = 50f;
 
     public Car(World world){
 
@@ -62,7 +62,7 @@ public class Car {
 
         body.createFixture(shape, 0.1f);
 
-        tires = new ArrayList<Tire>();
+        tires = new ArrayList<>();
 
 
         //first tire

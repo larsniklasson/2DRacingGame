@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Lasse on 2015-04-21.
+ * Created by Lars Niklasson on 2015-04-21.
  */
 public class GameWorld {
 
@@ -50,10 +50,9 @@ public class GameWorld {
 
         car = new Car(b2World);
 
-        //car.body.setTransform(0, 0, 0);
 
-        float width = Gdx.graphics.getWidth()/PIXELS_PER_METER;
-        float height = Gdx.graphics.getHeight()/PIXELS_PER_METER;
+
+
 
         car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
@@ -159,6 +158,8 @@ public class GameWorld {
         return tiledMap;
     }
 
+
+    //should probably be in another class
     public Shape objectToShape(MapObject object){
 
 

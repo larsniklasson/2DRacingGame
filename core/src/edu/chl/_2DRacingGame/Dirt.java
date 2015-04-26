@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame;
 
 /**
- * Created by Lasse on 2015-04-24.
+ * Created by Lars Niklasson on 2015-04-24.
  */
 public class Dirt implements GroundMaterial{
     @Override

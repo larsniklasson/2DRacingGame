@@ -12,26 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lasse on 2015-03-30.
+ * Created by Lars Niklasson on 2015-03-30.
  */
 public class Tire {
 
     private final Car car; // TODO This reference is probably crazy.
 
-    float maxForwardSpeed = 17;
-    float maxBackwardSpeed = -7;
-    float maxDriveForce;
-    float maxLateralImpulse;
+    private float maxForwardSpeed = 17;
+    private float maxBackwardSpeed = -7;
+    private float maxDriveForce;
+    private float maxLateralImpulse;
 
-    float dragForceMagnitude = -0.02f;
+    private float dragForceMagnitude = -0.02f;
 
-    public float newImp;
-    public float newForwardSpeed;
-    public float newDrag;
-    public float newBackwardSpeed;
+    private  float newImp;
+    private  float newForwardSpeed;
+    private  float newDrag;
+    private  float newBackwardSpeed;
 
     private Body body;
-    public List<GroundMaterial> grounds = new ArrayList<GroundMaterial>();
+    public List<GroundMaterial> grounds = new ArrayList<>();
 
     public Tire(Car car, World world, float width, float height){
         this.car = car;
@@ -60,21 +60,19 @@ public class Tire {
     }
 
 
-    Vector2 getLateralVelocity(){
+    private Vector2 getLateralVelocity(){
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1, 0));
         Vector2 copy = new Vector2(currentRightNormal.x, currentRightNormal.y);
         return copy.scl(copy.dot(body.getLinearVelocity()));
     }
 
-    void updateFriction(){
+    private void updateFriction(){
         Vector2 impulse = getLateralVelocity().cpy().scl(body.getMass() * -1);
 
 
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 
-
-        float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
 
 
@@ -90,15 +88,15 @@ public class Tire {
         currentForwardNormal = getForwardVelocity();
 
 
-        body.applyForceToCenter(currentForwardNormal.scl(dragForceMagnitude), true);
+        body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
 
 
 
     }
 
-    void updateDrive(int key){
+    private void updateDrive(int key){
 
-        float desiredSpeed = 0;
+        float desiredSpeed;
         if(key == Input.Keys.UP){
             desiredSpeed = newForwardSpeed;
         } else if(key == Input.Keys.DOWN){
@@ -117,7 +115,7 @@ public class Tire {
 
 
 
-        float force = 0;
+        float force;
 
         if(desiredSpeed > currentSpeed){
             force = maxDriveForce;

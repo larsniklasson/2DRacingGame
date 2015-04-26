@@ -8,15 +8,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
+
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
- * Created by Lasse on 2015-04-21.
+ * Created by Lars Niklasson on 2015-04-21.
  */
 public class GameRenderer {
     private GameWorld gameWorld;
@@ -67,7 +66,7 @@ public class GameRenderer {
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(gameWorld.PIXELS_PER_METER, gameWorld.PIXELS_PER_METER, 0));
+        debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
 
 
@@ -97,5 +96,6 @@ public class GameRenderer {
     public void dispose(){
         batch.dispose();
         carTexture.dispose();
+        tireTexture.dispose();
     }
 }

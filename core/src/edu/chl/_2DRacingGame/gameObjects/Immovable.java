@@ -1,14 +1,14 @@
 package edu.chl._2DRacingGame.gameObjects;
 
-import com.badlogic.gdx.math.Vector2;
+
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
- * Created by Lasse on 2015-04-21.
+ * Created by Lars Niklasson on 2015-04-21.
  */
 public class Immovable {
 
-    Body body;
+    private Body body;
 
     public Immovable(World world, Shape shape){
         BodyDef bodyDef = new BodyDef();

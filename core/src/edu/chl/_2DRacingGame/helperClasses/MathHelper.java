@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.helperClasses;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Created by Lasse on 2015-04-24.
+ * Created by Lars Niklasson on 2015-04-24.
  */
 public class MathHelper {
     public static void scaleRect(Rectangle r, float scale){

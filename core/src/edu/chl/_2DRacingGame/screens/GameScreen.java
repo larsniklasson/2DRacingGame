@@ -5,7 +5,7 @@ import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lasse on 2015-04-21.
+ * Created by Lars Niklasson on 2015-04-21.
  */
 public class GameScreen implements Screen {
 
