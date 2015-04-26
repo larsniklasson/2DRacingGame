@@ -57,131 +57,19 @@ public class GameWorld {
         float height = Gdx.graphics.getHeight()/PIXELS_PER_METER;
 
 
-        car.body.setTransform(width / 2, height / 2, 0);
+        car.body.setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
-            t.getBody().setTransform(width / 2, height / 2, 0);
+            t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         }
 
         new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World).addAllowedPassingDirection(CheckpointDirection.SOUTH);
 
 
-        //new Immovable(b2World, new Vector2(0,0), new Vector2(0,height));
-        //new Immovable(b2World, new Vector2(0,0), new Vector2(width,0));
-        //new Immovable(b2World, new Vector2(0,height), new Vector2(width,height));
-        //new Immovable(b2World, new Vector2(width,0), new Vector2(width,height));
+
 
         createShapesFromMap();
 
-        /*
-        //adding stuff from tilemap. hardcoding
-        MapObjects mo = tiledMap.getLayers().get("objects").getObjects();
 
-        //dirt rectangle
-
-        Rectangle dirtRect = ((RectangleMapObject)mo.get("dirt")).getRectangle();
-        MathHelper.scaleRect(dirtRect, 1 / PIXELS_PER_METER);
-
-        PolygonShape dirtShape = new PolygonShape();
-        dirtShape.setAsBox(dirtRect.getWidth()/2, dirtRect.getHeight()/2, dirtRect.getCenter(new Vector2()), 0);
-
-        new TrackSection(b2World, dirtShape, new Dirt());
-
-        //ice rectangle
-        Rectangle iceRect = ((RectangleMapObject)mo.get("ice")).getRectangle();
-        MathHelper.scaleRect(iceRect, 1 / PIXELS_PER_METER);
-
-        PolygonShape iceShape = new PolygonShape();
-        iceShape.setAsBox(iceRect.getWidth()/2, iceRect.getHeight()/2, iceRect.getCenter(new Vector2()), 0);
-
-        new TrackSection(b2World, iceShape, new Ice());
-
-        //ice triangle 1
-
-        Polygon icePoly = ((PolygonMapObject)mo.get("icet1")).getPolygon();
-
-
-
-        float[] vertices = icePoly.getVertices();
-        float x = icePoly.getX()/PIXELS_PER_METER;
-        float y = icePoly.getY()/PIXELS_PER_METER;
-
-        for (int i = 0; i < vertices.length; i++) {
-
-            vertices[i] = vertices[i] /PIXELS_PER_METER;
-            System.out.println(vertices[i]);
-        }
-
-        Vector2[] v2verts = new Vector2[3];
-        v2verts[0] = new Vector2(x +vertices[0], y + vertices[1]);
-        v2verts[1] = new Vector2(x + vertices[2], y + vertices[3]);
-        v2verts[2] = new Vector2(x + vertices[4], y + vertices[5]);
-
-        for(Vector2 v: v2verts){
-            System.out.println("x = " + v.x);
-            System.out.println("y = " + v.y);
-        }
-
-        PolygonShape ps = new PolygonShape();
-        ps.set(v2verts);
-        new TrackSection(b2World, ps, new Ice());
-
-
-        //ice triangle 2
-
-        Polygon icePoly2 = ((PolygonMapObject)mo.get("icet2")).getPolygon();
-
-
-
-        vertices = icePoly2.getVertices();
-        x = icePoly2.getX()/PIXELS_PER_METER;
-        y = icePoly2.getY()/PIXELS_PER_METER;
-
-        for (int i = 0; i < vertices.length; i++) {
-
-            vertices[i] = vertices[i] /PIXELS_PER_METER;
-            System.out.println(vertices[i]);
-        }
-
-        v2verts = new Vector2[3];
-        v2verts[0] = new Vector2(x +vertices[0], y + vertices[1]);
-        v2verts[1] = new Vector2(x + vertices[2], y + vertices[3]);
-        v2verts[2] = new Vector2(x + vertices[4], y + vertices[5]);
-
-        for(Vector2 v: v2verts){
-            System.out.println("x = " + v.x);
-            System.out.println("y = " + v.y);
-        }
-
-        ps = new PolygonShape();
-        ps.set(v2verts);
-        new TrackSection(b2World, ps, new Ice());
-
-
-        //ice rekt 2
-
-        iceRect = ((RectangleMapObject)mo.get("icerekt")).getRectangle();
-        MathHelper.scaleRect(iceRect, 1 / PIXELS_PER_METER);
-
-        iceShape = new PolygonShape();
-        iceShape.setAsBox(iceRect.getWidth() / 2, iceRect.getHeight() / 2, iceRect.getCenter(new Vector2()), 0);
-
-        new TrackSection(b2World, iceShape, new Ice());
-
-
-        //dirt circle
-
-        Ellipse cm = ((EllipseMapObject)mo.get("circle")).getEllipse();
-
-
-
-
-        CircleShape cs = new CircleShape();
-        cs.setRadius(cm.width/2/PIXELS_PER_METER);
-        cs.setPosition(new Vector2(cm.x/PIXELS_PER_METER + cs.getRadius(), cm.y/PIXELS_PER_METER + cs.getRadius()));
-
-        new TrackSection(b2World, cs, new Dirt());
-
-        */
 
         b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
             checkpointController.enteredCheckpoint(checkpoint, validEntry);
