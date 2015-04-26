@@ -26,7 +26,9 @@ import edu.chl._2DRacingGame.controllers.ContactController;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointDirection;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Lasse on 2015-04-21.
@@ -38,7 +40,7 @@ public class GameWorld {
     private Car car;
     private TiledMap tiledMap;
 
-    private final CheckpointController checkpointController = new CheckpointController();
+    private final CheckpointController checkpointController;
 
     public GameWorld(){
 
@@ -53,10 +55,22 @@ public class GameWorld {
         float width = Gdx.graphics.getWidth()/PIXELS_PER_METER;
         float height = Gdx.graphics.getHeight()/PIXELS_PER_METER;
 
-        car.body.setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
+        car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
             t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         }
+
+        List<Checkpoint> checkpoints = new ArrayList<>();
+
+        Checkpoint cp1 = new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World);
+        cp1.addAllowedPassingDirection(CheckpointDirection.SOUTH);
+        checkpoints.add(cp1);
+
+        Checkpoint cp2 = new Checkpoint(new Vector2(5, 20), new Vector2(20, 20), b2World);
+        cp2.addAllowedPassingDirection(CheckpointDirection.SOUTH);
+        checkpoints.add(cp2);
+
+        checkpointController = new CheckpointController(checkpoints);
 
         b2World.setContactListener(new ContactController((tire, checkpoint, validEntry) -> {
             if (validEntry) {
@@ -67,7 +81,6 @@ public class GameWorld {
         }));
 
         createShapesFromMap();
-        new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World).addAllowedPassingDirection(CheckpointDirection.SOUTH);
     }
 
     public World getb2World(){

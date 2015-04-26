@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- *
  * @author Daniel Sunnerberg
  */
 public class Checkpoint {
