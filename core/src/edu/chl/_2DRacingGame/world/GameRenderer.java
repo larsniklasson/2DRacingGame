@@ -3,10 +3,17 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import edu.chl._2DRacingGame.gameObjects.Tire;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lasse on 2015-04-21.
@@ -16,12 +23,25 @@ public class GameRenderer {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    private Texture carTexture;
+
+    private Texture tireTexture;
+    private Sprite carSprite;
+    private Sprite tireSprite;
+
+
 
     private Box2DDebugRenderer debugRenderer;
     private TiledMapRenderer tiledMapRenderer;
 
     public GameRenderer(GameWorld world){
         this.gameWorld = world;
+
+        carTexture = new Texture(Gdx.files.internal("carbody.png"));
+        tireTexture = new Texture(Gdx.files.internal("tire.png"));
+
+        carSprite = new Sprite(carTexture);
+        tireSprite = new Sprite(tireTexture);
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
@@ -41,8 +61,7 @@ public class GameRenderer {
 
         batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
-        batch.end();
+
 
         camera.update();
 
@@ -51,5 +70,32 @@ public class GameRenderer {
         debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(gameWorld.PIXELS_PER_METER, gameWorld.PIXELS_PER_METER, 0));
 
 
+
+        batch.begin();
+
+        for(Tire t: gameWorld.getCar().getTires()){
+            tireSprite.setPosition((t.getBody().getWorldCenter().x * GameWorld.PIXELS_PER_METER) - tireSprite.getWidth()/2,
+                    (t.getBody().getWorldCenter().y * GameWorld.PIXELS_PER_METER) - tireSprite.getHeight()/2);
+            tireSprite.setRotation((float) Math.toDegrees(t.getBody().getAngle()));
+            tireSprite.draw(batch);
+        }
+
+        
+
+        carSprite.setPosition((gameWorld.getCar().body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - carSprite.getWidth() / 2,
+                (gameWorld.getCar().body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - carSprite.getHeight() / 2);
+        carSprite.setRotation((float) Math.toDegrees(gameWorld.getCar().body.getAngle()));
+
+
+
+        carSprite.draw(batch);
+
+        batch.end();
+
+    }
+
+    public void dispose(){
+        batch.dispose();
+        carTexture.dispose();
     }
 }
