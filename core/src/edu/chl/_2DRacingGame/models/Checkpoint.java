@@ -43,10 +43,12 @@ public class Checkpoint {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
+        fixtureDef.isSensor = false;
+
 
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
+        body.getFixtureList().first().setSensor(true);
         body.setUserData(this);
 
         return body;

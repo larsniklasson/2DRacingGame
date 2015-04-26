@@ -15,14 +15,16 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.Dirt;
-import edu.chl._2DRacingGame.GroundMaterial;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
+import edu.chl._2DRacingGame.controllers.CheckpointController;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Immovable;
 import edu.chl._2DRacingGame.helperClasses.MathHelper;
-import edu.chl._2DRacingGame.helperClasses.MyContactListener;
+import edu.chl._2DRacingGame.controllers.ContactController;
+import edu.chl._2DRacingGame.models.Checkpoint;
+import edu.chl._2DRacingGame.models.CheckpointDirection;
 
 import java.util.Iterator;
 
@@ -34,13 +36,13 @@ public class GameWorld {
     private World b2World;
     public static float PIXELS_PER_METER = 20f;
     private Car car;
-
     private TiledMap tiledMap;
+
+    private final CheckpointController checkpointController = new CheckpointController();
 
     public GameWorld(){
 
         tiledMap = new TmxMapLoader().load("map2.tmx");
-
 
         b2World = new World(new Vector2(0, 0), true);
 
@@ -60,12 +62,15 @@ public class GameWorld {
             t.getBody().setTransform(width / 2, height / 2, 0);
         }
 
+        new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World).addAllowedPassingDirection(CheckpointDirection.SOUTH);
+
+
         //new Immovable(b2World, new Vector2(0,0), new Vector2(0,height));
         //new Immovable(b2World, new Vector2(0,0), new Vector2(width,0));
         //new Immovable(b2World, new Vector2(0,height), new Vector2(width,height));
         //new Immovable(b2World, new Vector2(width,0), new Vector2(width,height));
 
-        createShapesFromMap();
+        //createShapesFromMap();
 
         /*
         //adding stuff from tilemap. hardcoding
@@ -178,7 +183,9 @@ public class GameWorld {
 
         */
 
-        b2World.setContactListener(new MyContactListener());
+        b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
+            checkpointController.enteredCheckpoint(checkpoint, validEntry);
+        }));
 
     }
 
