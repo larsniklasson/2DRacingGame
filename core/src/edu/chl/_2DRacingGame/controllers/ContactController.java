@@ -33,8 +33,8 @@ public class ContactController implements ContactListener {
             ((Tire) b.getUserData()).grounds.add(((TrackSection) a.getUserData()).getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint) {
-            beginContactPosition = b.getPosition().cpy();
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Tire) {
+            beginContactPosition = ((Tire) b.getUserData()).getCar().body.getPosition().cpy();
         }
 
     }
@@ -52,16 +52,17 @@ public class ContactController implements ContactListener {
             ((Tire) b.getUserData()).grounds.remove(((TrackSection) a.getUserData()).getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint) {
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Tire) {
             Checkpoint checkpoint = (Checkpoint) a.getUserData();
-            boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, b.getPosition());
+            Tire tire = (Tire) b.getUserData();
 
-            contactDelegator.enteredCheckpoint(checkpoint, isValidEntry);
+            processCheckpointCollision(checkpoint, tire);
         }
     }
 
-    private void processCheckpointCollision(Checkpoint checkpoint) {
-
+    private void processCheckpointCollision(Checkpoint checkpoint, Tire tire) {
+        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, tire.getCar().body.getPosition());
+        contactDelegator.enteredCheckpoint(tire, checkpoint, isValidEntry);
     }
 
     @Override

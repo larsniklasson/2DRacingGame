@@ -14,7 +14,7 @@ public enum CheckpointDirection {
     NORTH {
         @Override
         public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
-            return beginContactPosition.x > endContactPosition.x;
+            return beginContactPosition.x < endContactPosition.x;
         }
     },
 
@@ -23,7 +23,7 @@ public enum CheckpointDirection {
     SOUTH {
         @Override
         public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
-            return beginContactPosition.x < endContactPosition.x;
+            return beginContactPosition.x > endContactPosition.x;
         }
     };
 

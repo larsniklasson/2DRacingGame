@@ -74,7 +74,7 @@ public class Car {
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
 
-        Tire tire = new Tire(world,tireWidth, tireHeight);
+        Tire tire = new Tire(this, world,tireWidth, tireHeight);
         tire.setCharacteristics(driveForceFront, maxImpulseFront);
         jointDef.bodyB = tire.getBody();
 
@@ -93,7 +93,7 @@ public class Car {
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
 
-        Tire tire2 = new Tire(world, tireWidth, tireHeight);
+        Tire tire2 = new Tire(this, world, tireWidth, tireHeight);
 
         tire2.setCharacteristics(driveForceFront, maxImpulseFront);
         jointDef.bodyB = tire2.getBody();
@@ -114,7 +114,7 @@ public class Car {
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
 
-        Tire tire3 = new Tire(world, tireWidth, tireHeight);
+        Tire tire3 = new Tire(this, world, tireWidth, tireHeight);
 
         tire3.setCharacteristics(driveForceBack, maxImpulseBack);
         jointDef.bodyB = tire3.getBody();
@@ -134,7 +134,7 @@ public class Car {
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
 
-        Tire tire4 = new Tire(world, tireWidth, tireHeight);
+        Tire tire4 = new Tire(this, world, tireWidth, tireHeight);
 
         tire4.setCharacteristics(driveForceBack, maxImpulseBack);
         jointDef.bodyB = tire4.getBody();

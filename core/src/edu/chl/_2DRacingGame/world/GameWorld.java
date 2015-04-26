@@ -48,33 +48,26 @@ public class GameWorld {
 
         car = new Car(b2World);
 
-
         //car.body.setTransform(0, 0, 0);
-
-
 
         float width = Gdx.graphics.getWidth()/PIXELS_PER_METER;
         float height = Gdx.graphics.getHeight()/PIXELS_PER_METER;
-
 
         car.body.setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
             t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         }
 
-        new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World).addAllowedPassingDirection(CheckpointDirection.SOUTH);
-
-
-
-
-        createShapesFromMap();
-
-
-
-        b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
-            checkpointController.enteredCheckpoint(checkpoint, validEntry);
+        b2World.setContactListener(new ContactController((tire, checkpoint, validEntry) -> {
+            if (validEntry) {
+                checkpointController.validPassing(tire.getCar(), checkpoint);
+            } else {
+                checkpointController.invalidPassing(tire.getCar(), checkpoint);
+            }
         }));
 
+        createShapesFromMap();
+        new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World).addAllowedPassingDirection(CheckpointDirection.SOUTH);
     }
 
     public World getb2World(){
