@@ -23,9 +23,12 @@ public class Car {
 
     private RevoluteJoint frontLeft, frontRight;
 
+
     public int key = 0;
     public int turn = 0;
 
+
+    //magic numbers
     private float scale = 0.4f* GameWorld.PIXELS_PER_METER;
     private float tireWidth = 0.5f *2 / scale;
     private float tireHeight = 1.25f *2 / scale;
@@ -153,11 +156,11 @@ public class Car {
 
     public void update(){
 
-
+        //turn wheels
 
         float lockAngle = MathUtils.degreesToRadians * maxAngle;
 
-        float turnSpeedPerSec = 1000/*160*/ * MathUtils.degreesToRadians;
+        float turnSpeedPerSec = 1000/*160*/ * MathUtils.degreesToRadians; //instant as it is now
         float turnPerTimeStep = turnSpeedPerSec/60f;
         float desiredAngle = 0;
 
@@ -180,6 +183,8 @@ public class Car {
 
         frontLeft.setLimits(newAngle, newAngle);
         frontRight.setLimits(newAngle, newAngle);
+
+
 
         for(Tire t : tires){
 

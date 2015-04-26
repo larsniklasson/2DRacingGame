@@ -36,7 +36,9 @@ import java.util.List;
 public class GameWorld {
 
     private World b2World;
-    public static float PIXELS_PER_METER = 20f;
+
+
+    public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
     private Car car;
     private TiledMap tiledMap;
 

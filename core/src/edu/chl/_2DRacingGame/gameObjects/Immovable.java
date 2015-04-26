@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
  * Created by Lars Niklasson on 2015-04-21.
  */
 public class Immovable {
+    //basically an immovable body
 
     private Body body;
 

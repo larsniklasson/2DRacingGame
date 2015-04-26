@@ -18,6 +18,8 @@ public class Tire {
 
     private final Car car; // TODO This reference is probably crazy.
 
+
+    //more magic numbers
     private float maxForwardSpeed = 17;
     private float maxBackwardSpeed = -7;
     private float maxDriveForce;
@@ -60,6 +62,7 @@ public class Tire {
     }
 
 
+    //sideways velocity
     private Vector2 getLateralVelocity(){
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1, 0));
         Vector2 copy = new Vector2(currentRightNormal.x, currentRightNormal.y);
@@ -69,25 +72,24 @@ public class Tire {
     private void updateFriction(){
         Vector2 impulse = getLateralVelocity().cpy().scl(body.getMass() * -1);
 
-
-
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 
 
-
-
-
+        //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
 
         if(impulse.len() > newImp){
             impulse.scl(newImp / impulse.len());
         }
 
+        //cancel out sideways velocity
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+
+
         //body.applyAngularImpulse(0f * body.getInertia() * -1 * body.getAngularVelocity(), true);
 
         currentForwardNormal = getForwardVelocity();
 
-
+        //this is basically friction - so the car comes to a stop by itself
         body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
 
 
@@ -107,15 +109,12 @@ public class Tire {
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 
-
-
-
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
 
-
-
         float force;
+
+        //accelerate up to a certaint point. (max speed)
 
         if(desiredSpeed > currentSpeed){
             force = maxDriveForce;
@@ -132,6 +131,7 @@ public class Tire {
 
 
     public void update(int key){
+
 
 
         if(grounds.isEmpty()){

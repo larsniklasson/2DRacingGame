@@ -7,5 +7,5 @@ import edu.chl._2DRacingGame.models.Checkpoint;
  * @author Daniel Sunnerberg
  */
 public interface ContactDelegator {
-    public void enteredCheckpoint(Tire tire, Checkpoint checkpoint, boolean validEntry);
+    void enteredCheckpoint(Tire tire, Checkpoint checkpoint, boolean validEntry);
 }

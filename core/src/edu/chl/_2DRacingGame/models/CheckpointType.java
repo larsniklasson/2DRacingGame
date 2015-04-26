@@ -6,5 +6,5 @@ package edu.chl._2DRacingGame.models;
 public enum CheckpointType {
     INVISIBLE,
     LAP_START,
-    LAP_END;
+    LAP_END
 }

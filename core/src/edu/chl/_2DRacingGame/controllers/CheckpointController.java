@@ -49,11 +49,8 @@ public class CheckpointController {
         }
 
         Checkpoint previousCheckpoint = checkpoints.get(currentCheckpointIndex - 1);
-        if (checkpointHistory.get(previousCheckpoint) == null) {
-            return false;
-        }
+        return checkpointHistory.get(previousCheckpoint) != null;
 
-        return true;
     }
 
 }
