@@ -65,13 +65,13 @@ public class GameScreen implements Screen {
             spriteBatch.begin();
 
             if (elapsedTime < 1f) {
-                spriteBatch.draw(ctdwnThree, centerWidth, centerHeight);
+                spriteBatch.draw(ctdwnThree, centerWidth - 178/2, centerHeight - 248/2);
             } else if (elapsedTime < 2f) {
-                spriteBatch.draw(ctdwnTwo, centerWidth, centerHeight);
+                spriteBatch.draw(ctdwnTwo, centerWidth - 178/2, centerHeight - 248/2);
             } else if (elapsedTime < 3f) {
-                spriteBatch.draw(ctdwnOne, centerWidth, centerHeight);
+                spriteBatch.draw(ctdwnOne, centerWidth - 178/2, centerHeight - 248/2);
             } else if (elapsedTime < 4f) {
-                spriteBatch.draw(ctdwnGo, centerWidth, centerHeight);
+                spriteBatch.draw(ctdwnGo, centerWidth - 393/2, centerHeight - 248/2);
             } else if (elapsedTime < 5f) {
                 gameStart = false;
             }
