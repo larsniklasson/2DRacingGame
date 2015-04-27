@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.TrackSection;
+import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.models.Checkpoint;
 
@@ -33,8 +34,8 @@ public class ContactController implements ContactListener {
             ((Tire) b.getUserData()).grounds.add(((TrackSection) a.getUserData()).getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Tire) {
-            beginContactPosition = ((Tire) b.getUserData()).getCar().body.getPosition().cpy();
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
+            beginContactPosition = ((Car) b.getUserData()).body.getPosition().cpy();
         }
 
     }
@@ -52,17 +53,17 @@ public class ContactController implements ContactListener {
             ((Tire) b.getUserData()).grounds.remove(((TrackSection) a.getUserData()).getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Tire) {
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
             Checkpoint checkpoint = (Checkpoint) a.getUserData();
-            Tire tire = (Tire) b.getUserData();
+            Car car = (Car) b.getUserData();
 
-            processCheckpointCollision(checkpoint, tire);
+            processCheckpointCollision(checkpoint, car);
         }
     }
 
-    private void processCheckpointCollision(Checkpoint checkpoint, Tire tire) {
-        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, tire.getCar().body.getPosition());
-        contactDelegator.enteredCheckpoint(tire, checkpoint, isValidEntry);
+    private void processCheckpointCollision(Checkpoint checkpoint, Car car) {
+        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, car.body.getPosition());
+        contactDelegator.enteredCheckpoint(car, checkpoint, isValidEntry);
     }
 
     @Override

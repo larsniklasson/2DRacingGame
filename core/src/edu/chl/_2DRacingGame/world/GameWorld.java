@@ -73,11 +73,11 @@ public class GameWorld {
 
         checkpointController = new CheckpointController(checkpoints);
 
-        b2World.setContactListener(new ContactController((tire, checkpoint, validEntry) -> {
+        b2World.setContactListener(new ContactController((car, checkpoint, validEntry) -> {
             if (validEntry) {
-                checkpointController.validPassing(tire.getCar(), checkpoint);
+                checkpointController.validPassing(car, checkpoint);
             } else {
-                checkpointController.invalidPassing(tire.getCar(), checkpoint);
+                checkpointController.invalidPassing(car, checkpoint);
             }
         }));
 

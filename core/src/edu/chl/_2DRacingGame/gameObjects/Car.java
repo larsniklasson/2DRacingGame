@@ -47,6 +47,7 @@ public class Car {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
+        body.setUserData(this);
 
 
         Vector2[] vertices = new Vector2[8];
@@ -62,6 +63,8 @@ public class Car {
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
+
+
 
         body.createFixture(shape, 0.1f);
 
