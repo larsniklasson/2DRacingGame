@@ -23,8 +23,8 @@ public class MainMenuScreen extends ScreenAdapter {
     public MainMenuScreen (_2DRacingGame game) {
         this.game = game;
 
-        mainMenuBackground = loadTexture("..\\assets\\mainMenuBackground.jpg");
-        mainMenuText = loadTexture("..\\assets\\mainMenuText.png");
+        mainMenuBackground = loadTexture("mainMenuBackground.jpg");
+        mainMenuText = loadTexture("mainMenuText.png");
         batcher = new SpriteBatch();
         playBounds = new Rectangle(590, 200, 100, 40);
         exitBounds = new Rectangle(590, 280, 100, 40);
