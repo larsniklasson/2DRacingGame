@@ -21,10 +21,10 @@ public class Checkpoint {
     private final Body body;
 
     public Checkpoint(Vector2 lineStart, Vector2 lineEnd, World world) {
-        this(lineEnd, lineStart, CheckpointType.INVISIBLE, world);
+        this(lineStart, lineEnd, CheckpointType.INVISIBLE, world);
     }
 
-    public Checkpoint(Vector2 lineEnd, Vector2 lineStart, CheckpointType type, World world) {
+    public Checkpoint(Vector2 lineStart, Vector2 lineEnd, CheckpointType type, World world) {
         this.type = type;
         this.lineStart = lineStart;
         this.lineEnd = lineEnd;
@@ -42,7 +42,6 @@ public class Checkpoint {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.isSensor = false;
-
 
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
@@ -64,6 +63,10 @@ public class Checkpoint {
         }
 
         return false;
+    }
+
+    public CheckpointType getType() {
+        return type;
     }
 
 }
