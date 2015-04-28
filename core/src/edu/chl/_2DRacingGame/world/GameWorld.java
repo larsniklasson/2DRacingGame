@@ -128,14 +128,17 @@ public class GameWorld {
                     new Immovable(b2World, objectToShape(object));
                 } else if (object.getProperties().get("type").equals("checkpoint")) {
 
-                    Checkpoint cp = new Checkpoint(objectToShape(object), CheckpointType.LAP_START, b2World);
+                    CheckpointType type = CheckpointType.getTypeFromName(
+                        (String) object.getProperties().get("checkpointType")
+                    );
+                    Checkpoint cp = new Checkpoint(objectToShape(object), type, b2World);
+
                     CheckpointDirection direction = CheckpointDirection.getDirectionFromName(
                         (String) object.getProperties().get("checkpointDirection")
                     );
                     cp.addAllowedPassingDirection(direction);
                     checkpoints.add(cp);
 
-                    // TODO type
                 }
 
             }

@@ -72,6 +72,7 @@
   <object id="78" name="cp1" type="checkpoint" x="625" y="542">
    <properties>
     <property name="checkpointDirection" value="west"/>
+    <property name="checkpointType" value="LAP_START"/>
    </properties>
    <polyline points="0,0 -1,101"/>
   </object>
