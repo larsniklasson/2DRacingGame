@@ -16,9 +16,6 @@ import java.util.List;
  */
 public class Tire {
 
-    private final Car car; // TODO This reference is probably crazy.
-
-
     //more magic numbers
     private float maxForwardSpeed = 17;
     private float maxBackwardSpeed = -7;
@@ -35,9 +32,7 @@ public class Tire {
     private Body body;
     public List<GroundMaterial> grounds = new ArrayList<>();
 
-    public Tire(Car car, World world, float width, float height){
-        this.car = car;
-
+    public Tire(World world, float width, float height){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -48,12 +43,6 @@ public class Tire {
 
         body.createFixture(shape, 1);
         body.setUserData(this);
-
-
-    }
-
-    public Car getCar() {
-        return car;
     }
 
     void setCharacteristics(float maxDriveForce, float maxLateralImpulse){
