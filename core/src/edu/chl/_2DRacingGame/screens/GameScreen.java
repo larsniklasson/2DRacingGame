@@ -98,9 +98,9 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.P)){
             if(this.state == State.GAME_RUNNING)
                 this.state = State.GAME_PAUSED;
-
         }
-
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+            Assets.carHorn();
 
       world.update(delta);
     }
