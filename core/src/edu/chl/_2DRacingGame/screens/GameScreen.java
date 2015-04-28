@@ -1,9 +1,13 @@
 package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -26,12 +30,20 @@ public class GameScreen implements Screen {
     private Texture ctdwnThree;
     private Texture ctdwnGo;
 
+    private enum State {GAME_RUNNING, GAME_PAUSED}
+    private State state;
     private SpriteBatch spriteBatch;
+    private  Vector3 touchPoint;
+    private Rectangle resumeBounds;
+    private Rectangle exitBounds;
 
     public GameScreen(){
         world = new GameWorld();
         renderer = new GameRenderer(world);
-
+        state = State.GAME_RUNNING;
+        touchPoint = new Vector3();
+        resumeBounds = new Rectangle(470,140,410,90);
+        exitBounds = new Rectangle(470,500,410,90);
         gameStart = true;
 
         ctdwnOne = new Texture("one.png");
@@ -46,6 +58,77 @@ public class GameScreen implements Screen {
 
     }
 
+    public void update(float delta){
+        switch(state){
+            case GAME_RUNNING:
+                updateRunning(delta);
+                break;
+            case GAME_PAUSED:
+                updatePaused();
+                break;
+            default: System.out.println("Something went wrong!");
+
+        }
+
+    }
+
+    private void updatePaused() {
+        if (Gdx.input.justTouched()) {
+            touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
+                this.state = State.GAME_RUNNING;
+                return;
+            }
+            if(exitBounds.contains(touchPoint.x, touchPoint.y)){
+                Gdx.app.exit();
+                return;
+            }
+        }
+
+        /* bortplockad för att programmet läser in ett knaptryck väldigt snabbt vilket gör att den
+           byter mellen pause och run flera gånger utan någon precision vart den slutar.
+        if (Gdx.input.isKeyPressed(Input.Keys.P)){
+            if(this.state == State.GAME_PAUSED)
+                this.state = State.GAME_RUNNING;
+
+        }*/
+    }
+
+    private void updateRunning(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P)){
+            if(this.state == State.GAME_RUNNING)
+                this.state = State.GAME_PAUSED;
+
+        }
+
+
+      world.update(delta);
+    }
+
+    public void draw () {
+        renderer.render();
+        spriteBatch.begin();
+        switch (state) {
+            case GAME_RUNNING:
+                drawRunning();
+                break;
+            case GAME_PAUSED:
+                drawPaused();
+                break;
+            default:
+                System.out.println("Something went wrong!");
+        }
+        spriteBatch.end();
+    }
+
+    private void drawPaused() {
+        spriteBatch.draw(Assets.pauseMenu,centerWidth-Assets.pauseMenu.getWidth()/2 ,0);
+    }
+
+    private void drawRunning() {
+        //måla upp placering i racet, tid, varv mm.
+    }
+
     @Override
     public void show() {
 
@@ -55,9 +138,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        update(delta);
+        draw();
 
-        world.update(delta);
-        renderer.render();
+       // renderer.render();
 
 
         if(gameStart) {
