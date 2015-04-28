@@ -34,10 +34,10 @@ public class GameScreen implements Screen {
 
         gameStart = true;
 
-        ctdwnOne = new Texture("..\\assets\\one.png");
-        ctdwnTwo = new Texture("..\\assets\\two.png");
-        ctdwnThree = new Texture("..\\assets\\three.png");
-        ctdwnGo = new Texture("..\\assets\\go.png");
+        ctdwnOne = new Texture("one.png");
+        ctdwnTwo = new Texture("two.png");
+        ctdwnThree = new Texture("three.png");
+        ctdwnGo = new Texture("go.png");
 
         centerWidth = Gdx.graphics.getWidth()/2;
         centerHeight = Gdx.graphics.getHeight()/2;

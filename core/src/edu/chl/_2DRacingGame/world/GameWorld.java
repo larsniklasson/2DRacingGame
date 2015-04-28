@@ -25,6 +25,7 @@ import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.controllers.ContactController;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointDirection;
+import edu.chl._2DRacingGame.models.CheckpointType;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,11 +36,12 @@ import java.util.List;
  */
 public class GameWorld {
 
-    private World b2World;
-
-
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
+
     private Car car;
+    private List<Checkpoint> checkpoints = new ArrayList<>();
+
+    private World b2World;
     private TiledMap tiledMap;
 
     private final CheckpointController checkpointController;
@@ -52,24 +54,12 @@ public class GameWorld {
 
         car = new Car(b2World);
 
-
-
-
-
         car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
             t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         }
 
-        List<Checkpoint> checkpoints = new ArrayList<>();
-
-        Checkpoint cp1 = new Checkpoint(new Vector2(5, 5), new Vector2(10, 5), b2World);
-        cp1.addAllowedPassingDirection(CheckpointDirection.SOUTH);
-        checkpoints.add(cp1);
-
-        Checkpoint cp2 = new Checkpoint(new Vector2(5, 20), new Vector2(20, 20), b2World);
-        cp2.addAllowedPassingDirection(CheckpointDirection.SOUTH);
-        checkpoints.add(cp2);
+        createShapesFromMap();
 
         checkpointController = new CheckpointController(checkpoints);
 
@@ -80,8 +70,6 @@ public class GameWorld {
                 checkpointController.invalidPassing(car, checkpoint);
             }
         }));
-
-        createShapesFromMap();
     }
 
     public World getb2World(){
@@ -133,16 +121,21 @@ public class GameWorld {
                 MapObject object = it2.next();
 
                 if(object.getName().equals("dirt")){
-
-
                     new TrackSection(b2World, objectToShape(object), new Dirt());
-                    //createTrackSection(object, new Dirt());
                 } else if(object.getName().equals("ice")){
                     new TrackSection(b2World, objectToShape(object), new Ice());
-                    //createTrackSection(object, new Ice());
                 } else if (object.getName().equals("solid")){
                     new Immovable(b2World, objectToShape(object));
+                } else if (object.getProperties().get("type").equals("checkpoint")) {
 
+                    Checkpoint cp = new Checkpoint(objectToShape(object), CheckpointType.LAP_START, b2World);
+                    CheckpointDirection direction = CheckpointDirection.getDirectionFromName(
+                        (String) object.getProperties().get("checkpointDirection")
+                    );
+                    cp.addAllowedPassingDirection(direction);
+                    checkpoints.add(cp);
+
+                    // TODO type
                 }
 
             }

@@ -11,33 +11,26 @@ import java.util.List;
  */
 public class Checkpoint {
 
-    private final Vector2 lineStart;
-    private final Vector2 lineEnd;
-
     private final CheckpointType type;
     private final List<CheckpointDirection> allowedPassingDirections = new ArrayList<>();
 
     private final World world;
     private final Body body;
 
-    public Checkpoint(Vector2 lineStart, Vector2 lineEnd, World world) {
-        this(lineStart, lineEnd, CheckpointType.INVISIBLE, world);
+    public Checkpoint(Shape shape, World world) {
+        this(shape, CheckpointType.INVISIBLE, world);
     }
 
-    public Checkpoint(Vector2 lineStart, Vector2 lineEnd, CheckpointType type, World world) {
+    // TODO inject body?
+    public Checkpoint(Shape shape, CheckpointType type, World world) {
         this.type = type;
-        this.lineStart = lineStart;
-        this.lineEnd = lineEnd;
         this.world = world;
-        this.body = createBody();
+        this.body = createBody(shape);
     }
 
-    private Body createBody() {
+    private Body createBody(Shape shape) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        EdgeShape shape = new EdgeShape();
-        shape.set(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
