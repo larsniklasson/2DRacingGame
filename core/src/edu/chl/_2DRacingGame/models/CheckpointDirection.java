@@ -9,7 +9,12 @@ import com.badlogic.gdx.math.Vector2;
  * @author Daniel Sunnerberg
  */
 public enum CheckpointDirection {
-    WEST,
+    WEST {
+        @Override
+        public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
+            return beginContactPosition.x < endContactPosition.x;
+        }
+    },
 
     NORTH {
         @Override
@@ -18,7 +23,12 @@ public enum CheckpointDirection {
         }
     },
 
-    EAST,
+    EAST {
+        @Override
+        public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
+            return beginContactPosition.x > endContactPosition.x;
+        }
+    },
 
     SOUTH {
         @Override
@@ -29,5 +39,20 @@ public enum CheckpointDirection {
 
     public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
         throw new UnsupportedOperationException("New valid directions must override this method before usage.");
+    }
+
+    public static CheckpointDirection getDirectionFromName(String name) {
+        switch (name.toUpperCase()) {
+            case "WEST":
+                return WEST;
+            case "NORTH":
+                return NORTH;
+            case "EAST":
+                return EAST;
+            case "SOUTH":
+                return SOUTH;
+            default:
+                throw new IllegalArgumentException("Illegal direction name.");
+        }
     }
 }
