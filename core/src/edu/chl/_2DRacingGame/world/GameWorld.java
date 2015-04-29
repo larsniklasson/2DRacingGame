@@ -18,6 +18,7 @@ import edu.chl._2DRacingGame.Dirt;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
+import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
@@ -34,10 +35,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 /**
  * Created by Lars Niklasson on 2015-04-21.
  */
-public class GameWorld {
+public class GameWorld implements GameListener {
 
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
@@ -48,7 +50,7 @@ public class GameWorld {
     private TiledMap tiledMap;
 
     private final CheckpointController checkpointController;
-    private final GameMode gameMode = new TimeTrial();
+    private final GameMode gameMode = new TimeTrial(this);
 
     public GameWorld(){
 
@@ -250,5 +252,10 @@ public class GameWorld {
 
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    @Override
+    public void gameFinished(String message) {
+        System.out.println("GAME DONE: " + message); // TODO display restart screen such
     }
 }

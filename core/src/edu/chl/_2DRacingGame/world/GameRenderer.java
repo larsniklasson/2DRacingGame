@@ -100,6 +100,7 @@ public class GameRenderer {
     }
 
     private void drawScreenTexts() {
+        gameWorld.getGameMode().syncTexts();
         for (ScreenText text : gameWorld.getGameMode().getScreenTexts()) {
             font.setColor(text.getColor());
             font.draw(batch, text.getText(), text.getX(), text.getY());
