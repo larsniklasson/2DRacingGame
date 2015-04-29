@@ -36,24 +36,26 @@ import java.util.List;
 /**
  * Created by Lars Niklasson on 2015-04-21.
  */
-public class GameWorld implements GameListener {
+public class GameWorld {
 
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
     private Car car;
-    private List<Checkpoint> checkpoints = new ArrayList<>();
+    private final GameMode gameMode;
+    private final List<Checkpoint> checkpoints = new ArrayList<>();
 
     private World b2World;
     private TiledMap tiledMap;
 
     private final CheckpointController checkpointController;
-    private final GameMode gameMode = new TimeTrial(this);
 
-    public GameWorld() {
+    public GameWorld(GameMap gameMap, GameMode gameMode) {
+        this.gameMode = gameMode;
+
         b2World = new World(new Vector2(0, 0), true);
         car = new Car(b2World);
-        tiledMap = GameMap.PLACEHOLDER_MAP.load();
-        checkpointController = new CheckpointController(gameMode,  checkpoints);
+        tiledMap = gameMap.load();
+        checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
         car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
@@ -61,7 +63,6 @@ public class GameWorld implements GameListener {
         }
 
         createShapesFromMap();
-
 
         b2World.setContactListener(new ContactController((car, checkpoint, validEntry) -> {
             if (validEntry) {
@@ -77,13 +78,9 @@ public class GameWorld implements GameListener {
     }
 
     public void update(float delta) {
-
-
         pollForInput();
         car.update();
-
     }
-
 
     //this should be in another class
     private void pollForInput() {
@@ -102,8 +99,6 @@ public class GameWorld implements GameListener {
         } else {
             car.turn = 0;
         }
-
-
 
     }
 
@@ -157,10 +152,5 @@ public class GameWorld implements GameListener {
 
     public GameMode getGameMode() {
         return gameMode;
-    }
-
-    @Override
-    public void gameFinished(String message) {
-        System.out.println("GAME DONE: " + message); // TODO display restart screen such
     }
 }

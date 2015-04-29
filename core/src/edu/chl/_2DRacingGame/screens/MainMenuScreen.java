@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame._2DRacingGame;
-import com.badlogic.gdx.graphics.Texture;
 
 public class MainMenuScreen extends ScreenAdapter {
     private _2DRacingGame game;
@@ -31,7 +30,7 @@ public class MainMenuScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new GameScreen());
+                game.setScreen(new GameScreen(game.getGameMap(), game.getGameMode()));
                 return;
             }
             if(exitBounds.contains(touchPoint.x, touchPoint.y)){

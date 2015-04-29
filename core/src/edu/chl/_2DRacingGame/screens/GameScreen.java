@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -37,8 +39,8 @@ public class GameScreen implements Screen {
     private Rectangle resumeBounds;
     private Rectangle exitBounds;
 
-    public GameScreen(){
-        world = new GameWorld();
+    public GameScreen(GameMap gameMap, GameMode gameMode){
+        world = new GameWorld(gameMap, gameMode);
         renderer = new GameRenderer(world);
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
