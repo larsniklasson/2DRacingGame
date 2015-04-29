@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -27,6 +26,7 @@ import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointDirection;
 import edu.chl._2DRacingGame.models.CheckpointType;
+import edu.chl._2DRacingGame.models.GameMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,13 +49,11 @@ public class GameWorld implements GameListener {
     private final CheckpointController checkpointController;
     private final GameMode gameMode = new TimeTrial(this);
 
-    public GameWorld(){
-
-        tiledMap = new TmxMapLoader().load("map2.tmx");
-
+    public GameWorld() {
         b2World = new World(new Vector2(0, 0), true);
-
         car = new Car(b2World);
+        tiledMap = GameMap.PLACEHOLDER_MAP.load();
+        checkpointController = new CheckpointController(gameMode,  checkpoints);
 
         car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
@@ -64,7 +62,6 @@ public class GameWorld implements GameListener {
 
         createShapesFromMap();
 
-        checkpointController = new CheckpointController(gameMode,  checkpoints);
 
         b2World.setContactListener(new ContactController((car, checkpoint, validEntry) -> {
             if (validEntry) {

@@ -10,17 +10,16 @@ import com.badlogic.gdx.math.Vector2;
 public class ScreenText {
 
     private String text;
-    private final Vector2 location;
+    private final Vector2 position;
     private Color color = new Color(255, 255, 255, 1);
-    private Vector2 position;
 
     public ScreenText(Vector2 location) {
-        this.location = location;
+        this.position = location;
     }
 
     public ScreenText(String text, Vector2 location) {
         this.text = text;
-        this.location = location;
+        this.position = location;
     }
 
     public String getText() {
@@ -32,11 +31,11 @@ public class ScreenText {
     }
 
     public float getX() {
-        return location.x;
+        return position.x;
     }
 
     public float getY() {
-        return location.y;
+        return position.y;
     }
 
     public Color getColor() {
