@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import edu.chl._2DRacingGame.gameObjects.Tire;
-
+import edu.chl._2DRacingGame.models.ScreenText;
 
 
 /**
@@ -28,6 +29,8 @@ public class GameRenderer {
     private Sprite carSprite;
     private Sprite tireSprite;
 
+    private BitmapFont font;
+
 
 
     private Box2DDebugRenderer debugRenderer;
@@ -41,6 +44,8 @@ public class GameRenderer {
 
         carSprite = new Sprite(carTexture);
         tireSprite = new Sprite(tireTexture);
+
+        font = new BitmapFont();
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
@@ -86,6 +91,7 @@ public class GameRenderer {
         carSprite.setRotation((float) Math.toDegrees(gameWorld.getCar().body.getAngle()));
 
 
+        drawScreenTexts();
 
         carSprite.draw(batch);
 
@@ -93,9 +99,17 @@ public class GameRenderer {
 
     }
 
+    private void drawScreenTexts() {
+        for (ScreenText text : gameWorld.getGameMode().getScreenTexts()) {
+            font.setColor(text.getColor());
+            font.draw(batch, text.getText(), text.getX(), text.getY());
+        }
+    }
+
     public void dispose(){
         batch.dispose();
         carTexture.dispose();
         tireTexture.dispose();
+        font.dispose();
     }
 }

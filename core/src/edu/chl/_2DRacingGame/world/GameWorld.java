@@ -28,6 +28,7 @@ import edu.chl._2DRacingGame.controllers.ContactController;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointDirection;
 import edu.chl._2DRacingGame.models.CheckpointType;
+import edu.chl._2DRacingGame.models.ScreenText;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,7 +48,7 @@ public class GameWorld {
     private TiledMap tiledMap;
 
     private final CheckpointController checkpointController;
-    private final GameMode gameMode = new TimeTrial(this);
+    private final GameMode gameMode = new TimeTrial();
 
     public GameWorld(){
 
@@ -245,7 +246,9 @@ public class GameWorld {
         }
 
         return null;
+    }
 
-
+    public GameMode getGameMode() {
+        return gameMode;
     }
 }
