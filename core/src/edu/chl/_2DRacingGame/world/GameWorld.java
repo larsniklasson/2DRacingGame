@@ -18,6 +18,8 @@ import edu.chl._2DRacingGame.Dirt;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
+import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Immovable;
@@ -45,6 +47,7 @@ public class GameWorld {
     private TiledMap tiledMap;
 
     private final CheckpointController checkpointController;
+    private final GameMode gameMode = new TimeTrial(this);
 
     public GameWorld(){
 
@@ -61,7 +64,7 @@ public class GameWorld {
 
         createShapesFromMap();
 
-        checkpointController = new CheckpointController(checkpoints);
+        checkpointController = new CheckpointController(gameMode,  checkpoints);
 
         b2World.setContactListener(new ContactController((car, checkpoint, validEntry) -> {
             if (validEntry) {
