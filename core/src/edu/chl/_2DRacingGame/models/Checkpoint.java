@@ -1,12 +1,14 @@
 package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Important note: This class is NOT coupled with any texture/body, this is done separately.
+ * For automated coupling with a body, see CheckpointFactory.
+ *
  * @author Daniel Sunnerberg
  */
 public class Checkpoint {
@@ -14,34 +16,12 @@ public class Checkpoint {
     private final CheckpointType type;
     private final List<CheckpointDirection> allowedPassingDirections = new ArrayList<>();
 
-    private final World world;
-    private final Body body;
-
-    public Checkpoint(Shape shape, World world) {
-        this(shape, CheckpointType.INVISIBLE, world);
+    public Checkpoint() {
+        this(CheckpointType.INVISIBLE);
     }
 
-    // TODO inject body?
-    public Checkpoint(Shape shape, CheckpointType type, World world) {
+    public Checkpoint(CheckpointType type) {
         this.type = type;
-        this.world = world;
-        this.body = createBody(shape);
-    }
-
-    private Body createBody(Shape shape) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = false;
-
-        Body body = world.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-        body.getFixtureList().first().setSensor(true);
-        body.setUserData(this);
-
-        return body;
     }
 
     public void addAllowedPassingDirection(CheckpointDirection direction) {
