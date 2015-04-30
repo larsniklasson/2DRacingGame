@@ -133,18 +133,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
         startTime = System.nanoTime();
-
     }
 
     @Override
     public void render(float delta) {
         update(delta);
         draw();
-
-       // renderer.render();
-
 
         if(gameStart) {
             elapsedTime = (System.nanoTime() - startTime) / 1000000000.0f;
@@ -187,6 +182,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        //renderer.dispose();
+        renderer.dispose();
+        ctdwnOne.dispose();
+        ctdwnTwo.dispose();
+        ctdwnThree.dispose();
+        ctdwnGo.dispose();
+        spriteBatch.dispose();
     }
 }
