@@ -47,6 +47,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "org.apache.commons:commons-lang3:3.4"
+        compile "com.google.code.gson:gson:1.7.2"
     }
 }
 

@@ -5,6 +5,7 @@ import edu.chl._2DRacingGame.models.ScreenText;
 import javafx.stage.Screen;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,9 +45,15 @@ public class TimeTrial extends GameMode {
 
         if (currentLap == lapGoal) {
             getStopWatch().stop();
-            listener.gameFinished("You drove the track in: " + getStopWatch().getTime() / 1000d + " seconds.");
+            double elapsedTime = getStopWatch().getTime() / 1000d;
+            listener.gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
         }
 
         currentLap++;
+    }
+
+    @Override
+    public Comparator<Double> getHighscoreComparator() {
+        return (a, b) -> a.compareTo(b);
     }
 }

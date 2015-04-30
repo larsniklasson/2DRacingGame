@@ -4,6 +4,7 @@ import edu.chl._2DRacingGame.models.ScreenText;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -31,4 +32,6 @@ public abstract class GameMode implements LapListener {
     protected StopWatch getStopWatch() {
         return stopWatch;
     }
+
+    public abstract Comparator<Double> getHighscoreComparator();
 }
