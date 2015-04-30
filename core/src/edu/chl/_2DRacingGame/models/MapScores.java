@@ -47,7 +47,7 @@ public class MapScores {
     }
 
     public boolean isHighScore(Double other) {
-        return scores.isEmpty() || highscoreComparator.compare(getHighScore(), other) < 1;
+        return scores.isEmpty() || highscoreComparator.compare(getHighScore(), other) > 0;
     }
 
     private static String getInstanceFileName(GameMap map, GameMode mode) {
