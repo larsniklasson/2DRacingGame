@@ -138,7 +138,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
         draw();
 
         if(gameStart) {
@@ -158,6 +157,8 @@ public class GameScreen implements Screen {
             }
             spriteBatch.end();
         }
+
+        update(delta);
     }
 
     @Override
