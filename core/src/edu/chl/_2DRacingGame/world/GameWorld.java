@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.Dirt;
 import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * Created by Lars Niklasson on 2015-04-21.
  */
-public class GameWorld {
+public class GameWorld implements Disposable {
 
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
@@ -152,5 +153,11 @@ public class GameWorld {
 
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    @Override
+    public void dispose() {
+        b2World.dispose();
+        tiledMap.dispose();
     }
 }

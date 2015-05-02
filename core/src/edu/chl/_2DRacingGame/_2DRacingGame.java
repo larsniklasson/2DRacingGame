@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
@@ -22,13 +23,10 @@ public class _2DRacingGame extends Game implements GameListener {
 		Assets.load();
 
 		setupExampleRace();
-		setScreen(screen); //this should be MainMenuScreen later
+		setScreen(screen);
 	}
 
-	private void setupExampleRace() {
-		if (screen != null) {
-			screen.dispose();
-		}
+    private void setupExampleRace() {
 		// TODO these should be chosen through in-game menu later
 		gameMap = GameMap.PLACEHOLDER_MAP;
 		gameMode = new TimeTrial(this);
@@ -45,8 +43,12 @@ public class _2DRacingGame extends Game implements GameListener {
 	}
 
 	private void restart() {
+        // Store the currently active screen and dispose it AFTER the new screen has been
+        // created and set. Disposing too early allows for a race-case which can crash the application.
+        Screen previousGameScreen = screen;
 		setupExampleRace();
-		setScreen(screen);
+        setScreen(screen);
+        previousGameScreen.dispose();
 	}
 
 	@Override
@@ -62,4 +64,10 @@ public class _2DRacingGame extends Game implements GameListener {
 		mapScores.persist();
 		restart();
 	}
+
+    @Override
+    public void dispose() {
+        screen.dispose();
+    }
+
 }
