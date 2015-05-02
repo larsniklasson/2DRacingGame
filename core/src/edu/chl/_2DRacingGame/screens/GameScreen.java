@@ -108,7 +108,7 @@ public class GameScreen implements Screen {
     }
 
     public void draw () {
-        renderer.render();
+
         spriteBatch.begin();
         switch (state) {
             case GAME_RUNNING:
@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
     }
 
     private void drawRunning() {
-        //måla upp placering i racet, tid, varv mm.
+        renderer.render();
     }
 
     @Override
