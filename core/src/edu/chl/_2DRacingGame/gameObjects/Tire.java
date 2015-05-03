@@ -40,6 +40,7 @@ public class Tire {
 
         body = world.createBody(bodyDef);
 
+        //shape is just a rectangle
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width/2, height/2);
 
@@ -60,11 +61,26 @@ public class Tire {
         return copy.scl(copy.dot(body.getLinearVelocity()));
     }
 
+
+
     private void updateFriction(){
+        reduceSideWaysVelocity();
+
+
+        applyRoadFriction();
+
+
+
+    }
+
+    private void applyRoadFriction() {
+        Vector2 currentForwardNormal = getForwardVelocity();
+
+        body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
+    }
+
+    private void reduceSideWaysVelocity() {
         Vector2 impulse = getLateralVelocity().cpy().scl(body.getMass() * -1);
-
-        //Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
-
 
         //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
 
@@ -74,18 +90,9 @@ public class Tire {
 
         //cancel out sideways velocity
         body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-
-
-        //body.applyAngularImpulse(0f * body.getInertia() * -1 * body.getAngularVelocity(), true);
-
-        Vector2 currentForwardNormal = getForwardVelocity();
-
-        //this is basically friction - so the car comes to a stop by itself
-        body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
-
-
-
     }
+
+
 
     private void updateDrive(Set<InputManager.PressedKey> keys){
 
@@ -99,6 +106,8 @@ public class Tire {
         } else {
             return;
         }
+        
+
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 

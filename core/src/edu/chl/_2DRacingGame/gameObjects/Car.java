@@ -41,6 +41,8 @@ public class Car {
     private float maxImpulseFront = 0.05f;
     private float maxImpulseBack = 0.05f;
 
+    private float turnDegreesPerSecond = 1000;
+
     private float maxAngle = 50f;
 
     public Car(World world){
@@ -82,8 +84,6 @@ public class Car {
 
         //second tire
 
-
-
         tire = new Tire(world, tireWidth, tireHeight);
 
         tire.setCharacteristics(driveForceFront, maxImpulseFront);
@@ -99,7 +99,6 @@ public class Car {
         //third tire
 
 
-
         tire = new Tire(world, tireWidth, tireHeight);
 
         tire.setCharacteristics(driveForceBack, maxImpulseBack);
@@ -112,8 +111,6 @@ public class Car {
         tires.add(tire);
 
         //fourth tire
-
-
 
         tire = new Tire(world, tireWidth, tireHeight);
 
@@ -159,10 +156,25 @@ public class Car {
 
         //turn wheels
 
+        turnWheels(keys);
+
+
+
+        for(Tire t : tires){
+
+            t.update(keys);
+        }
+
+
+
+    }
+
+    private void turnWheels(Set<PressedKey> keys) {
+
         float lockAngle = MathUtils.degreesToRadians * maxAngle;
 
-        float turnSpeedPerSec = 1000/*160*/ * MathUtils.degreesToRadians; //instant as it is now
-        float turnPerTimeStep = turnSpeedPerSec/60f;
+        float turnRadiansPerSec = turnDegreesPerSecond * MathUtils.degreesToRadians; //instant as it is now
+        float turnPerTimeStep = turnRadiansPerSec/60f;
         float desiredAngle = 0;
 
         if(keys.contains(PressedKey.Left)){
@@ -185,16 +197,6 @@ public class Car {
 
         frontLeft.setLimits(newAngle, newAngle);
         frontRight.setLimits(newAngle, newAngle);
-
-
-
-        for(Tire t : tires){
-
-            t.update(keys);
-        }
-
-
-
     }
 
     public List<Tire> getTires(){
