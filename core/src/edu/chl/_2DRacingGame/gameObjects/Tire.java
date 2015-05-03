@@ -1,6 +1,5 @@
 package edu.chl._2DRacingGame.gameObjects;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,12 +18,12 @@ import java.util.Set;
 public class Tire {
 
     //more magic numbers
-    private float maxForwardSpeed = 17;
-    private float maxBackwardSpeed = -7;
+    private float maxForwardSpeed;
+    private float maxBackwardSpeed;
     private float maxDriveForce;
     private float maxLateralImpulse;
 
-    private float dragForceMagnitude = -0.02f;
+    private float roadFrictionBackwardsCoefficient;
 
     private  float newImp;
     private  float newForwardSpeed;
@@ -48,9 +47,12 @@ public class Tire {
         body.setUserData(this);
     }
 
-    void setCharacteristics(float maxDriveForce, float maxLateralImpulse){
+    void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient){
         this.maxDriveForce = maxDriveForce;
         this.maxLateralImpulse = maxLateralImpulse;
+        this.maxForwardSpeed = maxForwardSpeed;
+        this.maxBackwardSpeed = maxBackwardSpeed;
+        this.roadFrictionBackwardsCoefficient = roadFrictionBackwardsCoefficient;
     }
 
 
@@ -106,7 +108,7 @@ public class Tire {
         } else {
             return;
         }
-        
+
 
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
@@ -139,7 +141,7 @@ public class Tire {
         if(grounds.isEmpty()){
 
             newImp = maxLateralImpulse;
-            newDrag = dragForceMagnitude;
+            newDrag = roadFrictionBackwardsCoefficient;
             newForwardSpeed = maxForwardSpeed;
             newBackwardSpeed = maxBackwardSpeed;
         } else {
@@ -147,7 +149,7 @@ public class Tire {
             newImp = gm.getDrift() * maxLateralImpulse;
 
             newForwardSpeed = gm.getSpeedFactor() * maxForwardSpeed;
-            newDrag = gm.getDrag() * dragForceMagnitude;
+            newDrag = gm.getDrag() * roadFrictionBackwardsCoefficient;
             newBackwardSpeed = gm.getSpeedFactor() * maxBackwardSpeed;
         }
 

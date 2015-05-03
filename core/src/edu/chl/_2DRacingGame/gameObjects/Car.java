@@ -45,6 +45,11 @@ public class Car {
 
     private float maxAngle = 50f;
 
+    private float maxForwardSpeed = 17;
+    private float maxBackwardSpeed = -7;
+
+    private float roadFrictionCoefficient = -0.02f;
+
     public Car(World world){
         this.world = world;
 
@@ -73,7 +78,7 @@ public class Car {
         //first tire
 
         Tire tire = new Tire(world,tireWidth, tireHeight);
-        tire.setCharacteristics(driveForceFront, maxImpulseFront);
+        tire.setCharacteristics(driveForceFront, maxImpulseFront, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
         jointDef.bodyB = tire.getBody();
 
         jointDef.localAnchorA.set(new Vector2(-3f/scale, 8.5f/scale));
@@ -86,7 +91,7 @@ public class Car {
 
         tire = new Tire(world, tireWidth, tireHeight);
 
-        tire.setCharacteristics(driveForceFront, maxImpulseFront);
+        tire.setCharacteristics(driveForceFront, maxImpulseFront, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
         jointDef.bodyB = tire.getBody();
 
         jointDef.localAnchorA.set(new Vector2(3f/scale, 8.5f/scale));
@@ -101,7 +106,7 @@ public class Car {
 
         tire = new Tire(world, tireWidth, tireHeight);
 
-        tire.setCharacteristics(driveForceBack, maxImpulseBack);
+        tire.setCharacteristics(driveForceBack, maxImpulseBack, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
         jointDef.bodyB = tire.getBody();
 
         jointDef.localAnchorA.set(new Vector2(-3f / scale, 0 / scale));
@@ -114,7 +119,7 @@ public class Car {
 
         tire = new Tire(world, tireWidth, tireHeight);
 
-        tire.setCharacteristics(driveForceBack, maxImpulseBack);
+        tire.setCharacteristics(driveForceBack, maxImpulseBack, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
         jointDef.bodyB = tire.getBody();
 
         jointDef.localAnchorA.set(new Vector2(3f/scale, 0/scale));
