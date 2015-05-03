@@ -23,6 +23,7 @@ import java.util.Set;
 public class Car {
     private List<Tire> tires;
     private Body body;
+    private World world;
 
     private RevoluteJoint frontLeft, frontRight;
 
@@ -43,7 +44,90 @@ public class Car {
     private float maxAngle = 50f;
 
     public Car(World world){
+        this.world = world;
 
+        createCarBody();
+
+        createAndAttachTires();
+
+
+    }
+
+
+
+    private void createAndAttachTires() {
+        tires = new ArrayList<>();
+
+        
+
+
+        RevoluteJointDef jointDef = new RevoluteJointDef();
+        jointDef.bodyA = body;
+        jointDef.enableLimit = true;
+        jointDef.lowerAngle = 0;
+        jointDef.upperAngle = 0;
+        jointDef.localAnchorB.setZero();
+
+        //first tire
+
+        Tire tire = new Tire(world,tireWidth, tireHeight);
+        tire.setCharacteristics(driveForceFront, maxImpulseFront);
+        jointDef.bodyB = tire.getBody();
+
+        jointDef.localAnchorA.set(new Vector2(-3f/scale, 8.5f/scale));
+
+        frontLeft = (RevoluteJoint) world.createJoint(jointDef);
+
+        tires.add(tire);
+
+        //second tire
+
+
+
+        tire = new Tire(world, tireWidth, tireHeight);
+
+        tire.setCharacteristics(driveForceFront, maxImpulseFront);
+        jointDef.bodyB = tire.getBody();
+
+        jointDef.localAnchorA.set(new Vector2(3f/scale, 8.5f/scale));
+
+        frontRight = (RevoluteJoint) world.createJoint(jointDef);
+
+        tires.add(tire);
+
+
+        //third tire
+
+
+
+        tire = new Tire(world, tireWidth, tireHeight);
+
+        tire.setCharacteristics(driveForceBack, maxImpulseBack);
+        jointDef.bodyB = tire.getBody();
+
+        jointDef.localAnchorA.set(new Vector2(-3f / scale, 0 / scale));
+
+        world.createJoint(jointDef);
+
+        tires.add(tire);
+
+        //fourth tire
+
+
+
+        tire = new Tire(world, tireWidth, tireHeight);
+
+        tire.setCharacteristics(driveForceBack, maxImpulseBack);
+        jointDef.bodyB = tire.getBody();
+
+        jointDef.localAnchorA.set(new Vector2(3f/scale, 0/scale));
+
+        world.createJoint(jointDef);
+
+        tires.add(tire);
+    }
+
+    private void createCarBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
@@ -65,93 +149,6 @@ public class Car {
         shape.set(vertices);
 
         body.createFixture(shape, 0.1f);
-
-        tires = new ArrayList<>();
-
-
-        //first tire
-
-        RevoluteJointDef jointDef  = new RevoluteJointDef();
-        jointDef.bodyA = body;
-        jointDef.enableLimit = true;
-        jointDef.lowerAngle = 0;
-        jointDef.upperAngle = 0;
-        jointDef.localAnchorB.setZero();
-
-        Tire tire = new Tire(world,tireWidth, tireHeight);
-        tire.setCharacteristics(driveForceFront, maxImpulseFront);
-        jointDef.bodyB = tire.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(-3f/scale, 8.5f/scale));
-
-        frontLeft = (RevoluteJoint) world.createJoint(jointDef);
-
-        tires.add(tire);
-
-        //second tire
-
-        jointDef  = new RevoluteJointDef();
-        jointDef.bodyA = body;
-        jointDef.enableLimit = true;
-        jointDef.lowerAngle = 0;
-        jointDef.upperAngle = 0;
-        jointDef.localAnchorB.setZero();
-
-        Tire tire2 = new Tire(world, tireWidth, tireHeight);
-
-        tire2.setCharacteristics(driveForceFront, maxImpulseFront);
-        jointDef.bodyB = tire2.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(3f/scale, 8.5f/scale));
-
-        frontRight = (RevoluteJoint) world.createJoint(jointDef);
-
-        tires.add(tire2);
-
-
-        //third tire
-
-        jointDef  = new RevoluteJointDef();
-        jointDef.bodyA = body;
-        jointDef.enableLimit = true;
-        jointDef.lowerAngle = 0;
-        jointDef.upperAngle = 0;
-        jointDef.localAnchorB.setZero();
-
-        Tire tire3 = new Tire(world, tireWidth, tireHeight);
-
-        tire3.setCharacteristics(driveForceBack, maxImpulseBack);
-        jointDef.bodyB = tire3.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(-3f/scale, 0/scale));
-
-        world.createJoint(jointDef);
-
-        tires.add(tire3);
-
-        //fourth tire
-
-        jointDef  = new RevoluteJointDef();
-        jointDef.bodyA = body;
-        jointDef.enableLimit = true;
-        jointDef.lowerAngle = 0;
-        jointDef.upperAngle = 0;
-        jointDef.localAnchorB.setZero();
-
-        Tire tire4 = new Tire(world, tireWidth, tireHeight);
-
-        tire4.setCharacteristics(driveForceBack, maxImpulseBack);
-        jointDef.bodyB = tire4.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(3f/scale, 0/scale));
-
-        world.createJoint(jointDef);
-
-        tires.add(tire4);
-
-
-
-
     }
 
 
