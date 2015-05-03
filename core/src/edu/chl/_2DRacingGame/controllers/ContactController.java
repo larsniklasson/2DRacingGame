@@ -35,7 +35,7 @@ public class ContactController implements ContactListener {
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
-            beginContactPosition = ((Car) b.getUserData()).body.getPosition().cpy();
+            beginContactPosition = ((Car) b.getUserData()).getBody().getPosition().cpy();
         }
 
     }
@@ -62,7 +62,7 @@ public class ContactController implements ContactListener {
     }
 
     private void processCheckpointCollision(Checkpoint checkpoint, Car car) {
-        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, car.body.getPosition().cpy());
+        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, car.getBody().getPosition().cpy());
         contactDelegator.enteredCheckpoint(car, checkpoint, isValidEntry);
     }
 

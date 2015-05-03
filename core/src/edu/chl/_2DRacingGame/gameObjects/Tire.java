@@ -7,9 +7,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.GroundMaterial;
+import edu.chl._2DRacingGame.helperClasses.InputManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Lars Niklasson on 2015-03-30.
@@ -61,7 +63,7 @@ public class Tire {
     private void updateFriction(){
         Vector2 impulse = getLateralVelocity().cpy().scl(body.getMass() * -1);
 
-        Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
+        //Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 
 
         //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
@@ -76,7 +78,7 @@ public class Tire {
 
         //body.applyAngularImpulse(0f * body.getInertia() * -1 * body.getAngularVelocity(), true);
 
-        currentForwardNormal = getForwardVelocity();
+        Vector2 currentForwardNormal = getForwardVelocity();
 
         //this is basically friction - so the car comes to a stop by itself
         body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
@@ -85,12 +87,14 @@ public class Tire {
 
     }
 
-    private void updateDrive(int key){
+    private void updateDrive(Set<InputManager.PressedKey> keys){
 
         float desiredSpeed;
-        if(key == Input.Keys.UP){
+        if (keys.contains(InputManager.PressedKey.Up)) {
+
             desiredSpeed = newForwardSpeed;
-        } else if(key == Input.Keys.DOWN){
+        } else if (keys.contains(InputManager.PressedKey.Down)) {
+
             desiredSpeed = newBackwardSpeed;
         } else {
             return;
@@ -119,7 +123,7 @@ public class Tire {
     }
 
 
-    public void update(int key){
+    public void update(Set<InputManager.PressedKey> keys){
 
 
 
@@ -139,7 +143,7 @@ public class Tire {
         }
 
         updateFriction();
-        updateDrive(key);
+        updateDrive(keys);
     }
 
 

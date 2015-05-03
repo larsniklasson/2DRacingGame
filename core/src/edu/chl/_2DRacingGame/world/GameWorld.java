@@ -58,7 +58,7 @@ public class GameWorld implements Disposable {
         tiledMap = gameMap.load();
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
-        car.body.setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
+        car.getBody().setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
         for(Tire t : car.getTires()){
             t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
         }
@@ -79,29 +79,11 @@ public class GameWorld implements Disposable {
     }
 
     public void update(float delta) {
-        pollForInput();
+
         car.update();
     }
 
-    //this should be in another class
-    private void pollForInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            car.key = Input.Keys.UP;
-        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            car.key = Input.Keys.DOWN;
-        } else {
-            car.key = 0;
-        }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            car.turn = Input.Keys.LEFT;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            car.turn = Input.Keys.RIGHT;
-        } else {
-            car.turn = 0;
-        }
-
-    }
 
     private void createShapesFromMap(){
 

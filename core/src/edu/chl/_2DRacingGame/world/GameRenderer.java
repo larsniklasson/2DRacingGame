@@ -75,9 +75,9 @@ public class GameRenderer {
     }
 
     private void drawCar() {
-        carSprite.setPosition((gameWorld.getCar().body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - carSprite.getWidth() / 2,
-                (gameWorld.getCar().body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - carSprite.getHeight() / 2);
-        carSprite.setRotation((float) Math.toDegrees(gameWorld.getCar().body.getAngle()));
+        carSprite.setPosition((gameWorld.getCar().getBody().getWorldCenter().x * GameWorld.PIXELS_PER_METER) - carSprite.getWidth() / 2,
+                (gameWorld.getCar().getBody().getWorldCenter().y * GameWorld.PIXELS_PER_METER) - carSprite.getHeight() / 2);
+        carSprite.setRotation((float) Math.toDegrees(gameWorld.getCar().getBody().getAngle()));
     }
 
     private void drawTires() {
@@ -98,7 +98,7 @@ public class GameRenderer {
     }
 
     public void dispose() {
-        batch.dispose();
+        //batch.dispose();
         carTexture.dispose();
         tireTexture.dispose();
         font.dispose();

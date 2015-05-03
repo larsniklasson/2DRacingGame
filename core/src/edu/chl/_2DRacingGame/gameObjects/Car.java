@@ -9,23 +9,23 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import edu.chl._2DRacingGame.helperClasses.InputManager;
+import edu.chl._2DRacingGame.helperClasses.InputManager.PressedKey;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Lars Niklasson on 2015-03-31.
  */
 public class Car {
     private List<Tire> tires;
-    public Body body;
+    private Body body;
 
     private RevoluteJoint frontLeft, frontRight;
 
-
-    public int key = 0;
-    public int turn = 0;
 
 
     //magic numbers
@@ -63,8 +63,6 @@ public class Car {
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
-
-
 
         body.createFixture(shape, 0.1f);
 
@@ -159,6 +157,9 @@ public class Car {
 
     public void update(){
 
+        Set<PressedKey> keys = InputManager.pollForInput();
+
+
         //turn wheels
 
         float lockAngle = MathUtils.degreesToRadians * maxAngle;
@@ -167,9 +168,10 @@ public class Car {
         float turnPerTimeStep = turnSpeedPerSec/60f;
         float desiredAngle = 0;
 
-        if(turn == Input.Keys.LEFT){
+        if(keys.contains(PressedKey.Left)){
             desiredAngle = lockAngle;
-        } else if (turn == Input.Keys.RIGHT){
+
+        } else if (keys.contains(PressedKey.Right)) {
             desiredAngle = -lockAngle;
         }
 
@@ -191,7 +193,7 @@ public class Car {
 
         for(Tire t : tires){
 
-            t.update(key);
+            t.update(keys);
         }
 
 
@@ -201,5 +203,6 @@ public class Car {
     public List<Tire> getTires(){
         return tires;
     }
+    public Body getBody(){ return body; }
 
 }
