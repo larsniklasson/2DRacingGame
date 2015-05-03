@@ -10,6 +10,7 @@ import edu.chl._2DRacingGame.models.Checkpoint;
 /**
  * Created by Lasse on 2015-04-24.
  * Revised by Daniel Sunnerberg on 2015-04-26.
+ * Revised by Lars Niklasson on 2015-05-03.
  */
 public class ContactController implements ContactListener {
 
@@ -27,11 +28,17 @@ public class ContactController implements ContactListener {
         Body b = contact.getFixtureB().getBody();
 
         if (a.getUserData() instanceof Tire && b.getUserData() instanceof TrackSection) {
-            ((Tire) a.getUserData()).grounds.add(((TrackSection) b.getUserData()).getGroundMaterial());
+            Tire tire = (Tire)a.getUserData();
+            TrackSection ts = (TrackSection)b.getUserData();
+
+            tire.addGroundMaterial(ts.getGroundMaterial());
         }
 
         if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Tire) {
-            ((Tire) b.getUserData()).grounds.add(((TrackSection) a.getUserData()).getGroundMaterial());
+            Tire tire = (Tire)b.getUserData();
+            TrackSection ts = (TrackSection)a.getUserData();
+
+            tire.addGroundMaterial(ts.getGroundMaterial());
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
@@ -46,11 +53,19 @@ public class ContactController implements ContactListener {
         Body b = contact.getFixtureB().getBody();
 
         if (a.getUserData() instanceof Tire && b.getUserData() instanceof TrackSection) {
-            ((Tire) a.getUserData()).grounds.remove(((TrackSection) b.getUserData()).getGroundMaterial());
+
+            Tire tire = (Tire)a.getUserData();
+            TrackSection ts = (TrackSection)b.getUserData();
+
+            tire.removeGroundMaterial(ts.getGroundMaterial());
+
         }
 
         if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Tire) {
-            ((Tire) b.getUserData()).grounds.remove(((TrackSection) a.getUserData()).getGroundMaterial());
+            Tire tire = (Tire)b.getUserData();
+            TrackSection ts = (TrackSection)a.getUserData();
+
+            tire.removeGroundMaterial(ts.getGroundMaterial());
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {

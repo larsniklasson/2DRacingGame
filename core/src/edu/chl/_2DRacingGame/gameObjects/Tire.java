@@ -17,23 +17,23 @@ import java.util.Set;
  */
 public class Tire {
 
-    //more magic numbers
+
     private float maxForwardSpeed;
     private float maxBackwardSpeed;
-    private float maxDriveForce;
+    private float driveForce;
     private float maxLateralImpulse;
 
-    private float roadFrictionBackwardsCoefficient;
+    private float backwardsFriction;
 
-    private  float newImp;
-    private  float newForwardSpeed;
-    private  float newDrag;
-    private  float newBackwardSpeed;
+    private float currentMaxLateralImpulse;
+    private float currentMaxForwardSpeed;
+    private float currentBackwardsFriction;
+    private float currentMaxBackwardSpeed;
 
-    private Body body;
-    public List<GroundMaterial> grounds = new ArrayList<>();
+    private final Body body;
+    public final List<GroundMaterial> grounds = new ArrayList<>();
 
-    public Tire(World world, float width, float height){
+    public Tire(World world, float width, float height) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -41,36 +41,34 @@ public class Tire {
 
         //shape is just a rectangle
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/2, height/2);
+        shape.setAsBox(width / 2, height / 2);
 
         body.createFixture(shape, 1);
         body.setUserData(this);
     }
 
-    void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient){
-        this.maxDriveForce = maxDriveForce;
+    void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient) {
+        this.driveForce = maxDriveForce;
         this.maxLateralImpulse = maxLateralImpulse;
         this.maxForwardSpeed = maxForwardSpeed;
         this.maxBackwardSpeed = maxBackwardSpeed;
-        this.roadFrictionBackwardsCoefficient = roadFrictionBackwardsCoefficient;
+        this.backwardsFriction = roadFrictionBackwardsCoefficient;
     }
 
 
     //sideways velocity
-    private Vector2 getLateralVelocity(){
+    private Vector2 getLateralVelocity() {
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1, 0));
         Vector2 copy = new Vector2(currentRightNormal.x, currentRightNormal.y);
         return copy.scl(copy.dot(body.getLinearVelocity()));
     }
 
 
-
-    private void updateFriction(){
+    private void updateFriction() {
         reduceSideWaysVelocity();
 
 
         applyRoadFriction();
-
 
 
     }
@@ -78,7 +76,7 @@ public class Tire {
     private void applyRoadFriction() {
         Vector2 currentForwardNormal = getForwardVelocity();
 
-        body.applyForceToCenter(currentForwardNormal.scl(newDrag), true);
+        body.applyForceToCenter(currentForwardNormal.scl(currentBackwardsFriction), true);
     }
 
     private void reduceSideWaysVelocity() {
@@ -86,8 +84,8 @@ public class Tire {
 
         //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
 
-        if(impulse.len() > newImp){
-            impulse.scl(newImp / impulse.len());
+        if (impulse.len() > currentMaxLateralImpulse) {
+            impulse.scl(currentMaxLateralImpulse / impulse.len());
         }
 
         //cancel out sideways velocity
@@ -95,20 +93,18 @@ public class Tire {
     }
 
 
-
-    private void updateDrive(Set<InputManager.PressedKey> keys){
+    private void updateDrive(Set<InputManager.PressedKey> keys) {
 
         float desiredSpeed;
         if (keys.contains(InputManager.PressedKey.Up)) {
 
-            desiredSpeed = newForwardSpeed;
+            desiredSpeed = currentMaxForwardSpeed;
         } else if (keys.contains(InputManager.PressedKey.Down)) {
 
-            desiredSpeed = newBackwardSpeed;
+            desiredSpeed = currentMaxBackwardSpeed;
         } else {
             return;
         }
-
 
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
@@ -118,12 +114,12 @@ public class Tire {
 
         float force;
 
-        //accelerate up to a certaint point. (max speed)
+        //accelerate up to a certain point. (max speed)
 
-        if(desiredSpeed > currentSpeed){
-            force = maxDriveForce;
-        } else if (desiredSpeed < currentSpeed){
-            force = -maxDriveForce;
+        if (desiredSpeed > currentSpeed) {
+            force = driveForce;
+        } else if (desiredSpeed < currentSpeed) {
+            force = -driveForce;
         } else {
             return;
         }
@@ -134,37 +130,45 @@ public class Tire {
     }
 
 
-    public void update(Set<InputManager.PressedKey> keys){
+    public void update(Set<InputManager.PressedKey> keys) {
 
 
+        if (grounds.isEmpty()) {
 
-        if(grounds.isEmpty()){
-
-            newImp = maxLateralImpulse;
-            newDrag = roadFrictionBackwardsCoefficient;
-            newForwardSpeed = maxForwardSpeed;
-            newBackwardSpeed = maxBackwardSpeed;
+            currentMaxLateralImpulse = maxLateralImpulse;
+            currentBackwardsFriction = backwardsFriction;
+            currentMaxForwardSpeed = maxForwardSpeed;
+            currentMaxBackwardSpeed = maxBackwardSpeed;
         } else {
-            GroundMaterial gm = grounds.get(grounds.size()-1);
-            newImp = gm.getDrift() * maxLateralImpulse;
+            GroundMaterial gm = grounds.get(grounds.size() - 1);
+            currentMaxLateralImpulse = gm.getDrift() * maxLateralImpulse;
 
-            newForwardSpeed = gm.getSpeedFactor() * maxForwardSpeed;
-            newDrag = gm.getDrag() * roadFrictionBackwardsCoefficient;
-            newBackwardSpeed = gm.getSpeedFactor() * maxBackwardSpeed;
+            currentMaxForwardSpeed = gm.getSpeedFactor() * maxForwardSpeed;
+            currentBackwardsFriction = gm.getDrag() * backwardsFriction;
+            currentMaxBackwardSpeed = gm.getSpeedFactor() * maxBackwardSpeed;
         }
 
         updateFriction();
         updateDrive(keys);
     }
 
+    public void addGroundMaterial(GroundMaterial gm) {
+        grounds.add(gm);
+
+    }
+
+    public void removeGroundMaterial(GroundMaterial gm) {
+        grounds.remove(gm);
+    }
+
 
     private Vector2 getForwardVelocity() {
-        Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0,1));
+        Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
         Vector2 copy = new Vector2(currentForwardNormal.x, currentForwardNormal.y);
         return copy.scl(copy.dot(body.getLinearVelocity()));
     }
 
-    public Body getBody(){
+    public Body getBody() {
         return body;
     }
 }

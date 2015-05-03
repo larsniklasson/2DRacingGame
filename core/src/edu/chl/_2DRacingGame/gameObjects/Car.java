@@ -1,6 +1,5 @@
 package edu.chl._2DRacingGame.gameObjects;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
-import edu.chl._2DRacingGame.helperClasses.InputManager.PressedKey;
+
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
@@ -23,34 +22,33 @@ import java.util.Set;
 public class Car {
     private List<Tire> tires;
     private Body body;
-    private World world;
+    private final World world;
 
     private RevoluteJoint frontLeft, frontRight;
 
 
-
     //magic numbers
-    private float scale = 0.4f* GameWorld.PIXELS_PER_METER;
-    private float tireWidth = 0.5f *2 / scale;
-    private float tireHeight = 1.25f *2 / scale;
+    private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
+    private static final float TIRE_WIDTH = 0.5f * 2 / SCALE;
+    private static final float TIRE_HEIGHT = 1.25f * 2 / SCALE;
 
 
-    private float driveForceFront = 2f;
-    private float driveForceBack = 1f;
+    private static final float DRIVE_FORCE_FRONT_WHEELS = 2f;
+    private static final float DRIVE_FORCE_BACK_WHEELS = 1f;
 
-    private float maxImpulseFront = 0.05f;
-    private float maxImpulseBack = 0.05f;
+    private static final float MAX_LATERAL_IMPULSE_FRONT = 0.05f;
+    private static final float MAX_LATERAL_IMPULSE_BACK = 0.05f;
 
-    private float turnDegreesPerSecond = 1000;
+    private static final float TURN_DEGREES_PER_SECOND = 1000;
 
-    private float maxAngle = 50f;
+    private static final float MAX_ANGLE = 50f;
 
-    private float maxForwardSpeed = 17;
-    private float maxBackwardSpeed = -7;
+    private static final float MAX_FORWARD_SPEED = 17;
+    private static final float MAX_BACKWARD_SPEED = -7;
 
-    private float roadFrictionCoefficient = -0.02f;
+    private static final float BACKWARDS_FRICTION = -0.02f;
 
-    public Car(World world){
+    public Car(World world) {
         this.world = world;
 
         createCarBody();
@@ -61,11 +59,8 @@ public class Car {
     }
 
 
-
     private void createAndAttachTires() {
         tires = new ArrayList<>();
-
-        
 
 
         RevoluteJointDef jointDef = new RevoluteJointDef();
@@ -77,11 +72,11 @@ public class Car {
 
         //first tire
 
-        Tire tire = new Tire(world,tireWidth, tireHeight);
-        tire.setCharacteristics(driveForceFront, maxImpulseFront, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
+        Tire tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
+        tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
 
-        jointDef.localAnchorA.set(new Vector2(-3f/scale, 8.5f/scale));
+        jointDef.localAnchorA.set(new Vector2(-3f / SCALE, 8.5f / SCALE));
 
         frontLeft = (RevoluteJoint) world.createJoint(jointDef);
 
@@ -89,12 +84,12 @@ public class Car {
 
         //second tire
 
-        tire = new Tire(world, tireWidth, tireHeight);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
 
-        tire.setCharacteristics(driveForceFront, maxImpulseFront, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
+        tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
 
-        jointDef.localAnchorA.set(new Vector2(3f/scale, 8.5f/scale));
+        jointDef.localAnchorA.set(new Vector2(3f / SCALE, 8.5f / SCALE));
 
         frontRight = (RevoluteJoint) world.createJoint(jointDef);
 
@@ -104,12 +99,12 @@ public class Car {
         //third tire
 
 
-        tire = new Tire(world, tireWidth, tireHeight);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
 
-        tire.setCharacteristics(driveForceBack, maxImpulseBack, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
+        tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
 
-        jointDef.localAnchorA.set(new Vector2(-3f / scale, 0 / scale));
+        jointDef.localAnchorA.set(new Vector2(-3f / SCALE, 0 / SCALE));
 
         world.createJoint(jointDef);
 
@@ -117,12 +112,12 @@ public class Car {
 
         //fourth tire
 
-        tire = new Tire(world, tireWidth, tireHeight);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
 
-        tire.setCharacteristics(driveForceBack, maxImpulseBack, maxForwardSpeed, maxBackwardSpeed, roadFrictionCoefficient);
+        tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
 
-        jointDef.localAnchorA.set(new Vector2(3f/scale, 0/scale));
+        jointDef.localAnchorA.set(new Vector2(3f / SCALE, 0 / SCALE));
 
         world.createJoint(jointDef);
 
@@ -138,14 +133,14 @@ public class Car {
 
         Vector2[] vertices = new Vector2[8];
 
-        vertices[0] = new Vector2( 1.5f/scale,   0);
-        vertices[1] = new Vector2(3/scale, 2.5f/scale);
-        vertices[2] = new Vector2(2.8f/scale, 5.5f/scale);
-        vertices[3] = new Vector2(1/scale, 10/scale);
-        vertices[4] = new Vector2(-1/scale, 10/scale);
-        vertices[5] = new Vector2(-2.8f/scale, 5.5f/scale);
-        vertices[6] = new Vector2(-3/scale, 2.5f/scale);
-        vertices[7] = new Vector2(-1.5f/scale, 0/scale);
+        vertices[0] = new Vector2(1.5f / SCALE, 0);
+        vertices[1] = new Vector2(3 / SCALE, 2.5f / SCALE);
+        vertices[2] = new Vector2(2.8f / SCALE, 5.5f / SCALE);
+        vertices[3] = new Vector2(1 / SCALE, 10 / SCALE);
+        vertices[4] = new Vector2(-1 / SCALE, 10 / SCALE);
+        vertices[5] = new Vector2(-2.8f / SCALE, 5.5f / SCALE);
+        vertices[6] = new Vector2(-3 / SCALE, 2.5f / SCALE);
+        vertices[7] = new Vector2(-1.5f / SCALE, 0 / SCALE);
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
@@ -154,47 +149,43 @@ public class Car {
     }
 
 
-    public void update(){
+    public void update() {
 
-        Set<PressedKey> keys = InputManager.pollForInput();
+        Set<InputManager.PressedKey> keys = InputManager.pollForInput();
 
-
-        //turn wheels
 
         turnWheels(keys);
 
 
-
-        for(Tire t : tires){
+        for (Tire t : tires) {
 
             t.update(keys);
         }
 
 
-
     }
 
-    private void turnWheels(Set<PressedKey> keys) {
+    private void turnWheels(Set<InputManager.PressedKey> keys) {
 
-        float lockAngle = MathUtils.degreesToRadians * maxAngle;
+        float lockAngle = MathUtils.degreesToRadians * MAX_ANGLE;
 
-        float turnRadiansPerSec = turnDegreesPerSecond * MathUtils.degreesToRadians; //instant as it is now
-        float turnPerTimeStep = turnRadiansPerSec/60f;
+        float turnRadiansPerSec = TURN_DEGREES_PER_SECOND * MathUtils.degreesToRadians; //instant as it is now
+        float turnPerTimeStep = turnRadiansPerSec / 60f;
         float desiredAngle = 0;
 
-        if(keys.contains(PressedKey.Left)){
+        if (keys.contains(InputManager.PressedKey.Left)) {
             desiredAngle = lockAngle;
 
-        } else if (keys.contains(PressedKey.Right)) {
+        } else if (keys.contains(InputManager.PressedKey.Right)) {
             desiredAngle = -lockAngle;
         }
 
         float angleNow = frontLeft.getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
 
-        if(angleToTurn < -turnPerTimeStep){
+        if (angleToTurn < -turnPerTimeStep) {
             angleToTurn = -turnPerTimeStep;
-        } else if(angleToTurn > turnPerTimeStep){
+        } else if (angleToTurn > turnPerTimeStep) {
             angleToTurn = turnPerTimeStep;
         }
 
@@ -204,9 +195,12 @@ public class Car {
         frontRight.setLimits(newAngle, newAngle);
     }
 
-    public List<Tire> getTires(){
+    public List<Tire> getTires() {
         return tires;
     }
-    public Body getBody(){ return body; }
+
+    public Body getBody() {
+        return body;
+    }
 
 }
