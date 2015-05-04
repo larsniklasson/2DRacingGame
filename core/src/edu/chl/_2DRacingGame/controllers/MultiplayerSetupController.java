@@ -22,6 +22,8 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private static final String API_KEY = "1b1136c934963a62964ccdd973e52b476f3977a743451d54c4f5d427d573a517";
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
 
+    private String roomId = null;
+
     private final WarpClient warpClient;
 
     public MultiplayerSetupController() {
@@ -33,7 +35,8 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
                     Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
                     joinRoom();
                 } else {
-                    Gdx.app.log("MultiplayerSetupController", "Failed to connect to AppWarp: " + connectEvent.getResult());
+                    Gdx.app.log("MultiplayerSetupController", "Failed to findOpponent to AppWarp: " + connectEvent.getResult());
+                    disconnect();
                     // TODO not available
                 }
             }
@@ -64,12 +67,13 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
             // getInstance doesn't throw an exception but Exception, hence
             // the crazy catch
             // TODO show multiplayer unavailable
+            disconnect();
             e.printStackTrace();
             return null;
         }
     }
 
-    public void connect() {
+    public void findOpponent() {
         warpClient.connectWithUserName(getUserName());
     }
 
@@ -87,7 +91,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
                 createEmptyRoom();
                 break;
             default:
-                warpClient.disconnect();
+                disconnect();
                 // TODO
                 Gdx.app.log("MultiplayerSetupController", "Failed to find a suitable room. Disconnecting.");
                 break;
@@ -107,6 +111,19 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
         // Create the room. The listener "onCreateRoomDone" will then subscribe to the room
         warpClient.createRoom("quickrace-" + userName, userName, 2, data);
     }
+
+    private void disconnect() {
+        if (roomId != null && ! roomId.isEmpty()) {
+            warpClient.unsubscribeRoom(roomId);
+            warpClient.leaveRoom(roomId);
+            warpClient.deleteRoom(roomId);
+        }
+
+        warpClient.removeZoneRequestListener(this);
+        warpClient.removeZoneRequestListener(this);
+        warpClient.disconnect();
+    }
+
 
     @Override
     public void onCreateRoomDone(RoomEvent roomEvent) {
