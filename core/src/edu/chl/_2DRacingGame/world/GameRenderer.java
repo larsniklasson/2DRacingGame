@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.models.ScreenText;
 
+import java.util.List;
+
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
@@ -25,7 +27,7 @@ public class GameRenderer {
     private final Texture carTexture;
 
     private final Texture tireTexture;
-    private final Sprite carSprite;
+    private final Sprite carSprite = new Sprite();
     private final Sprite tireSprite;
 
     private final BitmapFont font;
@@ -39,7 +41,7 @@ public class GameRenderer {
         carTexture = new Texture(Gdx.files.internal("carbody.png"));
         tireTexture = new Texture(Gdx.files.internal("tire.png"));
 
-        carSprite = new Sprite(carTexture);
+        //carSprite = new Sprite(carTexture);
         tireSprite = new Sprite(tireTexture);
 
         font = new BitmapFont();
@@ -56,7 +58,7 @@ public class GameRenderer {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        gameWorld.getb2World().step(Gdx.graphics.getDeltaTime(), 3, 3);
+
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -66,10 +68,14 @@ public class GameRenderer {
         debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
         batch.begin();
-        drawTires();
-        drawCar();
+        for(Sprite sprite : gameWorld.getCar().getSprites()){
+            sprite.draw(batch);
+        }
+
+
+
         drawScreenTexts();
-        carSprite.draw(batch);
+        //carSprite.draw(batch);
 
         batch.end();
     }

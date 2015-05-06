@@ -1,5 +1,8 @@
 package edu.chl._2DRacingGame.gameObjects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,6 +23,9 @@ import java.util.Set;
  * Created by Lars Niklasson on 2015-03-31.
  */
 public class Car {
+
+    private Sprite sprite;
+
     private List<Tire> tires;
     private Body body;
     private final World world;
@@ -49,6 +55,10 @@ public class Car {
     private static final float BACKWARDS_FRICTION = -0.02f;
 
     public Car(World world) {
+
+        Texture carTexture = new Texture(Gdx.files.internal("carbody.png"));
+        sprite = new Sprite(carTexture);
+
         this.world = world;
 
         createCarBody();
@@ -56,6 +66,12 @@ public class Car {
         createAndAttachTires();
 
 
+    }
+
+    private void updateSprite(){
+        sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
+                (body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - sprite.getHeight() / 2);
+        sprite.setRotation((float) Math.toDegrees(body.getAngle()));
     }
 
 
@@ -162,6 +178,9 @@ public class Car {
             t.update(keys);
         }
 
+        updateSprite();
+
+
 
     }
 
@@ -201,6 +220,19 @@ public class Car {
 
     public Body getBody() {
         return body;
+    }
+
+    public Sprite getSprite(){
+        return sprite;
+    }
+
+    public List<Sprite> getSprites() {
+        List<Sprite> list = new ArrayList<>();
+        list.add(sprite);
+        for(Tire t: tires){
+            list.add(t.getSprite());
+        }
+        return list;
     }
 
 }

@@ -1,5 +1,8 @@
 package edu.chl._2DRacingGame.gameObjects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -7,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.GroundMaterial;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
+import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,7 @@ import java.util.Set;
  * Created by Lars Niklasson on 2015-03-30.
  */
 public class Tire {
-
+    private Sprite sprite;
 
     private float maxForwardSpeed;
     private float maxBackwardSpeed;
@@ -34,6 +38,9 @@ public class Tire {
     public final List<GroundMaterial> grounds = new ArrayList<>();
 
     public Tire(World world, float width, float height) {
+        Texture texture = new Texture(Gdx.files.internal("tire.png"));
+        sprite = new Sprite(texture);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -53,6 +60,13 @@ public class Tire {
         this.maxForwardSpeed = maxForwardSpeed;
         this.maxBackwardSpeed = maxBackwardSpeed;
         this.backwardsFriction = roadFrictionBackwardsCoefficient;
+    }
+
+    private void updateSprite(){
+        sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
+                (body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - sprite.getHeight() / 2);
+        sprite.setRotation((float) Math.toDegrees(body.getAngle()));
+
     }
 
 
@@ -150,6 +164,8 @@ public class Tire {
 
         updateFriction();
         updateDrive(keys);
+
+        updateSprite();
     }
 
     public void addGroundMaterial(GroundMaterial gm) {
@@ -170,5 +186,8 @@ public class Tire {
 
     public Body getBody() {
         return body;
+    }
+    public Sprite getSprite(){
+        return sprite;
     }
 }

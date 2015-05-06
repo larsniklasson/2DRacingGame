@@ -79,7 +79,7 @@ public class GameWorld implements Disposable {
     }
 
     public void update(float delta) {
-
+        b2World.step(Gdx.graphics.getDeltaTime(), 3, 3);
         car.update();
     }
 
