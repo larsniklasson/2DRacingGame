@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-03-31.
  */
-public class Car {
+public class Car implements Vehicle{
 
     private Sprite sprite;
 
@@ -88,7 +88,7 @@ public class Car {
 
         //first tire
 
-        Tire tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
+        Tire tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
         tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
 
@@ -100,7 +100,7 @@ public class Car {
 
         //second tire
 
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
 
         tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
@@ -115,7 +115,7 @@ public class Car {
         //third tire
 
 
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
 
         tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
@@ -128,7 +128,7 @@ public class Car {
 
         //fourth tire
 
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT);
+        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
 
         tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
         jointDef.bodyB = tire.getBody();
@@ -165,9 +165,9 @@ public class Car {
     }
 
 
-    public void update() {
+    public void update(Set<InputManager.PressedKey> keys) {
 
-        Set<InputManager.PressedKey> keys = InputManager.pollForInput();
+
 
 
         turnWheels(keys);
@@ -233,6 +233,14 @@ public class Car {
             list.add(t.getSprite());
         }
         return list;
+    }
+
+    @Override
+    public void moveTo(Vector2 position, float angle) {
+        body.setTransform(position, angle);
+        for(Tire t : tires){
+            t.getBody().setTransform(position,0);
+        }
     }
 
 }

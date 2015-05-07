@@ -37,7 +37,7 @@ public class Tire {
     private final Body body;
     public final List<GroundMaterial> grounds = new ArrayList<>();
 
-    public Tire(World world, float width, float height) {
+    public Tire(World world, float width, float height, float density) {
         Texture texture = new Texture(Gdx.files.internal("tire.png"));
         sprite = new Sprite(texture);
 
@@ -50,7 +50,7 @@ public class Tire {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
 
-        body.createFixture(shape, 1);
+        body.createFixture(shape, density);
         body.setUserData(this);
     }
 

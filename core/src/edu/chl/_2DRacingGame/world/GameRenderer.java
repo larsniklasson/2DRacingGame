@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.ScreenText;
 
 import java.util.List;
@@ -68,8 +69,14 @@ public class GameRenderer {
         debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
         batch.begin();
-        for(Sprite sprite : gameWorld.getCar().getSprites()){
-            sprite.draw(batch);
+        for(Vehicle v : gameWorld.getVehicles()){
+            if(v.getSprites() == null){
+                continue;
+            }
+
+            for(Sprite s : v.getSprites()){
+                s.draw(batch);
+            }
         }
 
 

@@ -19,10 +19,9 @@ import edu.chl._2DRacingGame.controllers.ContactController;
 import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.Immovable;
-import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
+import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointDirection;
@@ -32,6 +31,7 @@ import edu.chl._2DRacingGame.models.GameMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -39,9 +39,13 @@ import java.util.List;
  */
 public class GameWorld implements Disposable {
 
+    private List<Vehicle> vehicles = new ArrayList<>();
+
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
-    private Car car;
+    //private MagicCarpet magicCarpet;
+
+
     private final GameMode gameMode;
     private final List<Checkpoint> checkpoints = new ArrayList<>();
 
@@ -54,14 +58,22 @@ public class GameWorld implements Disposable {
         this.gameMode = gameMode;
 
         b2World = new World(new Vector2(0, 0), true);
-        car = new Car(b2World);
+
+
+        vehicles.add(new Car(b2World));
+
+        vehicles.add(new MagicCarpet(b2World, 20f / PIXELS_PER_METER, 30f / PIXELS_PER_METER));
+
+        vehicles.get(0).moveTo(new Vector2(100f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
+
+        vehicles.get(1).moveTo(new Vector2(100f/PIXELS_PER_METER, 60f/PIXELS_PER_METER), 0);
+
+
         tiledMap = gameMap.load();
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
-        car.getBody().setTransform(20 / PIXELS_PER_METER, 20 / PIXELS_PER_METER, 0);
-        for(Tire t : car.getTires()){
-            t.getBody().setTransform(20/PIXELS_PER_METER, 20/PIXELS_PER_METER, 0);
-        }
+
+
 
         createShapesFromMap();
 
@@ -80,7 +92,13 @@ public class GameWorld implements Disposable {
 
     public void update(float delta) {
         b2World.step(Gdx.graphics.getDeltaTime(), 3, 3);
-        car.update();
+        Set<InputManager.PressedKey> keys = InputManager.pollForInput();
+
+        for(Vehicle v: vehicles){
+            v.update(keys);
+        }
+
+
     }
 
 
@@ -126,7 +144,8 @@ public class GameWorld implements Disposable {
     }
 
     public Car getCar(){
-        return car;
+        //return car;
+        return null;
     }
 
     public TiledMap getTiledMap(){
@@ -135,6 +154,10 @@ public class GameWorld implements Disposable {
 
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    public List<Vehicle> getVehicles(){
+        return vehicles;
     }
 
     @Override
