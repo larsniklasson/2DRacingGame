@@ -31,7 +31,7 @@ public class MapScores {
         this.map = map;
         this.mode = mode;
         this.scores = scores;
-        highscoreComparator = mode.getHighscoreComparator();
+        highscoreComparator = mode.getScoreComparator();
     }
 
     public void addScore(double score) {

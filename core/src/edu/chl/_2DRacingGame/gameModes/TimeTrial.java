@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class TimeTrial extends GameMode {
 
-    private final GameListener listener;
-
     private int currentLap = 1;
     private final int lapGoal = 1; // TODO inject from menu
 
@@ -22,7 +20,7 @@ public class TimeTrial extends GameMode {
     private final ScreenText currentRaceTimeText;
 
     public TimeTrial(GameListener listener) {
-        this.listener = listener;
+        super(listener);
 
         currentLapText = new ScreenText(new Vector2(1200, 670));
         addScreenText(currentLapText);
@@ -30,7 +28,6 @@ public class TimeTrial extends GameMode {
         addScreenText(currentRaceTimeText);
 
         syncTexts();
-        getStopWatch().start(); // TODO should not start right away
     }
 
     @Override
@@ -46,14 +43,14 @@ public class TimeTrial extends GameMode {
         if (currentLap == lapGoal) {
             getStopWatch().stop();
             double elapsedTime = getStopWatch().getTime() / 1000d;
-            listener.gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
+            getListener().gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
         }
 
         currentLap++;
     }
 
     @Override
-    public Comparator<Double> getHighscoreComparator() {
+    public Comparator<Double> getScoreComparator() {
         return (a, b) -> a.compareTo(b);
     }
 }

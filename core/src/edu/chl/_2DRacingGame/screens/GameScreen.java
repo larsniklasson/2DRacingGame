@@ -57,7 +57,6 @@ public class GameScreen implements Screen {
         centerHeight = Gdx.graphics.getHeight()/2;
 
         spriteBatch = new SpriteBatch();
-
     }
 
     public void update(float delta){
@@ -79,6 +78,7 @@ public class GameScreen implements Screen {
             touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
                 this.state = State.GAME_RUNNING;
+                world.getGameMode().resume();
                 return;
             }
             if(exitBounds.contains(touchPoint.x, touchPoint.y)){
@@ -98,8 +98,10 @@ public class GameScreen implements Screen {
 
     private void updateRunning(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.P)){
-            if(this.state == State.GAME_RUNNING)
+            if(this.state == State.GAME_RUNNING) {
+                world.getGameMode().pause();
                 this.state = State.GAME_PAUSED;
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             Assets.carHorn();
@@ -134,6 +136,11 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         startTime = System.nanoTime();
+
+        // There is a countdown before the race begins, however the world should still be drawn
+        // and the vehicles spawned.
+        world.update(0);
+        renderer.render();
     }
 
     @Override
@@ -154,11 +161,13 @@ public class GameScreen implements Screen {
                 spriteBatch.draw(ctdwnGo, centerWidth - 393/2, centerHeight - 248/2);
             } else if (elapsedTime < 5f) {
                 gameStart = false;
+                world.getGameMode().start();
             }
             spriteBatch.end();
+        } else {
+            update(delta);
         }
 
-        update(delta);
     }
 
     @Override

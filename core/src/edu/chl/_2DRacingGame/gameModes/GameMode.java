@@ -15,6 +15,42 @@ public abstract class GameMode implements LapListener {
     private ArrayList<ScreenText> screenTexts = new ArrayList<>();
     private StopWatch stopWatch = new StopWatch();
 
+    private final GameListener listener;
+
+    public GameMode(GameListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * Starts the race.
+     */
+    public void start() {
+        stopWatch.start();
+    }
+
+    /**
+     * Pauses the race.
+     */
+    public void pause() {
+        if (stopWatch.isStarted()) {
+            stopWatch.suspend();
+        }
+    }
+
+    /**
+     * Resumes the race.
+     */
+    public void resume() {
+        if (stopWatch.isSuspended()) {
+            stopWatch.resume();
+        }
+    }
+
+    /**
+     * Adds the specified text to the text-queue which are drawn to the screen.
+     *
+     * @param text Text to be queued
+     */
     protected void addScreenText(ScreenText text) {
         screenTexts.add(text);
     }
@@ -33,5 +69,15 @@ public abstract class GameMode implements LapListener {
         return stopWatch;
     }
 
-    public abstract Comparator<Double> getHighscoreComparator();
+    /**
+     * Returns a comparator which specifies how scores are compared in the
+     * specific game mode.
+     *
+     * @return Score comparator for the specified game mode
+     */
+    public abstract Comparator<Double> getScoreComparator();
+
+    protected GameListener getListener() {
+        return listener;
+    }
 }
