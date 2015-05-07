@@ -13,7 +13,7 @@ public class Player {
      * The player's username must be unique when playing online.
      */
     private final String userName;
-    private Vehicle vehicle;
+    private transient Vehicle vehicle;
 
     public Player(String userName, Vehicle vehicle) {
         this.userName = userName;

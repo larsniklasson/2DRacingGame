@@ -9,6 +9,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestL
 import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
+import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.Player;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author Daniel Sunnerberg
  */
-public class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, NotifyListener {
+public class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
 
     private static final String API_KEY = "1b1136c934963a62964ccdd973e52b476f3977a743451d54c4f5d427d573a517";
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
@@ -30,9 +31,10 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private final Player player;
     private List<Player> opponents;
     private String roomId = null;
-
     private final WarpClient warpClient;
+
     private final MultiplayerSetupListener listener;
+    private WarpClientNotificationAdapter notificationAdapter;
 
     public MultiplayerSetupController(Player player, MultiplayerSetupListener listener) {
         this.player = player;
@@ -64,7 +66,13 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
         });
         warpClient.addZoneRequestListener(this);
         warpClient.addRoomRequestListener(this);
-        warpClient.addNotificationListener(this);
+        notificationAdapter = new WarpClientNotificationAdapter() {
+            @Override
+            public void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
+                MultiplayerSetupController.this.onUserChangeRoomProperty(roomData, sender, properties, lockedPropertiesTable);
+            }
+        };
+        warpClient.addNotificationListener(notificationAdapter);
     }
 
     private void joinRoom() {
@@ -165,7 +173,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private void removeClientListeners() {
         warpClient.removeZoneRequestListener(this);
         warpClient.removeZoneRequestListener(this);
-        warpClient.removeNotificationListener(this);
+        warpClient.removeNotificationListener(notificationAdapter);
     }
 
     private void disconnect() {
@@ -199,7 +207,6 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
      * @param properties
      * @param lockedPropertiesTable
      */
-    @Override
     public void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
         Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
@@ -227,66 +234,6 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     }
 
     // Empty methods to satisfy required interfaces.
-
-    @Override
-    public void onUserJoinedRoom(RoomData roomData, String userName) {
-    }
-
-    @Override
-    public void onRoomCreated(RoomData roomData) {
-    }
-
-    @Override
-    public void onRoomDestroyed(RoomData roomData) {
-    }
-
-    @Override
-    public void onUserLeftRoom(RoomData roomData, String s) {
-    }
-
-    @Override
-    public void onUserLeftLobby(LobbyData lobbyData, String s) {
-    }
-
-    @Override
-    public void onUserJoinedLobby(LobbyData lobbyData, String s) {
-    }
-
-    @Override
-    public void onChatReceived(ChatEvent chatEvent) {
-    }
-
-    @Override
-    public void onPrivateChatReceived(String s, String s1) {
-    }
-
-    @Override
-    public void onPrivateUpdateReceived(String s, byte[] bytes, boolean b) {
-    }
-
-    @Override
-    public void onUpdatePeersReceived(UpdateEvent updateEvent) {
-    }
-
-    @Override
-    public void onMoveCompleted(MoveEvent moveEvent) {
-    }
-
-    @Override
-    public void onGameStarted(String s, String s1, String s2) {
-    }
-
-    @Override
-    public void onGameStopped(String s, String s1) {
-    }
-
-    @Override
-    public void onUserPaused(String s, boolean b, String s1) {
-    }
-
-    @Override
-    public void onUserResumed(String s, boolean b, String s1) {
-    }
 
     @Override
     public void onDeleteRoomDone(RoomEvent roomEvent) {

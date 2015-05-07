@@ -69,17 +69,12 @@ public class GameRenderer {
         debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
         batch.begin();
-        for(Vehicle v : gameWorld.getVehicles()){
-            if(v.getSprites() == null){
-                continue;
-            }
-
-            for(Sprite s : v.getSprites()){
+        Vehicle vehicle = gameWorld.getPlayer().getVehicle();
+        if(vehicle.getSprites() != null){
+            for(Sprite s : vehicle.getSprites()){
                 s.draw(batch);
             }
         }
-
-
 
         drawScreenTexts();
         //carSprite.draw(batch);

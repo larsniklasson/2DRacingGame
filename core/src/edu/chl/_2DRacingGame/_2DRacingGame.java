@@ -8,16 +8,20 @@ import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
+import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;
+import edu.chl._2DRacingGame.world.GameWorld;
 
 public class _2DRacingGame extends Game implements GameListener {
 
-	private GameMode gameMode;
-	private GameMap gameMap;
-	private GameScreen screen;
-	private MapScores mapScores;
+    private Player player;
+    private GameMode gameMode;
+    private GameMap gameMap;
+    private GameScreen screen;
+    private MapScores mapScores;
+    private GameWorld gameWorld;
 
-	@Override
+    @Override
 	public void create() {
 		Gdx.app.log("_2DRacingGame", "created");
 		Assets.load();
@@ -28,18 +32,12 @@ public class _2DRacingGame extends Game implements GameListener {
 
     private void setupExampleRace() {
 		// TODO these should be chosen through in-game menu later
+        player = new Player();
 		gameMap = GameMap.PLACEHOLDER_MAP;
 		gameMode = new TimeTrial(this);
 		mapScores = MapScores.getInstance(gameMap, gameMode);
-		screen = new GameScreen(gameMap, gameMode);
-	}
-
-	public GameMode getGameMode() {
-		return gameMode;
-	}
-
-	public GameMap getGameMap() {
-		return gameMap;
+        gameWorld = new GameWorld(player, gameMap, gameMode);
+        screen = new GameScreen(gameWorld);
 	}
 
 	private void restart() {
@@ -72,6 +70,10 @@ public class _2DRacingGame extends Game implements GameListener {
     @Override
     public void dispose() {
         screen.dispose();
+    }
+
+    public GameWorld getGameWorld() {
+        return gameWorld;
     }
 
 }

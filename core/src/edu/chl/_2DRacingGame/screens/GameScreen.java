@@ -39,8 +39,8 @@ public class GameScreen implements Screen {
     private Rectangle resumeBounds;
     private Rectangle exitBounds;
 
-    public GameScreen(GameMap gameMap, GameMode gameMode){
-        world = new GameWorld(gameMap, gameMode);
+    public GameScreen(GameWorld world){
+        this.world = world;
         renderer = new GameRenderer(world);
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
