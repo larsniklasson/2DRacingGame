@@ -60,8 +60,15 @@ public class CheckpointController {
     private boolean hasPassedRequiredCheckpoints(Car car, Checkpoint checkpoint) {
         int currentCheckpointIndex = checkpoints.indexOf(checkpoint);
 
-        if (currentCheckpointIndex == 0) {
+        boolean hasDrivenFullLap = checkpoints.size() == checkpointHistory.size();
+        boolean justStartedLap = checkpointHistory.size() == 0 && currentCheckpointIndex == 0;
+        if (hasDrivenFullLap || justStartedLap) {
             return true;
+        }
+
+        // If the user has reversed over the finish line and driven back over it
+        if (! hasDrivenFullLap && currentCheckpointIndex == 0) {
+            return false;
         }
 
         Checkpoint previousCheckpoint = checkpoints.get(currentCheckpointIndex - 1);
