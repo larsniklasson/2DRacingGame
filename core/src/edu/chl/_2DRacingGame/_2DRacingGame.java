@@ -43,12 +43,16 @@ public class _2DRacingGame extends Game implements GameListener {
 	}
 
 	private void restart() {
-        // Store the currently active screen and dispose it AFTER the new screen has been
-        // created and set. Disposing too early allows for a race-case which can crash the application.
-        Screen previousGameScreen = screen;
-		setupExampleRace();
-        setScreen(screen);
-        previousGameScreen.dispose();
+        // Disposal of the previous screen has to be run on the GDX thread to prevent
+        // JVM crash.
+        Gdx.app.postRunnable(() -> {
+            // Store the currently active screen and dispose it AFTER the new screen has been
+            // created and set. Disposing too early allows for a race-case which can crash the application.
+            Screen previousGameScreen = screen;
+            setupExampleRace();
+            setScreen(screen);
+            previousGameScreen.dispose();
+        });
 	}
 
 	@Override

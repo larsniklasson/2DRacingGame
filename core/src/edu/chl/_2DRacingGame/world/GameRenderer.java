@@ -111,7 +111,7 @@ public class GameRenderer {
     }
 
     public void dispose() {
-        //batch.dispose();
+        batch.dispose();
         carTexture.dispose();
         tireTexture.dispose();
         font.dispose();
