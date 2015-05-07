@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.controllers;
 
 import edu.chl._2DRacingGame.gameModes.LapListener;
 import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointType;
 
@@ -14,6 +15,10 @@ import java.util.Map;
  */
 public class CheckpointController {
 
+    // TODO event-methods shouldn't specify Car/Vehicle, we're only handling
+    // events for our local vehicle.
+
+
     private final LapListener listener;
 
     /**
@@ -24,7 +29,7 @@ public class CheckpointController {
     /**
      * Stores whether a player has passed a specific checkpoint this lap.
      */
-    private final Map<Checkpoint, Car> checkpointHistory = new HashMap<>(); // TODO should be Vehicle
+    private final Map<Checkpoint, Vehicle> checkpointHistory = new HashMap<>();
 
 
     public CheckpointController(LapListener listener, List<Checkpoint> mapCheckpoints) {

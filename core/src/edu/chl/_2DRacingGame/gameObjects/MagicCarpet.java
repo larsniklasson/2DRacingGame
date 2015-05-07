@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.world.GameWorld;
@@ -70,5 +71,10 @@ public class MagicCarpet implements Vehicle{
     @Override
     public void moveTo(Vector2 position, float angle) {
         tire.getBody().setTransform(position, angle);
+    }
+
+    @Override
+    public Body getBody() {
+        return tire.getBody();
     }
 }

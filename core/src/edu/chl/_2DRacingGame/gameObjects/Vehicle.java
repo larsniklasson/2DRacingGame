@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface Vehicle {
     void update(Set<InputManager.PressedKey> keys);
     List<Sprite> getSprites();
     void moveTo(Vector2 position, float angle);
-    
+    Body getBody();
 }

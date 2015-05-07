@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Checkpoint;
 
 /**
@@ -41,8 +42,8 @@ public class ContactController implements ContactListener {
             tire.addGroundMaterial(ts.getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
-            beginContactPosition = ((Car) b.getUserData()).getBody().getPosition().cpy();
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
+            beginContactPosition = ((Vehicle) b.getUserData()).getBody().getPosition().cpy();
         }
 
     }
