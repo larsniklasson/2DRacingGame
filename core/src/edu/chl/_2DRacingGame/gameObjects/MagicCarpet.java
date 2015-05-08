@@ -54,7 +54,7 @@ public class MagicCarpet implements Vehicle{
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
 
-        tire = new Tire(world, WIDTH, HEIGHT, 0.5f);
+        tire = new FlyingTire(world, WIDTH, HEIGHT, 0.5f);
         tire.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
 
 

@@ -58,9 +58,9 @@ public class GameWorld implements Disposable {
         this.player = player;
 
 
-        player.setVehicle(new MotorCycle(b2World));
+        //player.setVehicle(new MotorCycle(b2World));
         //player.setVehicle(new Car(b2World));
-        //player.setVehicle(new MagicCarpet(b2World));
+        player.setVehicle(new MagicCarpet(b2World));
         // TODO map-unique starting positions
         player.getVehicle().place(new Vector2(100f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
 
@@ -82,7 +82,7 @@ public class GameWorld implements Disposable {
     }
 
     public void update(float delta) {
-        b2World.step(Gdx.graphics.getDeltaTime(), 3, 3);
+        b2World.step(delta, 3, 3);
         Set<InputManager.PressedKey> keys = InputManager.pollForInput();
         player.getVehicle().update(keys);
     }
