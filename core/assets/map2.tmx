@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="88">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="90">
  <tileset firstgid="1" name="spritesheet_fixed" tilewidth="32" tileheight="32">
   <image source="spritesheet_fixed.png" width="576" height="576"/>
  </tileset>
@@ -94,5 +94,6 @@
    </properties>
    <polyline points="0,0 104,1"/>
   </object>
+  <object id="89" name="start" type="EAST" x="595" y="575" width="20" height="17"/>
  </objectgroup>
 </map>

@@ -5,7 +5,9 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,6 +21,7 @@ import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
+import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
 
@@ -61,8 +64,8 @@ public class GameWorld implements Disposable {
         //player.setVehicle(new MotorCycle(b2World));
         //player.setVehicle(new Car(b2World));
         player.setVehicle(new MagicCarpet(b2World));
-        // TODO map-unique starting positions
-        player.getVehicle().place(new Vector2(100f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
+
+        
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
@@ -119,6 +122,36 @@ public class GameWorld implements Disposable {
                     Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
                     cp.addAllowedPassingDirection(direction);
                     checkpoints.add(cp);
+
+                } else if(object.getName().equals("start")){
+
+                    Rectangle r = ((RectangleMapObject) object).getRectangle();
+
+
+                    String s = (String) object.getProperties().get("type");
+
+                    float angle;
+                    switch(s){
+                        case "NORTH":
+                            angle = 0;
+                            break;
+                        case "SOUTH":
+                            angle = (float) Math.PI;
+                            break;
+                        case "WEST":
+                            angle = (float) (Math.PI/2);
+                            break;
+                        case "EAST":
+
+                            angle = (float) (3 * Math.PI/2);
+                            break;
+                        default:
+                            angle = 0;
+                            break;
+                    }
+                    player.getVehicle().place(r.getCenter(new Vector2()), angle);
+
+
 
                 }
 
