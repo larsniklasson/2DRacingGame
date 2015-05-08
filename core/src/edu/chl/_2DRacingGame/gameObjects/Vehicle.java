@@ -14,6 +14,6 @@ import java.util.Set;
 public interface Vehicle {
     void update(Set<InputManager.PressedKey> keys);
     List<Sprite> getSprites();
-    void moveTo(Vector2 position, float angle);
+    void place(Vector2 position, float angle);
     Body getBody();
 }

@@ -37,7 +37,7 @@ public class MultiplayerGameWorld extends GameWorld {
         for (Player opponent : opponents) {
             opponent.setVehicle(new Car(getb2World()));
             // TODO map-unique starting positions
-            opponent.getVehicle().moveTo(new Vector2(50f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
+            opponent.getVehicle().place(new Vector2(50f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
         }
 
         warpClient.addNotificationListener(new WarpClientNotificationAdapter() {
@@ -65,7 +65,7 @@ public class MultiplayerGameWorld extends GameWorld {
         String senderUserName = update.get("senderUserName");
         for (Player opponent: opponents) {
             if (senderUserName.equals(opponent.getUserName())) {
-                opponent.getVehicle().moveTo(position, angle);
+                opponent.getVehicle().place(position, angle);
                 return;
             }
         }

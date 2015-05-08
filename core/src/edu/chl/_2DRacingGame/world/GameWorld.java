@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
@@ -16,9 +15,7 @@ import edu.chl._2DRacingGame.Ice;
 import edu.chl._2DRacingGame.TrackSection;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
 import edu.chl._2DRacingGame.controllers.ContactController;
-import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
-import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
@@ -59,9 +56,12 @@ public class GameWorld implements Disposable {
         // TODO insane. Vehicle should probably be injected directly when
         // the car class is ready for it.
         this.player = player;
-        player.setVehicle(new Car(b2World));
+
+
+        //player.setVehicle(new Car(b2World));
+        player.setVehicle(new MagicCarpet(b2World));
         // TODO map-unique starting positions
-        player.getVehicle().moveTo(new Vector2(100f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
+        player.getVehicle().place(new Vector2(100f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 

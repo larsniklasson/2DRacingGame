@@ -236,7 +236,7 @@ public class Car implements Vehicle{
     }
 
     @Override
-    public void moveTo(Vector2 position, float angle) {
+    public void place(Vector2 position, float angle) {
         body.setTransform(position, angle);
         for(Tire t : tires){
             t.getBody().setTransform(position,0);
