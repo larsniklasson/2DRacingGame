@@ -37,27 +37,27 @@ public class CheckpointController {
         this.checkpoints = mapCheckpoints;
     }
 
-    public void invalidPassing(Car car, Checkpoint checkpoint) {
+    public void invalidPassing(Vehicle vehicle, Checkpoint checkpoint) {
         System.out.println("Invalid checkpoint passing.");
     }
 
-    public void validPassing(Car car, Checkpoint checkpoint) {
+    public void validPassing(Vehicle vehicle, Checkpoint checkpoint) {
 
         System.out.println("Passed the checkpoint from the correct direction");
-        if (hasPassedRequiredCheckpoints(car, checkpoint)) {
+        if (hasPassedRequiredCheckpoints(vehicle, checkpoint)) {
             System.out.println("Has passed previous expected checkpoints. All OK!");
             boolean isClosedSystemLap = isClosedSystem() && checkpoint.getType() == CheckpointType.LAP_START;
             if (! checkpointHistory.isEmpty() && (isClosedSystemLap || checkpoint.getType() == CheckpointType.LAP_END)) {
                 checkpointHistory.clear();
                 listener.lap();
             }
-            checkpointHistory.put(checkpoint, car);
+            checkpointHistory.put(checkpoint, vehicle);
         } else {
             System.out.println("Car hasn't passed required checkpoints. Ignoring.");
         }
     }
 
-    private boolean hasPassedRequiredCheckpoints(Car car, Checkpoint checkpoint) {
+    private boolean hasPassedRequiredCheckpoints(Vehicle vehicle, Checkpoint checkpoint) {
         int currentCheckpointIndex = checkpoints.indexOf(checkpoint);
 
         boolean hasDrivenFullLap = checkpoints.size() == checkpointHistory.size();

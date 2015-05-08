@@ -69,17 +69,17 @@ public class ContactController implements ContactListener {
             tire.removeGroundMaterial(ts.getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Car) {
+        if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
             Checkpoint checkpoint = (Checkpoint) a.getUserData();
-            Car car = (Car) b.getUserData();
+            Vehicle vehicle = (Vehicle) b.getUserData();
 
-            processCheckpointCollision(checkpoint, car);
+            processCheckpointCollision(checkpoint, vehicle);
         }
     }
 
-    private void processCheckpointCollision(Checkpoint checkpoint, Car car) {
-        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, car.getBody().getPosition().cpy());
-        contactDelegator.enteredCheckpoint(car, checkpoint, isValidEntry);
+    private void processCheckpointCollision(Checkpoint checkpoint, Vehicle vehicle) {
+        boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, vehicle.getBody().getPosition().cpy());
+        contactDelegator.enteredCheckpoint(vehicle, checkpoint, isValidEntry);
     }
 
     @Override
