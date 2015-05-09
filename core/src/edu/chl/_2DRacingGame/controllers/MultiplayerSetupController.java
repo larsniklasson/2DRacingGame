@@ -81,7 +81,6 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     }
 
     private WarpClient getWarpInstance() {
-
         try {
             WarpClient.initialize(API_KEY, SECRET_KEY);
             return WarpClient.getInstance();

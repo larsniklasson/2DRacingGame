@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +11,8 @@ import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
@@ -21,7 +24,15 @@ import java.util.Map;
 
 /**
  * @author Daniel Sunnerberg
- *         TODO should probably be a controller
+ *
+ * TODO should probably be a controller
+ * TODO map-unique starting positions
+ * TODO animate angle
+ * TODO stop spinning
+ * TODO starting position
+ * TODO users colliding case
+ * TODO different vehicles
+
  */
 public class MultiplayerGameWorld extends GameWorld {
 
@@ -43,11 +54,9 @@ public class MultiplayerGameWorld extends GameWorld {
         super(player, gameMap, gameMode);
         this.opponents = opponents;
         this.warpClient = warpClient;
-        System.out.println(MIN_UPDATE_WAIT / 1000);
 
         for (Player opponent : opponents) {
             opponent.setVehicle(new Car(getb2World()));
-            // TODO map-unique starting positions
             opponent.getVehicle().place(new Vector2(50f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
         }
 
@@ -83,14 +92,17 @@ public class MultiplayerGameWorld extends GameWorld {
         String senderUserName = update.get("senderUserName");
         for (Player opponent : opponents) {
             if (senderUserName.equals(opponent.getUserName())) {
-                Vector2 opponentLocation = opponent.getVehicle().getBody().getTransform().getPosition();
+                Vehicle opponentVehicle = opponent.getVehicle();
+                Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
                 if (opponentLocation.equals(position)) {
                     return;
                 }
-                // TODO animate angle
-                // TODO stop spinning
-                // TODO starting position
-                opponent.getVehicle().getActor().addAction(Actions.moveTo(x, y, MIN_UPDATE_WAIT / 1000f));
+                opponentVehicle.resetForces();
+
+                float animationDuration = MIN_UPDATE_WAIT / 1000f;
+                Action moveAction = Actions.moveTo(x, y, animationDuration);
+                Action updateAngleAction = Actions.rotateTo(angle, animationDuration);
+                opponentVehicle.getActor().addAction(moveAction); //Actions.parallel(moveAction, updateAngleAction));
             }
         }
     }

@@ -151,4 +151,14 @@ public abstract class Vehicle {
     public VehicleActor getActor() {
         return actor;
     }
+
+    public void resetForces() {
+        body.setLinearVelocity(new Vector2(0, 0));
+        body.setAngularVelocity(0);
+
+        for (Tire tire : tires) {
+            tire.getBody().setLinearVelocity(new Vector2(0, 0));
+            tire.getBody().setAngularVelocity(0);
+        }
+    };
 }
