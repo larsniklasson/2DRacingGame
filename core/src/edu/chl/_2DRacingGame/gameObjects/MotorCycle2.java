@@ -11,7 +11,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class MotorCycle2 extends Vehicle2{
+public class MotorCycle2 extends Vehicle{
 
 
     private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
@@ -60,6 +60,8 @@ public class MotorCycle2 extends Vehicle2{
         tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
         attachTire(tire, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
+
+        setMaxAngle(30f);
 
     }
 }

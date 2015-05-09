@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-07.
  */
-public class MagicCarpet implements Vehicle{
+public class MagicCarpet implements Vehicle3{
 
     private static final float WIDTH = 20f/GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;

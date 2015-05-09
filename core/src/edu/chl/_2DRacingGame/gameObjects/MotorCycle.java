@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-08.
  */
-public class MotorCycle implements Vehicle{
+public class MotorCycle implements Vehicle3{
 
     private Sprite sprite;
     private Sprite tireSprite;

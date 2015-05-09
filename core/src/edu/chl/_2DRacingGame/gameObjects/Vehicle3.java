@@ -1,0 +1,19 @@
+package edu.chl._2DRacingGame.gameObjects;
+
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import edu.chl._2DRacingGame.helperClasses.InputManager;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Created by Lars Niklasson on 2015-05-06.
+ */
+public interface Vehicle3 {
+    void update(Set<InputManager.PressedKey> keys);
+    List<Sprite> getSprites();
+    void place(Vector2 position, float angle);
+    Body getBody();
+}

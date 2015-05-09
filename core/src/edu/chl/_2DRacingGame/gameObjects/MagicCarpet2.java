@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class MagicCarpet2 extends Vehicle2{
+public class MagicCarpet2 extends Vehicle{
     private Tire tire;
     private static final float WIDTH = 20f/ GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;
