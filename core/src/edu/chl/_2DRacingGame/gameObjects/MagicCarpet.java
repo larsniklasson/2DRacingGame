@@ -24,7 +24,7 @@ public class MagicCarpet extends Vehicle{
     public MagicCarpet(World world) {
         super(world);
 
-        Texture texture = new Texture(Gdx.files.internal("magiccarpet.png"));
+        Texture texture = new Texture(Gdx.files.internal("magiccarpet2.png"));
         setSprite(new Sprite(texture));
 
         PolygonShape shape = new PolygonShape();

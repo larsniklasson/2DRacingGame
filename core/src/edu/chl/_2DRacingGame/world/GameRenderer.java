@@ -1,6 +1,7 @@
 package edu.chl._2DRacingGame.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -22,6 +23,8 @@ import java.util.List;
  * Created by Lars Niklasson on 2015-04-21.
  */
 public class GameRenderer extends Stage {
+
+    boolean debug = true;
 
     private final GameWorld gameWorld;
 
@@ -62,12 +65,16 @@ public class GameRenderer extends Stage {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            debug = !debug;
+        }
+
         batch.setProjectionMatrix(camera.combined);
 
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
+        if(debug) debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
         batch.begin();
         Vehicle vehicle = gameWorld.getPlayer().getVehicle();
