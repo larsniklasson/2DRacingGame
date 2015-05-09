@@ -62,7 +62,8 @@ public class GameWorld implements Disposable {
 
         //player.setVehicle(new Car(b2World));
         //player.setVehicle(new MotorCycle(b2World));
-        player.setVehicle(new MagicCarpet(b2World));
+        //player.setVehicle(new MagicCarpet(b2World));
+        player.setVehicle(new FormulaOneCar(b2World));
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 

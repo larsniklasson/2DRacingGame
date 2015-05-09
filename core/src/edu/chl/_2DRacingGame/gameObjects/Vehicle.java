@@ -135,7 +135,10 @@ public abstract class Vehicle{
             t.update(keys);
         }
 
-        updateSprite();
+        if(sprite != null){
+            updateSprite();
+        }
+
 
 
     }

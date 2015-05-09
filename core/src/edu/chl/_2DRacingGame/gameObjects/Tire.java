@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-03-30.
  */
-public class Tire {
+public class Tire { //TODO make copy function
     private Sprite sprite;
 
     private float maxForwardSpeed;

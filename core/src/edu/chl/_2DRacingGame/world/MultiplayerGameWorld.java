@@ -10,7 +10,7 @@ import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
-import edu.chl._2DRacingGame.helperClasses.MoveAnimator;
+//import edu.chl._2DRacingGame.helperClasses.MoveAnimator;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
