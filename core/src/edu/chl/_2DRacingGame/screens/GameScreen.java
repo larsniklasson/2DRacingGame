@@ -6,9 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
@@ -41,7 +45,10 @@ public class GameScreen implements Screen {
 
     public GameScreen(GameWorld world){
         this.world = world;
+
         renderer = new GameRenderer(world);
+        renderer.addActor(world.getPlayer().getVehicle().getActor());
+
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
         resumeBounds = new Rectangle(470,140,410,90);
@@ -109,12 +116,12 @@ public class GameScreen implements Screen {
       world.update(delta);
     }
 
-    public void draw () {
+    public void draw(float delta) {
 
         spriteBatch.begin();
         switch (state) {
             case GAME_RUNNING:
-                drawRunning();
+                drawRunning(delta);
                 break;
             case GAME_PAUSED:
                 drawPaused();
@@ -129,8 +136,10 @@ public class GameScreen implements Screen {
         spriteBatch.draw(Assets.pauseMenu,centerWidth-Assets.pauseMenu.getWidth()/2 ,0);
     }
 
-    private void drawRunning() {
+    private void drawRunning(float delta) {
         renderer.render();
+        renderer.draw();
+        renderer.act(delta);
     }
 
     @Override
@@ -145,7 +154,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        draw();
+        draw(delta);
 
         if(gameStart) {
             elapsedTime = (System.nanoTime() - startTime) / 1000000000.0f;

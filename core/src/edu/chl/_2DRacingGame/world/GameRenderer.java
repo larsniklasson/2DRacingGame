@@ -11,34 +11,27 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.ScreenText;
-
-
-
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
  */
-public class GameRenderer {
+public class GameRenderer extends Stage {
+
     private final GameWorld gameWorld;
 
-    private final OrthographicCamera camera;
     private final SpriteBatch batch;
-
-
     private final BitmapFont font;
 
+    private final OrthographicCamera camera;
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
 
     public GameRenderer(GameWorld world) {
         this.gameWorld = world;
-
-
-
         font = new BitmapFont();
-
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
         camera = new OrthographicCamera();
@@ -51,8 +44,6 @@ public class GameRenderer {
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -73,11 +64,8 @@ public class GameRenderer {
 
         drawScreenTexts();
 
-
         batch.end();
     }
-
-
 
     private void drawScreenTexts() {
         gameWorld.getGameMode().syncTexts();
@@ -89,7 +77,6 @@ public class GameRenderer {
 
     public void dispose() {
         batch.dispose();
-
         font.dispose();
     }
 }

@@ -11,7 +11,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-05-08.
  */
-public class Car extends Vehicle{
+public class Car extends Vehicle {
 
     private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
     private static final float TIRE_WIDTH = 0.5f * 2 / SCALE;

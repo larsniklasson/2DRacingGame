@@ -38,9 +38,6 @@ public class GameWorld implements Disposable {
 
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
-
-
-
     private final GameMode gameMode;
     private final List<Checkpoint> checkpoints = new ArrayList<>();
 
@@ -57,8 +54,6 @@ public class GameWorld implements Disposable {
         // TODO insane. Vehicle should probably be injected directly when
         // the car class is ready for it.
         this.player = player;
-
-
 
         //player.setVehicle(new Car(b2World));
         //player.setVehicle(new MotorCycle(b2World));

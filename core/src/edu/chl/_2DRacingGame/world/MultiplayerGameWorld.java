@@ -9,14 +9,14 @@ import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.helperClasses.InputManager;
-//import edu.chl._2DRacingGame.helperClasses.MoveAnimator;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Daniel Sunnerberg
@@ -58,7 +58,8 @@ public class MultiplayerGameWorld extends GameWorld {
     }
 
     private Map<String, String> getUpdateProperties(String json) {
-        Type mapType = new TypeToken<Map<String, String>>() {}.getType();
+        Type mapType = new TypeToken<Map<String, String>>() {
+        }.getType();
         return new Gson().fromJson(json, mapType);
     }
 
@@ -89,13 +90,16 @@ public class MultiplayerGameWorld extends GameWorld {
         }
     }
 
+    private long getTimeSinceUpdate() {
+        return (System.nanoTime() - lastSyncTime) / 1000000;
+    }
+
     @Override
     public void update(float delta) {
         super.update(delta);
         Body vehicleBody = getPlayer().getVehicle().getBody();
 
-        float msSinceLastUpdate = (System.nanoTime() - lastSyncTime) / 1000000;
-        if (lastSyncTime == 0 || msSinceLastUpdate > MIN_UPDATE_WAIT) {
+        if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
             sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getAngle());
             lastSyncTime = System.nanoTime();
         }
@@ -111,7 +115,8 @@ public class MultiplayerGameWorld extends GameWorld {
         update.put("y", "" + vehiclePosition.y);
         update.put("angle", "" + angle);
 
-        Type typeOfMap = new TypeToken<Map<String, String>>() {}.getType();
+        Type typeOfMap = new TypeToken<Map<String, String>>() {
+        }.getType();
         warpClient.sendUpdatePeers(new Gson().toJson(update, typeOfMap).getBytes());
     }
 }

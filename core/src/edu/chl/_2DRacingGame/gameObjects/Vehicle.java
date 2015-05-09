@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
+import edu.chl._2DRacingGame.helperClasses.VehicleActor;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
@@ -16,29 +18,22 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-08.
  */
-public abstract class Vehicle{
-
-
-
-    private Sprite sprite;
+public abstract class Vehicle {
 
     private float turnDegreesPerSecond = 10000f;
+    private float maxAngle = 50f;
 
     private List<Tire> tires = new ArrayList<>();
     private List<RevoluteJoint> frontJoints = new ArrayList<>();
 
+    private final VehicleActor actor = new VehicleActor(this);
+
+    private Sprite sprite;
     private Body body;
-
     private World world;
-
-
-    private float maxAngle = 50f;
-
 
     public Vehicle(World world){
         this.world = world;
-
-
     }
 
     protected void setTurnDegreesPerSecond(float degrees){
@@ -48,7 +43,6 @@ public abstract class Vehicle{
     protected void setMaxAngle(float angle){
         maxAngle = angle;
     }
-
 
     protected void setSprite(Sprite sprite){
         this.sprite = sprite;
@@ -67,10 +61,7 @@ public abstract class Vehicle{
         jointDef.lowerAngle = 0;
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
-
-
         jointDef.bodyB = tire.getBody();
-
         jointDef.localAnchorA.set(position);
 
         if(frontTire){
@@ -80,9 +71,7 @@ public abstract class Vehicle{
             world.createJoint(jointDef);
         }
 
-
         tires.add(tire);
-
     }
 
     protected void createBody(Shape shape, float density){
@@ -90,7 +79,6 @@ public abstract class Vehicle{
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
         body.setUserData(this);
-
         body.createFixture(shape, 0.1f);
     }
 
@@ -127,11 +115,9 @@ public abstract class Vehicle{
     }
 
     public void update(Set<InputManager.PressedKey> keys) {
-
         turnWheels(keys);
 
         for (Tire t : tires) {
-
             t.update(keys);
         }
 
@@ -139,10 +125,8 @@ public abstract class Vehicle{
             updateSprite();
         }
 
-
-
+        updateSprite();
     }
-
 
     public List<Sprite> getSprites() {
         List<Sprite> list = new ArrayList<>();
@@ -151,24 +135,20 @@ public abstract class Vehicle{
             list.add(t.getSprite());
         }
         return list;
-
     }
 
-
     public void place(Vector2 position, float angle) {
-        body.setTransform(position,angle);
-        System.out.println(body.getPosition());
+        body.setTransform(position, angle);
         for(Tire t : tires){
-
             t.getBody().setTransform(position, angle);
         }
     }
-
 
     public Body getBody() {
         return body;
     }
 
-
-
+    public VehicleActor getActor() {
+        return actor;
+    }
 }
