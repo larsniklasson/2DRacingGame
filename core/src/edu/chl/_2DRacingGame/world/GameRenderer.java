@@ -51,6 +51,7 @@ public class GameRenderer {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
     }
@@ -72,7 +73,9 @@ public class GameRenderer {
         Vehicle vehicle = gameWorld.getPlayer().getVehicle();
         if(vehicle.getSprites() != null){
             for(Sprite s : vehicle.getSprites()){
-                s.draw(batch);
+                if(s != null){
+                    s.draw(batch);
+                }
             }
         }
 

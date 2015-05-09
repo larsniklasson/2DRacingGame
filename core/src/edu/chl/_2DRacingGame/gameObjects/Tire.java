@@ -38,8 +38,7 @@ public class Tire {
     public final List<GroundMaterial> grounds = new ArrayList<>();
 
     public Tire(World world, float width, float height, float density) {
-        Texture texture = new Texture(Gdx.files.internal("tire.png"));
-        sprite = new Sprite(texture);
+
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -165,7 +164,9 @@ public class Tire {
         updateFriction();
         updateDrive(keys);
 
-        updateSprite();
+        if(sprite != null){
+            updateSprite();
+        }
     }
 
     public void addGroundMaterial(GroundMaterial gm) {

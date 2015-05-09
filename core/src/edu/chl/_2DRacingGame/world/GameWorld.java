@@ -40,7 +40,7 @@ public class GameWorld implements Disposable {
 
     public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
 
-    //private MagicCarpet magicCarpet;
+
 
 
     private final GameMode gameMode;
@@ -63,9 +63,10 @@ public class GameWorld implements Disposable {
 
         //player.setVehicle(new MotorCycle(b2World));
         //player.setVehicle(new Car(b2World));
-        player.setVehicle(new MagicCarpet(b2World));
-
-        
+        //player.setVehicle(new MagicCarpet(b2World));
+        //player.setVehicle(new Car2(b2World));
+        //player.setVehicle(new MotorCycle2(b2World));
+        player.setVehicle(new MagicCarpet2(b2World));
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
