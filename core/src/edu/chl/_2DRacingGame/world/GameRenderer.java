@@ -13,7 +13,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
+
+import java.util.List;
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
@@ -34,11 +37,25 @@ public class GameRenderer extends Stage {
         font = new BitmapFont();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
+        setupActors();
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
+    }
+
+    private void setupActors() {
+        addActor(gameWorld.getPlayer().getVehicle().getActor());
+
+        // TODO solve this in a prettier way
+        if (gameWorld instanceof MultiplayerGameWorld) {
+            List<Player> opponents = ((MultiplayerGameWorld) gameWorld).getOpponents();
+            for (Player opponent : opponents) {
+                addActor(opponent.getVehicle().getActor());
+            }
+        }
     }
 
     public void render() {

@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
@@ -24,12 +25,12 @@ import java.util.Map;
  */
 public class MultiplayerGameWorld extends GameWorld {
 
-    private final List<Player> opponents;
-
     /**
      * Minimum time in ms before next update is sent to opponents.
      */
-    private static final int MIN_UPDATE_WAIT = 1000;
+    private static final int MIN_UPDATE_WAIT = 250;
+
+    private final List<Player> opponents;
 
     /**
      * The time when sent the last update.
@@ -42,6 +43,7 @@ public class MultiplayerGameWorld extends GameWorld {
         super(player, gameMap, gameMode);
         this.opponents = opponents;
         this.warpClient = warpClient;
+        System.out.println(MIN_UPDATE_WAIT / 1000);
 
         for (Player opponent : opponents) {
             opponent.setVehicle(new Car(getb2World()));
@@ -85,7 +87,10 @@ public class MultiplayerGameWorld extends GameWorld {
                 if (opponentLocation.equals(position)) {
                     return;
                 }
-                opponent.getVehicle().place(position, angle);
+                // TODO animate angle
+                // TODO stop spinning
+                // TODO starting position
+                opponent.getVehicle().getActor().addAction(Actions.moveTo(x, y, MIN_UPDATE_WAIT / 1000f));
             }
         }
     }
@@ -118,5 +123,9 @@ public class MultiplayerGameWorld extends GameWorld {
         Type typeOfMap = new TypeToken<Map<String, String>>() {
         }.getType();
         warpClient.sendUpdatePeers(new Gson().toJson(update, typeOfMap).getBytes());
+    }
+
+    public List<Player> getOpponents() {
+        return opponents;
     }
 }

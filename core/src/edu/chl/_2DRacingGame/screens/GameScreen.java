@@ -45,9 +45,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(GameWorld world){
         this.world = world;
-
         renderer = new GameRenderer(world);
-        renderer.addActor(world.getPlayer().getVehicle().getActor());
 
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
