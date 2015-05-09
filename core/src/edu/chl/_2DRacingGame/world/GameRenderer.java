@@ -3,18 +3,18 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import edu.chl._2DRacingGame.gameObjects.Tire;
+
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.ScreenText;
 
-import java.util.List;
+
 
 
 /**
@@ -25,11 +25,7 @@ public class GameRenderer {
 
     private final OrthographicCamera camera;
     private final SpriteBatch batch;
-    private final Texture carTexture;
 
-    private final Texture tireTexture;
-    private final Sprite carSprite = new Sprite();
-    private final Sprite tireSprite;
 
     private final BitmapFont font;
 
@@ -39,11 +35,7 @@ public class GameRenderer {
     public GameRenderer(GameWorld world) {
         this.gameWorld = world;
 
-        carTexture = new Texture(Gdx.files.internal("carbody.png"));
-        tireTexture = new Texture(Gdx.files.internal("tire.png"));
 
-        //carSprite = new Sprite(carTexture);
-        tireSprite = new Sprite(tireTexture);
 
         font = new BitmapFont();
 
@@ -80,25 +72,12 @@ public class GameRenderer {
         }
 
         drawScreenTexts();
-        //carSprite.draw(batch);
+
 
         batch.end();
     }
 
-    private void drawCar() {
-        carSprite.setPosition((gameWorld.getCar().getBody().getWorldCenter().x * GameWorld.PIXELS_PER_METER) - carSprite.getWidth() / 2,
-                (gameWorld.getCar().getBody().getWorldCenter().y * GameWorld.PIXELS_PER_METER) - carSprite.getHeight() / 2);
-        carSprite.setRotation((float) Math.toDegrees(gameWorld.getCar().getBody().getAngle()));
-    }
 
-    private void drawTires() {
-        for (Tire t : gameWorld.getCar().getTires()) {
-            tireSprite.setPosition((t.getBody().getWorldCenter().x * GameWorld.PIXELS_PER_METER) - tireSprite.getWidth() / 2,
-                    (t.getBody().getWorldCenter().y * GameWorld.PIXELS_PER_METER) - tireSprite.getHeight() / 2);
-            tireSprite.setRotation((float) Math.toDegrees(t.getBody().getAngle()));
-            tireSprite.draw(batch);
-        }
-    }
 
     private void drawScreenTexts() {
         gameWorld.getGameMode().syncTexts();
@@ -110,8 +89,7 @@ public class GameRenderer {
 
     public void dispose() {
         batch.dispose();
-        carTexture.dispose();
-        tireTexture.dispose();
+
         font.dispose();
     }
 }

@@ -18,6 +18,8 @@ import java.util.Set;
  */
 public abstract class Vehicle{
 
+
+
     private Sprite sprite;
 
     private float turnDegreesPerSecond = 10000f;
@@ -39,16 +41,16 @@ public abstract class Vehicle{
 
     }
 
-    public void setTurnDegreesPerSecond(float degrees){
+    protected void setTurnDegreesPerSecond(float degrees){
         turnDegreesPerSecond = degrees;
     }
 
-    public void setMaxAngle(float angle){
+    protected void setMaxAngle(float angle){
         maxAngle = angle;
     }
 
 
-    public void setSprite(Sprite sprite){
+    protected void setSprite(Sprite sprite){
         this.sprite = sprite;
     }
 
@@ -58,7 +60,7 @@ public abstract class Vehicle{
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
     }
 
-    void attachTire(Tire tire, Vector2 position, boolean frontTire){
+    protected void attachTire(Tire tire, Vector2 position, boolean frontTire){
         RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.bodyA = body;
         jointDef.enableLimit = true;
@@ -83,7 +85,7 @@ public abstract class Vehicle{
 
     }
 
-    void createBody(Shape shape, float density){
+    protected void createBody(Shape shape, float density){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
@@ -154,7 +156,7 @@ public abstract class Vehicle{
         body.setTransform(position,angle);
         System.out.println(body.getPosition());
         for(Tire t : tires){
-            System.out.println(t.getBody().getPosition());
+
             t.getBody().setTransform(position, angle);
         }
     }
@@ -163,6 +165,7 @@ public abstract class Vehicle{
     public Body getBody() {
         return body;
     }
+
 
 
 }

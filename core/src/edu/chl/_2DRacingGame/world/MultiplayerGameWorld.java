@@ -9,7 +9,6 @@ import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.Car2;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
@@ -36,7 +35,7 @@ public class MultiplayerGameWorld extends GameWorld {
         this.warpClient = warpClient;
 
         for (Player opponent : opponents) {
-            opponent.setVehicle(new Car2(getb2World()));
+            opponent.setVehicle(new Car(getb2World()));
             // TODO map-unique starting positions
             opponent.getVehicle().place(new Vector2(50f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
         }

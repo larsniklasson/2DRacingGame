@@ -3,37 +3,16 @@ package edu.chl._2DRacingGame.gameObjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import edu.chl._2DRacingGame.helperClasses.InputManager;
-
 import edu.chl._2DRacingGame.world.GameWorld;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 /**
- * Created by Lars Niklasson on 2015-03-31.
+ * Created by Lars Niklasson on 2015-05-08.
  */
-public class Car implements Vehicle3{
+public class Car extends Vehicle{
 
-    private Sprite sprite;
-
-    private List<Tire> tires;
-    private Body body;
-    private final World world;
-
-    private RevoluteJoint frontLeft, frontRight;
-
-
-    //magic numbers
     private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
     private static final float TIRE_WIDTH = 0.5f * 2 / SCALE;
     private static final float TIRE_HEIGHT = 1.25f * 2 / SCALE;
@@ -45,107 +24,18 @@ public class Car implements Vehicle3{
     private static final float MAX_LATERAL_IMPULSE_FRONT = 0.05f;
     private static final float MAX_LATERAL_IMPULSE_BACK = 0.05f;
 
-    private static final float TURN_DEGREES_PER_SECOND = 1000;
 
-    private static final float MAX_ANGLE = 50f;
 
     private static final float MAX_FORWARD_SPEED = 17;
     private static final float MAX_BACKWARD_SPEED = -7;
 
     private static final float BACKWARDS_FRICTION = -0.02f;
 
+
+
+
     public Car(World world) {
-
-        Texture carTexture = new Texture(Gdx.files.internal("carbody.png"));
-        sprite = new Sprite(carTexture);
-
-        this.world = world;
-
-        createCarBody();
-
-        createAndAttachTires();
-
-
-    }
-
-    private void updateSprite(){
-        sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
-                (body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - sprite.getHeight() / 2);
-        sprite.setRotation((float) Math.toDegrees(body.getAngle()));
-    }
-
-
-    private void createAndAttachTires() {
-        tires = new ArrayList<>();
-
-
-        RevoluteJointDef jointDef = new RevoluteJointDef();
-        jointDef.bodyA = body;
-        jointDef.enableLimit = true;
-        jointDef.lowerAngle = 0;
-        jointDef.upperAngle = 0;
-        jointDef.localAnchorB.setZero();
-
-        //first tire
-
-        Tire tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-        tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        jointDef.bodyB = tire.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(-3f / SCALE, 8.5f / SCALE));
-
-        frontLeft = (RevoluteJoint) world.createJoint(jointDef);
-
-        tires.add(tire);
-
-        //second tire
-
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-
-        tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        jointDef.bodyB = tire.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(3f / SCALE, 8.5f / SCALE));
-
-        frontRight = (RevoluteJoint) world.createJoint(jointDef);
-
-        tires.add(tire);
-
-
-        //third tire
-
-
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-
-        tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        jointDef.bodyB = tire.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(-3f / SCALE, 0 / SCALE));
-
-        world.createJoint(jointDef);
-
-        tires.add(tire);
-
-        //fourth tire
-
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-
-        tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        jointDef.bodyB = tire.getBody();
-
-        jointDef.localAnchorA.set(new Vector2(3f / SCALE, 0 / SCALE));
-
-        world.createJoint(jointDef);
-
-        tires.add(tire);
-    }
-
-    private void createCarBody() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
-
+        super(world);
 
         Vector2[] vertices = new Vector2[8];
 
@@ -161,86 +51,36 @@ public class Car implements Vehicle3{
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
 
-        body.createFixture(shape, 0.1f);
+        createBody(shape, 0.1f);
+
+        Texture texture = new Texture(Gdx.files.internal("carbody.png"));
+        setSprite(new Sprite(texture));
+
+
+        Tire t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        Texture tireTexture = new Texture(Gdx.files.internal("tire.png"));
+
+        t.setSprite(new Sprite(tireTexture));
+        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        attachTire(t, new Vector2(-3f / SCALE, 8.5f / SCALE), true);
+
+        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        t.setSprite(new Sprite(tireTexture));
+        attachTire(t, new Vector2(3f / SCALE, 8.5f / SCALE), true);
+
+        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        t.setSprite(new Sprite(tireTexture));
+        attachTire(t, new Vector2(3f / SCALE, 0), false);
+
+        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        t.setSprite(new Sprite(tireTexture));
+        attachTire(t, new Vector2(-3f / SCALE, 0), false);
+
+
+
+
     }
-
-
-    public void update(Set<InputManager.PressedKey> keys) {
-
-
-
-
-        turnWheels(keys);
-
-
-        for (Tire t : tires) {
-
-            t.update(keys);
-        }
-
-        updateSprite();
-
-
-
-    }
-
-    private void turnWheels(Set<InputManager.PressedKey> keys) {
-
-        float lockAngle = MathUtils.degreesToRadians * MAX_ANGLE;
-
-        float turnRadiansPerSec = TURN_DEGREES_PER_SECOND * MathUtils.degreesToRadians; //instant as it is now
-        float turnPerTimeStep = turnRadiansPerSec / 60f;
-        float desiredAngle = 0;
-
-        if (keys.contains(InputManager.PressedKey.Left)) {
-            desiredAngle = lockAngle;
-
-        } else if (keys.contains(InputManager.PressedKey.Right)) {
-            desiredAngle = -lockAngle;
-        }
-
-        float angleNow = frontLeft.getJointAngle();
-        float angleToTurn = desiredAngle - angleNow;
-
-        if (angleToTurn < -turnPerTimeStep) {
-            angleToTurn = -turnPerTimeStep;
-        } else if (angleToTurn > turnPerTimeStep) {
-            angleToTurn = turnPerTimeStep;
-        }
-
-        float newAngle = angleNow + angleToTurn;
-
-        frontLeft.setLimits(newAngle, newAngle);
-        frontRight.setLimits(newAngle, newAngle);
-    }
-
-    public List<Tire> getTires() {
-        return tires;
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public Sprite getSprite(){
-        return sprite;
-    }
-
-    public List<Sprite> getSprites() {
-        List<Sprite> list = new ArrayList<>();
-        list.add(sprite);
-        for(Tire t: tires){
-            list.add(t.getSprite());
-        }
-        return list;
-    }
-
-    @Override
-    public void place(Vector2 position, float angle) {
-        body.setTransform(position, angle);
-        for(Tire t : tires){
-            t.getBody().setTransform(position,0);
-        }
-    }
-
 }

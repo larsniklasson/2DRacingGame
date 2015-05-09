@@ -1,6 +1,5 @@
 package edu.chl._2DRacingGame.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
@@ -21,7 +20,6 @@ import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
-import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
 
@@ -61,12 +59,10 @@ public class GameWorld implements Disposable {
         this.player = player;
 
 
-        //player.setVehicle(new MotorCycle(b2World));
+
         //player.setVehicle(new Car(b2World));
-        //player.setVehicle(new MagicCarpet(b2World));
-        //player.setVehicle(new Car2(b2World));
-        //player.setVehicle(new MotorCycle2(b2World));
-        player.setVehicle(new MagicCarpet2(b2World));
+        //player.setVehicle(new MotorCycle(b2World));
+        player.setVehicle(new MagicCarpet(b2World));
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
@@ -161,10 +157,7 @@ public class GameWorld implements Disposable {
 
     }
 
-    public Car getCar(){
-        //return car;
-        return null;
-    }
+
 
     public TiledMap getTiledMap(){
         return tiledMap;

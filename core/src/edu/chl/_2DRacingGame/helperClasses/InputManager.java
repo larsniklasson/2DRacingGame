@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.helperClasses;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import java.util.ArrayList;
+
 import java.util.Set;
 import java.util.TreeSet;
 
