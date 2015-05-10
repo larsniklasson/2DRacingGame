@@ -40,25 +40,11 @@ public class GameRenderer extends Stage {
         font = new BitmapFont();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
-        setupActors();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
-    }
-
-    private void setupActors() {
-        addActor(gameWorld.getPlayer().getVehicle().getActor());
-
-        // TODO solve this in a prettier way
-        if (gameWorld instanceof MultiplayerGameWorld) {
-            List<Player> opponents = ((MultiplayerGameWorld) gameWorld).getOpponents();
-            for (Player opponent : opponents) {
-                addActor(opponent.getVehicle().getActor());
-            }
-        }
     }
 
     public void render() {
@@ -77,11 +63,13 @@ public class GameRenderer extends Stage {
         if(debug) debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
 
         batch.begin();
-        Vehicle vehicle = gameWorld.getPlayer().getVehicle();
-        if(vehicle.getSprites() != null){
-            for(Sprite s : vehicle.getSprites()){
-                if(s != null){
-                    s.draw(batch);
+        for (Player player : gameWorld.getPlayers()) {
+            Vehicle vehicle = player.getVehicle();
+            if(vehicle.getSprites() != null){
+                for(Sprite s : vehicle.getSprites()){
+                    if(s != null){
+                        s.draw(batch);
+                    }
                 }
             }
         }
@@ -102,5 +90,11 @@ public class GameRenderer extends Stage {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+    public void retrieveActors() {
+        for (Player player : gameWorld.getPlayers()) {
+            addActor(player.getVehicle().getActor());
+        }
     }
 }

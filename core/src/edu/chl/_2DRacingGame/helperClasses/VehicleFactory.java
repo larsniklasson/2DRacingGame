@@ -8,7 +8,7 @@ import edu.chl._2DRacingGame.gameObjects.*;
  */
 public class VehicleFactory {
 
-    public Vehicle createVehicle(String type, World world) {
+    public static Vehicle createVehicle(String type, World world) {
         switch (type.toLowerCase()) {
             case "car":
                 return new Car(world);

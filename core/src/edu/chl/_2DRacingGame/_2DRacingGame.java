@@ -7,6 +7,9 @@ import edu.chl._2DRacingGame.controllers.MultiplayerSetupController;
 import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
+import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.Player;
@@ -31,6 +34,7 @@ public class _2DRacingGame extends Game implements GameListener {
 		Assets.load();
 
         player = new Player();
+        player.setIsControlledByClient(true);
         setupExampleRace();
 
         if (useMultiplayer) {
@@ -41,14 +45,26 @@ public class _2DRacingGame extends Game implements GameListener {
 	}
 
     private void startSinglePlayer() {
+        gameWorld.addPlayer(player);
+        gameWorld.spawnPlayers();
         setScreen(screen);
     }
 
     private void startMultiPlayer() {
-        new MultiplayerSetupController(player, (client, opponents) -> {
+        new MultiplayerSetupController(player, (client, players) -> {
             Gdx.app.postRunnable(() -> {
-                gameWorld = new MultiplayerGameWorld(player, opponents, gameMap, gameMode, client);
-                screen = new GameScreen(gameWorld);
+
+                for (Player player : players) {
+                    if (player.getVehicle() == null) {
+                        player.setVehicle(VehicleFactory.createVehicle(player.getVehicleType(), gameWorld.getb2World()));
+                    }
+                }
+
+                ((MultiplayerGameWorld) gameWorld).setWarpClient(client);
+                ((MultiplayerGameWorld) gameWorld).setClientPlayer(player);
+                gameWorld.addPlayers(players);
+                gameWorld.spawnPlayers();
+
                 setScreen(screen);
             });
         }).findRace();
@@ -56,14 +72,21 @@ public class _2DRacingGame extends Game implements GameListener {
 
     private void setupExampleRace() {
 		// TODO these should be chosen through in-game menu later
-		gameMap = GameMap.PLACEHOLDER_MAP;
-		gameMode = new TimeTrial(this);
-		mapScores = MapScores.getInstance(gameMap, gameMode);
-        if (! useMultiplayer) {
-            gameWorld = new GameWorld(player, gameMap, gameMode);
-            screen = new GameScreen(gameWorld);
+        gameMap = GameMap.PLACEHOLDER_MAP;
+        gameMode = new TimeTrial(this);
+        mapScores = MapScores.getInstance(gameMap, gameMode);
+
+        if (useMultiplayer) {
+            gameWorld = new MultiplayerGameWorld(gameMap, gameMode);
+        } else {
+            gameWorld = new GameWorld(gameMap, gameMode);
         }
-	}
+
+        Vehicle vehicle = new Car(gameWorld.getb2World());
+        player.setVehicle(vehicle);
+
+        screen = new GameScreen(gameWorld);
+    }
 
 	private void restart() {
         // TODO doesn't work with multiplayer

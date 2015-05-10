@@ -1,6 +1,7 @@
 package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.World;
 import com.google.gson.Gson;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
@@ -9,6 +10,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestL
 import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
+import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.Player;
 
@@ -26,11 +28,16 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
 
     /**
-     * The player our client controls.
+     * Player controlled by our client.
      */
     private final Player player;
-    private List<Player> opponents;
+
+    /**
+     * Players in the room; including our player if we've successfully joined the room.
+     */
+    private List<Player> roomPlayers;
     private String roomId = null;
+
     private final WarpClient warpClient;
 
     private final MultiplayerSetupListener listener;
@@ -39,10 +46,12 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     public MultiplayerSetupController(Player player, MultiplayerSetupListener listener) {
         this.player = player;
         this.listener = listener;
+
         warpClient = getWarpInstance();
         if (warpClient == null) {
             return;
         }
+
         warpClient.addConnectionRequestListener(new ConnectionRequestListener() {
             @Override
             public void onConnectDone(ConnectEvent connectEvent) {
@@ -128,7 +137,16 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
 
     private List<Player> getPlayersFromJson(String playersJson) {
         Player[] players = new Gson().fromJson(playersJson, Player[].class);
-        return new ArrayList<>(Arrays.asList(players));
+        List<Player> playersList = new ArrayList<>();
+        for (Player roomPlayer : players) {
+            if (player.equals(roomPlayer)) {
+                playersList.add(player);
+            } else {
+                roomPlayer.setIsControlledByClient(false);
+                playersList.add(roomPlayer);
+            }
+        }
+        return playersList;
     }
 
     /**
@@ -194,7 +212,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private void raceReady() {
         Gdx.app.log("MultiplayerSetupController", "Race is ready");
         removeClientListeners();
-        listener.raceReady(warpClient, opponents);
+        listener.raceReady(warpClient, roomPlayers);
     }
 
     /**
@@ -209,27 +227,10 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     public void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
         Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
-        List<Player> players = getPlayersFromJson(playersJson);
-        updateOpponents(players);
-        if (players.size() == 2) { // TODO flexible race size
+        roomPlayers = getPlayersFromJson(playersJson);
+        if (roomPlayers.size() == 2) { // TODO flexible race size
             raceReady();
         }
-    }
-
-    /**
-     * Sets the opponents-field to the players in the room, excluding our player.
-     *
-     * @param roomPlayers
-     */
-    private void updateOpponents(List<Player> roomPlayers) {
-        List<Player> opponents = new ArrayList<>();
-        for (Player opponent : roomPlayers) {
-            if (this.player.equals(opponent)) {
-                continue;
-            }
-            opponents.add(opponent);
-        }
-        this.opponents = opponents;
     }
 
     // Empty methods to satisfy required interfaces.

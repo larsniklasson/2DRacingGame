@@ -31,12 +31,21 @@ import java.util.Set;
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
+ * Revised by Daniel Sunnerberg on 2015-05-10.
  */
 public class GameWorld implements Disposable {
 
-    private final Player player;
+    /**
+     * Box2D scale factor
+     */
+    public static float PIXELS_PER_METER = 20f;
 
-    public static float PIXELS_PER_METER = 20f;  //box2d scale factor.
+    /**
+     * Space between each vehicle when spawned on map.
+     */
+    private static final int VEHICLE_SPAWN_SPACE = 2;
+
+    private final List<Player> players = new ArrayList<>();
 
     private final GameMode gameMode;
     private final List<Checkpoint> checkpoints = new ArrayList<>();
@@ -44,25 +53,22 @@ public class GameWorld implements Disposable {
     private World b2World;
     private TiledMap tiledMap;
 
+    private Vector2 mapSpawnPoint;
+    private String mapSpawnDirection;
+
     private final CheckpointController checkpointController;
 
-    public GameWorld(Player player, GameMap gameMap, GameMode gameMode) {
+    public GameWorld(GameMap gameMap, GameMode gameMode) {
         this.gameMode = gameMode;
         tiledMap = gameMap.load();
         b2World = new World(new Vector2(0, 0), true);
 
-        // TODO insane. Vehicle should probably be injected directly when
-        // the car class is ready for it.
-        this.player = player;
-
-        //player.setVehicle(new Car(b2World));
-        //player.setVehicle(new MotorCycle(b2World));
-        player.setVehicle(new MagicCarpet(b2World));
-        //player.setVehicle(new FormulaOneCar(b2World));
-        //player.setVehicle(new MonsterTruck(b2World));
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
         createShapesFromMap();
+        if (mapSpawnPoint == null) {
+            throw new IllegalStateException("Found no spawn-area on the map.");
+        }
 
         b2World.setContactListener(new ContactController((vehicle, checkpoint, validEntry) -> {
             if (validEntry) {
@@ -73,6 +79,16 @@ public class GameWorld implements Disposable {
         }));
     }
 
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void addPlayers(List<Player> players) {
+        for (Player player : players) {
+            addPlayer(player);
+        }
+    }
+
     public World getb2World(){
         return b2World;
     }
@@ -80,7 +96,15 @@ public class GameWorld implements Disposable {
     public void update(float delta) {
         b2World.step(delta, 3, 3);
         Set<InputManager.PressedKey> keys = InputManager.pollForInput();
-        player.getVehicle().update(keys);
+        for (Player player : players) {
+            if (player.isControlledByClient()) {
+                // We should only control our own vehicle ...
+                player.getVehicle().update(keys);
+            } else {
+                // ... just move the opponents texture
+                player.getVehicle().updateSprite();
+            }
+        }
     }
 
     private void createShapesFromMap(){
@@ -117,35 +141,9 @@ public class GameWorld implements Disposable {
                     checkpoints.add(cp);
 
                 } else if(object.getName().equals("start")){
-
                     Rectangle r = ((RectangleMapObject) object).getRectangle();
-
-
-                    String s = (String) object.getProperties().get("type");
-
-                    float angle;
-                    switch(s){
-                        case "NORTH":
-                            angle = 0;
-                            break;
-                        case "SOUTH":
-                            angle = (float) Math.PI;
-                            break;
-                        case "WEST":
-                            angle = (float) (Math.PI/2);
-                            break;
-                        case "EAST":
-
-                            angle = (float) (3 * Math.PI/2);
-                            break;
-                        default:
-                            angle = 0;
-                            break;
-                    }
-                    player.getVehicle().place(r.getCenter(new Vector2()), angle);
-
-
-
+                    mapSpawnPoint = r.getCenter(new Vector2());
+                    mapSpawnDirection = (String) object.getProperties().get("type");
                 }
 
             }
@@ -153,7 +151,28 @@ public class GameWorld implements Disposable {
 
     }
 
+    public void spawnPlayers() {
+        Vector2 spawnPoint = mapSpawnPoint.cpy();
+        for (Player player : players) {
+            player.getVehicle().place(spawnPoint, getMapSpawnAngle());
 
+            switch (mapSpawnDirection) {
+                case "WEST":
+                    spawnPoint = spawnPoint.add(VEHICLE_SPAWN_SPACE, 0);
+                    break;
+                case "NORTH":
+                    spawnPoint = spawnPoint.add(0, -VEHICLE_SPAWN_SPACE);
+                    break;
+                case "EAST":
+                    spawnPoint = spawnPoint.add(-VEHICLE_SPAWN_SPACE, 0);
+                    break;
+                case "SOUTH":
+                    spawnPoint = spawnPoint.add(0, VEHICLE_SPAWN_SPACE);
+                    break;
+            }
+        }
+
+    }
 
     public TiledMap getTiledMap(){
         return tiledMap;
@@ -163,8 +182,8 @@ public class GameWorld implements Disposable {
         return gameMode;
     }
 
-    public Player getPlayer() {
-        return player;
+    public List<Player> getPlayers() {
+        return players;
     }
 
     @Override
@@ -172,4 +191,19 @@ public class GameWorld implements Disposable {
         b2World.dispose();
         tiledMap.dispose();
     }
+
+    public float getMapSpawnAngle() {
+        switch(mapSpawnDirection.toUpperCase()){
+            case "SOUTH":
+                return (float) Math.PI;
+            case "WEST":
+                return (float) (Math.PI/2);
+            case "EAST":
+                return (float) (3 * Math.PI/2);
+            case "NORTH":
+            default:
+                return 0;
+        }
+    }
+
 }

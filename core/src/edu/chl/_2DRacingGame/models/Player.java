@@ -13,7 +13,18 @@ public class Player {
      * The player's username must be unique when playing online.
      */
     private final String userName;
+
+    /**
+     * Since the Vehicle class contains Box2D-references which are cyclic, the vehicle itself cannot be
+     * serialized. Hence storing the type again.
+     */
+    private String vehicleType;
     private transient Vehicle vehicle;
+
+    /**
+     * Whether the player instance is controlled by our client or not.
+     */
+    private boolean isControlledByClient = false;
 
     public Player(String userName, Vehicle vehicle) {
         this.userName = userName;
@@ -38,6 +49,15 @@ public class Player {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+        vehicleType = vehicle.getClass().getSimpleName();
+    }
+
+    public void setIsControlledByClient(boolean isControlledByClient) {
+        this.isControlledByClient = isControlledByClient;
+    }
+
+    public boolean isControlledByClient() {
+        return isControlledByClient;
     }
 
     @Override
@@ -55,5 +75,10 @@ public class Player {
     public int hashCode() {
         return userName.hashCode();
     }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
 }
 

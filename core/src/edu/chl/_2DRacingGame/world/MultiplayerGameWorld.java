@@ -10,16 +10,13 @@ import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.GameMode;
-import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
-import edu.chl._2DRacingGame.helperClasses.MathHelper;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +29,6 @@ import java.util.Map;
  * TODO starting position
  * TODO users colliding case
  * TODO different vehicles
-
  */
 public class MultiplayerGameWorld extends GameWorld {
 
@@ -41,24 +37,28 @@ public class MultiplayerGameWorld extends GameWorld {
      */
     private static final int MIN_UPDATE_WAIT = 250;
 
-    private final List<Player> opponents;
-
     /**
      * The time when sent the last update.
      */
     private long lastSyncTime = 0;
 
-    private final WarpClient warpClient;
+    /**
+     * Player controlled by our client.
+     */
+    private Player clientPlayer;
 
-    public MultiplayerGameWorld(Player player, List<Player> opponents, GameMap gameMap, GameMode gameMode, WarpClient warpClient) {
-        super(player, gameMap, gameMode);
-        this.opponents = opponents;
+    private WarpClient warpClient;
+
+    public MultiplayerGameWorld(GameMap gameMap, GameMode gameMode) {
+        super(gameMap, gameMode);
+    }
+
+    public void setClientPlayer(Player player) {
+        this.clientPlayer = player;
+    }
+
+    public void setWarpClient(WarpClient warpClient) {
         this.warpClient = warpClient;
-
-        for (Player opponent : opponents) {
-            opponent.setVehicle(new Car(getb2World()));
-            opponent.getVehicle().place(new Vector2(50f / PIXELS_PER_METER, 50f / PIXELS_PER_METER), 0);
-        }
 
         warpClient.addNotificationListener(new WarpClientNotificationAdapter() {
             @Override
@@ -77,9 +77,9 @@ public class MultiplayerGameWorld extends GameWorld {
     private void updateOpponents(String updateJson) {
         Map<String, String> update = getUpdateProperties(updateJson);
 
-        // We will get these events when we send updates regarding our own player;
+        // We will get these events when we send updates regarding our own clientPlayer;
         // these does obviously not need to be handled again.
-        if (update.get("senderUserName").equals(getPlayer().getUserName())) {
+        if (update.get("senderUserName").equals(clientPlayer.getUserName())) {
             return;
         }
         Gdx.app.log("MultiplayerGameWorld", "Multiplayer-sync recieved. Updating...");
@@ -90,7 +90,7 @@ public class MultiplayerGameWorld extends GameWorld {
         Vector2 position = new Vector2(x, y);
 
         String senderUserName = update.get("senderUserName");
-        for (Player opponent : opponents) {
+        for (Player opponent : getPlayers()) {
             if (senderUserName.equals(opponent.getUserName())) {
                 Vehicle opponentVehicle = opponent.getVehicle();
                 Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
@@ -114,20 +114,23 @@ public class MultiplayerGameWorld extends GameWorld {
     @Override
     public void update(float delta) {
         super.update(delta);
-        Body vehicleBody = getPlayer().getVehicle().getBody();
 
+        if (clientPlayer == null) {
+            return;
+        }
+
+        Body vehicleBody = clientPlayer.getVehicle().getBody();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
             sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getAngle());
             lastSyncTime = System.nanoTime();
         }
-
     }
 
     private void sendLocation(Vector2 vehiclePosition, float angle) {
         Gdx.app.log("MultiplayerGameWorld", "Sending position to other players");
 
         Map<String, String> update = new HashMap<>();
-        update.put("senderUserName", getPlayer().getUserName());
+        update.put("senderUserName", clientPlayer.getUserName());
         update.put("x", "" + vehiclePosition.x);
         update.put("y", "" + vehiclePosition.y);
         update.put("angle", "" + angle);
@@ -137,7 +140,4 @@ public class MultiplayerGameWorld extends GameWorld {
         warpClient.sendUpdatePeers(new Gson().toJson(update, typeOfMap).getBytes());
     }
 
-    public List<Player> getOpponents() {
-        return opponents;
-    }
 }

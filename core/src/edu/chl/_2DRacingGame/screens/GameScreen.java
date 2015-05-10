@@ -143,6 +143,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         startTime = System.nanoTime();
+        renderer.retrieveActors();
 
         // There is a countdown before the race begins, however the world should still be drawn
         // and the vehicles spawned.

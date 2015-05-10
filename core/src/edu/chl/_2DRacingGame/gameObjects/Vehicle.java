@@ -48,7 +48,7 @@ public abstract class Vehicle {
         this.sprite = sprite;
     }
 
-    private void updateSprite(){
+    public void updateSprite(){
         sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
                 (body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - sprite.getHeight() / 2);
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));

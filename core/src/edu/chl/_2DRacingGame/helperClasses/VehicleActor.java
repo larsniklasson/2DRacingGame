@@ -51,8 +51,6 @@ public class VehicleActor extends Actor {
         vehicle.place(position, getRotation());
     }
 
-
-
     @Override
     public void setY(float y) {
         super.setY(y);
