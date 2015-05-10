@@ -1,5 +1,6 @@
 package edu.chl._2DRacingGame.controllers;
 
+import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.LapListener;
 import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
@@ -15,10 +16,6 @@ import java.util.Map;
  */
 public class CheckpointController {
 
-    // TODO event-methods shouldn't specify Car/Vehicle, we're only handling
-    // events for our local vehicle.
-
-
     private final LapListener listener;
 
     /**
@@ -29,7 +26,7 @@ public class CheckpointController {
     /**
      * Stores whether a player has passed a specific checkpoint this lap.
      */
-    private final Map<Checkpoint, Vehicle> checkpointHistory = new HashMap<>();
+    private final Map<Checkpoint, Integer> checkpointHistory = new HashMap<>();
 
 
     public CheckpointController(LapListener listener, List<Checkpoint> mapCheckpoints) {
@@ -37,27 +34,27 @@ public class CheckpointController {
         this.checkpoints = mapCheckpoints;
     }
 
-    public void invalidPassing(Vehicle vehicle, Checkpoint checkpoint) {
-        System.out.println("Invalid checkpoint passing.");
+    public void invalidPassing(Checkpoint checkpoint) {
+        Gdx.app.log("CheckpointController", "Invalid checkpoint passing.");
     }
 
-    public void validPassing(Vehicle vehicle, Checkpoint checkpoint) {
+    public void validPassing(Checkpoint checkpoint) {
 
-        System.out.println("Passed the checkpoint from the correct direction");
-        if (hasPassedRequiredCheckpoints(vehicle, checkpoint)) {
+        Gdx.app.log("CheckpointController", "Passed the checkpoint from the correct direction");
+        if (hasPassedRequiredCheckpoints(checkpoint)) {
             System.out.println("Has passed previous expected checkpoints. All OK!");
             boolean isClosedSystemLap = isClosedSystem() && checkpoint.getType() == CheckpointType.LAP_START;
             if (! checkpointHistory.isEmpty() && (isClosedSystemLap || checkpoint.getType() == CheckpointType.LAP_END)) {
                 checkpointHistory.clear();
                 listener.lap();
             }
-            checkpointHistory.put(checkpoint, vehicle);
+            checkpointHistory.put(checkpoint, 1);
         } else {
-            System.out.println("Car hasn't passed required checkpoints. Ignoring.");
+            Gdx.app.log("CheckpointController", "Car hasn't passed required checkpoints. Ignoring.");
         }
     }
 
-    private boolean hasPassedRequiredCheckpoints(Vehicle vehicle, Checkpoint checkpoint) {
+    private boolean hasPassedRequiredCheckpoints(Checkpoint checkpoint) {
         int currentCheckpointIndex = checkpoints.indexOf(checkpoint);
 
         boolean hasDrivenFullLap = checkpoints.size() == checkpointHistory.size();

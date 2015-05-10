@@ -79,7 +79,7 @@ public class ContactController implements ContactListener {
 
     private void processCheckpointCollision(Checkpoint checkpoint, Vehicle vehicle) {
         boolean isValidEntry = checkpoint.isValidEntry(beginContactPosition, vehicle.getBody().getPosition().cpy());
-        contactDelegator.enteredCheckpoint(vehicle, checkpoint, isValidEntry);
+        contactDelegator.enteredCheckpoint(checkpoint, isValidEntry);
     }
 
     @Override

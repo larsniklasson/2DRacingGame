@@ -23,12 +23,9 @@ import java.util.Map;
  * @author Daniel Sunnerberg
  *
  * TODO should probably be a controller
- * TODO map-unique starting positions
  * TODO animate angle
  * TODO stop spinning
- * TODO starting position
  * TODO users colliding case
- * TODO different vehicles
  */
 public class MultiplayerGameWorld extends GameWorld {
 

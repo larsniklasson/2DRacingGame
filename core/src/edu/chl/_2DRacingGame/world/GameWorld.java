@@ -70,11 +70,11 @@ public class GameWorld implements Disposable {
             throw new IllegalStateException("Found no spawn-area on the map.");
         }
 
-        b2World.setContactListener(new ContactController((vehicle, checkpoint, validEntry) -> {
+        b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
             if (validEntry) {
-                checkpointController.validPassing(vehicle, checkpoint);
+                checkpointController.validPassing(checkpoint);
             } else {
-                checkpointController.invalidPassing(vehicle, checkpoint);
+                checkpointController.invalidPassing(checkpoint);
             }
         }));
     }
