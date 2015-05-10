@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
@@ -84,22 +85,50 @@ public class MultiplayerGameWorld extends GameWorld {
         float x = Float.parseFloat(update.get("x"));
         float y = Float.parseFloat(update.get("y"));
         float angle = Float.parseFloat(update.get("angle"));
+
         Vector2 position = new Vector2(x, y);
 
         String senderUserName = update.get("senderUserName");
         for (Player opponent : getPlayers()) {
             if (senderUserName.equals(opponent.getUserName())) {
                 Vehicle opponentVehicle = opponent.getVehicle();
+
+
+
                 Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
                 if (opponentLocation.equals(position)) {
-                    return;
+                    //return;            //shouldn't you check angle as well? commenting out this for now
                 }
                 opponentVehicle.resetForces();
 
                 float animationDuration = MIN_UPDATE_WAIT / 1000f;
                 Action moveAction = Actions.moveTo(x, y, animationDuration);
-                Action updateAngleAction = Actions.rotateTo(angle, animationDuration);
-                opponentVehicle.getActor().addAction(moveAction); //Actions.parallel(moveAction, updateAngleAction));
+
+
+
+
+                float oldAngle = opponentVehicle.getActor().getRotation();
+
+                System.out.println("oldAngle " + oldAngle);
+                System.out.println("newAngle " + angle);
+
+
+                if(oldAngle > 2.5 && angle < -2.5){
+                    angle += 2* Math.PI;
+                }
+
+                if(oldAngle < -2.5 && angle > 2.5){
+                    angle -= 2*Math.PI;
+                }
+
+
+                Action rotateAction = Actions.rotateTo(angle, animationDuration);
+
+
+
+
+                opponentVehicle.getActor().addAction(Actions.parallel(moveAction,rotateAction));
+
             }
         }
     }
@@ -118,7 +147,8 @@ public class MultiplayerGameWorld extends GameWorld {
 
         Body vehicleBody = clientPlayer.getVehicle().getBody();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getAngle());
+
+            sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation());
             lastSyncTime = System.nanoTime();
         }
     }

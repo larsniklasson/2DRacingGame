@@ -60,12 +60,15 @@ public class VehicleActor extends Actor {
 
     @Override
     public float getRotation() {
+
         return vehicle.getBody().getTransform().getRotation();
     }
 
     @Override
-    public void setRotation(float degrees) {
-        vehicle.getBody().setTransform(getVehiclePosition(), (float) Math.toDegrees(degrees));
+    public void setRotation(float radians) {
+
+        vehicle.place(getVehiclePosition(), radians);
+
     }
 
     @Override
@@ -77,7 +80,7 @@ public class VehicleActor extends Actor {
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(x, y);
-        vehicle.place(new Vector2(x, y), vehicle.getBody().getAngle());
+        vehicle.place(new Vector2(x, y), vehicle.getBody().getTransform().getRotation());
     }
 
 

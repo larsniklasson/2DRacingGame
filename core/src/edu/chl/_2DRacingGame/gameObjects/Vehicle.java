@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.helperClasses.VehicleActor;
 import edu.chl._2DRacingGame.world.GameWorld;
