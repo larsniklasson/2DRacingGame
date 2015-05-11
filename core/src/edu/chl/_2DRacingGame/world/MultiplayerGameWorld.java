@@ -10,11 +10,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
+import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.models.ScoreBoard;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -24,11 +26,10 @@ import java.util.Map;
  * @author Daniel Sunnerberg
  *
  * TODO should probably be a controller
- * TODO animate angle
- * TODO stop spinning
  * TODO users colliding case
+ * TODO proper delete/disconnect of room/AppWarp
  */
-public class MultiplayerGameWorld extends GameWorld {
+public class MultiplayerGameWorld extends GameWorld implements GameListener {
 
     /**
      * Minimum time in ms before next update is sent to opponents.
@@ -45,10 +46,13 @@ public class MultiplayerGameWorld extends GameWorld {
      */
     private Player clientPlayer;
 
+    private final ScoreBoard scoreBoard = new ScoreBoard();
+
     private WarpClient warpClient;
 
     public MultiplayerGameWorld(GameMap gameMap, GameMode gameMode) {
         super(gameMap, gameMode);
+        gameMode.addListener(this);
     }
 
     public void setClientPlayer(Player player) {
@@ -61,76 +65,94 @@ public class MultiplayerGameWorld extends GameWorld {
         warpClient.addNotificationListener(new WarpClientNotificationAdapter() {
             @Override
             public void onUpdatePeersReceived(UpdateEvent updateEvent) {
-                updateOpponents(new String(updateEvent.getUpdate()));
+                recievedUpdate(new String(updateEvent.getUpdate()));
             }
         });
     }
 
     private Map<String, String> getUpdateProperties(String json) {
-        Type mapType = new TypeToken<Map<String, String>>() {
-        }.getType();
+        Type mapType = new TypeToken<Map<String, String>>() {}.getType();
         return new Gson().fromJson(json, mapType);
     }
 
-    private void updateOpponents(String updateJson) {
-        Map<String, String> update = getUpdateProperties(updateJson);
+    private void recievedUpdate(String updateJson) {
+        Map<String, String> updateData = getUpdateProperties(updateJson);
 
+        String updateType = updateData.get("updateType");
+        if (updateType.equals(MultiplayerUpdateType.LOCATION_UPDATE.name())) {
+            processOpponentMoved(updateData);
+        } else if (updateType.equals(MultiplayerUpdateType.FINISHED_RACE.name())) {
+            processOpponentFinishedRace(updateData);
+        } else {
+            throw new IllegalStateException("Invalid update type: " + updateType);
+        }
+    }
+
+    private void processOpponentMoved(Map<String, String> updateData) {
         // We will get these events when we send updates regarding our own clientPlayer;
         // these does obviously not need to be handled again.
-        if (update.get("senderUserName").equals(clientPlayer.getUserName())) {
+        if (updateData.get("senderUserName").equals(clientPlayer.getUserName())) {
             return;
         }
-        Gdx.app.log("MultiplayerGameWorld", "Multiplayer-sync recieved. Updating...");
 
-        float x = Float.parseFloat(update.get("x"));
-        float y = Float.parseFloat(update.get("y"));
-        float angle = Float.parseFloat(update.get("angle"));
+        float x = Float.parseFloat(updateData.get("x"));
+        float y = Float.parseFloat(updateData.get("y"));
+        float angle = Float.parseFloat(updateData.get("angle"));
+        String senderUserName = updateData.get("senderUserName");
 
-        Vector2 position = new Vector2(x, y);
-
-        String senderUserName = update.get("senderUserName");
         for (Player opponent : getPlayers()) {
             if (senderUserName.equals(opponent.getUserName())) {
-                Vehicle opponentVehicle = opponent.getVehicle();
-
-
-
-                Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
-                if (opponentLocation.equals(position)) {
-                    //return;            //shouldn't you check angle as well? commenting out this for now
-                }
-                opponentVehicle.resetForces();
-
-                float animationDuration = MIN_UPDATE_WAIT / 1000f;
-                Action moveAction = Actions.moveTo(x, y, animationDuration);
-
-
-
-
-                float oldAngle = opponentVehicle.getActor().getRotation();
-
-                System.out.println("oldAngle " + oldAngle);
-                System.out.println("newAngle " + angle);
-
-
-                if(oldAngle > 1.5 && angle < -1.5){
-                    angle += 2* Math.PI;
-                }
-
-                if(oldAngle < -1.5 && angle > 1.5){
-                    angle -= 2*Math.PI;
-                }
-
-
-                Action rotateAction = Actions.rotateTo(angle, animationDuration);
-
-
-
-
-                opponentVehicle.getActor().addAction(Actions.parallel(moveAction,rotateAction));
-
+                moveOpponent(opponent, x, y, angle);
             }
         }
+    }
+
+    private void processOpponentFinishedRace(Map<String, String> updateData) {
+        Gdx.app.log("MultiplayerGameWorld", "A player finished the race.");
+
+        String finishedUserName = updateData.get("senderUserName");
+        Double raceTime = Double.valueOf(updateData.get("raceTime"));
+        for (Player player : getPlayers()) {
+            if (finishedUserName.equals(player.getUserName())) {
+                scoreBoard.addPlayer(player, raceTime);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Moves the opponent smoothly to the passed location and adjusts the vehicles angle.
+     * Does not perform any path finding to avoid walls etc, should therefore be called often to
+     * ensure a smooth path.
+     *
+     * @param opponent
+     * @param x
+     * @param y
+     * @param angle
+     */
+    private void moveOpponent(Player opponent, float x, float y, float angle) {
+        Vehicle opponentVehicle = opponent.getVehicle();
+        Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
+        float oldAngle = opponentVehicle.getActor().getRotation();
+
+        if (opponentLocation.equals(new Vector2(x, y)) && angle == oldAngle) {
+            return;
+        }
+        opponentVehicle.resetForces();
+
+        float animationDuration = MIN_UPDATE_WAIT / 1000f;
+        Action moveAction = Actions.moveTo(x, y, animationDuration);
+
+        if(oldAngle > 1.5 && angle < -1.5){
+            angle += 2* Math.PI;
+        }
+
+        if(oldAngle < -1.5 && angle > 1.5){
+            angle -= 2*Math.PI;
+        }
+
+        Action rotateAction = Actions.rotateTo(angle, animationDuration);
+        opponentVehicle.getActor().addAction(Actions.parallel(moveAction, rotateAction));
     }
 
     private long getTimeSinceUpdate() {
@@ -147,24 +169,55 @@ public class MultiplayerGameWorld extends GameWorld {
 
         Body vehicleBody = clientPlayer.getVehicle().getBody();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-
             sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation());
             lastSyncTime = System.nanoTime();
         }
     }
 
+    /**
+     * Notify our opponents that we finished the race.
+     * @param raceTime
+     */
+    private void notifyFinishedRace(double raceTime) {
+        Gdx.app.log("MultiplayerGameWorld", "Notifying opponents that we've finished the race.");
+
+        Map<String, String> updateData = new HashMap<>();
+        updateData.put("raceTime", String.valueOf(raceTime));
+
+        sendUpdate(updateData, MultiplayerUpdateType.FINISHED_RACE);
+    }
+
     private void sendLocation(Vector2 vehiclePosition, float angle) {
         Gdx.app.log("MultiplayerGameWorld", "Sending position to other players");
 
-        Map<String, String> update = new HashMap<>();
-        update.put("senderUserName", clientPlayer.getUserName());
-        update.put("x", "" + vehiclePosition.x);
-        update.put("y", "" + vehiclePosition.y);
-        update.put("angle", "" + angle);
+        Map<String, String> updateData = new HashMap<>();
+        updateData.put("x", "" + vehiclePosition.x);
+        updateData.put("y", "" + vehiclePosition.y);
+        updateData.put("angle", "" + angle);
 
-        Type typeOfMap = new TypeToken<Map<String, String>>() {
-        }.getType();
-        warpClient.sendUpdatePeers(new Gson().toJson(update, typeOfMap).getBytes());
+        sendUpdate(updateData, MultiplayerUpdateType.LOCATION_UPDATE);
     }
 
+    private void sendUpdate(Map<String, String> updateData, MultiplayerUpdateType type) {
+        updateData.put("senderUserName", clientPlayer.getUserName());
+        updateData.put("updateType", type.name());
+
+        Type typeOfMap = new TypeToken<Map<String, String>>() {}.getType();
+        warpClient.sendUpdatePeers(new Gson().toJson(updateData, typeOfMap).getBytes());
+    }
+
+    /**
+     * Called when our vehicle has finished the race.
+     *
+     * @param raceTime
+     * @param message
+     */
+    @Override
+    public void gameFinished(double raceTime, String message) { // TODO rename interface params?
+        notifyFinishedRace(raceTime);
+    }
+
+    public ScoreBoard getScoreBoard() {
+        return scoreBoard;
+    }
 }

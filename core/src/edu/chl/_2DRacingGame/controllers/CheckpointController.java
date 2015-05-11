@@ -42,7 +42,7 @@ public class CheckpointController {
 
         Gdx.app.log("CheckpointController", "Passed the checkpoint from the correct direction");
         if (hasPassedRequiredCheckpoints(checkpoint)) {
-            System.out.println("Has passed previous expected checkpoints. All OK!");
+            Gdx.app.log("CheckpointController", "Has passed previous expected checkpoints. All OK!");
             boolean isClosedSystemLap = isClosedSystem() && checkpoint.getType() == CheckpointType.LAP_START;
             if (! checkpointHistory.isEmpty() && (isClosedSystemLap || checkpoint.getType() == CheckpointType.LAP_END)) {
                 checkpointHistory.clear();

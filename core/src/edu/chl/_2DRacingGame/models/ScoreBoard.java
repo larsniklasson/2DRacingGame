@@ -15,20 +15,24 @@ public class ScoreBoard {
     /**
      * The map will always be sorted so that the player with the lowest time (float) has the lowest index.
      */
-    private Map<Player, Float> scoreBoard = new HashMap<>();
+    private Map<Player, Double> scoreBoard = new HashMap<>();
 
-    public void addPlayer(Player player, float time) {
+    public void addPlayer(Player player, Double time) {
         scoreBoard.put(player, time);
         sortScoreBoard();
     }
 
     private void sortScoreBoard() {
-        Map<Player, Float> sortedMap = new HashMap<>();
-        Stream<Map.Entry<Player, Float>> stream = scoreBoard.entrySet().stream();
+        Map<Player, Double> sortedMap = new HashMap<>();
+        Stream<Map.Entry<Player, Double>> stream = scoreBoard.entrySet().stream();
         stream.sorted(Comparator.comparing(Map.Entry::getValue)).forEach(
                 e -> sortedMap.put(e.getKey(), e.getValue())
         );
         scoreBoard = sortedMap;
+    }
+
+    public Map<Player, Double> getFinishedPlayers() {
+        return new HashMap<>(scoreBoard);
     }
 
     public boolean isWinner(Player player) {
