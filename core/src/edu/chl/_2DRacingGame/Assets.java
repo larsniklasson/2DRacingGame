@@ -39,9 +39,7 @@ public class Assets {
         ice = loadTexture("ice.png");
         dirt = loadTexture("dirt.png");
         ful = loadTexture("ful.png");
-        car1 = loadTexture("car1.jpg");
-        car2 = loadTexture("car2.jpg");
-        car3 = loadTexture("car3.jpg");
+
         magicCarpet = loadTexture("magicCarpet.jpg");
         motorCycle = loadTexture("Motorcycle.jpg");
         arial40 = new BitmapFont(Gdx.files.internal("Arial40.fnt"),false);

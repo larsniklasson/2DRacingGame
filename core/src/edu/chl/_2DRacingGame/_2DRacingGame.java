@@ -12,10 +12,7 @@ import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.screens.GameScreen;
-import edu.chl._2DRacingGame.screens.MainMenuScreen;
-import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
-import edu.chl._2DRacingGame.screens.RaceSummaryListener;
+import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 import edu.chl._2DRacingGame.world.MultiplayerGameWorld;
 
@@ -27,6 +24,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
     private GameScreen screen;
     private MapScores mapScores;
     private GameWorld gameWorld;
+    private MainMenu test;
 
     private final boolean useMultiplayer = false;
 
@@ -34,7 +32,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
 	public void create() {
 		Gdx.app.log("_2DRacingGame", "created");
 		Assets.load();
-
+        test = new MainMenu(this);
         player = new Player();
         player.setIsControlledByClient(true);
 
@@ -49,7 +47,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
     private void startSinglePlayer() {
         gameWorld.addPlayer(player);
         gameWorld.spawnPlayers();
-        setScreen(screen);
+        setScreen(test);
     }
 
     private void startMultiPlayer() {

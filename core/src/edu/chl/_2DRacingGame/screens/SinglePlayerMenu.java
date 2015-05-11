@@ -25,7 +25,7 @@ public class SinglePlayerMenu implements Screen {
     private TextButton backButton;
     private int [] ints = {0,1,2,3};
 
-    private Image [] vehicleArray = {new Image(Assets.car1), new Image(Assets.magicCarpet), new Image(Assets.motorCycle)};
+    private Image [] vehicleArray = { new Image(Assets.magicCarpet), new Image(Assets.motorCycle)};
     private Image [] mapArray = {new Image(Assets.ice), new Image(Assets.ful)};
     private SelectBox laps;
     private SelectBox numberOfOpponents;
