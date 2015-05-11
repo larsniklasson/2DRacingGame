@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.models;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -17,7 +18,7 @@ public class ScoreBoard {
      */
     private Map<Player, Double> scoreBoard = new HashMap<>();
 
-    public void addPlayer(Player player, Double time) {
+    public void playerFinished(Player player, Double time) {
         scoreBoard.put(player, time);
         sortScoreBoard();
     }
@@ -32,11 +33,30 @@ public class ScoreBoard {
     }
 
     public Map<Player, Double> getFinishedPlayers() {
-        return new HashMap<>(scoreBoard);
+        Map<Player, Double> copy = new HashMap<>();
+        for (Map.Entry<Player, Double> entry : scoreBoard.entrySet()) {
+            Double value = entry.getValue() == Double.MAX_VALUE ? null : entry.getValue();
+            copy.put(entry.getKey(), value);
+        }
+
+        return copy;
     }
 
     public boolean isWinner(Player player) {
         return scoreBoard.keySet().iterator().next().equals(player);
     }
 
+    /**
+     * Ensures that the following players are shown in the scoreboard before they have reached
+     * the goal.
+     *
+     * @param players
+     */
+    public void trackPlayers(List<Player> players) {
+        for (Player player : players) {
+            // The sort-method doesn't like null values, use
+            // MAX_VALUE as a stupid replacement.
+            scoreBoard.put(player, Double.MAX_VALUE);
+        }
+    }
 }

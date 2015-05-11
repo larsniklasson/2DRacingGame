@@ -20,6 +20,7 @@ import edu.chl._2DRacingGame.models.ScoreBoard;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -115,7 +116,7 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         Double raceTime = Double.valueOf(updateData.get("raceTime"));
         for (Player player : getPlayers()) {
             if (finishedUserName.equals(player.getUserName())) {
-                scoreBoard.addPlayer(player, raceTime);
+                scoreBoard.playerFinished(player, raceTime);
                 return;
             }
         }
@@ -225,5 +226,11 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
 
     public ScoreBoard getScoreBoard() {
         return scoreBoard;
+    }
+
+    @Override
+    public void addPlayers(List<Player> players) {
+        super.addPlayers(players);
+        scoreBoard.trackPlayers(players);
     }
 }

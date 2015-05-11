@@ -2,13 +2,10 @@ package edu.chl._2DRacingGame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import edu.chl._2DRacingGame.controllers.MultiplayerSetupController;
 import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.MagicCarpet;
 import edu.chl._2DRacingGame.gameObjects.MonsterTruck;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
@@ -16,10 +13,13 @@ import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;
+import edu.chl._2DRacingGame.screens.MainMenuScreen;
+import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
+import edu.chl._2DRacingGame.screens.RaceSummaryListener;
 import edu.chl._2DRacingGame.world.GameWorld;
 import edu.chl._2DRacingGame.world.MultiplayerGameWorld;
 
-public class _2DRacingGame extends Game implements GameListener {
+public class _2DRacingGame extends Game implements GameListener, RaceSummaryListener {
 
     private Player player;
     private GameMode gameMode;
@@ -28,7 +28,7 @@ public class _2DRacingGame extends Game implements GameListener {
     private MapScores mapScores;
     private GameWorld gameWorld;
 
-    private final boolean useMultiplayer = true;
+    private final boolean useMultiplayer = false;
 
     @Override
 	public void create() {
@@ -37,8 +37,8 @@ public class _2DRacingGame extends Game implements GameListener {
 
         player = new Player();
         player.setIsControlledByClient(true);
-        setupExampleRace();
 
+        setupExampleRace();
         if (useMultiplayer) {
             startMultiPlayer();
         } else {
@@ -90,42 +90,60 @@ public class _2DRacingGame extends Game implements GameListener {
         screen = new GameScreen(gameWorld);
     }
 
-	private void restart() {
-        // TODO doesn't work with multiplayer
+    public GameWorld getGameWorld() {
+        return gameWorld;
+    }
 
-        // Disposal of the previous screen has to be run on the GDX thread to prevent
-        // JVM crash.
-        Gdx.app.postRunnable(() -> {
-            // Store the currently active screen and dispose it AFTER the new screen has been
-            // created and set. Disposing too early allows for a race-case which can crash the application.
-            Screen previousGameScreen = screen;
-            setupExampleRace();
-            setScreen(screen);
-            previousGameScreen.dispose();
-        });
-	}
-
-	@Override
+    @Override
 	public void gameFinished(double score, String message) {
-		Gdx.app.log("_2DRacingGame", "Game completed: " + message); // TODO display restart screen such
-		if (mapScores.isHighScore(score)) {
-			Gdx.app.log("_2DRacingGame", "Highscore!");
-		} else {
-			Gdx.app.log("_2DRacingGame", "Not a highscore. Current highscore: " + mapScores.getHighScore());
-		}
+        Gdx.app.log("_2DRacingGame", "Race completed!");
 
-		mapScores.addScore(score);
-		mapScores.persist();
-		restart();
+        mapScores.addScore(score);
+        mapScores.persist();
+        if (gameWorld instanceof MultiplayerGameWorld) {
+            processMultiplayerFinish();
+        } else {
+            processSinglePlayerFinish(score);
+        }
+
 	}
+
+    private void processMultiplayerFinish() {
+        MultiplayerGameWorld multiplayerGameWorld = (MultiplayerGameWorld) gameWorld;
+        Gdx.app.postRunnable(() -> {
+            setScreen(new MultiplayerRaceFinishedScreen(player, multiplayerGameWorld.getScoreBoard(), this));
+        });
+    }
+
+    private void processSinglePlayerFinish(double score) {
+        if (mapScores.isHighScore(score)) {
+            Gdx.app.log("_2DRacingGame", "Highscore!");
+        } else {
+            Gdx.app.log("_2DRacingGame", "Not a highscore. Current highscore: " + mapScores.getHighScore());
+        }
+
+        restartRace();
+    }
+
+    @Override
+    public void restartRace() {
+        Gdx.app.postRunnable(() -> {
+            // TODO doesn't work with multiplayer
+            setupExampleRace();
+            startSinglePlayer();
+        });
+    }
+
+    @Override
+    public void displayMainMenu() {
+        Gdx.app.postRunnable(() -> {
+            setScreen(new MainMenuScreen(this));
+        });
+    }
 
     @Override
     public void dispose() {
         screen.dispose();
-    }
-
-    public GameWorld getGameWorld() {
-        return gameWorld;
     }
 
 }
