@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
     }
@@ -37,6 +38,8 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
+
     }
 }
 
@@ -50,6 +53,8 @@ project(":core") {
         compile "com.google.code.gson:gson:1.7.2"
         compile "org.json:json:20141113"
         compile fileTree(dir: '../libraries', include: '*.jar')
+        compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
+
     }
 }
 
