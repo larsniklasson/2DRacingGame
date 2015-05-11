@@ -43,7 +43,10 @@ public class TimeTrial extends GameMode {
         if (currentLap == lapGoal) {
             getStopWatch().stop();
             double elapsedTime = getStopWatch().getTime() / 1000d;
-            getListener().gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
+
+            for (GameListener listener : getListeners()) {
+                listener.gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
+            }
         }
 
         currentLap++;
