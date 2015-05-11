@@ -113,11 +113,11 @@ public class MultiplayerGameWorld extends GameWorld {
                 System.out.println("newAngle " + angle);
 
 
-                if(oldAngle > 2.5 && angle < -2.5){
+                if(oldAngle > 1.5 && angle < -1.5){
                     angle += 2* Math.PI;
                 }
 
-                if(oldAngle < -2.5 && angle > 2.5){
+                if(oldAngle < -1.5 && angle > 1.5){
                     angle -= 2*Math.PI;
                 }
 

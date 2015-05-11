@@ -19,6 +19,8 @@ import java.util.Set;
  */
 public abstract class Vehicle {
 
+    private List<Vector2> tirePositions = new ArrayList<>();
+
     private float turnDegreesPerSecond = 10000f;
     private float maxAngle = 50f;
 
@@ -69,6 +71,8 @@ public abstract class Vehicle {
         } else {
             world.createJoint(jointDef);
         }
+
+        tirePositions.add(position);
 
         tires.add(tire);
     }
@@ -138,8 +142,10 @@ public abstract class Vehicle {
 
     public void place(Vector2 position, float angle) {
         body.setTransform(position, angle);
-        for(Tire t : tires){
-            t.getBody().setTransform(position, angle);
+        for(int i = 0; i < tirePositions.size(); i++){
+            Tire t = tires.get(i);
+            Vector2 pos = tirePositions.get(i);
+            t.getBody().setTransform(body.getWorldPoint(pos), angle);
         }
     }
 
@@ -159,5 +165,9 @@ public abstract class Vehicle {
             tire.getBody().setLinearVelocity(new Vector2(0, 0));
             tire.getBody().setAngularVelocity(0);
         }
-    };
+    }
+
+    public List<Tire> getTires(){
+        return tires;
+    }
 }

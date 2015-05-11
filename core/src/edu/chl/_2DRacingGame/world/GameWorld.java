@@ -103,6 +103,11 @@ public class GameWorld implements Disposable {
             } else {
                 // ... just move the opponents texture
                 player.getVehicle().updateSprite();
+                for(Tire t : player.getVehicle().getTires()){
+                    t.updateSprite();
+                }
+
+
             }
         }
     }

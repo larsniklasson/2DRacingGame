@@ -83,7 +83,7 @@ public class _2DRacingGame extends Game implements GameListener {
             gameWorld = new GameWorld(gameMap, gameMode);
         }
 
-        Vehicle vehicle = new MagicCarpet(gameWorld.getb2World());
+        Vehicle vehicle = new Car(gameWorld.getb2World());
         player.setVehicle(vehicle);
 
         screen = new GameScreen(gameWorld);
