@@ -16,7 +16,10 @@ public class MainMenuScreen extends ScreenAdapter {
     private Vector3 touchPoint;
     private SpriteBatch batcher;
 
-
+/*
+*   NOT IN USE!
+*
+* */
     public MainMenuScreen (_2DRacingGame game) {
         this.game = game;
         batcher = new SpriteBatch();
