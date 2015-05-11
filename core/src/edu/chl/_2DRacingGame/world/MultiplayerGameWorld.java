@@ -98,11 +98,12 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         float x = Float.parseFloat(updateData.get("x"));
         float y = Float.parseFloat(updateData.get("y"));
         float angle = Float.parseFloat(updateData.get("angle"));
+        float frontWheelAngle = Float.parseFloat(updateData.get("front_wheel_angle"));
         String senderUserName = updateData.get("senderUserName");
 
         for (Player opponent : getPlayers()) {
             if (senderUserName.equals(opponent.getUserName())) {
-                moveOpponent(opponent, x, y, angle);
+                moveOpponent(opponent, x, y, angle, frontWheelAngle);
             }
         }
     }
@@ -129,8 +130,9 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
      * @param x
      * @param y
      * @param angle
+     * @param frontWheelAngle
      */
-    private void moveOpponent(Player opponent, float x, float y, float angle) {
+    private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
         Vehicle opponentVehicle = opponent.getVehicle();
         Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
         float oldAngle = opponentVehicle.getActor().getRotation();
@@ -139,6 +141,8 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
             return;
         }
         opponentVehicle.resetForces();
+
+        opponentVehicle.setMP_angleToSetFrontTires(frontWheelAngle);
 
         float animationDuration = MIN_UPDATE_WAIT / 1000f;
         Action moveAction = Actions.moveTo(x, y, animationDuration);
@@ -168,8 +172,9 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         }
 
         Body vehicleBody = clientPlayer.getVehicle().getBody();
+        float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation());
+            sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
             lastSyncTime = System.nanoTime();
         }
     }
@@ -187,13 +192,14 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         sendUpdate(updateData, MultiplayerUpdateType.FINISHED_RACE);
     }
 
-    private void sendLocation(Vector2 vehiclePosition, float angle) {
+    private void sendLocation(Vector2 vehiclePosition, float angle, float frontWheelAngle) {
         Gdx.app.log("MultiplayerGameWorld", "Sending position to other players");
 
         Map<String, String> updateData = new HashMap<>();
         updateData.put("x", "" + vehiclePosition.x);
         updateData.put("y", "" + vehiclePosition.y);
         updateData.put("angle", "" + angle);
+        updateData.put("front_wheel_angle", "" + frontWheelAngle);
 
         sendUpdate(updateData, MultiplayerUpdateType.LOCATION_UPDATE);
     }

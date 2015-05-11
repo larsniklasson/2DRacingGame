@@ -18,6 +18,8 @@ public class VehicleFactory {
                 return new MagicCarpet(world);
             case "motorcycle":
                 return new MotorCycle(world);
+            case "monstertruck":
+                return new MonsterTruck(world);
             default:
                 throw new IllegalArgumentException("Found no matching vehicle.");
         }

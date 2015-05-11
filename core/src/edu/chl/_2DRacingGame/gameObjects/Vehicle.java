@@ -19,7 +19,11 @@ import java.util.Set;
  */
 public abstract class Vehicle {
 
+    private float currentFrontWheelAngle = 0;
+    private float MP_angleToSetFrontTires = 0;
+
     private List<Vector2> tirePositions = new ArrayList<>();
+    private List<Boolean> isFrontWheelBooleanList = new ArrayList<>();
 
     private float turnDegreesPerSecond = 10000f;
     private float maxAngle = 50f;
@@ -49,6 +53,17 @@ public abstract class Vehicle {
         this.sprite = sprite;
     }
 
+    public void MPspriteUpdate(){
+        updateSprite();
+        for (int i = 0; i < tires.size(); i++) {
+            Tire t = tires.get(i);
+            t.updateSprite();
+            if(isFrontWheelBooleanList.get(i)){
+                t.rotateSprite(t.getBody().getTransform().getRotation() + MP_angleToSetFrontTires);
+            }
+        }
+    }
+
     public void updateSprite(){
         sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
                 (body.getWorldCenter().y * GameWorld.PIXELS_PER_METER) - sprite.getHeight() / 2);
@@ -75,6 +90,8 @@ public abstract class Vehicle {
         tirePositions.add(position);
 
         tires.add(tire);
+
+        isFrontWheelBooleanList.add(frontTire);
     }
 
     protected void createBody(Shape shape, float density){
@@ -114,6 +131,8 @@ public abstract class Vehicle {
         for(RevoluteJoint rj : frontJoints){
             rj.setLimits(newAngle, newAngle);
         }
+
+        currentFrontWheelAngle = newAngle;
 
     }
 
@@ -169,5 +188,13 @@ public abstract class Vehicle {
 
     public List<Tire> getTires(){
         return tires;
+    }
+
+    public float getCurrentFrontWheelAngle() {
+        return currentFrontWheelAngle;
+    }
+
+    public void setMP_angleToSetFrontTires(float MP_angleToSetFrontTires) {
+        this.MP_angleToSetFrontTires = MP_angleToSetFrontTires;
     }
 }

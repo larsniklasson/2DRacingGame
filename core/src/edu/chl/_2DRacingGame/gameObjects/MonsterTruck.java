@@ -38,6 +38,8 @@ public class MonsterTruck extends Vehicle {
     public MonsterTruck(World world) {
         super(world);
 
+        setTurnDegreesPerSecond(300);
+
         Texture bodyTexture = new Texture(Gdx.files.internal("mt_body.png"));
         setSprite(new Sprite(bodyTexture));
 

@@ -60,6 +60,10 @@ public class Tire { //TODO make copy function
         this.backwardsFriction = roadFrictionBackwardsCoefficient;
     }
 
+    public void rotateSprite(float radians){
+        sprite.setRotation((float) Math.toDegrees(radians));
+    }
+
     public void updateSprite(){
         if(sprite == null)return;
         sprite.setPosition((body.getWorldCenter().x * GameWorld.PIXELS_PER_METER) - sprite.getWidth() / 2,
