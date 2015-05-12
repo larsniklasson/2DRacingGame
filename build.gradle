@@ -49,7 +49,7 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "org.apache.commons:commons-lang3:3.4"
+        compile "com.google.guava:guava:18.0"
         compile "com.google.code.gson:gson:1.7.2"
         compile "org.json:json:20141113"
         compile fileTree(dir: '../libraries', include: '*.jar')

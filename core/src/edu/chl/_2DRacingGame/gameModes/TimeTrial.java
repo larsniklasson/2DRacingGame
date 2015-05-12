@@ -7,6 +7,7 @@ import javafx.stage.Screen;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author  Daniel Sunnerberg
@@ -33,7 +34,7 @@ public class TimeTrial extends GameMode {
     @Override
     public void syncTexts() {
         currentLapText.setText(String.format("Lap %d/%d", currentLap, lapGoal));
-        currentRaceTimeText.setText(getStopWatch().getTime() / 1000d + "s");
+        currentRaceTimeText.setText(getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d + "s");
     }
 
     @Override
@@ -42,8 +43,7 @@ public class TimeTrial extends GameMode {
 
         if (currentLap == lapGoal) {
             getStopWatch().stop();
-            double elapsedTime = getStopWatch().getTime() / 1000d;
-
+            double elapsedTime = getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d;
             for (GameListener listener : getListeners()) {
                 listener.gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
             }
