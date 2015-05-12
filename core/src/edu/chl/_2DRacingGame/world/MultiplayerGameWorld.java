@@ -16,6 +16,7 @@ import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 
 import java.lang.reflect.Type;
@@ -116,7 +117,7 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         Double raceTime = Double.valueOf(updateData.get("raceTime"));
         for (Player player : getPlayers()) {
             if (finishedUserName.equals(player.getUserName())) {
-                scoreBoard.playerFinished(player, raceTime);
+                scoreBoard.addResult(player, raceTime);
                 return;
             }
         }

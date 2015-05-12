@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 
 import java.util.Map;
@@ -74,9 +75,9 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
 
         int position = 1;
         StringBuilder boardLabelBuilder = new StringBuilder();
-        for (Map.Entry<Player, Double> entry : scoreBoard.getFinishedPlayers().entrySet()) {
-            String name = entry.getKey().getUserName();
-            String timeLabel = entry.getValue() == null ? "-" : String.valueOf(entry.getValue());
+        for (RaceResult entry : scoreBoard.getResults()) {
+            String name = entry.getPlayer().getUserName();
+            String timeLabel = entry.getTime() == null ? "-" : String.valueOf(entry.getTime());
             String format = String.format(entryFormat, position, name, timeLabel);
             boardLabelBuilder.append(format);
 

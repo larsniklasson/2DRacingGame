@@ -10,47 +10,19 @@ import java.util.stream.Stream;
  */
 public class ScoreBoard {
 
-    /**
-     * The map will always be sorted so that the player with the lowest time (float) has the lowest index.
-     */
-    private Map<Player, Double> scoreBoard = new HashMap<>();
+    private TreeSet<RaceResult> scoreBoard = new TreeSet<>();
 
-    public void playerFinished(Player player, Double time) {
-        scoreBoard.put(player, time);
-        scoreBoard = ScoreBoard.sortByValue(scoreBoard);
+    public void addResult(Player player, Double time) {
+        scoreBoard.add(new RaceResult(player, time));
     }
 
-    /**
-     * Sorts a map by its values.
-     * Source: Carter Page (http://stackoverflow.com/a/2581754)
-     *
-     * @param map
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        Map<K, V> result = new LinkedHashMap<>();
-        Stream<Map.Entry<K, V>> st = map.entrySet().stream();
-
-        st.sorted(Comparator.comparing(e -> e.getValue()))
-                .forEach(e -> result.put(e.getKey(), e.getValue()));
-
-        return result;
-    }
-
-    public Map<Player, Double> getFinishedPlayers() {
-        Map<Player, Double> copy = new HashMap<>();
-        for (Map.Entry<Player, Double> entry : scoreBoard.entrySet()) {
-            Double value = entry.getValue() == Double.MAX_VALUE ? null : entry.getValue();
-            copy.put(entry.getKey(), value);
-        }
-
-        return copy;
+    public Set<RaceResult> getResults() {
+        return scoreBoard;
     }
 
     public boolean isWinner(Player player) {
-        return scoreBoard.keySet().iterator().next().equals(player);
+        RaceResult leader = scoreBoard.iterator().next();
+        return leader.getPlayer().equals(player) && leader.getTime() != null;
     }
 
     /**
@@ -61,9 +33,7 @@ public class ScoreBoard {
      */
     public void trackPlayers(List<Player> players) {
         for (Player player : players) {
-            // The sort-method doesn't like null values, use
-            // MAX_VALUE as a stupid replacement.
-            scoreBoard.put(player, Double.MAX_VALUE);
+            scoreBoard.add(new RaceResult(player, null));
         }
     }
 }
