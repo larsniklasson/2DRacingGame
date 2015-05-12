@@ -2,9 +2,12 @@ package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame._2DRacingGame;
 
 import javax.xml.soap.Text;
@@ -35,6 +38,34 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         TextButton mainMenu = new TextButton("Main Menu", skin, "default");
         TextButton newRace = new TextButton("New Race", skin, "default");
 
+        newRace.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new SinglePlayerMenu(game));
+            }
+        });
+
+        restartRace.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.restartRace();
+            }
+        });
+
+        mainMenu.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.displayMainMenu();
+            }
+        });
+
+        exit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+
         table.setBounds(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.debug();
         table.add(raceFinished).padBottom(50);
@@ -47,10 +78,13 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         table.row();
         table.add(exit).padBottom(30).width(200f).height(30f);
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }
 
