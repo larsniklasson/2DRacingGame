@@ -44,9 +44,9 @@ public class AI {
         createBody();
 
         linePath = new LinePath<Vector2>(createPath(), false);
-        followPath = new FollowPath<Vector2, LinePath.LinePathParam>(,linePath,10);
+        followPath = new FollowPath<Vector2, LinePath.LinePathParam>(aiCar,linePath,10);
 
-        aiCar = new AICar()
+        aiCar = new AICar();
 
     }
 
