@@ -46,6 +46,8 @@ public class AI {
         linePath = new LinePath<Vector2>(createPath(), false);
         followPath = new FollowPath<Vector2, LinePath.LinePathParam>(aiCar,linePath,10);
 
+        aiCar.setSteeringBehavior(followPath);
+
         aiCar = new AICar();
 
     }

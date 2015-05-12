@@ -120,9 +120,12 @@ public class AICar implements Steerable<Vector2>{
         return boundingRadius;
     }
 
+    public void setSteeringBehavior(SteeringBehavior<Vector2> steeringBehavior){
+        this.steeringBehavior = steeringBehavior;
+    }
+
     public void update(){
         steeringBehavior.calculateSteering(steeringAcceleration);
-
     }
 
 
