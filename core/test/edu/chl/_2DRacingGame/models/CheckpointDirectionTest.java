@@ -98,4 +98,26 @@ public class CheckpointDirectionTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetDirectionsFromNames1() {
+        CheckpointDirection.getDirectionsFromNames("");
+    }
+
+    @Test
+    public void testGetDirectionsFromNames2() {
+        List<CheckpointDirection> directions = new ArrayList<>();
+        directions.add(CheckpointDirection.NORTH);
+
+        assertEquals(directions, CheckpointDirection.getDirectionsFromNames("north"));
+        assertEquals(directions, CheckpointDirection.getDirectionsFromNames("NoRTH"));
+
+        directions.add(CheckpointDirection.EAST);
+        assertEquals(directions, CheckpointDirection.getDirectionsFromNames("north|east"));
+
+        directions.add(CheckpointDirection.SOUTH);
+        directions.add(CheckpointDirection.WEST);
+
+        assertEquals(directions, CheckpointDirection.getDirectionsFromNames("north|east|south|west"));
+    }
+
 }

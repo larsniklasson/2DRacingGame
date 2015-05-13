@@ -2,6 +2,9 @@ package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents possible directions which an object can enter a checkpoint.
  * "WEST" represents entering FROM west, i.e "-->"
@@ -41,7 +44,7 @@ public enum CheckpointDirection {
         throw new UnsupportedOperationException("New valid directions must override this method before usage.");
     }
 
-    public static CheckpointDirection getDirectionFromName(String name) {
+    private static CheckpointDirection getDirectionFromName(String name) {
         switch (name.toUpperCase()) {
             case "WEST":
                 return WEST;
@@ -54,5 +57,24 @@ public enum CheckpointDirection {
             default:
                 throw new IllegalArgumentException("Illegal direction name.");
         }
+    }
+
+    /**
+     * Returns all checkpoints direction found in argument, separated by "|".
+     *
+     * @return
+     */
+    public static List<CheckpointDirection> getDirectionsFromNames(String names) {
+        List<CheckpointDirection> directions = new ArrayList<>();
+
+        if (! names.contains("|")) {
+            directions.add(getDirectionFromName(names));
+            return directions;
+        }
+
+        for (String name : names.split("\\|")) {
+            directions.add(getDirectionFromName(name));
+        }
+        return directions;
     }
 }

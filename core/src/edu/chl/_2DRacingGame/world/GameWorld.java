@@ -139,11 +139,13 @@ public class GameWorld implements Disposable {
                         (String) object.getProperties().get("checkpointType")
                     );
 
-                    CheckpointDirection direction = CheckpointDirection.getDirectionFromName( //TODO multiple checkpointdirections from string, i.e. southwest
+                    List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
                             (String) object.getProperties().get("checkpointDirection")
                     );
                     Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
-                    cp.addAllowedPassingDirection(direction);
+                    for (CheckpointDirection direction : directions) {
+                        cp.addAllowedPassingDirection(direction);
+                    }
                     checkpoints.add(cp);
 
                 } else if(object.getName().equals("start")){ //TODO more angles, i.e. southwest
