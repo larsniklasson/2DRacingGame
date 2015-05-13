@@ -56,6 +56,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
 
         testCompile "junit:junit:4.11"
+        testCompile "org.mockito:mockito-all:1.9.5"
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
