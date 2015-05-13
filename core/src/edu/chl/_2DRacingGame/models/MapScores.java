@@ -1,18 +1,19 @@
 package edu.chl._2DRacingGame.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
+ * Stores the users stores for the different map/mode combinations.
+ * Hence, a score on map A running mode X will not be listed along with a score on map A running mode Y and so on.
+ *
+ * IMPORTANT NOTE: You probably want to try to get eventual scores from earlier game sessions,
+ * for that, see the MapScoresPersistor class.
+ *
+ * @see MapScoresPersistor
  * @author Daniel Sunnerberg
  */
 public class MapScores {
@@ -21,24 +22,39 @@ public class MapScores {
     private transient final GameMode mode;
 
     private final Comparator<Double> highscoreComparator;
+
+    /**
+     * This list will always be sorted after the highscoreComparator. Should normally be a TreeSet, but then its objects
+     * would need to be wrapped since it's the GameMode who decides the ordering.
+     */
     private final List<Double> scores;
 
-    private MapScores(GameMap map, GameMode mode) {
+    public MapScores(GameMap map, GameMode mode) {
         this(map, mode, new ArrayList<>());
     }
 
-    private MapScores(GameMap map, GameMode mode, List<Double> scores) {
+    public MapScores(GameMap map, GameMode mode, List<Double> scores) {
         this.map = map;
         this.mode = mode;
         this.scores = scores;
         highscoreComparator = mode.getScoreComparator();
     }
 
+    /**
+     * Adds a score for the actual map/mode combination.
+     *
+     * @param score Score to be added
+     */
     public void addScore(double score) {
         scores.add(score);
         scores.sort(highscoreComparator);
     }
 
+    /**
+     * Gets the highest score for the actual map/mode combination.
+     *
+     * @return highest score or null if no scores are recorded
+     */
     public Double getHighScore() {
         if (scores.isEmpty()) {
             return null;
@@ -46,41 +62,22 @@ public class MapScores {
         return scores.get(0);
     }
 
+    /**
+     * Returns whether the specified score is the highest so far on the actual map/mode combination.
+     *
+     * @param other score to compare against
+     * @return whether the score is the highest so far
+     */
     public boolean isHighScore(Double other) {
-        return scores.isEmpty() || highscoreComparator.compare(getHighScore(), other) > 0;
-    }
-
-    private static String getInstanceFileName(GameMap map, GameMode mode) {
-        return map.toString() + "_" + mode.getClass().getSimpleName() + ".scores";
+        return scores.isEmpty() || highscoreComparator.compare(getHighScore(), other) >= 0;
     }
 
     /**
-     * Saves the instance to disk, replacing any existing scores for the matching
-     * map and mode.
+     * Returns all stored scores.
+     *
+     * @return all stored scores
      */
-    public void persist() {
-        Gdx.app.log("MapScores", "Saving scores to disk.");
-        // At retrieve time we know everything but the actual scores
-        String serialized = new Gson().toJson(scores);
-        FileHandle fileHandle = Gdx.files.local(getInstanceFileName(map, mode));
-        fileHandle.writeString(serialized, false);
+    public List<Double> getScores() {
+        return scores;
     }
-
-    public static MapScores getInstance(GameMap map, GameMode mode) {
-        FileHandle serializedInstance = Gdx.files.local(getInstanceFileName(map, mode));
-        try {
-            String serialized = serializedInstance.readString();
-            Gdx.app.log("MapScores", "Found stored scores for this game.");
-            Type listType = new TypeToken<ArrayList<Double>>() {}.getType();
-            List<Double> scores = new Gson().fromJson(serialized, listType);
-
-            return new MapScores(map, mode, scores);
-
-        } catch (GdxRuntimeException e) {
-            Gdx.app.log("MapScores", "Found no stored scores. Creating now.");
-        }
-
-        return new MapScores(map, mode);
-    }
-
 }

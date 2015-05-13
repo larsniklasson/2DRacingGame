@@ -7,12 +7,11 @@ import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.MagicCarpet;
-import edu.chl._2DRacingGame.gameObjects.MonsterTruck;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
+import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;
 import edu.chl._2DRacingGame.screens.MainMenuScreen;
@@ -27,9 +26,8 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
     private GameMode gameMode;
     private GameMap gameMap;
     private GameScreen screen;
-    private MapScores mapScores;
+    private MapScoresPersistor mapScoresPersistor;
     private GameWorld gameWorld;
-    
 
     private final boolean useMultiplayer = false;
 
@@ -79,7 +77,8 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
 		// TODO these should be chosen through in-game menu later
         gameMap = GameMap.PLACEHOLDER_MAP;
         gameMode = new TimeTrial(this);
-        mapScores = MapScores.getInstance(gameMap, gameMode);
+        mapScoresPersistor = new MapScoresPersistor(gameMap, gameMode);
+        mapScoresPersistor.findInstance();
 
         if (useMultiplayer) {
             gameWorld = new MultiplayerGameWorld(gameMap, gameMode);
@@ -101,15 +100,16 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
 	public void gameFinished(double score, String message) {
         Gdx.app.log("_2DRacingGame", "Race completed!");
 
-        mapScores.addScore(score);
-        mapScores.persist();
         if (gameWorld instanceof MultiplayerGameWorld) {
             processMultiplayerFinish();
         } else {
             processSinglePlayerFinish(score);
         }
 
-	}
+        MapScores scores = mapScoresPersistor.getInstance();
+        scores.addScore(score);
+        mapScoresPersistor.persistInstance();
+    }
 
     private void processMultiplayerFinish() {
         MultiplayerGameWorld multiplayerGameWorld = (MultiplayerGameWorld) gameWorld;
@@ -119,6 +119,8 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
     }
 
     private void processSinglePlayerFinish(double score) {
+        MapScores mapScores = mapScoresPersistor.getInstance();
+        Gdx.app.log("_2DRacingGame", "You finished the race in: " + score + " seconds.");
         if (mapScores.isHighScore(score)) {
             Gdx.app.log("_2DRacingGame", "Highscore!");
         } else {
