@@ -21,6 +21,10 @@ public class ScoreBoard {
     }
 
     public boolean isWinner(Player player) {
+        if (scoreBoard.isEmpty()) {
+            return false;
+        }
+
         RaceResult leader = scoreBoard.iterator().next();
         return leader.getPlayer().equals(player) && leader.getTime() != null;
     }
