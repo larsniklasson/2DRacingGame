@@ -1,8 +1,5 @@
 package edu.chl._2DRacingGame.models;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-
 /**
  * @author Daniel Sunnerberg
  */
@@ -10,14 +7,13 @@ public enum GameMap {
 
     PLACEHOLDER_MAP("map3.tmx");
 
-    private final String tiledMapPath;
+    private final String mapPath;
 
-    GameMap(String tiledMapPath) {
-        this.tiledMapPath = tiledMapPath;
+    GameMap(String mapPath) {
+        this.mapPath = mapPath;
     }
 
-    public TiledMap load() {
-        // TODO Map loader should probably be injected
-        return new TmxMapLoader().load(tiledMapPath);
+    public String getPath() {
+        return mapPath;
     }
 }

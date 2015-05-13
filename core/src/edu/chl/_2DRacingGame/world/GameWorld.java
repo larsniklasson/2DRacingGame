@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -57,7 +58,7 @@ public class GameWorld implements Disposable {
 
     public GameWorld(GameMap gameMap, GameMode gameMode) {
         this.gameMode = gameMode;
-        tiledMap = gameMap.load();
+        tiledMap = new TmxMapLoader().load(gameMap.getPath());
         b2World = new World(new Vector2(0, 0), true);
 
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
