@@ -12,14 +12,13 @@ public enum CheckpointType {
         if (name == null) {
             return INVISIBLE;
         }
-        switch (name.toUpperCase()) {
-            case "LAP_START":
-                return LAP_START;
-            case "LAP_END":
-                return LAP_END;
-            case "INVISIBLE":
-            default:
-                throw new IllegalArgumentException("Illegal type name.");
+
+        for (CheckpointType type : CheckpointType.values()) {
+            if (name.toUpperCase().equals(type.name())) {
+                return type;
+            }
         }
+
+        throw new IllegalArgumentException("Found no matching type.");
     }
 }
