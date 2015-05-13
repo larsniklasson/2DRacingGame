@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.GroundMaterial;
+import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
 
 /**
  * Created by Lars Niklasson on 2015-05-08.

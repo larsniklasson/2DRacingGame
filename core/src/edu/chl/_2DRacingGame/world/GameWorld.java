@@ -11,13 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import edu.chl._2DRacingGame.Dirt;
-import edu.chl._2DRacingGame.Ice;
-import edu.chl._2DRacingGame.TrackSection;
+import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
 import edu.chl._2DRacingGame.controllers.ContactController;
 import edu.chl._2DRacingGame.gameModes.GameMode;
-import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
@@ -132,6 +129,8 @@ public class GameWorld implements Disposable {
                     new TrackSection(b2World, shape, new Dirt());
                 } else if(object.getName().equals("ice")){
                     new TrackSection(b2World, shape, new Ice());
+                } else if(object.getName().equals("sand")){
+                    new TrackSection(b2World, shape, new Sand());
                 } else if (object.getName().equals("solid")){
                     new Immovable(b2World, shape);
                 } else if (object.getProperties().get("type").equals("checkpoint")) {
@@ -140,14 +139,14 @@ public class GameWorld implements Disposable {
                         (String) object.getProperties().get("checkpointType")
                     );
 
-                    CheckpointDirection direction = CheckpointDirection.getDirectionFromName(
+                    CheckpointDirection direction = CheckpointDirection.getDirectionFromName( //TODO multiple checkpointdirections from string, i.e. southwest
                             (String) object.getProperties().get("checkpointDirection")
                     );
                     Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
                     cp.addAllowedPassingDirection(direction);
                     checkpoints.add(cp);
 
-                } else if(object.getName().equals("start")){
+                } else if(object.getName().equals("start")){ //TODO more angles, i.e. southwest
                     Rectangle r = ((RectangleMapObject) object).getRectangle();
                     mapSpawnPoint = r.getCenter(new Vector2());
                     mapSpawnDirection = (String) object.getProperties().get("type");

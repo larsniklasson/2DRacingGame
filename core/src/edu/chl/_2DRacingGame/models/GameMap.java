@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
  */
 public enum GameMap {
 
-    PLACEHOLDER_MAP("map2.tmx");
+    PLACEHOLDER_MAP("map3.tmx");
 
     private final String tiledMapPath;
 

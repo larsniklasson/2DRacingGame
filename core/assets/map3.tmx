@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="113">
+ <tileset firstgid="1" name="paintmap" tilewidth="32" tileheight="32">
+  <image source="paintmap.png" width="1280" height="704"/>
+ </tileset>
+ <tileset firstgid="881" name="mario" tilewidth="32" tileheight="32">
+  <image source="mario.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1137" name="celianna_farmnature_tileset" tilewidth="32" tileheight="32">
+  <image source="celianna_farmnature_tileset.png" width="512" height="512"/>
+  <terraintypes>
+   <terrain name="New Terrain" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="22">
+  <data encoding="base64" compression="zlib">
+   eJwV1oMSGAYARMHYtm3btm3btm3bttnGtm3bttPtzO033AsYIECAQAQmCEEJRnBCEJJQhCYMYQlHeCIQkUhEJgpRiUZ0YhCTWMQmDnGJR3wSkJBEJCYJSUlGclKQklSkJg1pSUd6MpCRTGQmC1nJRnZykJNc5CYPeclHfgpQkEIUpghFKUZxSlCSUpSmDGUpR3kqUJFKVKYKValGdWpQk1rUpg51qUd9GtCQRjSmCU1pRnNa0JJWtKYNbWlHezrQkU50pgtd6UZ3etCTXvSmD33pR38GMJBBDGYIQxnGcEYwklGMZgxjGcd4JjCRSUxmClOZxnRmMJNZzGYOc5nHfBawkEUsZglLWcZyVrCSVaxmDWtZx3o2sJFNbOYf/mULW9nGdnawk13sZg972cd+DnCQQxzmCEc5xnFOcJJTnOYMZznHeS5wkUtc5gpXucZ1bnCTW9zmDne5x30e8JBHPOYJT3nGc17wkle85g1vecd7PvCRT3zmC1/5xnd+8JNf/OYPfwkQ0AhEYIIQlGAEJwQhCUVowhCWcIQnAhGJRGSiEJVoRCcGMYlFbOIQl3jEJwEJSURikpCUZCQnBSlJRWrSkJZ0pCcDGclEZrKQlWxkJwc5yUVu8pCXfOSnAAUpRGGKUJRiFKcEJSlFacpQlnKUpwIVqURlqlCValSnBjWpRW3qUJd61KcBDWlEY5rQlGY0pwUtaUVr2tCWdrSnAx3pRGe60JVudKcHPelFb/rQl370ZwADGcRghjCUYQxnBCMZxWjGMJZxjGcCE5nEZKYwlWlMZwYzmcVs5jCXecxnAQtZxGKWsJRlLGcFK1nFatawlnWsZwMb2cRm/uFftrCVbWxnBzvZxW72sJd97OcABznEYY5wlGMc5wQnOcVpznCWc5znAhe5xGWucJVrXOcGN7nFbe5wl3vc5wEPecRjnvCUZzznBS95xWve8JZ3vOcDH/nEZ77wlW985wc/+cVv/vCX/48/IIEITBCCEozghCAkoQhNGMISjvBEICKRiEwUohKN6MQgJrGITRziEo/4JCAhiUhMEpKSjOSkICWpSE0a0pKO9GQgI5nITBayko3s5CAnuchNHvKSj/wUoCCFKEwRilKM4pSgJKUoTRnKUo7yVKAilahMFapSjerUoCa1qE0d6lKP+jSgIY1oTBOa0ozmtKAlrWhNG9rSjvZ0oCOd6EwXutKN7vSgJ73oTR/60o/+DGAggxjMEIYyjOGMYCSjGM0YxjKO8UxgIpOYzBSmMo3pzGAms5jNHOYyj/ksYCGLWMwSlrKM5axgJatYzRrWso71bGAjm9jMP/zLFrayje3sYCe72M0e9rKP/RzgIIc4zBGOcozjnOAkpzjNGc5yjvNc4CKXuMwVrnKN69zgJre4zR3uco/7POAhj3jME57yjOe84CWveM0b3vKO93zgI5/4zBe+8o3v/OAnv/jNH/7yf/QHJBCBCUJQghGcEIQkFKEJQ1jCEZ4IRCQSkYlCVKIRnRjEJBaxiUNc4hGfBCQkEYlJQlKSkZwUpCQVqUlDWtKRngxkJBOZyUJWspGdHOQkF7nJQ17ykZ8CFKQQhSlCUYpRnBKUpBSlKUNZylGeClSkEpWpQlWqUZ0a1KQWtalDXepRnwY0pBGNaUJTmtGcFrSkFa1pQ1va0Z4O/AcvrJub
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="25" name="solid" x="259" y="101" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="27" name="solid" x="239" y="106" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="28" name="solid" x="216" y="114" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="29" name="solid" x="206" y="130" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="30" name="solid" x="206" y="150" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="32" name="solid" x="280.5" y="97.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="33" name="solid" x="864.5" y="183.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="34" name="solid" x="1037.5" y="202.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="35" name="solid" x="896.5" y="148.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="36" name="solid" x="861.5" y="162.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="37" name="solid" x="874.5" y="154.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="38" name="solid" x="1018.5" y="175.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="39" name="solid" x="1021.5" y="505.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="40" name="solid" x="1033.5" y="186.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="41" name="solid" x="994.5" y="538.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="42" name="solid" x="1025.5" y="526.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="43" name="solid" x="1013.5" y="538.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="44" name="solid" x="406.5" y="374.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="45" name="solid" x="439.5" y="386.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="46" name="solid" x="423.5" y="379.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="47" name="solid" x="407.5" y="395.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="48" name="solid" x="423.5" y="394.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="49" name="solid" x="319.5" y="535.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="50" name="solid" x="331.5" y="532.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="51" name="solid" x="341.5" y="543.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="52" name="solid" x="326.5" y="551.5" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="56" name="solid" x="443" y="76">
+   <polygon points="0,0 50,-38 183,59 139,105"/>
+  </object>
+  <object id="57" name="sand" x="149" y="253">
+   <polygon points="0,0 -96,-150 -96,-91 -72,-46 -49,-19 -18,0"/>
+  </object>
+  <object id="58" name="sand" x="120" y="203">
+   <polygon points="0,0 -41,-154 -63,-129 -67,-106"/>
+  </object>
+  <object id="59" name="sand" x="108" y="148">
+   <polygon points="0,0 12,-142 -34,-98"/>
+  </object>
+  <object id="60" name="sand" x="113" y="94">
+   <polygon points="0,0 64,-93 9,-92"/>
+  </object>
+  <object id="61" name="sand" x="143" y="57">
+   <polygon points="0,0 87,-56 29,-58"/>
+  </object>
+  <object id="62" name="sand" x="194" y="26">
+   <polygon points="0,0 99,-27 7,-24"/>
+  </object>
+  <object id="63" name="sand" x="256" y="11">
+   <polygon points="0,0 94,2 53,-24"/>
+  </object>
+  <object id="69" name="sand" x="320" y="14">
+   <polygon points="0,0 35,13 42,5 16,-6"/>
+  </object>
+  <object id="70" name="dirt" x="566" y="641">
+   <polygon points="0,0 48,-127 155,-184 200,-138 248,-28"/>
+  </object>
+  <object id="71" name="dirt" x="566" y="643">
+   <polygon points="0,0 46,25 140,31 223,12 247,-29"/>
+  </object>
+  <object id="72" name="sand" x="802" y="98">
+   <polygon points="0,0 123,-75 81,-71 45,-60 15,-36"/>
+  </object>
+  <object id="73" name="sand" x="869" y="58">
+   <polygon points="0,0 143,-22 101,-35 52,-34"/>
+  </object>
+  <object id="74" name="sand" x="914" y="52">
+   <polygon points="0,0 194,19 170,1 99,-16"/>
+  </object>
+  <object id="75" name="sand" x="1002" y="62">
+   <polygon points="0,0 137,48 104,7"/>
+  </object>
+  <object id="76" name="sand" x="1070" y="86">
+   <polygon points="0,0 88,63 68,22"/>
+  </object>
+  <object id="77" name="sand" x="1126" y="128">
+   <polygon points="0,0 24,74 36,22"/>
+  </object>
+  <object id="78" name="sand" x="916" y="637">
+   <polygon points="0,0 223,33 194,45 104,36 31,23"/>
+  </object>
+  <object id="79" name="sand" x="1016" y="652">
+   <polygon points="0,0 176,-40 161,-14 138,10 119,20"/>
+  </object>
+  <object id="80" name="sand" x="1080" y="634">
+   <polygon points="0,0 102,-77 115,-49 111,-21"/>
+  </object>
+  <object id="81" name="sand" x="1119" y="604">
+   <polygon points="0,0 42,-79 65,-42"/>
+  </object>
+  <object id="82" name="sand" x="1133" y="573">
+   <polygon points="0,0 3,-74 41,-32"/>
+  </object>
+  <object id="84" name="ice" x="453" y="418">
+   <polygon points="0,0 44,-34 40,-7 28,12 14,18 2,14"/>
+  </object>
+  <object id="85" name="ice" x="459" y="350">
+   <polygon points="0,0 31,16 38,32 16,52"/>
+  </object>
+  <object id="86" name="ice" x="457" y="350">
+   <polygon points="0,0 -12,9 -10,21 14,36"/>
+  </object>
+  <object id="87" name="ice" x="469" y="639">
+   <polygon points="0,0 90,-44 68,-18 36,10 3,26"/>
+  </object>
+  <object id="88" name="ice" x="514" y="615">
+   <polygon points="0,0 42,-53 55,-52 52,-32 36,-12"/>
+  </object>
+  <object id="89" name="start" type="WEST" x="453" y="183"/>
+  <object id="91" name="cp1" type="checkpoint" x="490" y="120">
+   <properties>
+    <property name="checkpointDirection" value="east"/>
+    <property name="checkpointType" value="LAP_START"/>
+   </properties>
+   <polyline points="18,-17 -100,78"/>
+  </object>
+  <object id="92" name="cp2" type="checkpoint" x="224" y="125">
+   <properties>
+    <property name="checkpointDirection" value="north"/>
+   </properties>
+   <polyline points="0,0 -234,-131"/>
+  </object>
+  <object id="95" name="cp3" type="checkpoint" x="454" y="400">
+   <properties>
+    <property name="checkpointDirection" value="north"/>
+   </properties>
+   <polyline points="0,0 827,-17"/>
+  </object>
+  <object id="96" name="cp4" type="checkpoint" x="336" y="547">
+   <properties>
+    <property name="checkpointDirection" value="north"/>
+   </properties>
+   <polyline points="0,0 -359,-10"/>
+  </object>
+  <object id="97" name="cp5" type="checkpoint" x="885" y="171">
+   <properties>
+    <property name="checkpointDirection" value="west"/>
+   </properties>
+   <polyline points="0,0 -185,-187"/>
+  </object>
+  <object id="98" name="cp6" type="checkpoint" x="1046" y="194">
+   <properties>
+    <property name="checkpointDirection" value="north"/>
+   </properties>
+   <polyline points="0,0 243,-141"/>
+  </object>
+  <object id="99" name="cp7" type="checkpoint" x="1036" y="538">
+   <properties>
+    <property name="checkpointDirection" value="east"/>
+   </properties>
+   <polyline points="0,0 237,193"/>
+  </object>
+  <object id="101" name="solid" x="368" y="147">
+   <polygon points="0,0 110,83 83,113 -31,29"/>
+  </object>
+  <object id="109" name="solid" x="0" y="-32" width="1280" height="32"/>
+  <object id="110" name="solid" x="1280" y="-32" width="32" height="768"/>
+  <object id="111" name="solid" x="-32" y="704" width="1344" height="32"/>
+  <object id="112" name="solid" x="-32" y="-32" width="32" height="736"/>
+ </objectgroup>
+</map>

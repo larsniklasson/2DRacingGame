@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.GroundMaterial;
+import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.world.GameWorld;
 

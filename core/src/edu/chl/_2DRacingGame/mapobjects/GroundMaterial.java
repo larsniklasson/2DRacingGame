@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame;
+package edu.chl._2DRacingGame.mapobjects;
 
 /**
  * Created by Lars Niklasson on 2015-04-24.
