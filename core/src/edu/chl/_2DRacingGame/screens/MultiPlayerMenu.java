@@ -17,17 +17,13 @@ import edu.chl._2DRacingGame._2DRacingGame;
 /**
  * Created by Anton on 2015-05-08.
  */
-public class MultiPlayerMenu implements Screen {
+public class MultiPlayerMenu extends GUIScreen{
 
     private _2DRacingGame game;
-    private Skin skin;
-    private Stage stage;
 
 
     public MultiPlayerMenu(_2DRacingGame game) {
         this.game = game;
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
-        stage = new Stage();
     }
 
     @Override
@@ -48,6 +44,7 @@ public class MultiPlayerMenu implements Screen {
                 game.setScreen(new MainMenu(game));
             }
         });
+
         Table table = new Table();
         table.add(multiPlayer).colspan(2);
         table.row();
@@ -64,25 +61,9 @@ public class MultiPlayerMenu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
         stage.draw();
     }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
+    
     @Override
     public void hide() {
         dispose();
