@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,35 +12,28 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame._2DRacingGame;
 
+import javax.xml.soap.Text;
 
 
 /**
  * Created by Anton on 2015-05-08.
  */
-public class SinglePlayerMenu implements Screen {
+public class SinglePlayerMenu extends GUIScreen {
 
     private _2DRacingGame game;
-    private Skin skin;
-    private Stage stage;
-    private TextButton startGameButton;
-    private TextButton backButton;
-    private int [] ints = {0,1,2,3};
 
-    private Image [] vehicleArray = { new Image(Assets.magicCarpet), new Image(Assets.motorCycle)};
-    private Image [] mapArray = {new Image(Assets.ice), new Image(Assets.ful)};
     private SelectBox laps;
     private SelectBox numberOfOpponents;
+
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
     private Table mainTable;
 
     public SinglePlayerMenu(_2DRacingGame game) {
         this.game = game;
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
-        stage = new Stage();
         mainTable = new Table();
-        mapSelector = new ScrollTable(mapArray);
-        vehicleSelector = new ScrollTable(vehicleArray);
+        mapSelector = new ScrollTable(Assets.mapArray);
+        vehicleSelector = new ScrollTable(Assets.vehicleArray);
     }
 
 
@@ -73,9 +67,9 @@ public class SinglePlayerMenu implements Screen {
     }
 
     private void create() {
-        startGameButton = new TextButton("Start Game!", skin, "default");
+        final TextButton startGameButton = new TextButton("Start Game!", skin, "default");
         final Label singlePlayer = new Label("Single Player", skin, "arial40");
-        backButton = new TextButton("back", skin, "default");
+        final TextButton backButton = new TextButton("back", skin, "default");
         Table t = selectTable();
 
         backButton.addListener(new ClickListener() {
@@ -88,9 +82,9 @@ public class SinglePlayerMenu implements Screen {
         startGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Number of Opponants" + stringToInt(numberOfOpponents.getSelected().toString()));
+                System.out.println("Number of Opponents" + stringToInt(numberOfOpponents.getSelected().toString()));
                 System .out.println("Number of Laps" + stringToInt(laps.getSelected().toString()));
-                // game.setScreen(new GameScreen(game.getGameWorld()));
+                game.setScreen(new GameScreen(game.getGameWorld()));
 
             }
         });
@@ -108,9 +102,10 @@ public class SinglePlayerMenu implements Screen {
     }
 
 
-    private int stringToInt(String s) {
-        return Integer.parseInt(s);
-    }
+
+
+
+    private int stringToInt(String s) {return Integer.parseInt(s);}
 
     @Override
     public void render(float delta) {
@@ -118,21 +113,6 @@ public class SinglePlayerMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
     }
 
     @Override

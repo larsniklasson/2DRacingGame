@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 
-import java.awt.*;
 
 /**
  * Created by Anton on 2015-04-27.
@@ -47,13 +47,11 @@ public class Assets {
     public static Texture ice;
     public static Texture dirt;
     public static Texture ful;
-    public static Texture car;
-    public static Texture car2;
-    public static Texture car3;
     public static Texture magicCarpet;
     public static Texture motorCycle;
     public static BitmapFont arial40;
-
+    public static Image [] mapArray;
+    public static Image [] vehicleArray;
 
     public static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
@@ -92,6 +90,14 @@ public class Assets {
         motorCycle = loadTexture("Motorcycle.jpg");
         arial40 = new BitmapFont(Gdx.files.internal("Arial40.fnt"),false);
 
+        mapArray = new Image[] {textureToImage(ice), textureToImage(ful)};
+        vehicleArray = new Image[] {textureToImage(motorCycle), textureToImage(magicCarpet)};
+
+    }
+
+
+    public static Image textureToImage (Texture texture) {
+        return new Image(texture);
     }
 
     public static void carHorn(){
