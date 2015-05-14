@@ -4,14 +4,18 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.sun.javafx.geom.Edge;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
 import edu.chl._2DRacingGame.controllers.ContactController;
@@ -51,8 +55,8 @@ public class GameWorld implements Disposable {
     private World b2World;
     private TiledMap tiledMap;
 
-    private Vector2 mapSpawnPoint;
-    private String mapSpawnDirection;
+    private List<Vector2> mapSpawnPoints = new ArrayList<>();
+    private List<Float> mapSpawnAngles = new ArrayList<>();
 
     private final CheckpointController checkpointController;
 
@@ -64,8 +68,8 @@ public class GameWorld implements Disposable {
         checkpointController = new CheckpointController(this.gameMode, checkpoints);
 
         createShapesFromMap();
-        if (mapSpawnPoint == null) {
-            throw new IllegalStateException("Found no spawn-area on the map.");
+        if (mapSpawnPoints.isEmpty()) {
+            throw new IllegalStateException("Found no spawn-areas on the map.");
         }
 
         b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
@@ -126,34 +130,72 @@ public class GameWorld implements Disposable {
                 MapObject object = it2.next();
                 Shape shape = ShapeFactory.createShape(object, PIXELS_PER_METER);
 
-                if(object.getName().equals("dirt")){
-                    new TrackSection(b2World, shape, new Dirt());
-                } else if(object.getName().equals("ice")){
-                    new TrackSection(b2World, shape, new Ice());
-                } else if(object.getName().equals("sand")){
-                    new TrackSection(b2World, shape, new Sand());
-                } else if (object.getName().equals("solid")){
-                    new Immovable(b2World, shape);
-                } else if (object.getProperties().get("type").equals("checkpoint")) {
+                String objectType = (String) object.getProperties().get("type");
+                String objectName = object.getName();
 
-                    CheckpointType type = CheckpointType.getTypeFromName(
-                        (String) object.getProperties().get("checkpointType")
-                    );
 
-                    List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
-                            (String) object.getProperties().get("checkpointDirection")
-                    );
-                    Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
-                    for (CheckpointDirection direction : directions) {
-                        cp.addAllowedPassingDirection(direction);
-                    }
-                    checkpoints.add(cp);
+                switch (objectName){
+                    case "dirt":
+                        new TrackSection(b2World, shape, new Dirt());
+                        break;
+                    case "ice":
+                        new TrackSection(b2World, shape, new Ice());
+                        break;
+                    case "sand":
+                        new TrackSection(b2World, shape, new Sand());
+                        break;
+                    case "solid":
+                        new Immovable(b2World, shape);
+                        break;
+                    case "spawn_pos":
 
-                } else if(object.getName().equals("start")){ //TODO more angles, i.e. southwest
-                    Rectangle r = ((RectangleMapObject) object).getRectangle();
-                    mapSpawnPoint = r.getCenter(new Vector2());
-                    mapSpawnDirection = (String) object.getProperties().get("type");
+                        if(object instanceof PolylineMapObject){
+                            Polyline pl = ((PolylineMapObject) object).getPolyline();
+
+                            float[] vertices = pl.getVertices();
+
+                            Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
+
+
+                            mapSpawnAngles.add((float) (v.angleRad() - Math.PI/2));
+
+                            mapSpawnPoints.add(new Vector2(vertices[0], vertices[1]));
+                        } else {
+                            throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
+                        }
+
+
+                        break;
+
+
+
                 }
+
+                if(objectType == null){
+                    continue;
+                }
+
+                switch (objectType){
+                    case "checkpoint":
+
+                        CheckpointType type = CheckpointType.getTypeFromName(
+                                (String) object.getProperties().get("checkpointType")
+                        );
+
+                        List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
+                                (String) object.getProperties().get("checkpointDirection")
+                        );
+                        Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
+                        for (CheckpointDirection direction : directions) {
+                            cp.addAllowedPassingDirection(direction);
+                        }
+                        checkpoints.add(cp);
+                        break;
+
+                }
+
+
+
 
             }
         }
@@ -161,25 +203,15 @@ public class GameWorld implements Disposable {
     }
 
     public void spawnPlayers() {
-        Vector2 spawnPoint = mapSpawnPoint.cpy();
-        for (Player player : players) {
-            player.getVehicle().place(spawnPoint, getMapSpawnAngle());
+        for(int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            Vector2 spawnPoint = mapSpawnPoints.get(i);
+            float spawnAngle = mapSpawnAngles.get(i);
 
-            switch (mapSpawnDirection) {
-                case "WEST":
-                    spawnPoint = spawnPoint.add(VEHICLE_SPAWN_SPACE, 0);
-                    break;
-                case "NORTH":
-                    spawnPoint = spawnPoint.add(0, -VEHICLE_SPAWN_SPACE);
-                    break;
-                case "EAST":
-                    spawnPoint = spawnPoint.add(-VEHICLE_SPAWN_SPACE, 0);
-                    break;
-                case "SOUTH":
-                    spawnPoint = spawnPoint.add(0, VEHICLE_SPAWN_SPACE);
-                    break;
-            }
+            p.getVehicle().place(spawnPoint, spawnAngle);
         }
+
+
 
     }
 
@@ -201,18 +233,6 @@ public class GameWorld implements Disposable {
         tiledMap.dispose();
     }
 
-    public float getMapSpawnAngle() {
-        switch(mapSpawnDirection.toUpperCase()){
-            case "SOUTH":
-                return (float) Math.PI;
-            case "WEST":
-                return (float) (Math.PI/2);
-            case "EAST":
-                return (float) (3 * Math.PI/2);
-            case "NORTH":
-            default:
-                return 0;
-        }
-    }
+
 
 }

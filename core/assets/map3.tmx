@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="113">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="119">
  <tileset firstgid="1" name="paintmap" tilewidth="32" tileheight="32">
   <image source="paintmap.png" width="1280" height="704"/>
  </tileset>
@@ -177,47 +177,46 @@
   <object id="88" name="ice" x="514" y="615">
    <polygon points="0,0 42,-53 55,-52 52,-32 36,-12"/>
   </object>
-  <object id="89" name="start" type="WEST" x="453" y="183"/>
   <object id="91" name="cp1" type="checkpoint" x="490" y="120">
    <properties>
-    <property name="checkpointDirection" value="east"/>
+    <property name="checkpointDirection" value="east|south"/>
     <property name="checkpointType" value="LAP_START"/>
    </properties>
    <polyline points="18,-17 -100,78"/>
   </object>
   <object id="92" name="cp2" type="checkpoint" x="224" y="125">
    <properties>
-    <property name="checkpointDirection" value="north"/>
+    <property name="checkpointDirection" value="north|east"/>
    </properties>
    <polyline points="0,0 -234,-131"/>
   </object>
   <object id="95" name="cp3" type="checkpoint" x="454" y="400">
    <properties>
-    <property name="checkpointDirection" value="north"/>
+    <property name="checkpointDirection" value="west|north"/>
    </properties>
    <polyline points="0,0 827,-17"/>
   </object>
   <object id="96" name="cp4" type="checkpoint" x="336" y="547">
    <properties>
-    <property name="checkpointDirection" value="north"/>
+    <property name="checkpointDirection" value="east|north"/>
    </properties>
    <polyline points="0,0 -359,-10"/>
   </object>
   <object id="97" name="cp5" type="checkpoint" x="885" y="171">
    <properties>
-    <property name="checkpointDirection" value="west"/>
+    <property name="checkpointDirection" value="south|west"/>
    </properties>
    <polyline points="0,0 -185,-187"/>
   </object>
   <object id="98" name="cp6" type="checkpoint" x="1046" y="194">
    <properties>
-    <property name="checkpointDirection" value="north"/>
+    <property name="checkpointDirection" value="north|west"/>
    </properties>
    <polyline points="0,0 243,-141"/>
   </object>
   <object id="99" name="cp7" type="checkpoint" x="1036" y="538">
    <properties>
-    <property name="checkpointDirection" value="east"/>
+    <property name="checkpointDirection" value="east|north"/>
    </properties>
    <polyline points="0,0 237,193"/>
   </object>
@@ -228,5 +227,17 @@
   <object id="110" name="solid" x="1280" y="-32" width="32" height="768"/>
   <object id="111" name="solid" x="-32" y="704" width="1344" height="32"/>
   <object id="112" name="solid" x="-32" y="-32" width="32" height="736"/>
+  <object id="113" name="spawn_pos" x="488" y="149">
+   <polyline points="0,0 -40,-31"/>
+  </object>
+  <object id="115" name="spawn_pos" x="460" y="168">
+   <polyline points="0,0 -37,-24"/>
+  </object>
+  <object id="116" name="spawn_pos" x="545" y="181">
+   <polyline points="0,0 -37,-24"/>
+  </object>
+  <object id="118" name="spawn_pos" x="509" y="206">
+   <polyline points="0,0 -37,-24"/>
+  </object>
  </objectgroup>
 </map>

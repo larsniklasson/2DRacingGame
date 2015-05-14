@@ -85,7 +85,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
             gameWorld = new GameWorld(gameMap, gameMode);
         }
 
-        Vehicle vehicle = new MonsterTruck(gameWorld.getb2World());
+        Vehicle vehicle = new MotorCycle(gameWorld.getb2World());
         player.setVehicle(vehicle);
 
         screen = new GameScreen(gameWorld);
