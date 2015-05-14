@@ -18,13 +18,33 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-03-30.
  */
-public class Tire { //TODO make copy function
+public class Tire {
     private Sprite sprite;
 
     private float maxForwardSpeed;
     private float maxBackwardSpeed;
     private float driveForce;
     private float maxLateralImpulse;
+
+    public void setMaxForwardSpeed(float maxForwardSpeed) {
+        this.maxForwardSpeed = maxForwardSpeed;
+    }
+
+    public void setMaxBackwardSpeed(float maxBackwardSpeed) {
+        this.maxBackwardSpeed = maxBackwardSpeed;
+    }
+
+    public void setDriveForce(float driveForce) {
+        this.driveForce = driveForce;
+    }
+
+    public void setMaxLateralImpulse(float maxLateralImpulse) {
+        this.maxLateralImpulse = maxLateralImpulse;
+    }
+
+    public void setBackwardsFriction(float backwardsFriction) {
+        this.backwardsFriction = backwardsFriction;
+    }
 
     private float backwardsFriction;
 
@@ -33,12 +53,29 @@ public class Tire { //TODO make copy function
     private float currentBackwardsFriction;
     private float currentMaxBackwardSpeed;
 
-    private final Body body;
+    private float density;
+    private float width;
+    private float height;
+
+    private World world;
+
+    private Body body;
     public final List<GroundMaterial> grounds = new ArrayList<>();
 
     public Tire(World world, float width, float height, float density) {
 
+        this.world = world;
+        this.width = width;
+        this.height = height;
+        this.density = density;
 
+
+        createBody();
+
+
+    }
+
+    private void createBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -50,6 +87,7 @@ public class Tire { //TODO make copy function
 
         body.createFixture(shape, density);
         body.setUserData(this);
+
     }
 
     void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient) {
@@ -198,5 +236,13 @@ public class Tire { //TODO make copy function
 
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
+
+    }
+
+    public Tire cpy(){
+        Tire t = new Tire(world, width, height, density);
+        t.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
+        t.setSprite(new Sprite(sprite));
+        return t;
     }
 }

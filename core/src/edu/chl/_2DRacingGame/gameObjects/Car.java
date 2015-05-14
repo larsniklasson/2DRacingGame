@@ -57,27 +57,23 @@ public class Car extends Vehicle {
         setSprite(new Sprite(texture));
 
 
-        Tire t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
         Texture tireTexture = new Texture(Gdx.files.internal("tire.png"));
+        frontTire.setSprite(new Sprite(tireTexture));
+        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
-        t.setSprite(new Sprite(tireTexture));
-        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        attachTire(t, new Vector2(-3f / SCALE, 8.5f / SCALE), true);
+        Tire backTire = frontTire.cpy();
+        backTire.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
+        backTire.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
 
-        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(tireTexture));
-        attachTire(t, new Vector2(3f / SCALE, 8.5f / SCALE), true);
 
-        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(tireTexture));
-        attachTire(t, new Vector2(3f / SCALE, 0), false);
+        attachTire(frontTire, new Vector2(-3f / SCALE, 8.5f / SCALE), true);
 
-        t = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(tireTexture));
-        attachTire(t, new Vector2(-3f / SCALE, 0), false);
+        attachTire(frontTire.cpy(), new Vector2(3f / SCALE, 8.5f / SCALE), true);
+
+        attachTire(backTire, new Vector2(3f / SCALE, 0), false);
+
+        attachTire(backTire.cpy(), new Vector2(-3f / SCALE, 0), false);
 
 
 

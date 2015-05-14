@@ -6,8 +6,7 @@ import edu.chl._2DRacingGame.controllers.MultiplayerSetupController;
 import edu.chl._2DRacingGame.gameModes.GameListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
@@ -86,7 +85,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
             gameWorld = new GameWorld(gameMap, gameMode);
         }
 
-        Vehicle vehicle = new Car(gameWorld.getb2World());
+        Vehicle vehicle = new MonsterTruck(gameWorld.getb2World());
         player.setVehicle(vehicle);
 
         screen = new GameScreen(gameWorld);

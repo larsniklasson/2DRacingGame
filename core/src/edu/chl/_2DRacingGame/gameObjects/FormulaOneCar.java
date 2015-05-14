@@ -28,8 +28,8 @@ public class FormulaOneCar extends Vehicle{
     private static final float DRIVE_FORCE_FRONT_WHEELS = 2f;
     private static final float DRIVE_FORCE_BACK_WHEELS = 2f;
 
-    private static final float MAX_LATERAL_IMPULSE_FRONT = 0.05f;
-    private static final float MAX_LATERAL_IMPULSE_BACK = 0.05f;
+    private static final float MAX_LATERAL_IMPULSE_FRONT = 0.08f;
+    private static final float MAX_LATERAL_IMPULSE_BACK = 0.08f;
 
 
 
@@ -66,28 +66,21 @@ public class FormulaOneCar extends Vehicle{
         Texture backTireTexture = new Texture(Gdx.files.internal("f1_back_tire.png"));
 
 
-        Tire t = new Tire(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);
-        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(frontTireTexture));
-        attachTire(t, new Vector2(-7 / SCALE, 32 / SCALE), true);
+        Tire frontTire = new Tire(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);
+        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        frontTire.setSprite(new Sprite(frontTireTexture));
+        attachTire(frontTire, new Vector2(-7 / SCALE, 32 / SCALE), true);
 
 
-        t = new Tire(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);
-        t.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(frontTireTexture));
-        attachTire(t, new Vector2(7 / SCALE, 32 / SCALE), true);
+        attachTire(frontTire.cpy(), new Vector2(7 / SCALE, 32 / SCALE), true);
 
-        t = new Tire(world,TIRE_WIDTH_BACK, TIRE_HEIGHT_BACK, 1f);
-        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(backTireTexture));
-        attachTire(t, new Vector2(-7 / SCALE, 8 / SCALE), false);
-
-        t = new Tire(world,TIRE_WIDTH_BACK, TIRE_HEIGHT_BACK, 1f);
-        t.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        t.setSprite(new Sprite(backTireTexture));
-        attachTire(t,new Vector2(7/SCALE, 8/SCALE),false);
+        Tire backTire = new Tire(world,TIRE_WIDTH_BACK, TIRE_HEIGHT_BACK, 1f);
+        backTire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        backTire.setSprite(new Sprite(backTireTexture));
+        attachTire(backTire, new Vector2(-7 / SCALE, 8 / SCALE), false);
 
 
+        attachTire(backTire.cpy(),new Vector2(7/SCALE, 8/SCALE),false);
 
 
 

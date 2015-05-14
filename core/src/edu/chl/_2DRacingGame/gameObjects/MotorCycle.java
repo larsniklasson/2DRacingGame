@@ -14,9 +14,9 @@ import edu.chl._2DRacingGame.world.GameWorld;
 public class MotorCycle extends Vehicle{
 
 
-    private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
-    private static final float TIRE_WIDTH = 0.75f * 2 / SCALE;
-    private static final float TIRE_HEIGHT = 1.75f * 2 / SCALE;
+
+    private static final float TIRE_WIDTH = 4/GameWorld.PIXELS_PER_METER;
+    private static final float TIRE_HEIGHT = 9/GameWorld.PIXELS_PER_METER;
 
 
     private static final float DRIVE_FORCE_FRONT_WHEELS = 1.5f;
@@ -46,20 +46,20 @@ public class MotorCycle extends Vehicle{
 
 
         Texture tireTexture = new Texture(Gdx.files.internal("mc_tire.png"));
-        Tire tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-        tire.setSprite(new Sprite(tireTexture));
+        Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
+        frontTire.setSprite(new Sprite(tireTexture));
 
-        tire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
-        attachTire(tire, new Vector2(0, 10 / GameWorld.PIXELS_PER_METER), true);
+        attachTire(frontTire, new Vector2(0, 10 / GameWorld.PIXELS_PER_METER), true);
 
 
-        tire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-        tire.setSprite(new Sprite(tireTexture));
+        Tire backTire = frontTire.cpy();
+        backTire.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
+        backTire.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
 
-        tire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        attachTire(backTire, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
 
-        attachTire(tire, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
 
         setMaxAngle(30f);
 
