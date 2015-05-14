@@ -42,10 +42,7 @@ public class GameWorld implements Disposable {
      */
     public static float PIXELS_PER_METER = 20f;
 
-    /**
-     * Space between each vehicle when spawned on map.
-     */
-    private static final int VEHICLE_SPAWN_SPACE = 2;
+
 
     private final List<Player> players = new ArrayList<>();
 

@@ -19,6 +19,8 @@ import java.util.Set;
  */
 public abstract class Vehicle {
 
+    //TODO Vehicle archtecture should be overlooked (finish AI before)
+
     private float currentFrontWheelAngle = 0;
     private float MP_angleToSetFrontTires = 0;
 

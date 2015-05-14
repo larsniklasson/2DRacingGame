@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
@@ -53,12 +54,12 @@ public class Car extends Vehicle {
 
         createBody(shape, 0.1f);
 
-        Texture texture = new Texture(Gdx.files.internal("carbody.png"));
+        Texture texture = Assets.carBody;
         setSprite(new Sprite(texture));
 
 
         Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        Texture tireTexture = new Texture(Gdx.files.internal("tire.png"));
+        Texture tireTexture = Assets.carTire;
         frontTire.setSprite(new Sprite(tireTexture));
         frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 

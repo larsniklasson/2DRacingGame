@@ -19,7 +19,7 @@ import edu.chl._2DRacingGame.screens.RaceSummaryListener;
 import edu.chl._2DRacingGame.world.GameWorld;
 import edu.chl._2DRacingGame.world.MultiplayerGameWorld;
 
-public class _2DRacingGame extends Game implements GameListener, RaceSummaryListener {
+public class _2DRacingGame extends Game implements GameListener, RaceSummaryListener {  //TODO "Lars! Comment your code!" //Lars
 
     private Player player;
     private GameMode gameMode;
@@ -85,7 +85,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
             gameWorld = new GameWorld(gameMap, gameMode);
         }
 
-        Vehicle vehicle = new MotorCycle(gameWorld.getb2World());
+        Vehicle vehicle = new Car(gameWorld.getb2World());
         player.setVehicle(vehicle);
 
         screen = new GameScreen(gameWorld);

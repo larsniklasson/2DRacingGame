@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
@@ -40,7 +41,7 @@ public class MonsterTruck extends Vehicle {
 
         setTurnDegreesPerSecond(300);
 
-        Texture bodyTexture = new Texture(Gdx.files.internal("mt_body.png"));
+        Texture bodyTexture = Assets.monsterTruckBody;
         setSprite(new Sprite(bodyTexture));
 
         PolygonShape shape = new PolygonShape();
@@ -49,7 +50,7 @@ public class MonsterTruck extends Vehicle {
         createBody(shape, 0.1f);
 
 
-        Texture tireTexture = new Texture(Gdx.files.internal("mt_tire.png"));
+        Texture tireTexture = Assets.monsterTruckTire;
 
         Tire frontTire = new Tire(world,TIRE_WIDTH, TIRE_HEIGHT,1f);
         frontTire.setSprite(new Sprite(tireTexture));

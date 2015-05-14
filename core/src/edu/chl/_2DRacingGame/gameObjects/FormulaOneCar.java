@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
@@ -43,7 +44,7 @@ public class FormulaOneCar extends Vehicle{
     public FormulaOneCar(World world) {
         super(world);
 
-        Texture texture = new Texture(Gdx.files.internal("f1_body.png"));
+        Texture texture = Assets.f1CarBody;
         setSprite(new Sprite(texture));
 
         setMaxAngle(MAX_ANGLE);
@@ -62,8 +63,8 @@ public class FormulaOneCar extends Vehicle{
 
         createBody(shape, 0.1f);
 
-        Texture frontTireTexture = new Texture(Gdx.files.internal("f1_front_tire.png"));
-        Texture backTireTexture = new Texture(Gdx.files.internal("f1_back_tire.png"));
+        Texture frontTireTexture = Assets.f1CarFrontTire;
+        Texture backTireTexture = Assets.f1CarBackTire;
 
 
         Tire frontTire = new Tire(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);

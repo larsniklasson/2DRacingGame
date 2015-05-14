@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -24,7 +25,7 @@ public class MagicCarpet extends Vehicle{
     public MagicCarpet(World world) {
         super(world);
 
-        Texture texture = new Texture(Gdx.files.internal("magiccarpet2.png"));
+        Texture texture = Assets.magicCarpetBody;
         setSprite(new Sprite(texture));
 
         PolygonShape shape = new PolygonShape();

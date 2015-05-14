@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="119">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" nextobjectid="120">
  <tileset firstgid="1" name="paintmap" tilewidth="32" tileheight="32">
   <image source="paintmap.png" width="1280" height="704"/>
  </tileset>
@@ -227,16 +227,16 @@
   <object id="110" name="solid" x="1280" y="-32" width="32" height="768"/>
   <object id="111" name="solid" x="-32" y="704" width="1344" height="32"/>
   <object id="112" name="solid" x="-32" y="-32" width="32" height="736"/>
-  <object id="113" name="spawn_pos" x="488" y="149">
+  <object id="113" name="spawn_pos" x="500" y="158">
    <polyline points="0,0 -40,-31"/>
   </object>
-  <object id="115" name="spawn_pos" x="460" y="168">
+  <object id="115" name="spawn_pos" x="474" y="182">
    <polyline points="0,0 -37,-24"/>
   </object>
-  <object id="116" name="spawn_pos" x="545" y="181">
+  <object id="116" name="spawn_pos" x="554" y="192">
    <polyline points="0,0 -37,-24"/>
   </object>
-  <object id="118" name="spawn_pos" x="509" y="206">
+  <object id="118" name="spawn_pos" x="522" y="215">
    <polyline points="0,0 -37,-24"/>
   </object>
  </objectgroup>
