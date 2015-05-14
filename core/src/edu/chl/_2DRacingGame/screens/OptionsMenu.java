@@ -16,24 +16,19 @@ import edu.chl._2DRacingGame._2DRacingGame;
 /**
  * Created by Anton on 2015-05-08.
  */
-public class OptionsMenu implements Screen {
+public class OptionsMenu extends GUIScreen {
 
     private _2DRacingGame game;
-    private SpriteBatch batch;
-    private Skin skin;
-    private Stage stage;
 
     public OptionsMenu(_2DRacingGame game) {
         this.game = game;
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
-        stage = new Stage();
-
     }
 
     @Override
     public void show() {
         final TextButton backButton = new TextButton("Back", skin, "default");
         final Label options = new Label("Options", skin, "arial40");
+
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -49,36 +44,10 @@ public class OptionsMenu implements Screen {
         table.debug();
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
-
-
     }
 
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-        dispose();
-    }
+    public void hide() {dispose();}
 
     @Override
     public void dispose() {
