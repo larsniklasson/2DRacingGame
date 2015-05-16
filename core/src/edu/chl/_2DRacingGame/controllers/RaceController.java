@@ -20,6 +20,7 @@ public abstract class RaceController implements RaceListener, Disposable {
 
     protected GameMode mode;
     protected GameScreen screen;
+    protected GameWorld world;
 
     protected final GameController gameController;
 
@@ -38,8 +39,9 @@ public abstract class RaceController implements RaceListener, Disposable {
         screen.dispose();
     }
 
-    // TODO?
-    public abstract GameWorld getWorld();
+    public GameWorld getWorld() {
+        return world;
+    }
 
     public abstract void restartRace();
 }

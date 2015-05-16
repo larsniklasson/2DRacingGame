@@ -87,8 +87,4 @@ public class SinglePlayerRace extends RaceController {
         world.dispose();
     }
 
-    @Override
-    public GameWorld getWorld() {
-        return world;
-    }
 }

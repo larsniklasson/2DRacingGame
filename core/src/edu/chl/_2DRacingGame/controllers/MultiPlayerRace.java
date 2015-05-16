@@ -8,21 +8,24 @@ import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.screens.GameScreen;
 import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
 import edu.chl._2DRacingGame.screens.RaceSummaryListener;
 import edu.chl._2DRacingGame.world.GameWorld;
-import edu.chl._2DRacingGame.world.MultiplayerGameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
 /**
  * @author Daniel Sunnerberg
+ *
+ * TODO consistent spelling of multiplayer...
  */
-public class MultiPlayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener {
+public class MultiPlayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener, OpponentListener {
 
-    private MultiplayerGameWorld world;
+    private MultiplayerWorldSyncer worldSyncer;
+    private final ScoreBoard scoreBoard = new ScoreBoard();
 
     public MultiPlayerRace(GameController gameController) {
         super(gameController);
@@ -32,8 +35,7 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
         // TODO these should be chosen through in-game menu later
         map = GameMap.PLACEHOLDER_MAP;
         mode = new TimeTrial(this);
-
-        world = new MultiplayerGameWorld(map, mode);
+        world = new GameWorld(map, mode);
 
         Vehicle vehicle = new Car(world.getb2World());
         player.setVehicle(vehicle);
@@ -50,7 +52,7 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void raceFinished(double score, String message) {
         Gdx.app.postRunnable(() -> {
-            gameController.setScreen(new MultiplayerRaceFinishedScreen(player, world.getScoreBoard(), this));
+            gameController.setScreen(new MultiplayerRaceFinishedScreen(player, scoreBoard, this));
         });
     }
 
@@ -64,8 +66,11 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
                 }
             }
 
-            world.setWarpClient(client);
-            world.setClientPlayer(player);
+            worldSyncer = new MultiplayerWorldSyncer(client, player, players);
+            mode.addListener(worldSyncer);
+
+            scoreBoard.trackPlayers(players);
+
             world.addPlayers(players);
             world.spawnPlayers();
 
@@ -80,11 +85,6 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public GameWorld getWorld() {
-        return world;
-    }
-
-    @Override
     public void restartRace() {
         // TODO
         throw new NotImplementedException();
@@ -93,5 +93,10 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void displayMainMenu() {
         gameController.displayStartMenu();
+    }
+
+    @Override
+    public void opponentFinished(Player player, double time) {
+        scoreBoard.addResult(player, time);
     }
 }
