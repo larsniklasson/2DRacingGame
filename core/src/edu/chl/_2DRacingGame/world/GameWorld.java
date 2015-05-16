@@ -43,9 +43,9 @@ public class GameWorld implements Disposable {
     /**
      * Box2D scale factor
      */
-    public static float PIXELS_PER_METER = 20f; //TODO maybe this does not belong here. will be the same for all gameworlds
+    public static final float PIXELS_PER_METER = 20f;
 
-    public Array<Vector2> wayPoints = new Array<Vector2>();
+    public Array<Vector2> wayPoints = new Array<>();
 
     private final List<Player> players = new ArrayList<>();
 
@@ -58,6 +58,8 @@ public class GameWorld implements Disposable {
     private List<Vector2> mapSpawnPoints = new ArrayList<>();
     private List<Float> mapSpawnAngles = new ArrayList<>();
 
+    private final List<UpdateListener> updateListeners = new ArrayList<>();
+
     private final CheckpointController checkpointController;
 
     public GameWorld(GameMap gameMap, GameMode gameMode) {
@@ -65,7 +67,7 @@ public class GameWorld implements Disposable {
         tiledMap = new TmxMapLoader().load(gameMap.getPath());
         b2World = new World(new Vector2(0, 0), true);
 
-        checkpointController = new CheckpointController(this.gameMode, checkpoints);
+        checkpointController = new CheckpointController(this.gameMode, checkpoints); // TODO
 
         createShapesFromMap();
         if (mapSpawnPoints.isEmpty()) {
@@ -104,8 +106,6 @@ public class GameWorld implements Disposable {
                 player.getVehicle().update(delta);
             } else {
 
-
-
                 // ... just move the opponents texture
                 /*player.getVehicle().updateSprite();
                 for(Tire t : player.getVehicle().getTires()){
@@ -114,8 +114,11 @@ public class GameWorld implements Disposable {
 
                 //player.getVehicle().MPspriteUpdate();
 
-
             }
+        }
+
+        for (UpdateListener listener : updateListeners) {
+            listener.worldUpdated();
         }
     }
 
@@ -159,7 +162,6 @@ public class GameWorld implements Disposable {
                             throw new IllegalStateException("path must be an Ellipse in Tiled");
                         }
 
-
                         break;
                     case "spawn_pos":
 
@@ -170,7 +172,6 @@ public class GameWorld implements Disposable {
 
                             Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
 
-
                             mapSpawnAngles.add((float) (v.angleRad() - Math.PI/2));
 
                             mapSpawnPoints.add(new Vector2(vertices[0], vertices[1]));
@@ -178,11 +179,7 @@ public class GameWorld implements Disposable {
                             throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
                         }
 
-
                         break;
-
-
-
                 }
 
                 if(objectType == null){
@@ -205,11 +202,7 @@ public class GameWorld implements Disposable {
                         }
                         checkpoints.add(cp);
                         break;
-
                 }
-
-
-
 
             }
         }
@@ -224,9 +217,6 @@ public class GameWorld implements Disposable {
 
             p.getVehicle().place(spawnPoint, spawnAngle);
         }
-
-
-
     }
 
     public TiledMap getTiledMap(){
@@ -247,6 +237,8 @@ public class GameWorld implements Disposable {
         tiledMap.dispose();
     }
 
-
+    public void addUpdateListener(UpdateListener listener) {
+        updateListeners.add(listener);
+    }
 
 }
