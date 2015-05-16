@@ -2,13 +2,16 @@ package edu.chl._2DRacingGame.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,7 +25,8 @@ import edu.chl._2DRacingGame.models.ScreenText;
  */
 public class GameRenderer extends Stage {
 
-    boolean debug = true;
+    boolean showDebug = true;
+    boolean showWayPoints = true;
 
     private final GameWorld gameWorld;
 
@@ -50,7 +54,11 @@ public class GameRenderer extends Stage {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
-            debug = !debug;
+            showDebug = !showDebug;
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            showWayPoints = !showWayPoints;
         }
 
         batch.setProjectionMatrix(camera.combined);
@@ -58,8 +66,11 @@ public class GameRenderer extends Stage {
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        if(debug) debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
-
+        if(showDebug) debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
+        
+        
+        if(showWayPoints)drawWayPoints();
+        
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
             Vehicle vehicle = player.getVehicle();
@@ -72,6 +83,20 @@ public class GameRenderer extends Stage {
         drawScreenTexts();
 
         batch.end();
+    }
+
+    private void drawWayPoints() {
+        ShapeRenderer sr = new ShapeRenderer();
+        sr.setColor(Color.BLACK);
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (Vector2 v2 : gameWorld.wayPoints) {
+
+            sr.circle(v2.x*GameWorld.PIXELS_PER_METER, v2.y*GameWorld.PIXELS_PER_METER, 10);
+        }
+
+        sr.end();
+
     }
 
     private void drawScreenTexts() {

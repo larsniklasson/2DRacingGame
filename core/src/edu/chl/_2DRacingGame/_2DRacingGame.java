@@ -86,6 +86,7 @@ public class _2DRacingGame extends Game implements GameListener, RaceSummaryList
         }
 
         Vehicle vehicle = new MotorCycle(gameWorld.getb2World());
+        vehicle.steeringSystem = new WayPointSystem((OurVehicle)vehicle, gameWorld.wayPoints);
         player.setVehicle(vehicle);
 
         screen = new GameScreen(gameWorld);

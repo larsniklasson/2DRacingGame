@@ -4,16 +4,19 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.sun.javafx.geom.Edge;
 import edu.chl._2DRacingGame.mapobjects.*;
@@ -42,7 +45,7 @@ public class GameWorld implements Disposable {
      */
     public static float PIXELS_PER_METER = 20f; //TODO maybe this does not belong here. will be the same for all gameworlds
 
-
+    public Array<Vector2> wayPoints = new Array<Vector2>();
 
     private final List<Player> players = new ArrayList<>();
 
@@ -146,6 +149,17 @@ public class GameWorld implements Disposable {
                         break;
                     case "solid":
                         new Immovable(b2World, shape);
+                        break;
+                    case "path":
+                        if(object instanceof EllipseMapObject){
+                            Ellipse c = ((EllipseMapObject)object).getEllipse();
+
+                            wayPoints.add(new Vector2(c.x/PIXELS_PER_METER, c.y/PIXELS_PER_METER));
+                        } else {
+                            throw new IllegalStateException("path must be an Ellipse in Tiled");
+                        }
+
+
                         break;
                     case "spawn_pos":
 
