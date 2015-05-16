@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.MonsterTruck;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
@@ -37,7 +38,7 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
         mode = new TimeTrial(this);
         world = new GameWorld(map, mode);
 
-        Vehicle vehicle = new Car(world.getb2World());
+        Vehicle vehicle = new MonsterTruck(world.getb2World());
         player.setVehicle(vehicle);
 
         screen = new GameScreen(world);

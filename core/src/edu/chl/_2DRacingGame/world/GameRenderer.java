@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
+import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
@@ -74,9 +75,32 @@ public class GameRenderer extends Stage {
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
             Vehicle vehicle = player.getVehicle();
-            if(vehicle instanceof Drawable){
-                ((Drawable)vehicle).draw(batch);
+            if(!(vehicle instanceof Drawable)){
+                continue;  //nothing to draw
             }
+
+            if(player.isControlledByClient()){
+                ((Drawable)vehicle).draw(batch);
+
+            } else {
+                //drawing opponents vehicle in multiplayer
+
+                if(vehicle instanceof OurVehicle){
+
+                    //A bit of a hack to change front wheel sprites and not actually the tire-bodies.
+                    ((OurVehicle)vehicle).MP_draw(batch);
+                } else {
+                    //is never called - all vehicle-implementations extend OurVehicle (as of 2015-05-17)
+
+                    ((Drawable)vehicle).draw(batch);
+
+                }
+
+            }
+
+
+
+
 
         }
 

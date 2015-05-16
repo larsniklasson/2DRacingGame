@@ -1,5 +1,6 @@
 package edu.chl._2DRacingGame.gameObjects;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -24,7 +25,10 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
     private float maxTurnAngle = 50f;
     private float turnDegreesPerSecond = 1000;
 
+    private float currentFrontWheelAngle = 0;
 
+    //A bit of a hack to get the wheels to turn in multiplayer. Should only be used from multiplayer-classes
+    private float MP_FrontWheelAngle = 0;
 
     private List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
 
@@ -97,6 +101,21 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
     }
 
 
+    //hack for drawing opponent in MP. Only the sprites of the frontwheels are rotated to prevent weird bugs.
+    public void MP_draw(SpriteBatch batch){
+        SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
+        sprite.draw(batch);
+        for(int i = 0; i < tires.size(); i ++){
+            Tire t = tires.get(i);
+            SpriteUtils.updateSprite(t.getBody(), t.getSprite(), GameWorld.PIXELS_PER_METER);
+            if(isFrontWheelBooleanList.get(i)){
+
+                SpriteUtils.rotateSpriteBy(t.getSprite(), MP_FrontWheelAngle);
+            }
+            t.getSprite().draw(batch);
+        }
+
+    }
 
 
     public Sprite getSprite() {
@@ -124,7 +143,17 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         this.turnDegreesPerSecond = turnDegreesPerSecond;
     }
 
+    public float getCurrentFrontWheelAngle() {
+        return currentFrontWheelAngle;
+    }
 
+    public void setCurrentFrontWheelAngle(float currentFrontWheelAngle) {
+        this.currentFrontWheelAngle = currentFrontWheelAngle;
+    }
+
+    public void setMP_FrontWheelAngle(float mp_frontWheelAngle){  //TODO bad variable names
+        this.MP_FrontWheelAngle = mp_frontWheelAngle;
+    }
 
 
 }

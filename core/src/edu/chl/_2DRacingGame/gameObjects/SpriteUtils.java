@@ -13,8 +13,12 @@ public class SpriteUtils {
         sprite.setRotation((float) Math.toDegrees(body.getTransform().getRotation()));
     }
 
-    public static void rotateSprite(Sprite sprite, float radians){ //maybe not needed but was used for MP
+    public static void rotateSpriteTo(Sprite sprite, float radians){ //maybe not needed but was used for MP
         sprite.setRotation((float) Math.toDegrees(radians));
+    }
+
+    public static void rotateSpriteBy(Sprite sprite, float radians){
+        sprite.setRotation((float) (sprite.getRotation() + Math.toDegrees(radians)));
     }
 
 

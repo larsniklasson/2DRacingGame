@@ -135,6 +135,8 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
             rj.setLimits(newAngle, newAngle);
         }
 
+        vehicle.setCurrentFrontWheelAngle(newAngle);
+
 
     }
 

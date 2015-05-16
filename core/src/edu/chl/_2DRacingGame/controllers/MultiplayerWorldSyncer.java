@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
+import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.Player;
@@ -129,7 +130,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * @param frontWheelAngle
      */
     private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
-        System.out.println("moveop");
+
         Vehicle opponentVehicle = opponent.getVehicle();
         Vector2 opponentLocation = opponentVehicle.getPosition();
         float oldAngle = opponentVehicle.getDirection();
@@ -140,6 +141,13 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
         float animationDuration = MIN_UPDATE_WAIT / 1000f;
         Action moveAction = Actions.moveTo(x, y, animationDuration);
+
+        //Hack. We move the sprite instead of the actual tire-body, to avoid weird bugs.
+        // hack in action can be seen clearest when playing against a MonsterTruck with debug-mode on.
+        if(opponentVehicle instanceof OurVehicle){
+            ((OurVehicle)opponentVehicle).setMP_FrontWheelAngle(frontWheelAngle);
+        }
+
 
         if(oldAngle > 1.5 && angle < -1.5){
             angle += 2* Math.PI;
@@ -196,9 +204,19 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     public void worldUpdated() {
         // TODO
 
-        Vehicle v = clientPlayer.getVehicle();
+        Vehicle vehicle = clientPlayer.getVehicle();
+
+
+        //if vehicle doesn't have front wheels to turn, set it to 0.
+
+        float wheelAngle = 0;
+        if(vehicle instanceof OurVehicle){
+            wheelAngle = ((OurVehicle)vehicle).getCurrentFrontWheelAngle();
+        }
+
+
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            sendLocation(v.getPosition(), v.getDirection(), 0);
+            sendLocation(vehicle.getPosition(), vehicle.getDirection(), wheelAngle);
             lastSyncTime = System.nanoTime();
         }
     }
