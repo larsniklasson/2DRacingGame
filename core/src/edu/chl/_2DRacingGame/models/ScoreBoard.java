@@ -13,6 +13,13 @@ public class ScoreBoard {
     private TreeSet<RaceResult> scoreBoard = new TreeSet<>();
 
     public void addResult(Player player, Double time) {
+        for (RaceResult result : scoreBoard) {
+            if (result.getPlayer().equals(player)) {
+                result.updateTime(time);
+                return;
+            }
+        }
+
         scoreBoard.add(new RaceResult(player, time));
     }
 

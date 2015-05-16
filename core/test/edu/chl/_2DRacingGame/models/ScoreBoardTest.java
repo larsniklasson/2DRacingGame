@@ -1,5 +1,6 @@
 package edu.chl._2DRacingGame.models;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,6 +30,16 @@ public class ScoreBoardTest {
         scoreBoard.addResult(p1, 4d);
         assertEquals(1, scoreBoard.getResults().size());
         scoreBoard.addResult(p2, 2d);
+        assertEquals(2, scoreBoard.getResults().size());
+    }
+
+    @Test
+    public void testAddResult2() throws Exception {
+        scoreBoard.trackPlayers(Lists.newArrayList(p1, p2));
+        assertEquals(2, scoreBoard.getResults().size());
+        scoreBoard.addResult(p1, 50d);
+        assertEquals(2, scoreBoard.getResults().size());
+        scoreBoard.addResult(p2, 55d);
         assertEquals(2, scoreBoard.getResults().size());
     }
 

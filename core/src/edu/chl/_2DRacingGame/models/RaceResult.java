@@ -13,7 +13,7 @@ public class RaceResult implements Comparable<RaceResult> {
     /**
      * Time it took to finish the race.
      */
-    private final Double time;
+    private Double time;
 
     public RaceResult(Player player, Double time) {
         this.player = player;
@@ -60,4 +60,7 @@ public class RaceResult implements Comparable<RaceResult> {
 
     }
 
+    public void updateTime(Double time) {
+        this.time = time;
+    }
 }

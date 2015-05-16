@@ -107,7 +107,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     private void processOpponentFinishedRace(Map<String, String> updateData) {
-        Gdx.app.log("MultiplayerGameWorld", "A player finished the race.");
+        Gdx.app.log("MultiplayerWorldSyncer", "A player finished the race.");
 
         String finishedUserName = updateData.get("senderUserName");
         Double raceTime = Double.valueOf(updateData.get("raceTime"));
@@ -171,7 +171,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * @param raceTime
      */
     private void notifyFinishedRace(double raceTime) {
-        Gdx.app.log("MultiplayerGameWorld", "Notifying opponents that we've finished the race.");
+        Gdx.app.log("MultiplayerWorldSyncer", "Notifying opponents that we've finished the race.");
 
         Map<String, String> updateData = new HashMap<>();
         updateData.put("raceTime", String.valueOf(raceTime));

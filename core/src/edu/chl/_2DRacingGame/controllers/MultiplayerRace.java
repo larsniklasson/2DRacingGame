@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.MonsterTruck;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
-import edu.chl._2DRacingGame.screens.GameScreen;
 import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
 import edu.chl._2DRacingGame.screens.RaceSummaryListener;
 import edu.chl._2DRacingGame.world.GameWorld;
@@ -67,6 +65,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
             Player player = getPlayer();
 
             worldSyncer = new MultiplayerWorldSyncer(client, player, players);
+            worldSyncer.addOpponentListener(this);
+
             getMode().addListener(worldSyncer);
             world.addUpdateListener(worldSyncer);
 
