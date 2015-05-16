@@ -6,14 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.gameModes.GameMode;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
-import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -23,6 +18,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 public class GameScreen implements Screen {
 
     private GameWorld world;
+    private GameMode gameMode; // TODO this dependency is crazy
     private GameRenderer renderer;
     private Boolean gameStart;
 
@@ -43,9 +39,10 @@ public class GameScreen implements Screen {
     private Rectangle resumeBounds;
     private Rectangle exitBounds;
 
-    public GameScreen(GameWorld world){
+    public GameScreen(GameWorld world, GameMode mode) {
         this.world = world;
-        renderer = new GameRenderer(world);
+        this.gameMode = mode;
+        renderer = new GameRenderer(world, mode);
 
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
@@ -83,7 +80,7 @@ public class GameScreen implements Screen {
             touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
                 this.state = State.GAME_RUNNING;
-                world.getGameMode().resume();
+                gameMode.resume();
                 return;
             }
             if(exitBounds.contains(touchPoint.x, touchPoint.y)){
@@ -104,14 +101,14 @@ public class GameScreen implements Screen {
     private void updateRunning(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.P)){
             if(this.state == State.GAME_RUNNING) {
-                world.getGameMode().pause();
+                gameMode.pause();
                 this.state = State.GAME_PAUSED;
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
             Assets.carHorn();
 
-      world.update(delta);
+        world.update(delta);
     }
 
     public void draw(float delta) {
@@ -169,7 +166,7 @@ public class GameScreen implements Screen {
                 spriteBatch.draw(ctdwnGo, centerWidth - 393/2, centerHeight - 248/2);
             } else if (elapsedTime < 5f) {
                 gameStart = false;
-                world.getGameMode().start();
+                gameMode.start();
             }
             spriteBatch.end();
         } else {
@@ -179,24 +176,16 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {

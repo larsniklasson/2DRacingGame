@@ -6,19 +6,15 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.sun.javafx.geom.Edge;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.controllers.CheckpointController;
 import edu.chl._2DRacingGame.controllers.ContactController;
@@ -45,14 +41,13 @@ public class GameWorld implements Disposable {
      */
     public static final float PIXELS_PER_METER = 20f;
 
-    public Array<Vector2> wayPoints = new Array<>();
-
     private final List<Player> players = new ArrayList<>();
 
-    private final GameMode gameMode;
+    // TODO not sure if these are supposed to be here
     private final List<Checkpoint> checkpoints = new ArrayList<>();
-
+    public Array<Vector2> wayPoints = new Array<>();
     private World b2World;
+
     private TiledMap tiledMap;
 
     private List<Vector2> mapSpawnPoints = new ArrayList<>();
@@ -60,27 +55,14 @@ public class GameWorld implements Disposable {
 
     private final List<UpdateListener> updateListeners = new ArrayList<>();
 
-    private final CheckpointController checkpointController;
-
-    public GameWorld(GameMap gameMap, GameMode gameMode) {
-        this.gameMode = gameMode;
+    public GameWorld(GameMap gameMap) {
         tiledMap = new TmxMapLoader().load(gameMap.getPath());
         b2World = new World(new Vector2(0, 0), true);
-
-        checkpointController = new CheckpointController(this.gameMode, checkpoints); // TODO
 
         createShapesFromMap();
         if (mapSpawnPoints.isEmpty()) {
             throw new IllegalStateException("Found no spawn-areas on the map.");
         }
-
-        b2World.setContactListener(new ContactController((checkpoint, validEntry) -> {
-            if (validEntry) {
-                checkpointController.validPassing(checkpoint);
-            } else {
-                checkpointController.invalidPassing(checkpoint);
-            }
-        }));
     }
 
     public void addPlayer(Player player) {
@@ -119,7 +101,6 @@ public class GameWorld implements Disposable {
         }
 
         for (UpdateListener listener : updateListeners) {
-
             listener.worldUpdated();
         }
     }
@@ -158,7 +139,6 @@ public class GameWorld implements Disposable {
                     case "path":
                         if(object instanceof EllipseMapObject){
                             Ellipse c = ((EllipseMapObject)object).getEllipse();
-
                             wayPoints.add(new Vector2(c.x/PIXELS_PER_METER, c.y/PIXELS_PER_METER));
                         } else {
                             throw new IllegalStateException("path must be an Ellipse in Tiled");
@@ -169,14 +149,11 @@ public class GameWorld implements Disposable {
 
                         if(object instanceof PolylineMapObject){
                             Polyline pl = ((PolylineMapObject) object).getPolyline();
-
                             float[] vertices = pl.getVertices();
-
                             Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
 
-                            mapSpawnAngles.add((float) (v.angleRad() - Math.PI/2));
-
                             mapSpawnPoints.add(new Vector2(vertices[0], vertices[1]));
+                            mapSpawnAngles.add((float) (v.angleRad() - Math.PI/2));
                         } else {
                             throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
                         }
@@ -211,6 +188,10 @@ public class GameWorld implements Disposable {
 
     }
 
+    public List<Checkpoint> getCheckpoints() {
+        return checkpoints;
+    }
+
     public void spawnPlayers() {
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
@@ -223,10 +204,6 @@ public class GameWorld implements Disposable {
 
     public TiledMap getTiledMap(){
         return tiledMap;
-    }
-
-    public GameMode getGameMode() {
-        return gameMode;
     }
 
     public List<Player> getPlayers() {

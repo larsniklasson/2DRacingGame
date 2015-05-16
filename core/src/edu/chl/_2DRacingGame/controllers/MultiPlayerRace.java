@@ -34,32 +34,29 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
 
     private void requestRaceSettings() {
         // TODO these should be chosen through in-game menu later
-        map = GameMap.PLACEHOLDER_MAP;
-        mode = new TimeTrial(this);
-        world = new GameWorld(map, mode);
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(this));
 
-        Vehicle vehicle = new MonsterTruck(world.getb2World());
-        player.setVehicle(vehicle);
-
-        screen = new GameScreen(world);
+        Vehicle vehicle = new Car(getWorld().getb2World());
+        getPlayer().setVehicle(vehicle);
     }
 
     @Override
-    public void giveControl() {
+    public void setUp() {
         requestRaceSettings();
-        new MultiplayerSetupController(player, this).findRace();
+        new MultiplayerSetupController(getPlayer(), this).findRace();
     }
 
     @Override
     public void raceFinished(double score, String message) {
         Gdx.app.postRunnable(() -> {
-            gameController.setScreen(new MultiplayerRaceFinishedScreen(player, scoreBoard, this));
+            gameController.setScreen(new MultiplayerRaceFinishedScreen(getPlayer(), scoreBoard, this));
         });
     }
 
     @Override
     public void raceReady(WarpClient client, List<Player> players) {
         Gdx.app.postRunnable(() -> {
+            GameWorld world = getWorld();
 
             for (Player player : players) {
                 if (player.getVehicle() == null) {
@@ -67,9 +64,10 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
                 }
             }
 
+            Player player = getPlayer();
 
             worldSyncer = new MultiplayerWorldSyncer(client, player, players);
-            mode.addListener(worldSyncer);
+            getMode().addListener(worldSyncer);
             world.addUpdateListener(worldSyncer);
 
             scoreBoard.trackPlayers(players);
@@ -77,14 +75,8 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
             world.addPlayers(players);
             world.spawnPlayers();
 
-            gameController.setScreen(screen);
+            gameController.setScreen(getScreen());
         });
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        world.dispose();
     }
 
     @Override

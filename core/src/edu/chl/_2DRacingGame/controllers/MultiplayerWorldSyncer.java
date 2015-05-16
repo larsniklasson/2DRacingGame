@@ -26,6 +26,7 @@ import java.util.Map;
  *
  * TODO users colliding case
  * TODO proper delete/disconnect of room/AppWarp
+ * TODO despawn opponent when reached the goal
  */
 public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
@@ -130,7 +131,6 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * @param frontWheelAngle
      */
     private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
-
         Vehicle opponentVehicle = opponent.getVehicle();
         Vector2 opponentLocation = opponentVehicle.getPosition();
         float oldAngle = opponentVehicle.getDirection();
@@ -180,8 +180,6 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     private void sendLocation(Vector2 vehiclePosition, float angle, float frontWheelAngle) {
-        Gdx.app.log("MultiplayerGameWorld", "Sending position to other players");
-
         Map<String, String> updateData = new HashMap<>();
         updateData.put("x", "" + vehiclePosition.x);
         updateData.put("y", "" + vehiclePosition.y);

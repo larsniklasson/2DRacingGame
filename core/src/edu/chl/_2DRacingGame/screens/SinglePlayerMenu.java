@@ -84,7 +84,7 @@ public class SinglePlayerMenu extends GUIScreen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Number of Opponents" + stringToInt(numberOfOpponents.getSelected().toString()));
                 System .out.println("Number of Laps" + stringToInt(laps.getSelected().toString()));
-                game.setScreen(new GameScreen(game.getGameWorld()));
+//                game.setScreen(new GameScreen(game.getGameWorld())); // TODO should use listeners
 
             }
         });

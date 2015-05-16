@@ -15,9 +15,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
 
@@ -30,6 +32,7 @@ public class GameRenderer extends Stage {
     boolean showWayPoints = true;
 
     private final GameWorld gameWorld;
+    private final GameMode gameMode;
 
     private final SpriteBatch batch;
     private final BitmapFont font;
@@ -38,8 +41,9 @@ public class GameRenderer extends Stage {
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
 
-    public GameRenderer(GameWorld world) {
+    public GameRenderer(GameWorld world, GameMode gameMode) {
         this.gameWorld = world;
+        this.gameMode = gameMode;
         font = new BitmapFont();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
@@ -124,8 +128,8 @@ public class GameRenderer extends Stage {
     }
 
     private void drawScreenTexts() {
-        gameWorld.getGameMode().syncTexts();
-        for (ScreenText text : gameWorld.getGameMode().getScreenTexts()) {
+        gameMode.syncTexts();
+        for (ScreenText text : gameMode.getScreenTexts()) {
             font.setColor(text.getColor());
             font.draw(batch, text.getText(), text.getX(), text.getY());
         }

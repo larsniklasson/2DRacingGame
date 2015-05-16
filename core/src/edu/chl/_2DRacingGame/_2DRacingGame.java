@@ -31,12 +31,12 @@ public class _2DRacingGame extends Game implements GameController {
 
     private void startSinglePlayer() {
         raceController = new SinglePlayerRace(this);
-        raceController.giveControl();
+        raceController.setUp();
     }
 
     private void startMultiPlayer() {
         raceController = new MultiPlayerRace(this);
-        raceController.giveControl();
+        raceController.setUp();
     }
 
     public GameWorld getGameWorld() {

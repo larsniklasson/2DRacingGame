@@ -13,8 +13,6 @@ import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * @author Daniel Sunnerberg
- *         <p>
- *         TODO extract out commons
  *         TODO race -> game?
  */
 public class SinglePlayerRace extends RaceController {
@@ -28,27 +26,23 @@ public class SinglePlayerRace extends RaceController {
 
     private void requestRaceSettings() {
         // TODO these should be chosen through in-game menu later
-        map = GameMap.PLACEHOLDER_MAP;
-        mode = new TimeTrial(this);
-        scoresPersistor = new MapScoresPersistor(map, mode);
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(this));
+
+        scoresPersistor = new MapScoresPersistor(getMap(), getMode());
         scoresPersistor.findInstance();
 
-        world = new GameWorld(map, mode);
-
         Vehicle vehicle = new Car(world.getb2World());
-        player.setVehicle(vehicle);
-
-        screen = new GameScreen(world);
+        getPlayer().setVehicle(vehicle);
     }
 
     private void startRace() {
-        world.addPlayer(player);
+        world.addPlayer(getPlayer());
         world.spawnPlayers();
-        gameController.setScreen(screen);
+        gameController.setScreen(getScreen());
     }
 
     @Override
-    public void giveControl() {
+    public void setUp() {
         requestRaceSettings();
         startRace();
     }

@@ -33,8 +33,7 @@ public class MainMenuScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-
-                game.setScreen(new GameScreen(game.getGameWorld()));
+//                game.setScreen(new GameScreen(game.getGameWorld())); TODO should probably use listeners
                 return;
             }
             if(exitBounds.contains(touchPoint.x, touchPoint.y)){
