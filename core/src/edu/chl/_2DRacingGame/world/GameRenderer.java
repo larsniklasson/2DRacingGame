@@ -114,7 +114,7 @@ public class GameRenderer extends Stage {
 
     public void retrieveActors() {
         for (Player player : gameWorld.getPlayers()) {
-            //addActor(player.getVehicle().getActor());
+            addActor(player.getActor());
         }
     }
 }

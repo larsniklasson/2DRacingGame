@@ -66,8 +66,10 @@ public class MultiPlayerRace extends RaceController implements MultiplayerSetupL
                 }
             }
 
+
             worldSyncer = new MultiplayerWorldSyncer(client, player, players);
             mode.addListener(worldSyncer);
+            world.addUpdateListener(worldSyncer);
 
             scoreBoard.trackPlayers(players);
 

@@ -129,9 +129,10 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * @param frontWheelAngle
      */
     private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
+        System.out.println("moveop");
         Vehicle opponentVehicle = opponent.getVehicle();
-        Vector2 opponentLocation = new Vector2();//opponentVehicle.getBody().getTransform().getPosition();
-        float oldAngle = 0;//opponentVehicle.getActor().getRotation();
+        Vector2 opponentLocation = opponentVehicle.getPosition();
+        float oldAngle = opponentVehicle.getDirection();
 
         if (opponentLocation.equals(new Vector2(x, y)) && angle == oldAngle) {
             return;
@@ -149,7 +150,8 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         }
 
         Action rotateAction = Actions.rotateTo(angle, animationDuration);
-        //opponentVehicle.getActor().addAction(Actions.parallel(moveAction, rotateAction));
+
+        opponent.getActor().addAction(Actions.parallel(moveAction, rotateAction));
     }
 
     private long getTimeSinceUpdate() {
@@ -182,6 +184,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     private void sendUpdate(Map<String, String> updateData, MultiplayerUpdateType type) {
+
         updateData.put("senderUserName", clientPlayer.getUserName());
         updateData.put("updateType", type.name());
 
@@ -192,10 +195,10 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     @Override
     public void worldUpdated() {
         // TODO
-        //Body vehicleBody = clientPlayer.getVehicle().getBody();
-        //float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
+
+        Vehicle v = clientPlayer.getVehicle();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            //sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
+            sendLocation(v.getPosition(), v.getDirection(), 0);
             lastSyncTime = System.nanoTime();
         }
     }

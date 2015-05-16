@@ -114,10 +114,12 @@ public class GameWorld implements Disposable {
 
                 //player.getVehicle().MPspriteUpdate();
 
+
             }
         }
 
         for (UpdateListener listener : updateListeners) {
+
             listener.worldUpdated();
         }
     }

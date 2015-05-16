@@ -55,7 +55,7 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         mainMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.displayMainMenu();
+                //game.displayMainMenu();
             }
         });
 
