@@ -11,25 +11,19 @@ import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.
+ * Created by Lars Niklasson on 2015-05-16.  Most code from Libgdx's AI-LIB tests. https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests
  */
-public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem implements Steerable<Vector2>{
+public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implements Steerable<Vector2>{
 
-    T ov;
 
     private float wheelAngle;
 
-    private Array<Vector2> wayPoints = new Array<Vector2>();
 
-
-
-    LinePath<Vector2> linePath;
-    FollowPath<Vector2, LinePath.LinePathParam> followPathSB;
 
     final boolean openPath = false;
 
 
-    private float SCALE = GameWorld.PIXELS_PER_METER;
+
 
     float boundingRadius;
     boolean tagged = false;
@@ -47,57 +41,37 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
 
 
 
-    public AISteeringSystem(T v, Array<Vector2> wayPoints) {
-        super(v);
-        this.ov = v;
-        this.wayPoints = wayPoints;
+    public AISteeringSystem(OurVehicle vehicle) {
+        super(vehicle);
 
-
-        linePath = new LinePath<Vector2>(wayPoints, openPath);
-
-
-        followPathSB = new FollowPath<Vector2, LinePath.LinePathParam>(this, linePath,3); //
-        // Setters below are only useful to arrive at the end of an open path
-
-        this.steeringBehavior = followPathSB;
     }
 
-    public Array<Vector2> getWayPoints(){
-        return wayPoints;
-    }
+
 
     public boolean isIndependentFacing () {
         return independentFacing;
     }
 
-    public void addWayPoint(Vector2 point){
-        wayPoints.add(point);
-    }
-
-
-
-
-
 
 
     @Override
     public Vector2 getPosition() {
-        return v.getPosition();
+        return vehicle.getPosition();
     }
 
     @Override
     public float getOrientation() {
-        return v.getDirection();
+        return vehicle.getDirection();
     }
 
     @Override
     public Vector2 getLinearVelocity() {
-        return v.getLinearVelocity();
+        return vehicle.getLinearVelocity();
     }
 
     @Override
     public float getAngularVelocity() {
-        return v.getAngularVelocity();
+        return vehicle.getAngularVelocity();
     }
 
     @Override
@@ -209,8 +183,8 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
         if (!steeringOutput.linear.isZero()) {
 
             Vector2 force = steeringOutput.linear.scl(deltaTime);
-            ov.getBody().applyForceToCenter(force, true);
-            for(Tire t : ov.getTires()){
+            vehicle.getBody().applyForceToCenter(force, true);
+            for(Tire t : vehicle.getTires()){
                 t.getBody().applyForceToCenter(force, true);
             }
 
@@ -221,9 +195,9 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
         if (isIndependentFacing()) {
             if (steeringOutput.angular != 0) {
 
-                ov.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
+                vehicle.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
 
-                for(Tire t : ov.getTires()){
+                for(Tire t : vehicle.getTires()){
                     t.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
                 }
                 anyAccelerations = true;
@@ -238,18 +212,18 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
                 float newOrientation = vectorToAngle(linVel);
 
 
-                for(Tire t : ov.getTires()){
+                for(Tire t : vehicle.getTires()){
                     t.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime);
                     //t.getBody().setTransform(t.getBody().getPosition(), newOrientation);
                 }
-                ov.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
+                vehicle.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
                 //getBody().setTransform(getBody().getPosition(), newOrientation);
 
 
 
-                float f = newOrientation - ov.getBody().getTransform().getRotation();
+                float f = newOrientation - vehicle.getBody().getTransform().getRotation();
 
-                ov.place(ov.getBody().getPosition(), newOrientation);
+                vehicle.place(vehicle.getBody().getPosition(), newOrientation);
 
 
                 System.out.println("f = " + f);
@@ -278,10 +252,16 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
 
                 System.out.println("wheelangle: " + wheelAngle);
 
-                Body b = ov.getTires().get(0).getBody();
-                b.setTransform(b.getTransform().getPosition(), b.getTransform().getRotation() + wheelAngle);
-                b = ov.getTires().get(1).getBody();
-                b.setTransform(b.getTransform().getPosition(), b.getTransform().getRotation() + wheelAngle);
+
+                for(int i = 0; i < vehicle.getTires().size(); i++){
+                    if(vehicle.getIsFrontWheelBooleanList().get(i)){
+                        Body b = vehicle.getTires().get(i).getBody();
+                        b.setTransform(b.getTransform().getPosition(), b.getTransform().getRotation() + wheelAngle);
+
+
+                    }
+                }
+
 
             }
         }
@@ -291,12 +271,12 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
 
 
             // Cap the linear speed
-            Vector2 velocity = ov.getBody().getLinearVelocity();
+            Vector2 velocity = vehicle.getBody().getLinearVelocity();
             float currentSpeedSquare = velocity.len2();
             float maxLinearSpeed = getMaxLinearSpeed();
             if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
-                ov.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
-                for(Tire t : ov.getTires()){
+                vehicle.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
+                for(Tire t : vehicle.getTires()){
                     t.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
 
                 }
@@ -304,9 +284,9 @@ public class AISteeringSystem<T extends OurVehicle> extends SteeringSystem imple
 
             // Cap the angular speed
             float maxAngVelocity = getMaxAngularSpeed();
-            if (ov.getBody().getAngularVelocity() > maxAngVelocity) {
-                ov.getBody().setAngularVelocity(maxAngVelocity);
-                for(Tire t : ov.getTires()){
+            if (vehicle.getBody().getAngularVelocity() > maxAngVelocity) {
+                vehicle.getBody().setAngularVelocity(maxAngVelocity);
+                for(Tire t : vehicle.getTires()){
                     t.getBody().setAngularVelocity(maxAngVelocity);
 
                 }

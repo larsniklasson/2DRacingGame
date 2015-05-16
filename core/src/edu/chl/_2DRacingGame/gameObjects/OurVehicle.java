@@ -46,6 +46,10 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         return tirePositions;
     }
 
+    public List<Boolean> getIsFrontWheelBooleanList(){
+        return isFrontWheelBooleanList;
+    }
+
 
     protected void attachTire(Tire tire, Vector2 position, boolean frontTire){
         RevoluteJointDef jointDef = new RevoluteJointDef();
