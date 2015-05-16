@@ -23,12 +23,12 @@ import java.util.List;
  *
  * TODO consistent spelling of multiplayer...
  */
-public class MultiPlayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener, OpponentListener {
+public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener, OpponentListener {
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
 
-    public MultiPlayerRace(GameController gameController) {
+    public MultiplayerRace(GameController gameController) {
         super(gameController);
     }
 

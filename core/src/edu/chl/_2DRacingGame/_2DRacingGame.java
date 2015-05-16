@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.controllers.GameController;
-import edu.chl._2DRacingGame.controllers.MultiPlayerRace;
+import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.RaceController;
 import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
 import edu.chl._2DRacingGame.screens.MainMenuScreen;
@@ -23,7 +23,7 @@ public class _2DRacingGame extends Game implements GameController {
         Assets.load();
 
         if (useMultiplayer) {
-            startMultiPlayer();
+            startMultiplayer();
         } else {
             startSinglePlayer();
         }
@@ -34,8 +34,8 @@ public class _2DRacingGame extends Game implements GameController {
         raceController.setUp();
     }
 
-    private void startMultiPlayer() {
-        raceController = new MultiPlayerRace(this);
+    private void startMultiplayer() {
+        raceController = new MultiplayerRace(this);
         raceController.setUp();
     }
 
