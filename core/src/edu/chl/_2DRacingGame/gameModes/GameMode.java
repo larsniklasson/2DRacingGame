@@ -15,9 +15,9 @@ public abstract class GameMode implements LapListener {
     private ArrayList<ScreenText> screenTexts = new ArrayList<>();
     private Stopwatch stopWatch = Stopwatch.createUnstarted();
 
-    private final List<GameListener> listeners = new ArrayList<>();
+    private final List<RaceListener> listeners = new ArrayList<>();
 
-    public GameMode(GameListener listener) {
+    public GameMode(RaceListener listener) {
         addListener(listener);
     }
 
@@ -73,11 +73,11 @@ public abstract class GameMode implements LapListener {
      */
     public abstract Comparator<Double> getScoreComparator();
 
-    public void addListener(GameListener listener) {
+    public void addListener(RaceListener listener) {
         listeners.add(listener);
     }
 
-    public List<GameListener> getListeners() {
+    public List<RaceListener> getListeners() {
         return listeners;
     }
 }

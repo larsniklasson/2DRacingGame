@@ -10,13 +10,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
-import edu.chl._2DRacingGame.gameModes.GameListener;
+import edu.chl._2DRacingGame.gameModes.RaceListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 
 import java.lang.reflect.Type;
@@ -31,7 +30,7 @@ import java.util.Map;
  * TODO users colliding case
  * TODO proper delete/disconnect of room/AppWarp
  */
-public class MultiplayerGameWorld extends GameWorld implements GameListener {
+public class MultiplayerGameWorld extends GameWorld implements RaceListener {
 
     /**
      * Minimum time in ms before next update is sent to opponents.
@@ -221,7 +220,7 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
      * @param message
      */
     @Override
-    public void gameFinished(double raceTime, String message) { // TODO rename interface params?
+    public void raceFinished(double raceTime, String message) { // TODO rename interface params?
         notifyFinishedRace(raceTime);
     }
 

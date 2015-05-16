@@ -2,11 +2,8 @@ package edu.chl._2DRacingGame.gameModes;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl._2DRacingGame.models.ScreenText;
-import javafx.stage.Screen;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,7 +17,7 @@ public class TimeTrial extends GameMode {
     private final ScreenText currentLapText;
     private final ScreenText currentRaceTimeText;
 
-    public TimeTrial(GameListener listener) {
+    public TimeTrial(RaceListener listener) {
         super(listener);
 
         currentLapText = new ScreenText(new Vector2(1200, 670));
@@ -44,8 +41,8 @@ public class TimeTrial extends GameMode {
         if (currentLap == lapGoal) {
             getStopWatch().stop();
             double elapsedTime = getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d;
-            for (GameListener listener : getListeners()) {
-                listener.gameFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
+            for (RaceListener listener : getListeners()) {
+                listener.raceFinished(elapsedTime, "You drove the track in: " + elapsedTime + " seconds.");
             }
         }
 
