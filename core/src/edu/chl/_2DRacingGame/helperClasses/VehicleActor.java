@@ -21,7 +21,8 @@ public class VehicleActor extends Actor {
     }
 
     private Vector2 getVehiclePosition() {
-        return vehicle.getBody().getTransform().getPosition().cpy();
+        //return vehicle.getBody().getTransform().getPosition().cpy();
+        return new Vector2();
     }
 
     @Override
@@ -60,8 +61,8 @@ public class VehicleActor extends Actor {
 
     @Override
     public float getRotation() {
-
-        return vehicle.getBody().getTransform().getRotation();
+        return 0;
+        //return vehicle.getBody().getTransform().getRotation();
     }
 
     @Override
@@ -80,7 +81,7 @@ public class VehicleActor extends Actor {
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(x, y);
-        vehicle.place(new Vector2(x, y), vehicle.getBody().getTransform().getRotation());
+        //vehicle.place(new Vector2(x, y), vehicle.getBody().getTransform().getRotation());
     }
 
 

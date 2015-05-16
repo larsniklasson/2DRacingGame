@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class MotorCycle extends Vehicle{
+public class MotorCycle extends OurVehicle{
 
 
 
@@ -36,6 +36,8 @@ public class MotorCycle extends Vehicle{
 
     public MotorCycle(World world) {
         super(world);
+
+        steeringSystem = new TireSteeringSystem(this);
 
         Texture texture = Assets.mcBody;
         setSprite(new Sprite(texture));
@@ -61,8 +63,7 @@ public class MotorCycle extends Vehicle{
 
         attachTire(backTire, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
 
-
-        setMaxAngle(30f);
+        setMaxTurnAngle(30f);
 
     }
 }

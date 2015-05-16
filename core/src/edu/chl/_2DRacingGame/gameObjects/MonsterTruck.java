@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class MonsterTruck extends Vehicle {
+public class MonsterTruck extends OurVehicle {
 
     private static final float SCALE = GameWorld.PIXELS_PER_METER;
     private static final float TIRE_WIDTH = 8 / SCALE;
@@ -40,6 +40,8 @@ public class MonsterTruck extends Vehicle {
         super(world);
 
         setTurnDegreesPerSecond(300);
+
+        steeringSystem = new TireSteeringSystem(this);
 
         Texture bodyTexture = Assets.monsterTruckBody;
         setSprite(new Sprite(bodyTexture));

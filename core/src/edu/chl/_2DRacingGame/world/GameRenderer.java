@@ -6,18 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
-
-import java.util.List;
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
@@ -65,13 +63,10 @@ public class GameRenderer extends Stage {
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
             Vehicle vehicle = player.getVehicle();
-            if(vehicle.getSprites() != null){
-                for(Sprite s : vehicle.getSprites()){
-                    if(s != null){
-                        s.draw(batch);
-                    }
-                }
+            if(vehicle instanceof Drawable){
+                ((Drawable)vehicle).draw(batch);
             }
+
         }
 
         drawScreenTexts();
@@ -94,7 +89,7 @@ public class GameRenderer extends Stage {
 
     public void retrieveActors() {
         for (Player player : gameWorld.getPlayers()) {
-            addActor(player.getVehicle().getActor());
+            //addActor(player.getVehicle().getActor());
         }
     }
 }

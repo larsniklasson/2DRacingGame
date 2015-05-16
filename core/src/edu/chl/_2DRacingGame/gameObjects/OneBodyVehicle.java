@@ -2,14 +2,16 @@ package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Created by Lars Niklasson on 2015-05-15.
  */
 public abstract class OneBodyVehicle extends Vehicle {
-    Body body;
-    World world;
+    protected Body body;
+    protected World world;
 
     public OneBodyVehicle(World world){
         this.world = world;
@@ -42,5 +44,15 @@ public abstract class OneBodyVehicle extends Vehicle {
 
     public Body getBody(){
         return body;
+    }
+
+
+
+    protected void createBody(Shape shape, float density){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bodyDef);
+        body.setUserData(this);
+        body.createFixture(shape, density);
     }
 }

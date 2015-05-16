@@ -3,8 +3,6 @@ package edu.chl._2DRacingGame.gameObjects;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -16,7 +14,7 @@ import java.util.List;
 /**
  * Created by Lars Niklasson on 2015-05-15.
  */
-public abstract class OurVehicle extends OneBodyVehicle implements HasTires, DrawAble {
+public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Drawable {
     private Sprite sprite;
 
     List<Tire> tires = new ArrayList<>();
@@ -24,14 +22,16 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     List<RevoluteJoint> frontJoints = new ArrayList<>();
     private float maxTurnAngle = 50f;
-    private float turnPerSecond = 1000;
+    private float turnDegreesPerSecond = 1000;
 
 
 
-    private List<Boolean> isFrontWheelBooleanList = new ArrayList<>();
+    private List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
 
     public OurVehicle(World world) {
         super(world);
+
+
     }
 
 
@@ -71,13 +71,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         isFrontWheelBooleanList.add(frontTire);
     }
 
-    protected void createBody(Shape shape, float density){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
-        body.createFixture(shape, 0.1f);
-    }
+
 
     @Override
     public void place(Vector2 position, float angle) {
@@ -91,7 +85,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     @Override
     public void draw(SpriteBatch batch){
-        Utils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
+        SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
         for(Tire t : tires){
             t.draw(batch);
@@ -109,19 +103,24 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         this.sprite = sprite;
     }
 
-    public void setMaxTurnAngle(float maxTurnAngle) {
-        this.maxTurnAngle = maxTurnAngle;
-    }
-
-    public void setTurnPerSecond(float turnPerSecond) {
-        this.turnPerSecond = turnPerSecond;
-    }
-
     public float getMaxTurnAngle() {
         return maxTurnAngle;
     }
 
-    public float getTurnPerSecond() {
-        return turnPerSecond;
+    public void setMaxTurnAngle(float maxTurnAngle) {
+        this.maxTurnAngle = maxTurnAngle;
     }
+
+
+    public float getTurnDegreesPerSecond() {
+        return turnDegreesPerSecond;
+    }
+
+    public void setTurnDegreesPerSecond(float turnDegreesPerSecond) {
+        this.turnDegreesPerSecond = turnDegreesPerSecond;
+    }
+
+
+
+
 }

@@ -136,15 +136,15 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
      */
     private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
         Vehicle opponentVehicle = opponent.getVehicle();
-        Vector2 opponentLocation = opponentVehicle.getBody().getTransform().getPosition();
-        float oldAngle = opponentVehicle.getActor().getRotation();
+        Vector2 opponentLocation = new Vector2();//opponentVehicle.getBody().getTransform().getPosition();
+        float oldAngle = 0;//opponentVehicle.getActor().getRotation();
 
         if (opponentLocation.equals(new Vector2(x, y)) && angle == oldAngle) {
             return;
         }
-        opponentVehicle.resetForces();
+        //opponentVehicle.resetForces();
 
-        opponentVehicle.setMP_angleToSetFrontTires(frontWheelAngle);
+        //opponentVehicle.setMP_angleToSetFrontTires(frontWheelAngle);
 
         float animationDuration = MIN_UPDATE_WAIT / 1000f;
         Action moveAction = Actions.moveTo(x, y, animationDuration);
@@ -158,7 +158,7 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
         }
 
         Action rotateAction = Actions.rotateTo(angle, animationDuration);
-        opponentVehicle.getActor().addAction(Actions.parallel(moveAction, rotateAction));
+        //opponentVehicle.getActor().addAction(Actions.parallel(moveAction, rotateAction));
     }
 
     private long getTimeSinceUpdate() {
@@ -173,10 +173,10 @@ public class MultiplayerGameWorld extends GameWorld implements GameListener {
             return;
         }
 
-        Body vehicleBody = clientPlayer.getVehicle().getBody();
-        float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
+        //Body vehicleBody = clientPlayer.getVehicle().getBody();
+        //float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
+            //sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
             lastSyncTime = System.nanoTime();
         }
     }

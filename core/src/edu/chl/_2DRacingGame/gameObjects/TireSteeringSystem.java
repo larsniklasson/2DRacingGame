@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.gameObjects;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
 import edu.chl._2DRacingGame.helperClasses.InputManager;
 
 import java.util.Set;
@@ -10,22 +11,22 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-16.
  */
-public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
+public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
     Set<InputManager.PressedKey> keys;
 
 
-    public TireSteeringSystem(T v) {
-        super(v);
+    public TireSteeringSystem(OurVehicle ourVehicle) {
+        super(ourVehicle);
     }
 
     @Override
     void update(float delta) {
 
-        keys = InputManager.pollForInput();
+        keys = InputManager.pollForInput(); //TODO make some kind of inputprocessor instead, so you dont have to poll every frame. this works fine though
 
         turnWheels();
-        for(Tire t : ((T)v).getTires()){
+        for(Tire t : vehicle.getTires()){
             t.updateValues();
             updateDrive(t);
             updateFriction(t);
@@ -33,7 +34,7 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
 
     }
 
-    private void updateDrive(Tire t) {
+    private void updateDrive(Tire t) { //TODO make a general method for any body - so it can be used in other SteeringSystems (includes friction methods)
 
 
 
@@ -47,11 +48,12 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
         } else {
             return;
         }
-        System.out.println("desiredspeed " + desiredSpeed);
+
+
 
         Vector2 currentForwardNormal = t.getBody().getWorldVector(new Vector2(0, 1));
 
-        float currentSpeed = t.getForwardVelocity().dot(currentForwardNormal);
+        float currentSpeed = Box2DUtils.getForwardVelocity(t.getBody()).dot(currentForwardNormal);
 
 
         float force;
@@ -82,13 +84,13 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
     }
 
     private void applyRoadFriction(Tire t) {
-        Vector2 currentForwardNormal = t.getForwardVelocity();
+        Vector2 currentForwardNormal = Box2DUtils.getForwardVelocity(t.getBody());
 
         t.getBody().applyForceToCenter(currentForwardNormal.scl(t.getCurrentBackwardsFriction()), true);
     }
 
     private void reduceSideWaysVelocity(Tire t) {
-        Vector2 impulse = t.getLateralVelocity().cpy().scl(t.getBody().getMass() * -1);
+        Vector2 impulse = Box2DUtils.getLateralVelocity(t.getBody()).cpy().scl(t.getBody().getMass() * -1);
 
         //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
 
@@ -104,11 +106,10 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
 
     public void turnWheels() {
 
-        T ov = (T) this.v;
 
-        float lockAngle = MathUtils.degreesToRadians * ov.getMaxTurnAngle();
+        float lockAngle = MathUtils.degreesToRadians * vehicle.getMaxTurnAngle();
 
-        float turnRadiansPerSec = ov.getTurnPerSecond() * MathUtils.degreesToRadians; //instant as it is now
+        float turnRadiansPerSec = vehicle.getTurnDegreesPerSecond() * MathUtils.degreesToRadians; //instant as it is now
         float turnPerTimeStep = turnRadiansPerSec / 60f;
         float desiredAngle = 0;
 
@@ -119,7 +120,7 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
             desiredAngle = -lockAngle;
         }
 
-        float angleNow = ov.frontJoints.get(0).getJointAngle();
+        float angleNow = vehicle.frontJoints.get(0).getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
 
         if (angleToTurn < -turnPerTimeStep) {
@@ -130,7 +131,7 @@ public class TireSteeringSystem<T extends OurVehicle> extends SteeringSystem{
 
         float newAngle = angleNow + angleToTurn;
 
-        for(RevoluteJoint rj : ov.frontJoints){
+        for(RevoluteJoint rj : vehicle.frontJoints){
             rj.setLimits(newAngle, newAngle);
         }
 

@@ -40,7 +40,7 @@ public class GameWorld implements Disposable {
     /**
      * Box2D scale factor
      */
-    public static float PIXELS_PER_METER = 20f;
+    public static float PIXELS_PER_METER = 20f; //TODO maybe this does not belong here. will be the same for all gameworlds
 
 
 
@@ -94,19 +94,22 @@ public class GameWorld implements Disposable {
 
     public void update(float delta) {
         b2World.step(delta, 3, 3);
-        Set<InputManager.PressedKey> keys = InputManager.pollForInput();
+        Set<InputManager.PressedKey> keys = InputManager.pollForInput(); // not needed with current steering system
         for (Player player : players) {
             if (player.isControlledByClient()) {
                 // We should only control our own vehicle ...
-                player.getVehicle().update(keys);
+                player.getVehicle().update(delta);
             } else {
+
+
+
                 // ... just move the opponents texture
                 /*player.getVehicle().updateSprite();
                 for(Tire t : player.getVehicle().getTires()){
                     t.updateSprite();
                 }*/
 
-                player.getVehicle().MPspriteUpdate();
+                //player.getVehicle().MPspriteUpdate();
 
 
             }

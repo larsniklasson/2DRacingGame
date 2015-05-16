@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class MagicCarpet extends Vehicle{
+public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle but this works for now
     private Tire tire;
     private static final float WIDTH = 20f/ GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;
@@ -24,6 +24,8 @@ public class MagicCarpet extends Vehicle{
 
     public MagicCarpet(World world) {
         super(world);
+
+        steeringSystem = new FlyingSteeringSystem(this);
 
         Texture texture = Assets.magicCarpetBody;
         setSprite(new Sprite(texture));
@@ -39,18 +41,5 @@ public class MagicCarpet extends Vehicle{
         attachTire(tire, new Vector2(0,0), false);
     }
 
-    @Override
-    public void turnWheels(Set<InputManager.PressedKey> keys){
-        float torque = 0;
-        if(keys.contains(InputManager.PressedKey.Left)){
-            torque = 3;
-        }
 
-        if (keys.contains(InputManager.PressedKey.Right)){
-            torque = -3;
-        }
-
-        tire.getBody().applyAngularImpulse(0.1f * tire.getBody().getInertia() * -tire.getBody().getAngularVelocity(), true);
-        tire.getBody().applyTorque(torque, true);
-    }
 }

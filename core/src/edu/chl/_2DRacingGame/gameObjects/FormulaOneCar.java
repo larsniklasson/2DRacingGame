@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-05-09.
  */
-public class FormulaOneCar extends Vehicle{
+public class FormulaOneCar extends OurVehicle{
 
     //comment out debugrenderer for full viewing pleasure
 
@@ -47,7 +47,10 @@ public class FormulaOneCar extends Vehicle{
         Texture texture = Assets.f1CarBody;
         setSprite(new Sprite(texture));
 
-        setMaxAngle(MAX_ANGLE);
+        steeringSystem = new TireSteeringSystem(this);
+
+        setMaxTurnAngle(MAX_ANGLE);
+
 
         Vector2[] vertices = new Vector2[6];
 
