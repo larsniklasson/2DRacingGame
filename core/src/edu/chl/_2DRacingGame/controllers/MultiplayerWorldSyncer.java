@@ -1,24 +1,21 @@
-package edu.chl._2DRacingGame.world;
+package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
-import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
-import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.models.ScoreBoard;
+import edu.chl._2DRacingGame.world.UpdateListener;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,42 +23,30 @@ import java.util.Map;
 /**
  * @author Daniel Sunnerberg
  *
- * TODO should probably be a controller
  * TODO users colliding case
  * TODO proper delete/disconnect of room/AppWarp
  */
-public class MultiplayerGameWorld extends GameWorld implements RaceListener {
+public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
     /**
      * Minimum time in ms before next update is sent to opponents.
      */
     private static final int MIN_UPDATE_WAIT = 250;
-
     /**
-     * The time when sent the last update.
+     * The time when the last update was sent.
      */
     private long lastSyncTime = 0;
 
-    /**
-     * Player controlled by our client.
-     */
-    private Player clientPlayer;
+    private final Player clientPlayer;
+    private final List<Player> players;
 
-    private final ScoreBoard scoreBoard = new ScoreBoard();
+    private final WarpClient warpClient;
+    private final List<OpponentListener> opponentListeners = new ArrayList<>();
 
-    private WarpClient warpClient;
-
-    public MultiplayerGameWorld(GameMap gameMap, GameMode gameMode) {
-        super(gameMap, gameMode);
-        gameMode.addListener(this);
-    }
-
-    public void setClientPlayer(Player player) {
-        this.clientPlayer = player;
-    }
-
-    public void setWarpClient(WarpClient warpClient) {
+    public MultiplayerWorldSyncer(WarpClient warpClient, Player clientPlayer, List<Player> players) {
         this.warpClient = warpClient;
+        this.clientPlayer = clientPlayer;
+        this.players = players;
 
         warpClient.addNotificationListener(new WarpClientNotificationAdapter() {
             @Override
@@ -69,6 +54,10 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
                 recievedUpdate(new String(updateEvent.getUpdate()));
             }
         });
+    }
+
+    public void addOpponentListener(OpponentListener listener) {
+        opponentListeners.add(listener);
     }
 
     private Map<String, String> getUpdateProperties(String json) {
@@ -102,10 +91,16 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
         float frontWheelAngle = Float.parseFloat(updateData.get("front_wheel_angle"));
         String senderUserName = updateData.get("senderUserName");
 
-        for (Player opponent : getPlayers()) {
+        for (Player opponent : players) {
             if (senderUserName.equals(opponent.getUserName())) {
                 moveOpponent(opponent, x, y, angle, frontWheelAngle);
             }
+        }
+    }
+
+    private void notifyOpponentListeners(Player opponent, Double raceTime) {
+        for (OpponentListener listener : opponentListeners) {
+            listener.opponentFinished(opponent, raceTime);
         }
     }
 
@@ -114,9 +109,9 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
 
         String finishedUserName = updateData.get("senderUserName");
         Double raceTime = Double.valueOf(updateData.get("raceTime"));
-        for (Player player : getPlayers()) {
+        for (Player player : players) {
             if (finishedUserName.equals(player.getUserName())) {
-                scoreBoard.addResult(player, raceTime);
+                notifyOpponentListeners(player, raceTime);
                 return;
             }
         }
@@ -141,9 +136,6 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
         if (opponentLocation.equals(new Vector2(x, y)) && angle == oldAngle) {
             return;
         }
-        //opponentVehicle.resetForces();
-
-        //opponentVehicle.setMP_angleToSetFrontTires(frontWheelAngle);
 
         float animationDuration = MIN_UPDATE_WAIT / 1000f;
         Action moveAction = Actions.moveTo(x, y, animationDuration);
@@ -162,22 +154,6 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
 
     private long getTimeSinceUpdate() {
         return (System.nanoTime() - lastSyncTime) / 1000000;
-    }
-
-    @Override
-    public void update(float delta) {
-        super.update(delta);
-
-        if (clientPlayer == null) {
-            return;
-        }
-
-        //Body vehicleBody = clientPlayer.getVehicle().getBody();
-        //float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
-        if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
-            //sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
-            lastSyncTime = System.nanoTime();
-        }
     }
 
     /**
@@ -213,6 +189,17 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
         warpClient.sendUpdatePeers(new Gson().toJson(updateData, typeOfMap).getBytes());
     }
 
+    @Override
+    public void worldUpdated() {
+        // TODO
+        //Body vehicleBody = clientPlayer.getVehicle().getBody();
+        //float wheelAngle = clientPlayer.getVehicle().getCurrentFrontWheelAngle();
+        if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
+            //sendLocation(vehicleBody.getTransform().getPosition(), vehicleBody.getTransform().getRotation(), wheelAngle);
+            lastSyncTime = System.nanoTime();
+        }
+    }
+
     /**
      * Called when our vehicle has finished the race.
      *
@@ -220,17 +207,8 @@ public class MultiplayerGameWorld extends GameWorld implements RaceListener {
      * @param message
      */
     @Override
-    public void raceFinished(double raceTime, String message) { // TODO rename interface params?
+    public void raceFinished(double raceTime, String message) {
         notifyFinishedRace(raceTime);
     }
 
-    public ScoreBoard getScoreBoard() {
-        return scoreBoard;
-    }
-
-    @Override
-    public void addPlayers(List<Player> players) {
-        super.addPlayers(players);
-        scoreBoard.trackPlayers(players);
-    }
 }
