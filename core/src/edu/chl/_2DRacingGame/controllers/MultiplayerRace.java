@@ -53,7 +53,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public void raceReady(WarpClient client, List<Player> players) {
+    public void raceReady(String roomId, WarpClient client, List<Player> players) {
         Gdx.app.postRunnable(() -> {
             GameWorld world = getWorld();
 
@@ -65,7 +65,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
             Player player = getPlayer();
 
-            worldSyncer = new MultiplayerWorldSyncer(client, player, players);
+            worldSyncer = new MultiplayerWorldSyncer(roomId, client, player, players);
             worldSyncer.addOpponentListener(this);
 
             getMode().addListener(worldSyncer);
@@ -104,6 +104,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     @Override
     public void displayMainMenu() {
+        getWorld().removeUpdateListener(worldSyncer);
+        worldSyncer.disconnect();
         gameController.displayStartMenu();
     }
 

@@ -25,8 +25,7 @@ import java.util.Map;
  * @author Daniel Sunnerberg
  *
  * TODO users colliding case
- * TODO proper delete/disconnect of room/AppWarp
- * TODO despawn opponent when reached the goal
+ * TODO despawn vehicle on player disconnect
  */
 public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
@@ -38,24 +37,29 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * The time when the last update was sent.
      */
     private long lastSyncTime = 0;
-
     private final Player clientPlayer;
+
     private final List<Player> players;
 
+    private final String roomId;
     private final WarpClient warpClient;
+
+    private final WarpClientNotificationAdapter clientNofiticationAdapter;
     private final List<OpponentListener> opponentListeners = new ArrayList<>();
 
-    public MultiplayerWorldSyncer(WarpClient warpClient, Player clientPlayer, List<Player> players) {
+    public MultiplayerWorldSyncer(String roomId, WarpClient warpClient, Player clientPlayer, List<Player> players) {
+        this.roomId = roomId;
         this.warpClient = warpClient;
         this.clientPlayer = clientPlayer;
         this.players = players;
 
-        warpClient.addNotificationListener(new WarpClientNotificationAdapter() {
+        clientNofiticationAdapter = new WarpClientNotificationAdapter() {
             @Override
             public void onUpdatePeersReceived(UpdateEvent updateEvent) {
                 recievedUpdate(new String(updateEvent.getUpdate()));
             }
-        });
+        };
+        warpClient.addNotificationListener(clientNofiticationAdapter);
     }
 
     public void addOpponentListener(OpponentListener listener) {
@@ -228,6 +232,24 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     @Override
     public void raceFinished(double raceTime, String message) {
         notifyFinishedRace(raceTime);
+    }
+
+    private void removeClientListeners() {
+        warpClient.removeNotificationListener(clientNofiticationAdapter);
+    }
+
+    /**
+     * Disconnects from AppWarp, leaving eventual rooms and removing listeners.
+     */
+    public void disconnect() {
+        Gdx.app.log("MultiplayerWorldSyncer", "Disconnecting from AppWarp.");
+        if (roomId != null && ! roomId.isEmpty()) {
+            warpClient.unsubscribeRoom(roomId);
+            warpClient.leaveRoom(roomId);
+        }
+
+        removeClientListeners();
+        warpClient.disconnect();
     }
 
 }

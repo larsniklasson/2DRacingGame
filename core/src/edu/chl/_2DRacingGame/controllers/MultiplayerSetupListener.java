@@ -9,6 +9,6 @@ import java.util.List;
  * @author Daniel Sunnerberg
  */
 public interface MultiplayerSetupListener {
-    void raceReady(WarpClient client, List<Player> players);
+    void raceReady(String roomId, WarpClient client, List<Player> players);
     void connectionError(String message);
 }

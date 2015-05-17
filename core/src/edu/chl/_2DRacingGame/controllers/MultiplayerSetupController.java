@@ -197,7 +197,6 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
         if (roomId != null && !roomId.isEmpty()) {
             warpClient.unsubscribeRoom(roomId);
             warpClient.leaveRoom(roomId);
-            warpClient.deleteRoom(roomId);
         }
 
         removeClientListeners();
@@ -212,7 +211,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
     private void raceReady() {
         Gdx.app.log("MultiplayerSetupController", "Race is ready");
         removeClientListeners();
-        listener.raceReady(warpClient, roomPlayers);
+        listener.raceReady(roomId, warpClient, roomPlayers);
     }
 
     /**
