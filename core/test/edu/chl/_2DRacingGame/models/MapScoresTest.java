@@ -18,12 +18,11 @@ public class MapScoresTest {
 
     @Before
     public void setUp() throws Exception {
-        GameMap map = GameMap.values()[0]; // TODO
         GameMode mode = mock(GameMode.class);
         // Use a typical "lower is better" comparator
         when(mode.getScoreComparator()).thenReturn(Double::compareTo);
 
-        mapScores = new MapScores(map, mode);
+        mapScores = new MapScores(mode.getScoreComparator());
     }
 
     @Test

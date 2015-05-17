@@ -18,26 +18,21 @@ import java.util.List;
  */
 public class MapScores {
 
-    private final GameMap map;
-    private transient final GameMode mode;
-
-    private final Comparator<Double> highscoreComparator;
+    private final Comparator<Double> scoreComparator;
 
     /**
-     * This list will always be sorted after the highscoreComparator. Should normally be a TreeSet, but then its objects
+     * This list will always be sorted after the scoreComparator. Should normally be a TreeSet, but then its objects
      * would need to be wrapped since it's the GameMode who decides the ordering.
      */
     private final List<Double> scores;
 
-    public MapScores(GameMap map, GameMode mode) {
-        this(map, mode, new ArrayList<>());
+    public MapScores(Comparator<Double> scoreComparator) {
+        this(scoreComparator, new ArrayList<>());
     }
 
-    public MapScores(GameMap map, GameMode mode, List<Double> scores) {
-        this.map = map;
-        this.mode = mode;
+    public MapScores(Comparator<Double> scoreComparator, List<Double> scores) {
         this.scores = scores;
-        highscoreComparator = mode.getScoreComparator();
+        this.scoreComparator = scoreComparator;
     }
 
     /**
@@ -47,7 +42,7 @@ public class MapScores {
      */
     public void addScore(double score) {
         scores.add(score);
-        scores.sort(highscoreComparator);
+        scores.sort(scoreComparator);
     }
 
     /**
@@ -69,7 +64,7 @@ public class MapScores {
      * @return whether the score is the highest so far
      */
     public boolean isHighScore(Double other) {
-        return scores.isEmpty() || highscoreComparator.compare(getHighScore(), other) >= 0;
+        return scores.isEmpty() || scoreComparator.compare(getHighScore(), other) >= 0;
     }
 
     /**

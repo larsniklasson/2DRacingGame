@@ -46,7 +46,7 @@ public class MapScoresPersistor {
             Gdx.app.log("MapScores", "Found no stored scores. Creating now.");
         }
 
-        instance = new MapScores(map, mode, scores);
+        instance = new MapScores(mode.getScoreComparator(), scores);
     }
 
     private String getInstanceFileName(GameMap map, GameMode mode) {
