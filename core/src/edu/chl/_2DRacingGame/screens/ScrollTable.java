@@ -30,6 +30,7 @@ public class ScrollTable {
     public Table getTable(){
         return table;
     }
+    public String getImageName(){return imageArray[imageIndex].getName();}
 
     private void setupSelectorTable(){
         itemName = new Label("Name!", skin, "default");
@@ -69,23 +70,27 @@ public class ScrollTable {
     }
 
     private void previousItem() {
-        if(imageIndex==0)
-            imageIndex= imageArray.length-1;
-        else
-            imageIndex--;
-        System.out.println("Previous!");
+       decreaseImageIndex();
         redrawTable();
     }
 
     private void nextItem() {
-        if(imageIndex==imageArray.length-1)
-            imageIndex=0;
-        else
-            imageIndex++;
-        System.out.println("NExt!");
+        increaseImageIndex();
         redrawTable();
 
     }
 
+    private void increaseImageIndex(){
+        if(imageIndex==imageArray.length-1)
+            imageIndex=0;
+        else
+            imageIndex++;
+    }
 
+    private void decreaseImageIndex(){
+        if(imageIndex==0)
+            imageIndex= imageArray.length-1;
+        else
+            imageIndex--;
+    }
 }
