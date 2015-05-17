@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
@@ -39,13 +40,13 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
         table = new Table();
 
         String titleMessage = scoreBoard.isWinner(clientPlayer) ? WIN_MESSAGE : LOOSE_MESSAGE;
-        Label titleLabel = new Label(titleMessage, skin); // TODO size
+        Label titleLabel = new Label(titleMessage, skin, "arial40");
         titleLabel.setColor(Color.BLACK);
         table.add(titleLabel).row();
 
         boardLabel = new Label(null, skin);
         boardLabel.setColor(Color.BLACK);
-        table.add(boardLabel);
+        table.add(boardLabel).left();
 
         TextButton displayMainMenuButton = new TextButton("Return to main menu", skin, "default");
         displayMainMenuButton.setWidth(200f);
