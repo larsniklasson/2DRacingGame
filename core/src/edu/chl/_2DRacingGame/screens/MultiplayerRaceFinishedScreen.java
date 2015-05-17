@@ -11,8 +11,6 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 
-import java.util.Map;
-
 /**
  * @author Daniel Sunnerberg
  */
@@ -27,9 +25,9 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
     private Table table;
     private Label boardLabel;
 
-    private final RaceSummaryListener listener;
+    private final MainMenuDisplayer listener;
 
-    public MultiplayerRaceFinishedScreen(Player clientPlayer, ScoreBoard scoreBoard, RaceSummaryListener listener) {
+    public MultiplayerRaceFinishedScreen(Player clientPlayer, ScoreBoard scoreBoard, MainMenuDisplayer listener) {
         this.scoreBoard = scoreBoard;
         this.clientPlayer = clientPlayer;
         this.listener = listener;

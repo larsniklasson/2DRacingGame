@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
@@ -11,8 +10,9 @@ import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
+import edu.chl._2DRacingGame.screens.ErrorScreen;
 import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
-import edu.chl._2DRacingGame.screens.RaceSummaryListener;
+import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
 import edu.chl._2DRacingGame.world.GameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Daniel Sunnerberg
  */
-public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener, OpponentListener {
+public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener {
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
@@ -77,6 +77,22 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
             gameController.setScreen(getScreen());
         });
+    }
+
+    /**
+     * Called when we failed to find opponents for the race.
+     *
+     * @param message
+     */
+    @Override
+    public void connectionError(String message) {
+        Gdx.app.error("MultiplayerRace", "Failed to setup multiplayer race. Error message: " + message);
+        ErrorScreen errorScreen = new ErrorScreen(
+            "Failed to start multiplayer game",
+            "Please check your connection and try again.",
+            this
+        );
+        gameController.setScreen(errorScreen);
     }
 
     @Override

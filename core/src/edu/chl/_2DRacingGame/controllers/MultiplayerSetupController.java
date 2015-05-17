@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
+import com.google.common.base.Throwables;
 import com.google.gson.Gson;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
@@ -21,6 +22,8 @@ import java.util.List;
 
 /**
  * @author Daniel Sunnerberg
+ *
+ * TODO join only specific map
  */
 public class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
 
@@ -59,9 +62,8 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
                     Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
                     joinRoom();
                 } else {
-                    Gdx.app.log("MultiplayerSetupController", "Failed to findOpponent to AppWarp: " + connectEvent.getResult());
+                    listener.connectionError("Failed to findOpponent to AppWarp: " + connectEvent.getResult());
                     disconnect();
-                    // TODO not available
                 }
             }
 
@@ -96,9 +98,8 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
         } catch (Exception e) {
             // getInstance doesn't throw an exception but Exception, hence
             // the crazy catch
-            // TODO show multiplayer unavailable
+            listener.connectionError("Failed to get AppWarp connection. Stacktrace: " + Throwables.getStackTraceAsString(e));
             disconnect();
-            e.printStackTrace();
             return null;
         }
     }
@@ -121,9 +122,8 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
                 createEmptyRoom();
                 break;
             default:
+                listener.connectionError("Failed to find a suitable room. Response code: " + roomEvent.getResult());
                 disconnect();
-                // TODO
-                Gdx.app.log("MultiplayerSetupController", "Failed to find a suitable room. Disconnecting.");
                 break;
         }
     }
@@ -169,7 +169,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
             roomProperties.put("players", playersJson);
             warpClient.updateRoomProperties(roomId, roomProperties, null);
 
-        } else if (e.getJoinedUsers().length == 2) {
+        } else if (e.getJoinedUsers().length == 2) { // TODO custom size
             raceReady();
         }
     }

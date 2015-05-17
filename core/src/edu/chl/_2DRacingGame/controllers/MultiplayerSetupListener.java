@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface MultiplayerSetupListener {
     void raceReady(WarpClient client, List<Player> players);
+    void connectionError(String message);
 }
