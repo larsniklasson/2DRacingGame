@@ -14,18 +14,20 @@ public class WayPointSystem extends AISteeringSystem {
     private LinePath<Vector2> linePath;
     private FollowPath<Vector2, LinePath.LinePathParam> followPathSB;
 
-    public WayPointSystem(OurVehicle vehicle, Array<Vector2> wayPoints) {
+    public WayPointSystem(OurVehicle vehicle, Array<Vector2> wayPoints, Difficulty difficulty) {
         super(vehicle);
+
+        setSpeeds(vehicle.getAISpeeds(difficulty));
 
 
         this.wayPoints = wayPoints;
 
 
-        linePath = new LinePath<Vector2>(wayPoints, openPath);
+        linePath = new LinePath<Vector2>(wayPoints, false);
 
 
-        followPathSB = new FollowPath<Vector2, LinePath.LinePathParam>(this, linePath,3); //
-        // Setters below are only useful to arrive at the end of an open path
+        followPathSB = new FollowPath<>(this, linePath,3); //
+
 
         this.steeringBehavior = followPathSB;
     }

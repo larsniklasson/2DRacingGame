@@ -38,7 +38,7 @@ public class Car extends OurVehicle {
     public Car(World world) {
         super(world);
 
-        steeringSystem = new TireSteeringSystem(this);
+
 
         Vector2[] vertices = new Vector2[8];
 
@@ -81,5 +81,20 @@ public class Car extends OurVehicle {
 
 
 
+    }
+
+    @Override
+    public AISpeedHolder getEasySpeeds() {
+        return AISpeedHolder.getStandardEasySpeed();
+    }
+
+    @Override
+    public AISpeedHolder getMediumSpeeds() {
+        return AISpeedHolder.getStandardMediumSpeed();
+    }
+
+    @Override
+    public AISpeedHolder getHardSpeeds() {
+        return AISpeedHolder.getStandardHardSpeed();
     }
 }

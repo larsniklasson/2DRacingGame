@@ -25,7 +25,7 @@ public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle 
     public MagicCarpet(World world) {
         super(world);
 
-        steeringSystem = new FlyingSteeringSystem(this);
+        setSteeringSystem(new FlyingSteeringSystem(this));
 
         Texture texture = Assets.magicCarpetBody;
         setSprite(new Sprite(texture));
@@ -39,6 +39,21 @@ public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle 
         tire.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
 
         attachTire(tire, new Vector2(0,0), false);
+    }
+
+    @Override
+    public AISpeedHolder getEasySpeeds() {
+        return AISpeedHolder.getStandardEasySpeed();
+    }
+
+    @Override
+    public AISpeedHolder getMediumSpeeds() {
+        return AISpeedHolder.getStandardMediumSpeed();
+    }
+
+    @Override
+    public AISpeedHolder getHardSpeeds() {
+        return AISpeedHolder.getStandardHardSpeed();
     }
 
 

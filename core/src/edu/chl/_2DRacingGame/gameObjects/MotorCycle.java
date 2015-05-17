@@ -37,7 +37,6 @@ public class MotorCycle extends OurVehicle{
     public MotorCycle(World world) {
         super(world);
 
-        steeringSystem = new TireSteeringSystem(this);
 
         Texture texture = Assets.mcBody;
         setSprite(new Sprite(texture));
@@ -65,5 +64,20 @@ public class MotorCycle extends OurVehicle{
 
         setMaxTurnAngle(30f);
 
+    }
+
+    @Override
+    public AISpeedHolder getEasySpeeds() {
+        return AISpeedHolder.getStandardEasySpeed();  //TODO good values here
+    }
+
+    @Override
+    public AISpeedHolder getMediumSpeeds() {
+        return AISpeedHolder.getStandardMediumSpeed();
+    }
+
+    @Override
+    public AISpeedHolder getHardSpeeds() {
+        return AISpeedHolder.getStandardHardSpeed();
     }
 }

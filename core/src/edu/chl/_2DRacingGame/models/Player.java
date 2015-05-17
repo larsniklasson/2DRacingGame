@@ -32,6 +32,7 @@ public class Player {
     public Player(String userName, Vehicle vehicle) {
         this.userName = userName;
         this.vehicle = vehicle;
+        this.actor = new VehicleActor(vehicle);
     }
 
     public Player() {

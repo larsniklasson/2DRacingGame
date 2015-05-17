@@ -1,6 +1,5 @@
 package edu.chl._2DRacingGame.gameObjects;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +15,8 @@ import java.util.List;
  * Created by Lars Niklasson on 2015-05-15.
  */
 public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Drawable {
+
+
     private Sprite sprite;
 
     List<Tire> tires = new ArrayList<>();
@@ -34,6 +35,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     public OurVehicle(World world) {
         super(world);
+
+        setSteeringSystem(new TireSteeringSystem(this));
 
 
     }
@@ -154,6 +157,31 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
     public void setMP_FrontWheelAngle(float mp_frontWheelAngle){  //TODO bad variable names
         this.MP_FrontWheelAngle = mp_frontWheelAngle;
     }
+
+
+    public AISpeedHolder getAISpeeds(Difficulty difficulty){
+        if(difficulty == null){
+            return AISpeedHolder.getStandardMediumSpeed();
+        }
+
+        switch (difficulty){
+            case Easy:
+                return getEasySpeeds();
+
+            case Medium:
+                return getMediumSpeeds();
+
+            case Hard:
+                return getHardSpeeds();
+
+
+        }
+        return null;
+    }
+
+    public abstract AISpeedHolder getEasySpeeds();
+    public abstract AISpeedHolder getMediumSpeeds();
+    public abstract AISpeedHolder getHardSpeeds();
 
 
 }

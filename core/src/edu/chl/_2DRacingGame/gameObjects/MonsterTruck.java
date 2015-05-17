@@ -41,7 +41,6 @@ public class MonsterTruck extends OurVehicle {
 
         setTurnDegreesPerSecond(300);
 
-        steeringSystem = new TireSteeringSystem(this);
 
         Texture bodyTexture = Assets.monsterTruckBody;
         setSprite(new Sprite(bodyTexture));
@@ -70,5 +69,20 @@ public class MonsterTruck extends OurVehicle {
 
         attachTire(backTire.cpy(),new Vector2(16/SCALE, -16/SCALE),false);
 
+    }
+
+    @Override
+    public AISpeedHolder getEasySpeeds() {
+        return AISpeedHolder.getStandardEasySpeed();
+    }
+
+    @Override
+    public AISpeedHolder getMediumSpeeds() {
+        return AISpeedHolder.getStandardMediumSpeed();
+    }
+
+    @Override
+    public AISpeedHolder getHardSpeeds() {
+        return AISpeedHolder.getStandardHardSpeed();
     }
 }

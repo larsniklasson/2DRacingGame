@@ -47,7 +47,7 @@ public class FormulaOneCar extends OurVehicle{
         Texture texture = Assets.f1CarBody;
         setSprite(new Sprite(texture));
 
-        steeringSystem = new TireSteeringSystem(this);
+
 
         setMaxTurnAngle(MAX_ANGLE);
 
@@ -89,5 +89,20 @@ public class FormulaOneCar extends OurVehicle{
 
 
 
+    }
+
+    @Override
+    public AISpeedHolder getEasySpeeds() {
+        return AISpeedHolder.getStandardEasySpeed(); //TODO good values here, placeholder values for now
+    }
+
+    @Override
+    public AISpeedHolder getMediumSpeeds() {
+        return AISpeedHolder.getStandardMediumSpeed();
+    }
+
+    @Override
+    public AISpeedHolder getHardSpeeds() {
+        return AISpeedHolder.getStandardHardSpeed();
     }
 }

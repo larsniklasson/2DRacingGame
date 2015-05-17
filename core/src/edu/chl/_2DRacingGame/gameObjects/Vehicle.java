@@ -9,7 +9,7 @@ public abstract class Vehicle{
 
     //TODO vector2 fix (no libgdx code here)
 
-    public SteeringSystem steeringSystem;
+    private SteeringSystem steeringSystem;
     public abstract Vector2 getPosition();
 
     //not used ATM but AI-system will make use of these later
@@ -23,6 +23,8 @@ public abstract class Vehicle{
 
     public abstract void place(Vector2 position, float direction);
 
-
+    public void setSteeringSystem(SteeringSystem steeringSystem){
+        this.steeringSystem = steeringSystem;
+    }
 
 }

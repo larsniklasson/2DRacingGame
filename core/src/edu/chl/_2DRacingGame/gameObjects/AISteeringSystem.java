@@ -12,37 +12,34 @@ import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * Created by Lars Niklasson on 2015-05-16.  Most code from Libgdx's AI-LIB tests. https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests
+ *
+ * file in particular: https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/steer/box2d/Box2dSteeringEntity.java
  */
 public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implements Steerable<Vector2>{
 
-
     private float wheelAngle;
 
-
-
-    final boolean openPath = false;
-
-
-
+    private AISpeedHolder speedHolder;
 
     float boundingRadius;
     boolean tagged = false;
 
-    float maxLinearSpeed = 10;
-    float maxLinearAcceleration = 2000;
-    float maxAngularSpeed = 1000;
-    float maxAngularAcceleration = 1200;
-
+    /*private float maxLinearSpeed = 10;
+    private float maxLinearAcceleration = 2000;
+    private float maxAngularSpeed = 1000;
+    private float maxAngularAcceleration = 1200;
+*/
     boolean independentFacing = false;
 
     protected SteeringBehavior<Vector2> steeringBehavior;
 
-    private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+    private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<>(new Vector2());
 
 
 
     public AISteeringSystem(OurVehicle vehicle) {
         super(vehicle);
+
 
     }
 
@@ -110,47 +107,53 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
     @Override
     public float getMaxLinearSpeed() {
-        return maxLinearSpeed;
+        return speedHolder.getMaxLinearSpeed();
     }
 
     @Override
     public void setMaxLinearSpeed(float maxLinearSpeed) {
-        this.maxLinearSpeed = maxLinearSpeed;
+
+        speedHolder.setMaxLinearSpeed(maxLinearSpeed);
     }
 
     @Override
     public float getMaxLinearAcceleration() {
-        return maxLinearAcceleration;
+        return speedHolder.getMaxLinearAcceleration();
     }
 
     @Override
     public void setMaxLinearAcceleration(float maxLinearAcceleration) {
-        this.maxLinearSpeed = maxLinearAcceleration;
+        speedHolder.setMaxLinearAcceleration(maxLinearAcceleration);
     }
 
     @Override
     public float getMaxAngularSpeed() {
-        return maxAngularSpeed;
+        return speedHolder.getMaxAngularSpeed();
     }
 
     @Override
     public void setMaxAngularSpeed(float maxAngularSpeed) {
-        this.maxAngularSpeed = maxAngularSpeed;
+        speedHolder.setMaxAngularSpeed(maxAngularSpeed);
     }
 
     @Override
     public float getMaxAngularAcceleration() {
-        return maxAngularAcceleration;
+        return speedHolder.getMaxAngularAcceleration();
     }
 
     @Override
     public void setMaxAngularAcceleration(float maxAngularAcceleration) {
-        this.maxAngularAcceleration = maxAngularAcceleration;
+        speedHolder.setMaxAngularAcceleration(maxAngularAcceleration);
     }
+
+    public void setSpeeds(AISpeedHolder speeds){
+        this.speedHolder = speeds;
+    }
+
 
     @Override
     public void update (float deltaTime) {
-
+        //TODO implement GroundMaterial support
 
 
         if (steeringBehavior != null) {
@@ -226,7 +229,7 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
                 vehicle.place(vehicle.getBody().getPosition(), newOrientation);
 
 
-                System.out.println("f = " + f);
+                //System.out.println("f = " + f);
 
 
                 /*if(f < -0.04){
@@ -250,7 +253,7 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
                     wheelAngle -= Math.toRadians(2);
                 }
 
-                System.out.println("wheelangle: " + wheelAngle);
+                //System.out.println("wheelangle: " + wheelAngle);
 
 
                 for(int i = 0; i < vehicle.getTires().size(); i++){
@@ -271,7 +274,7 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
 
             // Cap the linear speed
-            Vector2 velocity = vehicle.getBody().getLinearVelocity();
+            Vector2 velocity = vehicle.getLinearVelocity();
             float currentSpeedSquare = velocity.len2();
             float maxLinearSpeed = getMaxLinearSpeed();
             if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
