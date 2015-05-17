@@ -91,11 +91,11 @@ public class Assets {
 
 
         //--------Images for Vehicle Selection
-        magicCarpet = loadTexture("magicCarpet.jpg");
-        motorCycle = loadTexture("Motorcycle.jpg");
-        car = loadTexture("car.png");
-        monsterTruck = loadTexture("monsterTruck.jpg");
-        formula1 = loadTexture("formula1.jpg");
+        magicCarpet = loadTexture("VehicleSelectorImages/magicCarpet.jpg");
+        motorCycle = loadTexture("VehicleSelectorImages/Motorcycle.jpg");
+        car = loadTexture("VehicleSelectorImages/car.png");
+        monsterTruck = loadTexture("VehicleSelectorImages/monsterTruck.jpg");
+        formula1 = loadTexture("VehicleSelectorImages/formula1.jpg");
 
 
 
