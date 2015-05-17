@@ -45,7 +45,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public void raceFinished(double score, String message) {
+    public void raceFinished(double time, String message) {
+        scoreBoard.addResult(getPlayer(), time);
         Gdx.app.postRunnable(() -> {
             gameController.setScreen(new MultiplayerRaceFinishedScreen(getPlayer(), scoreBoard, this));
         });

@@ -112,7 +112,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         String finishedUserName = updateData.get("senderUserName");
         Double raceTime = Double.valueOf(updateData.get("raceTime"));
         for (Player player : players) {
-            if (finishedUserName.equals(player.getUserName())) {
+            if (finishedUserName.equals(player.getUserName()) && ! clientPlayer.getUserName().equals(finishedUserName)) {
                 notifyOpponentListeners(player, raceTime);
                 return;
             }
