@@ -24,11 +24,7 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
     float boundingRadius;
     boolean tagged = false;
 
-    /*private float maxLinearSpeed = 10;
-    private float maxLinearAcceleration = 2000;
-    private float maxAngularSpeed = 1000;
-    private float maxAngularAcceleration = 1200;
-*/
+
     boolean independentFacing = false;
 
     protected SteeringBehavior<Vector2> steeringBehavior;
