@@ -24,7 +24,7 @@ public class SinglePlayerRace extends RaceController {
 
     private void requestRaceSettings() {
         // TODO these should be chosen through in-game menu later
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(this));
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
 
         scoresPersistor = new MapScoresPersistor(getMap(), getMode());
         scoresPersistor.findInstance();

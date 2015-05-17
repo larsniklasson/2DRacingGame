@@ -32,7 +32,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     private void requestRaceSettings() {
         // TODO these should be chosen through in-game menu later
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(this));
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
 
         Vehicle vehicle = new Car(getWorld().getb2World());
         getPlayer().setVehicle(vehicle);

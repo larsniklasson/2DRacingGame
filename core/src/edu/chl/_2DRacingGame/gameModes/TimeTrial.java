@@ -12,13 +12,14 @@ import java.util.concurrent.TimeUnit;
 public class TimeTrial extends GameMode {
 
     private int currentLap = 1;
-    private final int lapGoal = 1; // TODO inject from menu
+    private final int lapGoal;
 
     private final ScreenText currentLapText;
     private final ScreenText currentRaceTimeText;
 
-    public TimeTrial(RaceListener listener) {
+    public TimeTrial(int lapGoal, RaceListener listener) {
         super(listener);
+        this.lapGoal = lapGoal;
 
         currentLapText = new ScreenText(new Vector2(1200, 670));
         addScreenText(currentLapText);
