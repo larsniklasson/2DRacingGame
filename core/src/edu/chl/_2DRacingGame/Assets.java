@@ -49,6 +49,9 @@ public class Assets {
     public static Texture ful;
     public static Texture magicCarpet;
     public static Texture motorCycle;
+    public static Texture monsterTruck;
+    public static Texture formula1;
+    public static Texture car;
     public static BitmapFont arial40;
     public static Image [] mapArray;
     public static Image [] vehicleArray;
@@ -78,6 +81,8 @@ public class Assets {
 
         //-------------------
 
+
+        //--- stuff that will probably be deleted
         mainMenuBackground = loadTexture("mainMenuBackground.jpg");
         mainMenuText = loadTexture("mainMenuText.png");
         pauseMenu = loadTexture("pauseMenu.png");
@@ -86,12 +91,21 @@ public class Assets {
         dirt = loadTexture("dirt.png");
         ful = loadTexture("ful.png");
 
+
+        //--------Images for Vehicle Selection
         magicCarpet = loadTexture("magicCarpet.jpg");
         motorCycle = loadTexture("Motorcycle.jpg");
+        car = loadTexture("car.png");
+        monsterTruck = loadTexture("monsterTruck.jpg");
+        formula1 = loadTexture("formula1.jpg");
+
+
+
         arial40 = new BitmapFont(Gdx.files.internal("Arial40.fnt"),false);
 
         mapArray = new Image[] {textureToImage(ice), textureToImage(ful)};
-        vehicleArray = new Image[] {textureToImage(motorCycle), textureToImage(magicCarpet)};
+        vehicleArray = new Image[] {textureToImage(motorCycle), textureToImage(magicCarpet), textureToImage(car),
+                textureToImage(formula1), textureToImage(monsterTruck)};
 
     }
 
