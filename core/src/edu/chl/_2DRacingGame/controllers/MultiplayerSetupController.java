@@ -1,22 +1,18 @@
 package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.World;
 import com.google.common.base.Throwables;
 import com.google.gson.Gson;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
 import com.shephertz.app42.gaming.multiplayer.client.events.*;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
-import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
-import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +21,7 @@ import java.util.List;
  *
  * TODO join only specific map
  */
-public class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
+class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
 
     private static final String API_KEY = "1b1136c934963a62964ccdd973e52b476f3977a743451d54c4f5d427d573a517";
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
@@ -223,7 +219,7 @@ public class MultiplayerSetupController implements RoomRequestListener, ZoneRequ
      * @param properties
      * @param lockedPropertiesTable
      */
-    public void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
+    private void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
         Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
         roomPlayers = getPlayersFromJson(playersJson);

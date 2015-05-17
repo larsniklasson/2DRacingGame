@@ -5,5 +5,5 @@ package edu.chl._2DRacingGame.controllers;
  */
 enum MultiplayerUpdateType {
     LOCATION_UPDATE,
-    FINISHED_RACE;
+    FINISHED_RACE
 }

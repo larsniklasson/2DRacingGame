@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
@@ -23,7 +22,6 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
     private final ScoreBoard scoreBoard;
     private final Player clientPlayer;
 
-    private Table table;
     private Label boardLabel;
 
     private final MainMenuDisplayer listener;
@@ -37,7 +35,7 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
     @Override
     public void show() {
         super.show();
-        table = new Table();
+        Table table = new Table();
 
         String titleMessage;
         if (scoreBoard.isWinner(clientPlayer)) {

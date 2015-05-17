@@ -22,8 +22,8 @@ public class SinglePlayerMenu extends GUIScreen {
 
     private _2DRacingGame game;
 
-    private SelectBox laps;
-    private SelectBox numberOfOpponents;
+    private SelectBox<Integer> laps;
+    private SelectBox<Integer> numberOfOpponents;
 
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
@@ -50,8 +50,8 @@ public class SinglePlayerMenu extends GUIScreen {
         t.bottom();
         final Label lapsLabel = new Label("Number of laps:",skin,"default");
         final Label oppLabel = new Label("Number of opponents:",skin,"default");
-        numberOfOpponents = new SelectBox(skin);
-        laps = new SelectBox(skin);
+        numberOfOpponents = new SelectBox<>(skin);
+        laps = new SelectBox<>(skin);
         laps.setItems(1,2,3);
         numberOfOpponents.setItems(1,2,3,4,5,6);
         t.add(lapsLabel);

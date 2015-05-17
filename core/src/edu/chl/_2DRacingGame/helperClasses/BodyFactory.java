@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 /**
  * @author Daniel Sunnerberg
  */
-public class BodyFactory {
+class BodyFactory {
 
     public static Body createStaticBody(World world, Shape shape) {
         BodyDef bodyDef = new BodyDef();

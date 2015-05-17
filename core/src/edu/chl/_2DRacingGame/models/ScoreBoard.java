@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame.models;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Represents a simple score board which keeps track of when players finished a race and at which position/time.
@@ -10,7 +9,7 @@ import java.util.stream.Stream;
  */
 public class ScoreBoard {
 
-    private TreeSet<RaceResult> scoreBoard = new TreeSet<>();
+    private final TreeSet<RaceResult> scoreBoard = new TreeSet<>();
 
     public void addResult(Player player, Double time) {
         for (RaceResult result : scoreBoard) {

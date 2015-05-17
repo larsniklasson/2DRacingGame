@@ -12,8 +12,8 @@ import java.util.List;
  */
 public abstract class GameMode implements LapListener {
 
-    private ArrayList<ScreenText> screenTexts = new ArrayList<>();
-    private Stopwatch stopWatch = Stopwatch.createUnstarted();
+    private final ArrayList<ScreenText> screenTexts = new ArrayList<>();
+    private final Stopwatch stopWatch = Stopwatch.createUnstarted();
 
     private final List<RaceListener> listeners = new ArrayList<>();
 

@@ -2,8 +2,6 @@ package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.LapListener;
-import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Checkpoint;
 import edu.chl._2DRacingGame.models.CheckpointType;
 
@@ -14,7 +12,7 @@ import java.util.Map;
 /**
  * @author Daniel Sunnerberg
  */
-public class CheckpointController {
+class CheckpointController {
 
     private final LapListener listener;
 

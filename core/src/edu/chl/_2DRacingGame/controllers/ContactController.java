@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.models.Checkpoint;
  * Revised by Daniel Sunnerberg on 2015-04-26.
  * Revised by Lars Niklasson on 2015-05-03.
  */
-public class ContactController implements ContactListener {
+class ContactController implements ContactListener {
 
     private final ContactDelegator contactDelegator;
 

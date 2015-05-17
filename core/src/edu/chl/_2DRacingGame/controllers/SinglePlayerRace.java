@@ -8,7 +8,6 @@ import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * @author Daniel Sunnerberg
@@ -86,11 +85,6 @@ public class SinglePlayerRace extends RaceController {
         }
 
         restartRace();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
 }

@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import edu.chl._2DRacingGame.controllers.MultiplayerWorldSyncer;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.InputManager;

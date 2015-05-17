@@ -19,7 +19,6 @@ import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
-import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
 
