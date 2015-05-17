@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
@@ -18,8 +20,6 @@ import java.util.List;
 
 /**
  * @author Daniel Sunnerberg
- *
- * TODO consistent spelling of multiplayer...
  */
 public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, RaceSummaryListener, OpponentListener {
 
@@ -90,8 +90,16 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         gameController.displayStartMenu();
     }
 
+    private void hideVehicle(Player player) {
+        // Since removing bodies from the world while it is active is a potentially dangerous action
+        // according to documentation, we will simply move it outside the map.
+        player.getActor().clearActions();
+        player.getActor().addAction(Actions.sequence(Actions.delay(0.2f), Actions.moveTo(-10, -10, 0)));
+    }
+
     @Override
     public void opponentFinished(Player player, double time) {
         scoreBoard.addResult(player, time);
+        hideVehicle(player);
     }
 }
