@@ -15,7 +15,10 @@ public class ScoreBoard {
     public void addResult(Player player, Double time) {
         for (RaceResult result : scoreBoard) {
             if (result.getPlayer().equals(player)) {
+                // Remove and then add the result to ensure set order
+                scoreBoard.remove(result);
                 result.updateTime(time);
+                scoreBoard.add(result);
                 return;
             }
         }
@@ -46,5 +49,24 @@ public class ScoreBoard {
         for (Player player : players) {
             scoreBoard.add(new RaceResult(player, null));
         }
+    }
+
+    /**
+     * Gets the race position of the specified player.
+     *
+     * @param player
+     * @return
+     */
+    public int getPosition(Player player) {
+        int position = 1;
+        for (RaceResult entry : scoreBoard) {
+            if (entry.getPlayer().equals(player)) {
+                return position;
+            }
+
+            position++;
+        }
+
+        throw new IllegalArgumentException("Player has not finished the race or is not  tracked.");
     }
 }

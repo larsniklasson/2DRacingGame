@@ -18,7 +18,7 @@ import edu.chl._2DRacingGame.models.ScoreBoard;
 public class MultiplayerRaceFinishedScreen extends GUIScreen {
 
     private static final String WIN_MESSAGE = "Congratulations, you won the race!";
-    private static final String LOOSE_MESSAGE = "Sorry, you did not win the race."; // TODO position
+    private static final String LOOSE_MESSAGE = "You reached the goal with position %s/%s.";
 
     private final ScoreBoard scoreBoard;
     private final Player clientPlayer;
@@ -39,7 +39,12 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
         super.show();
         table = new Table();
 
-        String titleMessage = scoreBoard.isWinner(clientPlayer) ? WIN_MESSAGE : LOOSE_MESSAGE;
+        String titleMessage;
+        if (scoreBoard.isWinner(clientPlayer)) {
+            titleMessage = WIN_MESSAGE;
+        } else {
+            titleMessage = String.format(LOOSE_MESSAGE, scoreBoard.getPosition(clientPlayer), scoreBoard.getResults().size());
+        }
         Label titleLabel = new Label(titleMessage, skin, "arial40");
         titleLabel.setColor(Color.BLACK);
         table.add(titleLabel).row();

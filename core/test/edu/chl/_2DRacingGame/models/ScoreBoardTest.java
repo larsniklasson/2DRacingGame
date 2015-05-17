@@ -94,4 +94,31 @@ public class ScoreBoardTest {
             }
         }
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetPosition() throws Exception {
+        scoreBoard.addResult(p1, 5d);
+        scoreBoard.getPosition(p2);
+    }
+
+    @Test
+    public void testGetPosition2() throws Exception {
+        scoreBoard.addResult(p1, 5d);
+        assertEquals(1, scoreBoard.getPosition(p1));
+
+        scoreBoard.addResult(p2, 2d);
+        assertEquals(1, scoreBoard.getPosition(p2));
+        assertEquals(2, scoreBoard.getPosition(p1));
+    }
+
+    @Test
+    public void testGetPosition3() throws Exception {
+        scoreBoard.trackPlayers(Lists.newArrayList(p1, p2));
+        scoreBoard.addResult(p2, 5d);
+        assertEquals(1, scoreBoard.getPosition(p2));
+
+        scoreBoard.addResult(p1, 1d);
+        assertEquals(1, scoreBoard.getPosition(p1));
+        assertEquals(2, scoreBoard.getPosition(p2));
+    }
 }
