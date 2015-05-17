@@ -11,11 +11,11 @@ import edu.chl._2DRacingGame._2DRacingGame;
 /**
  * Created by Anton on 2015-05-08.
  */
-public class OptionsMenu extends GUIScreen {
+public class OptionsMenuScreen extends GUIScreen {
 
     private _2DRacingGame game;
 
-    public OptionsMenu(_2DRacingGame game) {
+    public OptionsMenuScreen(_2DRacingGame game) {
         this.game = game;
     }
 
@@ -27,7 +27,7 @@ public class OptionsMenu extends GUIScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenu(game));
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 
