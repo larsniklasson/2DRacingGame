@@ -12,13 +12,11 @@ import edu.chl._2DRacingGame._2DRacingGame;
  */
 public class MainMenuScreen extends GUIScreen {
 
-    private _2DRacingGame game;
-    private Table table;
+    private MainMenuListener listener;
 
-    public MainMenuScreen(_2DRacingGame game) {
+    public MainMenuScreen(MainMenuListener listener) {
 
-        this.game = game;
-        table = new Table();
+        this.listener = listener;
     }
 
     @Override
@@ -28,33 +26,35 @@ public class MainMenuScreen extends GUIScreen {
         final TextButton options = new TextButton("options", skin, "default");
         final TextButton exit = new TextButton("Exit", skin, "default");
         final Label gameTitle = new Label("2D Racing Game!", skin, "arial40");
+        final Table table = new Table();
+
 
         //Adds Listeners to all buttons
         singlePlayer.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new SinglePlayerMenu());
+                listener.displaySinglePlayerMenuScreen();
             }
         });
 
         multiPlayer.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MultiPlayerMenu(game));
+                listener.displayMultiPlayerMenuScreen();
             }
         });
 
         options.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new OptionsMenu(game));
+                listener.displayOptionsScreen();
             }
         });
 
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                listener.exitGame();
             }
         });
 
@@ -62,7 +62,7 @@ public class MainMenuScreen extends GUIScreen {
 
         table.add(gameTitle).padBottom(60).colspan(2).center();
         table.row();
-        table.add(singlePlayer).width(400f).height(40f);
+        table.add(singlePlayer).width(400f).height(40f).padRight(50);
         table.add(multiPlayer).width(400f).height(40f);
         table.row();
         table.add(options).width(150f).height(30f).padTop(30).colspan(2).center();
