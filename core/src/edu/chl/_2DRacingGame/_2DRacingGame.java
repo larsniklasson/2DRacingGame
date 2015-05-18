@@ -6,7 +6,7 @@ import edu.chl._2DRacingGame.controllers.GameController;
 import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.RaceController;
 import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
-import edu.chl._2DRacingGame.screens.MainMenu;
+import edu.chl._2DRacingGame.screens.MainMenuScreen;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 public class _2DRacingGame extends Game implements GameController {
@@ -50,7 +50,7 @@ public class _2DRacingGame extends Game implements GameController {
 
     @Override
     public void displayStartMenu() {
-        Gdx.app.postRunnable(() -> setScreen(new MainMenu(this)));
+        Gdx.app.postRunnable(() -> setScreen(new MainMenuScreen(this)));
     }
 
     public void restartRace() {
