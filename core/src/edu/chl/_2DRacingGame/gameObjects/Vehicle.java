@@ -1,6 +1,7 @@
 package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
+import edu.chl._2DRacingGame.steering.SteeringSystem;
 
 /**
  * Created by Lars Niklasson on 2015-05-15.
@@ -18,6 +19,7 @@ public abstract class Vehicle{
     public abstract float getAngularVelocity();
 
     public void update(float delta){
+        if(steeringSystem == null)return;
         steeringSystem.update(delta);
     }
 

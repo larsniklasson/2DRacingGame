@@ -17,9 +17,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
-import edu.chl._2DRacingGame.helperClasses.InputManager;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -78,7 +78,7 @@ public class GameWorld implements Disposable {
 
     public void update(float delta) {
         b2World.step(delta, 3, 3);
-        Set<InputManager.PressedKey> keys = InputManager.pollForInput(); // not needed with current steering system
+
         for (Player player : players) {
             if (player.isControlledByClient()) {
                 // We should only control our own vehicle ...

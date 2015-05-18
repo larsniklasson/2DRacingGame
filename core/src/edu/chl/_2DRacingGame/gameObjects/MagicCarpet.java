@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
@@ -18,10 +19,10 @@ public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle 
 
 
 
+
     public MagicCarpet(World world) {
         super(world);
 
-        setSteeringSystem(new FlyingSteeringSystem(this));
 
         Texture texture = Assets.magicCarpetBody;
         setSprite(new Sprite(texture));

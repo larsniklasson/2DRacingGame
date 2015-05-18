@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.gameObjects;
+package edu.chl._2DRacingGame.steering;
 
 /**
  * Created by Lars Niklasson on 2015-05-17.

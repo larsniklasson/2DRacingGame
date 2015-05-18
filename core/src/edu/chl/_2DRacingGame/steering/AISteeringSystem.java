@@ -1,10 +1,12 @@
-package edu.chl._2DRacingGame.gameObjects;
+package edu.chl._2DRacingGame.steering;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import edu.chl._2DRacingGame.gameObjects.OurVehicle;
+import edu.chl._2DRacingGame.gameObjects.Tire;
 
 /**
  * Created by Lars Niklasson on 2015-05-16.  Most code from Libgdx's AI-LIB tests. https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests

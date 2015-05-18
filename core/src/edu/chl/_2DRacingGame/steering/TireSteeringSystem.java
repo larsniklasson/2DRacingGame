@@ -1,10 +1,12 @@
-package edu.chl._2DRacingGame.gameObjects;
+package edu.chl._2DRacingGame.steering;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import edu.chl._2DRacingGame.gameObjects.OurVehicle;
+import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
-import edu.chl._2DRacingGame.helperClasses.InputManager;
+
 
 import java.util.Set;
 
@@ -13,17 +15,20 @@ import java.util.Set;
  */
 public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
-    Set<InputManager.PressedKey> keys;
 
+    Set<Key> keys;
 
-    public TireSteeringSystem(OurVehicle ourVehicle) {
+    SteeringInputListener steeringListener;
+
+    public TireSteeringSystem(OurVehicle ourVehicle, SteeringInputListener steeringListener) {
         super(ourVehicle);
+        this.steeringListener = steeringListener;
     }
 
     @Override
-    void update(float delta) {
+    public void update(float delta) {
 
-        keys = InputManager.pollForInput(); //TODO make some kind of inputprocessor instead, so you dont have to poll every frame. this works fine though
+        keys = steeringListener.getInput(); //TODO make some kind of inputprocessor instead, so you dont have to poll every frame. this works fine though
 
         turnWheels();
         for(Tire t : vehicle.getTires()){
@@ -39,10 +44,10 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
 
         float desiredSpeed;
-        if (keys.contains(InputManager.PressedKey.Up)) {
+        if (keys.contains(Key.Up)) {
 
             desiredSpeed = t.getCurrentMaxForwardSpeed();
-        } else if (keys.contains(InputManager.PressedKey.Down)) {
+        } else if (keys.contains(Key.Down)) {
 
             desiredSpeed = t.getCurrentMaxBackwardSpeed();
         } else {
@@ -113,14 +118,14 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
         float turnPerTimeStep = turnRadiansPerSec / 60f;
         float desiredAngle = 0;
 
-        if (keys.contains(InputManager.PressedKey.Left)) {
+        if (keys.contains(Key.Left)) {
             desiredAngle = lockAngle;
 
-        } else if (keys.contains(InputManager.PressedKey.Right)) {
+        } else if (keys.contains(Key.Right)) {
             desiredAngle = -lockAngle;
         }
 
-        float angleNow = vehicle.frontJoints.get(0).getJointAngle();
+        float angleNow = vehicle.getFrontJoints().get(0).getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
 
         if (angleToTurn < -turnPerTimeStep) {
@@ -131,7 +136,7 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
         float newAngle = angleNow + angleToTurn;
 
-        for(RevoluteJoint rj : vehicle.frontJoints){
+        for(RevoluteJoint rj : vehicle.getFrontJoints()){
             rj.setLimits(newAngle, newAngle);
         }
 

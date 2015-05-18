@@ -24,7 +24,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
         Gdx.app.log("_2DRacingGame", "created");
         Assets.load();
-        displayStartMenu();
+        //displayStartMenu();
         if (useMultiplayer) {
             startMultiplayer();
         } else {

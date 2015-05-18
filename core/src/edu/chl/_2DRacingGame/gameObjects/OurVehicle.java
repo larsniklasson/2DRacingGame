@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import edu.chl._2DRacingGame.steering.AISpeedHolder;
+import edu.chl._2DRacingGame.steering.Difficulty;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
@@ -35,9 +37,6 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     public OurVehicle(World world) {
         super(world);
-
-        setSteeringSystem(new TireSteeringSystem(this));
-
 
     }
 
@@ -156,6 +155,10 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     public void setMP_FrontWheelAngle(float mp_frontWheelAngle){  //TODO bad variable names
         this.MP_FrontWheelAngle = mp_frontWheelAngle;
+    }
+
+    public List<RevoluteJoint> getFrontJoints(){
+        return frontJoints;
     }
 
 
