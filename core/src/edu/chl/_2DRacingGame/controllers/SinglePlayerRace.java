@@ -6,11 +6,15 @@ import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
-import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.models.ScoreList;
+import edu.chl._2DRacingGame.persistance.DiskPersistor;
+import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
+
+import java.util.List;
 
 /**
  * Controls the process surrounding a single player race, such as choosing map/vehicle/...,
@@ -20,7 +24,7 @@ import edu.chl._2DRacingGame.steering.*;
  */
 public class SinglePlayerRace extends RaceController implements setUpListener{
 
-    private MapScoresPersistor scoresPersistor;
+    private MapScores mapScores;
 
     /**
      * Creates a new SinglePlayerRace instance which bases itself on the specified gameController.
@@ -78,9 +82,9 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     }
 
     private void saveScore(double score) {
-        MapScores scores = scoresPersistor.getInstance();
+        ScoreList scores = mapScores.getScores();
         scores.addScore(score);
-        scoresPersistor.persistInstance();
+        mapScores.save();
     }
 
     /**
@@ -93,12 +97,12 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     public void raceFinished(double score, String message) {
         saveScore(score);
 
-        MapScores mapScores = scoresPersistor.getInstance();
+        ScoreList scores = mapScores.getScores();
         Gdx.app.log("SinglePlayerRace", "You finished the race in: " + score + " seconds.");
-        if (mapScores.isHighScore(score)) {
+        if (scores.isHighScore(score)) {
             Gdx.app.log("SinglePlayerRace", "Highscore!");
         } else {
-            Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + mapScores.getHighScore());
+            Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + scores.getHighScore());
         }
 
         //TODO trådar
@@ -110,8 +114,10 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     @Override
     public void setUpRace(String vehicleType, String mapName, int nbrOflaps, int nbrOfOpponents) {
         setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOflaps, this));
-        scoresPersistor = new MapScoresPersistor(getMap(), getMode());
-        scoresPersistor.findInstance();
+
+        Persistor<List<Double>> persistor = new DiskPersistor<>();
+        mapScores = new MapScores(getMap(), getMode(), persistor);
+        mapScores.findSavedScores();
 
         //TODO gör det möjligt att välja svårighetsgrad med meny
         Difficulty d = Difficulty.getRandomDifficulty();

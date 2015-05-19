@@ -1,78 +1,92 @@
 package edu.chl._2DRacingGame.models;
 
+import com.badlogic.gdx.Gdx;
+import com.google.gson.reflect.TypeToken;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.persistance.Persistor;
+import edu.chl._2DRacingGame.persistance.PersistorException;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
- * Stores the users stores for the different map/mode combinations.
- * Hence, a score on map A running mode X will not be listed along with a score on map A running mode Y and so on.
+ * Acts as a wrapper around ScoreList, keeping track of the player's scores on the specified map/mode-combination.
  *
- * IMPORTANT NOTE: You probably want to try to get eventual scores from earlier game sessions,
- * for that, see the MapScoresPersistor class.
- *
- * @see MapScoresPersistor
  * @author Daniel Sunnerberg
  */
 public class MapScores {
 
-    private final Comparator<Double> scoreComparator;
+    private final GameMap map;
+    private final GameMode mode;
+
+    private final Persistor<List<Double>> persistor;
+    private ScoreList scores;
 
     /**
-     * This list will always be sorted after the scoreComparator. Should normally be a TreeSet, but then its objects
-     * would need to be wrapped since it's the GameMode who decides the ordering.
-     */
-    private final List<Double> scores;
-
-    public MapScores(Comparator<Double> scoreComparator) {
-        this(scoreComparator, new ArrayList<>());
-    }
-
-    public MapScores(Comparator<Double> scoreComparator, List<Double> scores) {
-        this.scores = scores;
-        this.scoreComparator = scoreComparator;
-    }
-
-    /**
-     * Adds a score for the actual map/mode combination.
+     * Creates a new MapScores instance which helps track player's scores on the specified map/mode-combination.
      *
-     * @param score Score to be added
+     * @param map map to track scores for
+     * @param mode mode to track scores for
+     * @param persistor persistor which will somehow store the scores to make them available later if needed
      */
-    public void addScore(double score) {
-        scores.add(score);
-        scores.sort(scoreComparator);
+    public MapScores(GameMap map, GameMode mode, Persistor<List<Double>> persistor) {
+        this.map = map;
+        this.mode = mode;
+        this.persistor = persistor;
     }
 
     /**
-     * Gets the highest score for the actual map/mode combination.
+     * Finds scores saved by previous game instances and loads these. If none are found, an empty list will be
+     * retrieved instead.
      *
-     * @return highest score or null if no scores are recorded
+     * To retrieve the found scores:
+     * @see MapScores#getScores()
      */
-    public Double getHighScore() {
-        if (scores.isEmpty()) {
-            return null;
+    public void findSavedScores() {
+        List<Double> scores;
+        try {
+            Type listType = new TypeToken<ArrayList<Double>>() {}.getType();
+            String persistanceKey = getPersistanceKey(map, mode);
+            scores = persistor.getPersistedInstance(persistanceKey, listType);
+        } catch (PersistorException e) {
+            scores = new ArrayList<>();
         }
-        return scores.get(0);
+
+        this.scores = new ScoreList(mode.getScoreComparator(), scores);
+    }
+
+    private String getPersistanceKey(GameMap map, GameMode mode) {
+        return map.toString() + "_" + mode.getClass().getSimpleName() + ".scores";
     }
 
     /**
-     * Returns whether the specified score is the highest so far on the actual map/mode combination.
+     * Saves the scores saved for the map/mode combination, making them available for later retrieval.
+     * Any existing saved scores will be replaced.
      *
-     * @param other score to compare against
-     * @return whether the score is the highest so far
+     * @see MapScores#findSavedScores()
      */
-    public boolean isHighScore(Double other) {
-        return scores.isEmpty() || scoreComparator.compare(getHighScore(), other) >= 0;
+    public void save() {
+        if (scores == null) {
+            throw new IllegalStateException("No scores loaded. Try to find scores before saving them.");
+        }
+
+        Gdx.app.log("MapScroes", "Saving scores to disk.");
+        String instanceFileName = getPersistanceKey(map, mode);
+        persistor.persist(scores.getScores(), instanceFileName);
     }
 
     /**
-     * Returns all stored scores.
+     * Returns the scores found by #findSavedScores().
      *
-     * @return all stored scores
+     * @return scores previously found by #findInstance()
+     * @see MapScores#findSavedScores()
      */
-    public List<Double> getScores() {
+    public ScoreList getScores() {
+        if (scores == null) {
+            throw new IllegalStateException("No scores has been set. You need to find one using #findSavedScores.");
+        }
+
         return scores;
     }
 }

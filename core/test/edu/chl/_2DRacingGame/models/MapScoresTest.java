@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
  */
 public class MapScoresTest {
 
-    private MapScores mapScores;
+    private ScoreList mapScores;
 
     @Before
     public void setUp() throws Exception {
@@ -22,7 +22,7 @@ public class MapScoresTest {
         // Use a typical "lower is better" comparator
         when(mode.getScoreComparator()).thenReturn(Double::compareTo);
 
-        mapScores = new MapScores(mode.getScoreComparator());
+        mapScores = new ScoreList(mode.getScoreComparator());
     }
 
     @Test
