@@ -3,13 +3,12 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.*;
+import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.steering.PlayerOneInputListener;
-import edu.chl._2DRacingGame.steering.PlayerTwoInputListener;
-import edu.chl._2DRacingGame.steering.TireSteeringSystem;
+import edu.chl._2DRacingGame.steering.*;
 
 /**
  * @author Daniel Sunnerberg
@@ -38,14 +37,14 @@ public class SinglePlayerRace extends RaceController {
     private void startRace() {
         getWorld().addPlayer(getPlayer());
 
-        OurVehicle vehicle = new MotorCycle(getWorld().getb2World());
+        /*OurVehicle vehicle = new MotorCycle(getWorld().getb2World());
         vehicle.setSteeringSystem(new TireSteeringSystem(vehicle, new PlayerTwoInputListener()));
         Player p2 = new Player("apa", vehicle);
         p2.setIsControlledByClient(true);
-        getWorld().addPlayer(p2);
+        getWorld().addPlayer(p2);*/
 
         //testing adding ai-vehicles
-        /*for(int i = 0; i < 5; i ++){
+        for(int i = 0; i < 5; i ++){
             OurVehicle ov = (OurVehicle) VehicleFactory.createRandomVehicle(getWorld().getb2World()); //TODO add random value to speed to make race more interesting
 
             Difficulty d = Difficulty.values()[(int)(Math.random()*Difficulty.values().length)];
@@ -53,9 +52,8 @@ public class SinglePlayerRace extends RaceController {
             ov.setSteeringSystem(new WayPointSystem(ov, getWorld().wayPoints, d));
 
             Player p = new Player("p" + i, ov);
-            p.setIsControlledByClient(true); //TODO well, not rly.
             getWorld().addPlayer(p);
-        }*/
+        }
 
 
         getWorld().spawnPlayers();

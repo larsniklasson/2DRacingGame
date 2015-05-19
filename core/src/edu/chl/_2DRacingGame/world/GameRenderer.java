@@ -82,7 +82,7 @@ public class GameRenderer extends Stage {
                 continue;  //nothing to draw
             }
 
-            if(player.isControlledByClient()){
+            if(player.isControlledLocally()){
                 ((Drawable)vehicle).draw(batch);
 
             } else {

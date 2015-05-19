@@ -27,7 +27,8 @@ public class WayPointSystem extends AISteeringSystem {
         linePath = new LinePath<Vector2>(wayPoints, false);
 
 
-        followPathSB = new FollowPath<>(this, linePath,3); //
+        followPathSB = new FollowPath<>(this, linePath,3);
+
 
 
         this.steeringBehavior = followPathSB;

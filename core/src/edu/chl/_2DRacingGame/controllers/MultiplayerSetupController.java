@@ -138,7 +138,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             if (player.equals(roomPlayer)) {
                 playersList.add(player);
             } else {
-                roomPlayer.setIsControlledByClient(false);
+                roomPlayer.setControlledLocally(false);
                 playersList.add(roomPlayer);
             }
         }

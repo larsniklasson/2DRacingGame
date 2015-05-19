@@ -27,7 +27,7 @@ public class Player {
     /**
      * Whether the player instance is controlled by our client or not.
      */
-    private boolean isControlledByClient = false;
+    private boolean controlledLocally = true;
 
     public Player(String userName, Vehicle vehicle) {
         this.userName = userName;
@@ -57,13 +57,7 @@ public class Player {
         this.actor = new VehicleActor(vehicle);
     }
 
-    public void setIsControlledByClient(boolean isControlledByClient) {
-        this.isControlledByClient = isControlledByClient;
-    }
 
-    public boolean isControlledByClient() {
-        return isControlledByClient;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,5 +84,12 @@ public class Player {
     }
 
 
+    public boolean isControlledLocally() {
+        return controlledLocally;
+    }
+
+    public void setControlledLocally(boolean controlledLocally) {
+        this.controlledLocally = controlledLocally;
+    }
 }
 

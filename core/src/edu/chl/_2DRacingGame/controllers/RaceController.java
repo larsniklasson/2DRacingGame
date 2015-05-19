@@ -30,7 +30,7 @@ public abstract class RaceController implements RaceListener, Disposable {
         this.gameController = gameController;
 
         player = new Player();
-        player.setIsControlledByClient(true);
+
     }
 
     /**

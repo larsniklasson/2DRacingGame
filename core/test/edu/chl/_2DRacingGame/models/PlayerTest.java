@@ -1,14 +1,11 @@
 package edu.chl._2DRacingGame.models;
 
-import edu.chl._2DRacingGame.gameObjects.Car;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Daniel Sunnerberg
@@ -38,12 +35,12 @@ public class PlayerTest {
     }
 
     @Test
-    public void testIsControlledByClient() throws Exception {
-        assertFalse(new Player().isControlledByClient());
+    public void testIsControlledLocally() throws Exception {
+        assertTrue(new Player().isControlledLocally());
 
         Player player = new Player();
-        player.setIsControlledByClient(true);
-        assertTrue(player.isControlledByClient());
+        player.setControlledLocally(false);
+        assertFalse(player.isControlledLocally());
     }
 
     @Test

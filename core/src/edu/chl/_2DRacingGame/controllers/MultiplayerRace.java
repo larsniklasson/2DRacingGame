@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.Car;
+import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
@@ -13,6 +14,8 @@ import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.screens.ErrorScreen;
 import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
 import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
+import edu.chl._2DRacingGame.steering.PlayerOneInputListener;
+import edu.chl._2DRacingGame.steering.TireSteeringSystem;
 import edu.chl._2DRacingGame.world.GameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -34,7 +37,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         // TODO these should be chosen through in-game menu later
         setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
 
-        Vehicle vehicle = new Car(getWorld().getb2World());
+        OurVehicle vehicle = new Car(getWorld().getb2World());
+        vehicle.setSteeringSystem(new TireSteeringSystem(vehicle, new PlayerOneInputListener()));
         getPlayer().setVehicle(vehicle);
     }
 

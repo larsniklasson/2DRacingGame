@@ -24,7 +24,6 @@ import edu.chl._2DRacingGame.models.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -80,20 +79,9 @@ public class GameWorld implements Disposable {
         b2World.step(delta, 3, 3);
 
         for (Player player : players) {
-            if (player.isControlledByClient()) {
+            if (player.isControlledLocally()) {
                 // We should only control our own vehicle ...
                 player.getVehicle().update(delta);
-            } else {
-
-                // ... just move the opponents texture
-                /*player.getVehicle().updateSprite();
-                for(Tire t : player.getVehicle().getTires()){
-                    t.updateSprite();
-                }*/
-
-                //player.getVehicle().MPspriteUpdate();
-
-
             }
         }
 
