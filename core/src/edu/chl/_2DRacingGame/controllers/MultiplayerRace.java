@@ -44,7 +44,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void setUp() {
         requestRaceSettings();
-        new MultiplayerSetupController(getPlayer(), this).findRace();
+        new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
     }
 
     @Override

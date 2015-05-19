@@ -10,16 +10,16 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestL
 import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
+import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
- * @author Daniel Sunnerberg
+ * Helps find opponents to a multiplayer race. Players are paired on a first-come basis, with the exception
+ * that both must have selected the same map.
  *
- * TODO join only specific map
+ * @author Daniel Sunnerberg
  */
 class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
 
@@ -32,6 +32,11 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     private final Player player;
 
     /**
+     * We want to find other players who want to play the same map
+     */
+    private final GameMap map;
+
+    /**
      * Players in the room; including our player if we've successfully joined the room.
      */
     private List<Player> roomPlayers;
@@ -42,8 +47,9 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     private final MultiplayerSetupListener listener;
     private WarpClientNotificationAdapter notificationAdapter;
 
-    public MultiplayerSetupController(Player player, MultiplayerSetupListener listener) {
+    public MultiplayerSetupController(Player player, GameMap map, MultiplayerSetupListener listener) {
         this.player = player;
+        this.map = map;
         this.listener = listener;
 
         warpClient = getWarpInstance();
@@ -84,7 +90,10 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
     private void joinRoom() {
         warpClient.initUDP();
-        warpClient.joinRoomInRange(1, 1, false);
+
+        HashMap<String, Object> roomProperties = new HashMap<>();
+        roomProperties.put("map", map.name());
+        warpClient.joinRoomWithProperties(roomProperties);
     }
 
     private WarpClient getWarpInstance() {
@@ -176,11 +185,16 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("hostUserName", userName);
+        data.put("map", map.name());
+
+        // We want the room to have a property with the players (serialized) in the room.
+        // This functionality isn't automatically provided, hence the serialization below
         String playersJson = new Gson().toJson(new Player[]{player});
         data.put("players", playersJson);
 
+        String roomName = "quickrace-" + userName;
         // Create the room. The listener "onCreateRoomDone" will then subscribe to the room
-        warpClient.createRoom("quickrace-" + userName, userName, 2, data);
+        warpClient.createRoom(roomName, userName, 2, data);
     }
 
     private void removeClientListeners() {
