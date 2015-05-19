@@ -6,10 +6,7 @@ import edu.chl._2DRacingGame.controllers.GameController;
 import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.RaceController;
 import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
-import edu.chl._2DRacingGame.screens.MainMenuListener;
-import edu.chl._2DRacingGame.screens.MainMenuScreen;
-import edu.chl._2DRacingGame.screens.OptionsMenuScreen;
-import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
+import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 public class _2DRacingGame extends Game implements GameController, MainMenuListener {
@@ -64,7 +61,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     public void displaySinglePlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen());}
 
     @Override
-    public void displayMultiPlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen());}
+    public void displayMultiPlayerMenuScreen() {setScreen(new MultipPlayerMenuScreen());}
 
     @Override
     public void displayOptionsScreen() {setScreen(new OptionsMenuScreen());}
