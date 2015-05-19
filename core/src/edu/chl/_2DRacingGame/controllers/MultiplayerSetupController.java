@@ -27,19 +27,25 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
 
     /**
+     * We have, for now, decided that a multiplayer race will only have two players.
+     */
+    private static final int RACE_SIZE = 2;
+
+    /**
      * Player controlled by our client.
      */
     private final Player player;
+
+    /**
+     * Players in the room; including our player if we've successfully joined the room.
+     */
+    private List<Player> roomPlayers;
 
     /**
      * We want to find other players who want to play the same map
      */
     private final GameMap map;
 
-    /**
-     * Players in the room; including our player if we've successfully joined the room.
-     */
-    private List<Player> roomPlayers;
     private String roomId = null;
 
     private final WarpClient warpClient;
@@ -174,7 +180,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             roomProperties.put("players", playersJson);
             warpClient.updateRoomProperties(roomId, roomProperties, null);
 
-        } else if (e.getJoinedUsers().length == 2) { // TODO custom size
+        } else if (e.getJoinedUsers().length == RACE_SIZE) {
             raceReady();
         }
     }
@@ -194,7 +200,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         String roomName = "quickrace-" + userName;
         // Create the room. The listener "onCreateRoomDone" will then subscribe to the room
-        warpClient.createRoom(roomName, userName, 2, data);
+        warpClient.createRoom(roomName, userName, RACE_SIZE, data);
     }
 
     private void removeClientListeners() {
@@ -237,7 +243,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
         roomPlayers = getPlayersFromJson(playersJson);
-        if (roomPlayers.size() == 2) { // TODO flexible race size
+        if (roomPlayers.size() == RACE_SIZE) {
             raceReady();
         }
     }
