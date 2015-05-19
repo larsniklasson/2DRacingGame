@@ -22,10 +22,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Daniel Sunnerberg
+ * Will attempt to keep our world in sync with our opponents by sending out update packages to our opponents when
+ * found necessary. Also receives corresponding packages from opponents and uses that information to sync their world
+ * with ours.
  *
- * TODO users colliding case
+ * Be aware that this class will NOT keep the worlds in perfect sync, but rather perform some
+ * interpolation/extrapolation-inspired actions to make it look like everything is running smoothly between updates.
+ *
+ * TODO users colliding case - on hold
  * TODO despawn vehicle on player disconnect
+ *
+ * @author Daniel Sunnerberg
  */
 public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
@@ -33,6 +40,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * Minimum time in ms before next update is sent to opponents.
      */
     private static final int MIN_UPDATE_WAIT = 250;
+
     /**
      * The time when the last update was sent.
      */
@@ -44,7 +52,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     private final String roomId;
     private final WarpClient warpClient;
 
-    private final WarpClientNotificationAdapter clientNofiticationAdapter;
+    private final WarpClientNotificationAdapter clientNotificationAdapter;
     private final List<OpponentListener> opponentListeners = new ArrayList<>();
 
     public MultiplayerWorldSyncer(String roomId, WarpClient warpClient, Player clientPlayer, List<Player> players) {
@@ -53,15 +61,20 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         this.clientPlayer = clientPlayer;
         this.players = players;
 
-        clientNofiticationAdapter = new WarpClientNotificationAdapter() {
+        clientNotificationAdapter = new WarpClientNotificationAdapter() {
             @Override
             public void onUpdatePeersReceived(UpdateEvent updateEvent) {
-                recievedUpdate(new String(updateEvent.getUpdate()));
+                receivedUpdate(new String(updateEvent.getUpdate()));
             }
         };
-        warpClient.addNotificationListener(clientNofiticationAdapter);
+        warpClient.addNotificationListener(clientNotificationAdapter);
     }
 
+    /**
+     * Adds a listener who will be notified when an opponent has finished the race.
+     *
+     * @param listener
+     */
     public void addOpponentListener(OpponentListener listener) {
         opponentListeners.add(listener);
     }
@@ -71,7 +84,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         return new Gson().fromJson(json, mapType);
     }
 
-    private void recievedUpdate(String updateJson) {
+    private void receivedUpdate(String updateJson) {
         Map<String, String> updateData = getUpdateProperties(updateJson);
 
         String updateType = updateData.get("updateType");
@@ -143,15 +156,11 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
             return;
         }
 
-        float animationDuration = MIN_UPDATE_WAIT / 1000f;
-        Action moveAction = Actions.moveTo(x, y, animationDuration);
-
         //Hack. We move the sprite instead of the actual tire-body, to avoid weird bugs.
         // hack in action can be seen clearest when playing against a MonsterTruck with debug-mode on.
         if(opponentVehicle instanceof OurVehicle){
             ((OurVehicle)opponentVehicle).setMP_FrontWheelAngle(frontWheelAngle);
         }
-
 
         if(oldAngle > 1.5 && angle < -1.5){
             angle += 2* Math.PI;
@@ -161,8 +170,10 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
             angle -= 2*Math.PI;
         }
 
-        Action rotateAction = Actions.rotateTo(angle, animationDuration);
+        float animationDuration = MIN_UPDATE_WAIT / 1000f;
+        Action moveAction = Actions.moveTo(x, y, animationDuration);
 
+        Action rotateAction = Actions.rotateTo(angle, animationDuration);
         opponent.getActor().addAction(Actions.parallel(moveAction, rotateAction));
     }
 
@@ -172,6 +183,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
     /**
      * Notify our opponents that we finished the race.
+     *
      * @param raceTime
      */
     private void notifyFinishedRace(double raceTime) {
@@ -183,6 +195,13 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         sendUpdate(updateData, MultiplayerUpdateType.FINISHED_RACE);
     }
 
+    /**
+     * Sends our location to our opponents.
+     *
+     * @param vehiclePosition
+     * @param angle
+     * @param frontWheelAngle
+     */
     private void sendLocation(Vector2 vehiclePosition, float angle, float frontWheelAngle) {
         Map<String, String> updateData = new HashMap<>();
         updateData.put("x", "" + vehiclePosition.x);
@@ -194,7 +213,6 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     private void sendUpdate(Map<String, String> updateData, MultiplayerUpdateType type) {
-
         updateData.put("senderUserName", clientPlayer.getUserName());
         updateData.put("updateType", type.name());
 
@@ -202,20 +220,18 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         warpClient.sendUpdatePeers(new Gson().toJson(updateData, typeOfMap).getBytes());
     }
 
+    /**
+     * Called when the local world is updated. Will then send updates to our opponents if necessary.
+     */
     @Override
     public void worldUpdated() {
-        // TODO
-
         Vehicle vehicle = clientPlayer.getVehicle();
 
-
         //if vehicle doesn't have front wheels to turn, set it to 0.
-
         float wheelAngle = 0;
         if(vehicle instanceof OurVehicle){
             wheelAngle = ((OurVehicle)vehicle).getCurrentFrontWheelAngle();
         }
-
 
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {
             sendLocation(vehicle.getPosition(), vehicle.getDirection(), wheelAngle);
@@ -235,7 +251,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     private void removeClientListeners() {
-        warpClient.removeNotificationListener(clientNofiticationAdapter);
+        warpClient.removeNotificationListener(clientNotificationAdapter);
     }
 
     /**
