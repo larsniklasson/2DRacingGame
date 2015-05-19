@@ -108,8 +108,12 @@ public abstract class RaceController implements RaceListener, Disposable {
      */
     @Override
     public void dispose() {
-        screen.dispose();
-        world.dispose();
+        if (screen != null) {
+            screen.dispose();
+        }
+        if (world != null) {
+            world.dispose();
+        }
     }
 
 }

@@ -174,8 +174,9 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
      */
     @Override
     public void onGetLiveRoomInfoDone(LiveRoomInfoEvent e) {
+        boolean raceIsFull = e.getJoinedUsers().length == RACE_SIZE;
         HashMap<String, Object> roomProperties = e.getProperties();
-        if (!roomProperties.get("hostUserName").equals(player.getUserName())) {
+        if (! roomProperties.get("hostUserName").equals(player.getUserName())) {
             Gdx.app.log("MultiplayerSetupController", "Updating room data to include our player.");
 
             // We joined a room which we didn't create, add our Player-information to it.
@@ -188,14 +189,14 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
             // If we're the last player who is supposed to join, make sure to set the room-status to started
             // to prevent more players from joining
-            if ((e.getJoinedUsers().length + 1) == RACE_SIZE) {
+            if (raceIsFull) {
                 Gdx.app.log("MultiplayerSetupController", "Locking the room to prevent more players from joining");
                 roomProperties.put("started", true);
             }
 
             warpClient.updateRoomProperties(roomId, roomProperties, null);
 
-        } else if (e.getJoinedUsers().length == RACE_SIZE) {
+        } else if (raceIsFull) {
             raceReady();
         }
     }
