@@ -35,7 +35,7 @@ public class ShapeFactory {
 
             float[] vertices = p.getVertices();
             for (int i = 0; i < vertices.length; i++) {
-                vertices[i] = vertices[i] / scale;
+                vertices[i] /= scale;
                 if (i % 2 == 0) {
                     vertices[i] += x;
                 } else {
@@ -66,7 +66,7 @@ public class ShapeFactory {
             float[] vertices = pl.getVertices();
 
             for (int i = 0; i < vertices.length; i++) {
-                vertices[i] = vertices[i] / scale;
+                vertices[i] /= scale;
             }
 
             float x = pl.getX() / scale;

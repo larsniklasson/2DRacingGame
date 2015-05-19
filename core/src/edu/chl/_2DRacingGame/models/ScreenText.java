@@ -13,13 +13,13 @@ public class ScreenText {
     private final Vector2 position;
     private Color color = new Color(255, 255, 255, 1);
 
-    public ScreenText(Vector2 location) {
-        this.position = location;
+    public ScreenText(Vector2 position) {
+        this("", position);
     }
 
-    public ScreenText(String text, Vector2 location) {
+    public ScreenText(String text, Vector2 position) {
         this.text = text;
-        this.position = location;
+        this.position = position;
     }
 
     public String getText() {
