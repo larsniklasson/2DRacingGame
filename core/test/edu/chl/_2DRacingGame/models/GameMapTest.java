@@ -14,4 +14,5 @@ public class GameMapTest {
         GameMap[] maps = GameMap.values();
         assertTrue(maps.length > 0 && maps[0].getPath() != null);
     }
+    
 }
