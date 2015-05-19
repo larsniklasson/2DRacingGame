@@ -41,7 +41,7 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         newRace.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new SinglePlayerMenu(game));
+                game.setScreen(new SinglePlayerMenuScreen());
             }
         });
 
