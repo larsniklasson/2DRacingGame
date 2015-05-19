@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public abstract class OneBodyVehicle extends Vehicle {
     protected Body body;
-    protected World world;
+    protected final World world;
 
     public OneBodyVehicle(World world){
         this.world = world;

@@ -11,9 +11,7 @@ import edu.chl._2DRacingGame.gameObjects.OurVehicle;
  */
 public class WayPointSystem extends AISteeringSystem {
 
-    private Array<Vector2> wayPoints;
-    private LinePath<Vector2> linePath;
-    private FollowPath<Vector2, LinePath.LinePathParam> followPathSB;
+    private final Array<Vector2> wayPoints;
 
     public WayPointSystem(OurVehicle vehicle, Array<Vector2> wayPoints, Difficulty difficulty) {
         super(vehicle);
@@ -24,18 +22,15 @@ public class WayPointSystem extends AISteeringSystem {
         this.wayPoints = wayPoints;
 
 
-        linePath = new LinePath<Vector2>(wayPoints, false);
+        LinePath<Vector2> linePath = new LinePath<Vector2>(wayPoints, false);
 
 
-        followPathSB = new FollowPath<>(this, linePath,3);
+        FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(this, linePath, 3, 0);
 
 
 
-        this.steeringBehavior = followPathSB;
+        setSteeringBehavior(followPath);
     }
 
-    public Array<Vector2> getWayPoints(){
-        return wayPoints;
-    }
 
 }

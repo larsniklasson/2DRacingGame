@@ -41,13 +41,16 @@ public class GameWorld implements Disposable {
 
     // TODO not sure if these are supposed to be here
     private final List<Checkpoint> checkpoints = new ArrayList<>();
-    public Array<Vector2> wayPoints = new Array<>();
-    private World b2World;
 
-    private TiledMap tiledMap;
 
-    private List<Vector2> mapSpawnPoints = new ArrayList<>();
-    private List<Float> mapSpawnAngles = new ArrayList<>();
+
+    private final  Array<Vector2> wayPoints = new Array<>();
+    private final World b2World;
+
+    private final TiledMap tiledMap;
+
+    private final List<Vector2> mapSpawnPoints = new ArrayList<>();
+    private final List<Float> mapSpawnAngles = new ArrayList<>();
 
     private final List<UpdateListener> updateListeners = new ArrayList<>();
 
@@ -193,6 +196,10 @@ public class GameWorld implements Disposable {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Array<Vector2> getWayPoints() {
+        return wayPoints;
     }
 
     @Override

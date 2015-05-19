@@ -16,17 +16,15 @@ import com.badlogic.gdx.utils.Array;
 public class WayPoints {
 
     private Pathfollower pathfollower;
-    private Sprite sprite;
     private ShapeRenderer shapeRenderer;
-    private Vector2 startingPosition;
 
     public WayPoints(Vector2 startingPosition){
 
-        this.startingPosition = startingPosition;
+        Vector2 startingPosition1 = startingPosition;
 
         shapeRenderer = new ShapeRenderer();
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("carbody.png")));
+        Sprite sprite = new Sprite(new Texture(Gdx.files.internal("carbody.png")));
         sprite.setOrigin(0, 0);
 
         pathfollower = new Pathfollower(sprite, createPath());

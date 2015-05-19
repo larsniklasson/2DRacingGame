@@ -16,9 +16,9 @@ import java.util.Set;
 public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
 
-    Set<Key> keys;
+    protected Set<Key> keys;
 
-    SteeringInputListener steeringListener;
+    private final SteeringInputListener steeringListener;
 
     public TireSteeringSystem(OurVehicle ourVehicle, SteeringInputListener steeringListener) {
         super(ourVehicle);
@@ -109,7 +109,7 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
 
 
-    public void turnWheels() {
+    protected void turnWheels() {
 
 
         float lockAngle = MathUtils.degreesToRadians * vehicle.getMaxTurnAngle();

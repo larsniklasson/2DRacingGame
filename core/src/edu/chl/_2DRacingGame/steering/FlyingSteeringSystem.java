@@ -12,11 +12,11 @@ public class FlyingSteeringSystem extends TireSteeringSystem {
         super(ourVehicle, steeringListener);
     }
 
-    //TODO questionable design. forces turnwheels() to not be private
+    //TODO questionable design. forces turnwheels() and keys to not be private
 
 
     @Override
-    public void turnWheels(){
+    protected void turnWheels(){
         for(Tire tire : vehicle.getTires()){
             float torque = 0;
             if(keys.contains(Key.Left)){

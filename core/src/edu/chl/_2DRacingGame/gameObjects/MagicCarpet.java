@@ -13,10 +13,9 @@ import edu.chl._2DRacingGame.world.GameWorld;
  * Created by Lars Niklasson on 2015-05-09.
  */
 public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle but this works for now
-    private Tire tire;
+
     private static final float WIDTH = 20f/ GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;
-
 
 
 
@@ -32,7 +31,7 @@ public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle 
 
         createBody(shape, 0.0001f);
 
-        tire = new FlyingTire(world, WIDTH, HEIGHT, 0.5f);
+        Tire tire = new FlyingTire(world, WIDTH, HEIGHT, 0.5f);
         tire.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
 
         attachTire(tire, new Vector2(0,0), false);

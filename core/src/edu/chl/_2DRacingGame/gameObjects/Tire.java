@@ -31,15 +31,15 @@ public class Tire implements Drawable, Trackable {
     private float currentBackwardsFriction;
     private float currentMaxBackwardSpeed;
 
-    private float density;
-    private float width;
-    private float height;
+    private final float density;
+    private final float width;
+    private final float height;
 
-    private World world;
+    private final World world;
 
     private Body body;
 
-    public final List<GroundMaterial> grounds = new ArrayList<>();
+    private final List<GroundMaterial> grounds = new ArrayList<>();
 
     public Tire(World world, float width, float height, float density) {
 

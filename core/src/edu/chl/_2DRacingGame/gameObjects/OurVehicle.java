@@ -16,15 +16,15 @@ import java.util.List;
 /**
  * Created by Lars Niklasson on 2015-05-15.
  */
-public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Drawable {
+public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
 
 
     private Sprite sprite;
 
-    List<Tire> tires = new ArrayList<>();
-    List<Vector2> tirePositions = new ArrayList<>();
+    private final List<Tire> tires = new ArrayList<>();
+    private final List<Vector2> tirePositions = new ArrayList<>();
 
-    List<RevoluteJoint> frontJoints = new ArrayList<>();
+    private final List<RevoluteJoint> frontJoints = new ArrayList<>();
     private float maxTurnAngle = 50f;
     private float turnDegreesPerSecond = 1000;
 
@@ -33,7 +33,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
     //A bit of a hack to get the wheels to turn in multiplayer. Should only be used from multiplayer-classes
     private float MP_FrontWheelAngle = 0;
 
-    private List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
+    private final List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
 
     public OurVehicle(World world) {
         super(world);
@@ -42,19 +42,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
 
 
-    @Override
-    public List<Tire> getTires() {
-        return tires;
-    }
 
-    @Override
-    public List<Vector2> getTirePositions() {
-        return tirePositions;
-    }
-
-    public List<Boolean> getIsFrontWheelBooleanList(){
-        return isFrontWheelBooleanList;
-    }
 
 
     protected void attachTire(Tire tire, Vector2 position, boolean frontTire){
@@ -129,7 +117,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         return sprite;
     }
 
-    public void setSprite(Sprite sprite) {
+    protected void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
 
@@ -137,7 +125,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         return maxTurnAngle;
     }
 
-    public void setMaxTurnAngle(float maxTurnAngle) {
+    protected void setMaxTurnAngle(float maxTurnAngle) {
         this.maxTurnAngle = maxTurnAngle;
     }
 
@@ -146,7 +134,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         return turnDegreesPerSecond;
     }
 
-    public void setTurnDegreesPerSecond(float turnDegreesPerSecond) {
+    protected void setTurnDegreesPerSecond(float turnDegreesPerSecond) {
         this.turnDegreesPerSecond = turnDegreesPerSecond;
     }
 
@@ -164,6 +152,15 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     public List<RevoluteJoint> getFrontJoints(){
         return frontJoints;
+    }
+
+    public List<Tire> getTires() {
+        return tires;
+    }
+
+
+    public List<Boolean> getIsFrontWheelBooleanList(){
+        return isFrontWheelBooleanList;
     }
 
 

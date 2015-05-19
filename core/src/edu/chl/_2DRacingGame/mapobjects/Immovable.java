@@ -9,14 +9,13 @@ import com.badlogic.gdx.physics.box2d.*;
 public class Immovable {
     //basically an immovable body
 
-    private Body body;
 
     public Immovable(World world, Shape shape){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
 
-        body = world.createBody(bodyDef);
+        Body body = world.createBody(bodyDef);
 
 
         FixtureDef fixtureDef = new FixtureDef();

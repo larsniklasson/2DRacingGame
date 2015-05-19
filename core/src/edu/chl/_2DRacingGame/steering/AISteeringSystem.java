@@ -21,13 +21,13 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
     private AISpeedHolder speedHolder;
 
-    float boundingRadius;
-    boolean tagged = false;
+    private float boundingRadius;
+    private boolean tagged = false;
 
 
-    boolean independentFacing = false;
+    private boolean independentFacing = false;
 
-    protected SteeringBehavior<Vector2> steeringBehavior;
+    private SteeringBehavior<Vector2> steeringBehavior;
 
     private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<>(new Vector2());
 
@@ -40,10 +40,6 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
     }
 
 
-
-    public boolean isIndependentFacing () {
-        return independentFacing;
-    }
 
 
 
@@ -166,14 +162,14 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 			 */
 
             // Apply steering acceleration
-            applySteering(steeringOutput, deltaTime);
+            applySteering(deltaTime);
         }
 
 
 
     }
 
-    protected void applySteering (SteeringAcceleration<Vector2> steering, float deltaTime) {
+    private void applySteering (float deltaTime) {
         boolean anyAccelerations = false;
 
 
@@ -191,7 +187,7 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
         }
 
         // Update orientation and angular velocity
-        if (isIndependentFacing()) {
+        if (independentFacing) {
             if (steeringOutput.angular != 0) {
 
                 vehicle.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
@@ -291,5 +287,9 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
                 }
             }
         }
+    }
+
+    public void setSteeringBehavior(SteeringBehavior<Vector2> steeringBehavior) {
+        this.steeringBehavior = steeringBehavior;
     }
 }

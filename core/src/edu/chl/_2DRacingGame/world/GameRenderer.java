@@ -24,11 +24,13 @@ import edu.chl._2DRacingGame.models.ScreenText;
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
+ *
+ * Class responsible for drawing the game to the screen.
  */
 public class GameRenderer extends Stage {
 
-    boolean showDebug = true;
-    boolean showWayPoints = true;
+    private boolean showDebug = true;
+    private boolean showWayPoints = true;
 
     private final GameWorld gameWorld;
     private final GameMode gameMode;
@@ -39,6 +41,7 @@ public class GameRenderer extends Stage {
     private final OrthographicCamera camera;
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
+
 
     public GameRenderer(GameWorld world, GameMode gameMode) {
         this.gameWorld = world;
@@ -117,7 +120,7 @@ public class GameRenderer extends Stage {
         sr.setColor(Color.BLACK);
         sr.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Vector2 v2 : gameWorld.wayPoints) {
+        for (Vector2 v2 : gameWorld.getWayPoints()) {
 
             sr.circle(v2.x*GameWorld.PIXELS_PER_METER, v2.y*GameWorld.PIXELS_PER_METER, 10);
         }

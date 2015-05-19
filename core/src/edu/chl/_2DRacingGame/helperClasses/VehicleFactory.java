@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame.helperClasses;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.physics.box2d.World;
+
 import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.steering.*;
 import edu.chl._2DRacingGame.world.GameWorld;
@@ -35,7 +34,7 @@ public class VehicleFactory {
 
     }
 
-    private static String[] vehicles = {CAR, FORMULA_ONE_CAR, MOTORCYCLE, MONSTER_TRUCK, MAGIC_CARPET};
+    private static final String[] vehicles = {CAR, FORMULA_ONE_CAR, MOTORCYCLE, MONSTER_TRUCK, MAGIC_CARPET};
 
 
     private static String getRandomVehicleType(){
@@ -65,7 +64,7 @@ public class VehicleFactory {
 
     public static OurVehicle createAIVehicle(GameWorld gameWorld, String vehicleName, Difficulty difficulty){
         OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleName);
-        ov.setSteeringSystem(new WayPointSystem(ov, gameWorld.wayPoints, difficulty));
+        ov.setSteeringSystem(new WayPointSystem(ov, gameWorld.getWayPoints(), difficulty));
         return ov;
     }
 

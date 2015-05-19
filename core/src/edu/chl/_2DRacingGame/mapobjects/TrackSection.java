@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 public class TrackSection {
 
 
-    private GroundMaterial groundMaterial;
+    private final GroundMaterial groundMaterial;
 
     public TrackSection(World world, Shape shape, GroundMaterial groundMaterial){
         this.groundMaterial = groundMaterial;
