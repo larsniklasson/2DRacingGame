@@ -2,27 +2,71 @@ package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
  * Created by Victor Christoffersson on 2015-05-19.
  */
 public class MultipPlayerMenuScreen extends GUIScreen {
 
-    private Stage stage;
+    private MultiPlayerMenuListener listener;
+
     private Table table;
 
-    public MultipPlayerMenuScreen() {
+    private TextButton startButton;
+    private TextButton backButton;
 
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+    private Label multiPlayerLabel;
+
+    public MultipPlayerMenuScreen(MultiPlayerMenuListener listener) {
+
+        this.listener = listener;
 
         table = new Table();
-        table.setFillParent(true);
+
+    }
+
+    @Override
+    public void show() {
+        create();
 
         stage.addActor(table);
+        table.setFillParent(true);
 
+        Gdx.input.setInputProcessor(stage);
+
+    }
+
+    public void create(){
+
+        multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
+        table.add(multiPlayerLabel);
+
+        backButton = new TextButton("back", skin);
+        table.add(backButton);
+
+        startButton = new TextButton("Find race", skin);
+        table.add(startButton);
+
+        startButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("search for opponent");
+                listener.startMultiplayerRace();
+            }
+        });
+
+        backButton.addListener((new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("back");
+                listener.displayMainMenuScreen();
+            }
+        }));
     }
 
     @Override
@@ -45,5 +89,6 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     public void dispose() {
         stage.dispose();
 
+        skin.dispose();
     }
 }
