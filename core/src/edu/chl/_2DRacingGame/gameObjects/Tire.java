@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Lars Niklasson on 2015-03-30.
  */
-public class Tire implements Drawable {
+public class Tire implements Drawable, Trackable {
     private Sprite sprite;
 
     private float maxForwardSpeed;

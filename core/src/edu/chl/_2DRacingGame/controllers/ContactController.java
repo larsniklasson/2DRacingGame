@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import edu.chl._2DRacingGame.gameObjects.Trackable;
 import edu.chl._2DRacingGame.mapobjects.TrackSection;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
@@ -27,18 +28,18 @@ class ContactController implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        if (a.getUserData() instanceof Tire && b.getUserData() instanceof TrackSection) {
-            Tire tire = (Tire)a.getUserData();
+        if (a.getUserData() instanceof Trackable && b.getUserData() instanceof TrackSection) {
+            Trackable trackable = (Trackable)a.getUserData();
             TrackSection ts = (TrackSection)b.getUserData();
 
-            tire.addGroundMaterial(ts.getGroundMaterial());
+            trackable.addGroundMaterial(ts.getGroundMaterial());
         }
 
-        if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Tire) {
-            Tire tire = (Tire)b.getUserData();
+        if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Trackable) {
+            Trackable trackable = (Trackable)b.getUserData();
             TrackSection ts = (TrackSection)a.getUserData();
 
-            tire.addGroundMaterial(ts.getGroundMaterial());
+            trackable.addGroundMaterial(ts.getGroundMaterial());
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
@@ -52,20 +53,20 @@ class ContactController implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        if (a.getUserData() instanceof Tire && b.getUserData() instanceof TrackSection) {
+        if (a.getUserData() instanceof Trackable && b.getUserData() instanceof TrackSection) {
 
-            Tire tire = (Tire)a.getUserData();
+            Trackable trackable = (Trackable)a.getUserData();
             TrackSection ts = (TrackSection)b.getUserData();
 
-            tire.removeGroundMaterial(ts.getGroundMaterial());
+            trackable.removeGroundMaterial(ts.getGroundMaterial());
 
         }
 
-        if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Tire) {
-            Tire tire = (Tire)b.getUserData();
+        if (a.getUserData() instanceof TrackSection && b.getUserData() instanceof Trackable) {
+            Trackable trackable = (Trackable)b.getUserData();
             TrackSection ts = (TrackSection)a.getUserData();
 
-            tire.removeGroundMaterial(ts.getGroundMaterial());
+            trackable.removeGroundMaterial(ts.getGroundMaterial());
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
