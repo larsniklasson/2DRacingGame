@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class SpriteUtils {
     public static void updateSprite(Body body, Sprite sprite, float scale){
+
         sprite.setPosition((body.getWorldCenter().x * scale) - sprite.getWidth() / 2,
                 (body.getWorldCenter().y * scale) - sprite.getHeight() / 2);
         sprite.setRotation((float) Math.toDegrees(body.getTransform().getRotation()));

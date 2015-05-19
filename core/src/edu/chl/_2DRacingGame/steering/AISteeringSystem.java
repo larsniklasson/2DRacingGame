@@ -15,6 +15,8 @@ import edu.chl._2DRacingGame.gameObjects.Tire;
  */
 public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implements Steerable<Vector2>{
 
+
+    //TODO add random value to speed to make race more interesting
     private float wheelAngle;
 
     private AISpeedHolder speedHolder;

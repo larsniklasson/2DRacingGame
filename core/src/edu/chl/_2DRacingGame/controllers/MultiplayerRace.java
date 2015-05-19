@@ -37,8 +37,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         // TODO these should be chosen through in-game menu later
         setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
 
-        OurVehicle vehicle = new Car(getWorld().getb2World());
-        vehicle.setSteeringSystem(new TireSteeringSystem(vehicle, new PlayerOneInputListener()));
+        OurVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.MAGIC_CARPET, 1);
         getPlayer().setVehicle(vehicle);
     }
 
@@ -63,7 +62,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
             for (Player player : players) {
                 if (player.getVehicle() == null) {
-                    player.setVehicle(VehicleFactory.createVehicle(player.getVehicleType(), world.getb2World()));
+                    player.setVehicle(VehicleFactory.createVehicle(world, player.getVehicleType()));
                 }
             }
 

@@ -95,6 +95,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
 
     @Override
     public void draw(SpriteBatch batch){
+        if(sprite == null)return;
+        
         SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
         for(Tire t : tires){
@@ -109,6 +111,9 @@ public abstract class OurVehicle extends OneBodyVehicle implements HasTires, Dra
         sprite.draw(batch);
         for(int i = 0; i < tires.size(); i ++){
             Tire t = tires.get(i);
+
+            if(t.getSprite() == null)continue; //currently only for MagicCarpet but you shouldn't have to set the sprite;
+
             SpriteUtils.updateSprite(t.getBody(), t.getSprite(), GameWorld.PIXELS_PER_METER);
             if(isFrontWheelBooleanList.get(i)){
 

@@ -29,30 +29,36 @@ public class SinglePlayerRace extends RaceController {
         scoresPersistor = new MapScoresPersistor(getMap(), getMode());
         scoresPersistor.findInstance();
 
-        OurVehicle vehicle = new Car(getWorld().getb2World());
-        vehicle.setSteeringSystem(new TireSteeringSystem(vehicle, new PlayerOneInputListener())); //TODO make all this stuff in VehicleFactory
+        Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.CAR, 1);
         getPlayer().setVehicle(vehicle);
     }
 
     private void startRace() {
         getWorld().addPlayer(getPlayer());
 
-        /*OurVehicle vehicle = new MotorCycle(getWorld().getb2World());
-        vehicle.setSteeringSystem(new TireSteeringSystem(vehicle, new PlayerTwoInputListener()));
-        Player p2 = new Player("apa", vehicle);
-        p2.setIsControlledByClient(true);
-        getWorld().addPlayer(p2);*/
+        //New player-controlled random vehicle. using player2-controls
+        Vehicle v = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, 2);
+
+        getWorld().addPlayer(new Player("p2", v));
 
         //testing adding ai-vehicles
         for(int i = 0; i < 5; i ++){
-            OurVehicle ov = (OurVehicle) VehicleFactory.createRandomVehicle(getWorld().getb2World()); //TODO add random value to speed to make race more interesting
 
-            Difficulty d = Difficulty.values()[(int)(Math.random()*Difficulty.values().length)];
+            // how to use VehicleFactory
 
-            ov.setSteeringSystem(new WayPointSystem(ov, getWorld().wayPoints, d));
+            String s = VehicleFactory.RANDOM_VEHICLE;
+            Difficulty d = Difficulty.getRandomDifficulty();
 
-            Player p = new Player("p" + i, ov);
+            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld(), s, d);
+
+            Player p = new Player("p" + i, ai_v);
             getWorld().addPlayer(p);
+
+
+            //OR le epic oneliner
+            //getWorld().addPlayer(new Player("ai " + i, VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, Difficulty.getRandomDifficulty())));
+
+
         }
 
 
