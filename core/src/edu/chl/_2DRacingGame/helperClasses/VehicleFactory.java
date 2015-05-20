@@ -8,9 +8,12 @@ import edu.chl._2DRacingGame.world.GameWorld;
 import java.util.Random;
 
 /**
+ * Factory used to create vehicles.
+ * Used to easily create different kinds of vehicles with the right steering-system set automatically.
+ *
  * @author Daniel Sunnerberg
  *
- * revised by Lars Niklasson 2015-05-19
+ * revised by Lars Niklasson 2015-05-19, added alot of functionality
  */
 public class VehicleFactory {
 
@@ -42,9 +45,19 @@ public class VehicleFactory {
     }
 
 
-
-    public static Vehicle createVehicle(GameWorld gameWorld, String vehicleName) {
-        switch (vehicleName.toLowerCase()) {
+    /**
+     * Creates a vehicle in the specified GameWorld.
+     * For the type of vehicle use constants defined in this class, or the name of the class
+     * in all lower case letters.
+     * 
+     * NOTE: does not have a steering-system.
+     * @param gameWorld the GameWorld the vehicle will be created in.
+     * @param vehicleType The type of vehicle.
+     *
+     * @return The created vehicle.
+     */
+    public static Vehicle createVehicle(GameWorld gameWorld, String vehicleType) {
+        switch (vehicleType.toLowerCase()) {
             case CAR:
                 return new Car(gameWorld.getb2World());
             case FORMULA_ONE_CAR:
@@ -62,21 +75,44 @@ public class VehicleFactory {
         }
     }
 
-    public static OurVehicle createAIVehicle(GameWorld gameWorld, String vehicleName, Difficulty difficulty){
-        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleName);
+
+    /**
+     * Creates a bot-vehicle, controlled by Artificial Intelligence (AI).
+     * For the type of vehicle use constants defined in this class, or the name of the class
+     * in all lower case letters.
+     *
+     * NOTE: returns an OurVehicle since the AI-system requires a body and wheels.
+     *
+     * @param gameWorld The GameWorld the vehicle will be created in.
+     * @param vehicleType The type of vehicle.
+     * @param difficulty The difficulty-setting of the AI.
+     * @return The created AI-controlled vehicle.
+     */
+    public static OurVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
+        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
         ov.setSteeringSystem(new WayPointSystem(ov, gameWorld.getWayPoints(), difficulty));
         return ov;
     }
 
 
+    /**
+     * Creates a user-controllable vehicle. Different keys to control the vehicle based on what player-number
+     * specified.
+     * For the type of vehicle use constants defined in this class, or the name of the class
+     * in all lower case letters.
+     *
+     * @param gameWorld The GameWorld the vehicle will be created in.
+     * @param vehicleType The type of vehicle.
+     * @param playerNumber The player-number. (Player 1, Player 2, etc.)
+     * @return The created user-controllable vehicle.
+     */
+    public static OurVehicle createPlayerVehicle(GameWorld gameWorld, String vehicleType, int playerNumber){
 
-    public static OurVehicle createPlayerVehicle(GameWorld gameWorld, String vehicleName, int playerNumber){
-
-        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleName);
+        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
         SteeringInputListener sl = getSteeringInputListener(playerNumber);
 
         SteeringSystem ss;
-        if(vehicleName.equals(MAGIC_CARPET)){
+        if(vehicleType.equals(MAGIC_CARPET)){
             ss = new FlyingSteeringSystem(ov, sl);
         } else {
             ss = new TireSteeringSystem(ov, sl);

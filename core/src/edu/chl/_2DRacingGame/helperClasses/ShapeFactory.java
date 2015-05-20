@@ -14,10 +14,20 @@ import com.badlogic.gdx.physics.box2d.Shape;
 /**
  * Note: All code written by Lars Niklasson; just extracted it.
  *
+ * Class for creating Box2D-shapes from MapObjects. (these are used by for example tile-map files such as the .tmx-format)
+ * Desinged specifically for the map-editor Tiled. (http://www.mapeditor.org/)
+ *
  * @author Lars Niklasson
  */
 public class ShapeFactory {
 
+    /**
+     * Creates a Box2D-shape from the specified MapObject with the specified scale.
+     *
+     * @param object The MapObject the shape will be derived from
+     * @param scale The scale which the shape will be created in.
+     * @return The Box2D-shape created
+     */
     public static Shape createShape(MapObject object, float scale) {
 
         if (object instanceof RectangleMapObject) {
