@@ -9,7 +9,7 @@ import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
-public class _2DRacingGame extends Game implements GameController, MainMenuListener, MultiPlayerMenuListener {
+public class _2DRacingGame extends Game implements GameController, MainMenuListener {
 
     // TODO
     private final boolean useMultiplayer = false;
@@ -36,7 +36,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
     private void startMultiplayer() {
         raceController = new MultiplayerRace(this);
-        raceController.setUp();
+        //raceController.setUp();
     }
 
     public GameWorld getGameWorld() {
@@ -61,7 +61,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     public void displaySinglePlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen(this));}
 
     @Override
-    public void displayMultiPlayerMenuScreen() {setScreen(new MultipPlayerMenuScreen(this));}
+    public void displayMultiPlayerMenuScreen() { startMultiplayer(); }
 
     @Override
     public void displayOptionsScreen() {setScreen(new OptionsMenuScreen());}
@@ -70,17 +70,8 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     public void exitGame() {Gdx.app.exit();}
 
     @Override
-    public void startMultiplayerRace() {
-        startMultiplayer();
-    }
-
-    @Override
     public void startSinglePlayerRace() {
         startSinglePlayer();
     }
 
-    @Override
-    public void displayMainMenuScreen() {
-        displayStartMenu();
-    }
 }

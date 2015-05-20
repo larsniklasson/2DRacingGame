@@ -3,7 +3,6 @@ package edu.chl._2DRacingGame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,8 +16,11 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     private MultiPlayerMenuListener listener;
 
-    private Table table;
+    private Table mainTable;
+    private Table carouselTable;
+    private Table buttonTable;
     private ScrollTable2 vehicleTable;
+    private ScrollTable2 mapTable;
 
 
     private TextButton startButton;
@@ -29,8 +31,12 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     public MultipPlayerMenuScreen(MultiPlayerMenuListener listener) {
 
         this.listener = listener;
+
         vehicleTable = new ScrollTable2(Assets.vehicleArray);
-        table = new Table();
+        mapTable = new ScrollTable2((Assets.mapArray));
+        mainTable = new Table();
+        carouselTable = new Table();
+        buttonTable = new Table();
 
     }
 
@@ -38,27 +44,34 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     public void show() {
         create();
 
-        stage.addActor(table);
-        //table.setFillParent(true);
+        stage.addActor(mainTable);
 
         Gdx.input.setInputProcessor(stage);
 
     }
 
     public void create(){
-        table.setDebug(true);
-        multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
-        table.add(multiPlayerLabel).colspan(2);
-        table.row();
+        mainTable.setDebug(true);
 
-        table.add(vehicleTable.getTable());
-        table.row();
+        multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
+        mainTable.add(multiPlayerLabel).colspan(2);
+        mainTable.row();
+
+        carouselTable.add(vehicleTable.getTable());
+        carouselTable.row();
+        carouselTable.add(mapTable.getTable());
+        carouselTable.setSize(Gdx.graphics.getWidth(), 200);
+
+        mainTable.add(carouselTable);
+        mainTable.row();
 
         backButton = new TextButton("back", skin);
-        table.add(backButton);
+        buttonTable.add(backButton).left();
 
         startButton = new TextButton("Find race", skin);
-        table.add(startButton);
+        buttonTable.add(startButton).right();
+
+        mainTable.add(buttonTable);
 
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -74,7 +87,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
                 listener.displayMainMenuScreen();
             }
         }));
-        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        mainTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     }
 

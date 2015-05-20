@@ -11,9 +11,7 @@ import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
-import edu.chl._2DRacingGame.screens.ErrorScreen;
-import edu.chl._2DRacingGame.screens.MultiplayerRaceFinishedScreen;
-import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
+import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.steering.PlayerOneInputListener;
 import edu.chl._2DRacingGame.steering.TireSteeringSystem;
 import edu.chl._2DRacingGame.world.GameWorld;
@@ -27,7 +25,7 @@ import java.util.List;
  *
  * @author Daniel Sunnerberg
  */
-public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener {
+public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener, MultiPlayerMenuListener {
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
@@ -39,6 +37,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
      */
     public MultiplayerRace(GameController gameController) {
         super(gameController);
+        gameController.setScreen(new MultipPlayerMenuScreen(this));
     }
 
     private void requestRaceSettings() {
@@ -164,4 +163,13 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         hideVehicle(opponent);
     }
 
+    @Override
+    public void startMultiplayerRace() {
+        setUp();
+    }
+
+    @Override
+    public void displayMainMenuScreen() {
+        gameController.displayStartMenu();
+    }
 }
