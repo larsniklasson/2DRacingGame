@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import edu.chl._2DRacingGame.Assets;
 
 /**
  * Created by Victor Christoffersson on 2015-05-19.
@@ -17,6 +18,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     private MultiPlayerMenuListener listener;
 
     private Table table;
+    private ScrollTable2 vehicleTable;
 
 
     private TextButton startButton;
@@ -27,7 +29,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     public MultipPlayerMenuScreen(MultiPlayerMenuListener listener) {
 
         this.listener = listener;
-
+        vehicleTable = new ScrollTable2(Assets.vehicleArray);
         table = new Table();
 
     }
@@ -37,7 +39,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
         create();
 
         stage.addActor(table);
-        table.setFillParent(true);
+        //table.setFillParent(true);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -45,9 +47,11 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     public void create(){
         table.setDebug(true);
-
         multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
         table.add(multiPlayerLabel).colspan(2);
+        table.row();
+
+        table.add(vehicleTable.getTable());
         table.row();
 
         backButton = new TextButton("back", skin);
@@ -70,6 +74,8 @@ public class MultipPlayerMenuScreen extends GUIScreen {
                 listener.displayMainMenuScreen();
             }
         }));
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     }
 
     @Override
