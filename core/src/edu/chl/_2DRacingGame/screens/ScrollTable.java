@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by Anton on 2015-05-10.
  */
@@ -16,27 +18,27 @@ public class ScrollTable {
     private TextButton previousItemButton;
     private TextButton nextItemButton;
     private Label itemName;
-    private TextArea itemDesc;
-    private Image [] imageArray;
+    private String s;
+    private ArrayList <Image> imageArray;
     private int imageIndex = 0;
 
-    public ScrollTable(Image[] images) {
+    public ScrollTable(ArrayList <Image> images, String typeOfSelector) {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
         imageArray = images;
+        this.s = "Choose a " + typeOfSelector;
         setupSelectorTable();
     }
 
     public Table getTable(){
         return table;
     }
-    public String getImageName(){return imageArray[imageIndex].getName();}
+    public String getImageName(){return imageArray.get(imageIndex).getName();}
 
     private void setupSelectorTable(){
-        itemName = new Label("Name!", skin, "default");
+        itemName = new Label(s, skin, "default");
         previousItemButton = new TextButton("<", skin, "default");
         nextItemButton = new TextButton(">", skin, "default");
-        itemDesc = new TextArea(" Description stuff",skin,"default");
 
         previousItemButton.addListener(new ClickListener() {
             @Override
@@ -57,14 +59,15 @@ public class ScrollTable {
 
     private void redrawTable(){
         table.reset();
-        table.padRight(50);
-        table.add(previousItemButton);
-        table.add(imageArray[imageIndex]).width(300).height(200);//värde för width och Height är bara för test
-        table.add(nextItemButton);
-        table.row();
         table.add(itemName).colspan(3).center();
         table.row();
-        table.add(itemDesc).colspan(3);
+        table.padRight(50);
+        table.add(previousItemButton);
+        table.add(imageArray.get(imageIndex)).width(300).height(200);//värde för width och Height är bara för test
+        table.add(nextItemButton);
+        table.row();
+        table.row();
+        //table.add(itemDesc).colspan(3);
         table.setBounds(0, 0, table.getMinWidth(), table.getMinHeight());
         table.debug();
     }
@@ -81,7 +84,7 @@ public class ScrollTable {
     }
 
     private void increaseImageIndex(){
-        if(imageIndex==imageArray.length-1)
+        if(imageIndex==imageArray.size()-1)
             imageIndex=0;
         else
             imageIndex++;
@@ -89,7 +92,7 @@ public class ScrollTable {
 
     private void decreaseImageIndex(){
         if(imageIndex==0)
-            imageIndex= imageArray.length-1;
+            imageIndex= imageArray.size()-1;
         else
             imageIndex--;
     }

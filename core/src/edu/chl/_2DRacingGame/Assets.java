@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Anton on 2015-04-27.
@@ -52,8 +54,8 @@ public class Assets {
     public static Texture formula1;
     public static Texture car;
     public static BitmapFont arial40;
-    public static Image [] mapArray;
-    public static Image [] vehicleArray;
+    public static ArrayList <Image> mapArray;
+    public static ArrayList <Image> vehicleArray;
 
     public static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
@@ -89,24 +91,30 @@ public class Assets {
         dirt = loadTexture("dirt.png");
         ful = loadTexture("ful.png");
 
-
-        //--------Images for Vehicle Selection
-        magicCarpet = loadTexture("VehicleSelectorImages/magicCarpet.jpg");
-        motorCycle = loadTexture("VehicleSelectorImages/Motorcycle.jpg");
+       /* magicCarpet = loadTexture("VehicleSelectorImages/magiccarpet.jpg");
+        motorCycle = loadTexture("VehicleSelectorImages/motorcycle.jpg");
         car = loadTexture("VehicleSelectorImages/car.png");
-        monsterTruck = loadTexture("VehicleSelectorImages/monsterTruck.jpg");
+        monsterTruck = loadTexture("VehicleSelectorImages/monstertruck.jpg");
         formula1 = loadTexture("VehicleSelectorImages/formula1.jpg");
+*/
 
+        //--------Images for Vehicle and Map Selection
+        String [] mapNames  = new String[] {"map1.png", "spritesheet.png"};
+        mapArray = new ArrayList<>();
+        for(int i = 0; i<mapNames.length;i++){
+            System.out.println(i);
+            mapArray.add(textureToImage(loadTexture(mapNames[i])));
+            mapArray.get(i).setName(mapNames[i]);
+        }
 
-
-        arial40 = new BitmapFont(Gdx.files.internal("Arial40.fnt"),false);
-
-        mapArray = new Image[] {textureToImage(ice), textureToImage(ful)};
-        vehicleArray = new Image[] {textureToImage(motorCycle), textureToImage(magicCarpet), textureToImage(car),
-                textureToImage(formula1), textureToImage(monsterTruck)};
-
+        String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1.jpg", "magiccarpet.jpg"};
+        vehicleArray = new ArrayList<>();
+        for(int i = 0; i<vehicleNames.length;i++){
+            System.out.println(i);
+            vehicleArray.add(textureToImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
+            vehicleArray.get(i).setName(vehicleNames[i]);
+        }
     }
-
 
     public static Image textureToImage (Texture texture) {
         return new Image(texture);
