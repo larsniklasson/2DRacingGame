@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Victor Christoffersson on 2015-05-20.
@@ -14,7 +16,7 @@ public class ScrollTable2 {
 
     private Table table;
 
-    private Image[] images;
+    private ArrayList<Image> images;
 
     private Skin skin;
 
@@ -23,7 +25,7 @@ public class ScrollTable2 {
 
     private Label currentLabel;
 
-    public ScrollTable2(Image[] images){
+    public ScrollTable2(ArrayList<Image> images){
         this.images = images;
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -57,7 +59,7 @@ public class ScrollTable2 {
 
     private void drawTable() {
         table.setDebug(true);
-        table.add(currentLabel).colspan(images.length + 2);
+        table.add(currentLabel).colspan(images.size() + 2);
         table.row();
         table.add(prevButton);
         setUpImages();
@@ -65,15 +67,15 @@ public class ScrollTable2 {
     }
 
     private void setUpImages() {
-        for(int i = 0; i <= images.length - 1; i++){
+        for(int i = 0; i <= images.size() - 1; i++){
 
             Table temp = new Table();
-            temp.add(images[i]);
+            temp.add(images.get(i));
             table.add(temp);
         }
     }
 
-    public Image[] getImages() {
+    public ArrayList<Image> getImages() {
         return images;
     }
 
