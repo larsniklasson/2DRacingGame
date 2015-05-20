@@ -58,7 +58,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     }
 
     @Override
-    public void displaySinglePlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen());}
+    public void displaySinglePlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen(this));}
 
     @Override
     public void displayMultiPlayerMenuScreen() {setScreen(new MultipPlayerMenuScreen(this));}
@@ -71,6 +71,11 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
     @Override
     public void startMultiplayerRace() {
+        startMultiplayer();
+    }
+
+    @Override
+    public void startSinglePlayerRace() {
         startMultiplayer();
     }
 

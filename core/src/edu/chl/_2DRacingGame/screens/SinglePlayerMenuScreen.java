@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame._2DRacingGame;
+import javafx.scene.control.RadioButton;
 
 
 /**
@@ -14,7 +15,7 @@ import edu.chl._2DRacingGame._2DRacingGame;
  */
 public class SinglePlayerMenuScreen extends GUIScreen {
 
-    private _2DRacingGame game;
+
 
     private SelectBox<Integer> laps;
     private SelectBox<Integer> numberOfOpponents;
@@ -22,12 +23,13 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
     private Table mainTable;
+    private MainMenuListener listener;
 
-    public SinglePlayerMenuScreen() {
-        this.game = game;
+    public SinglePlayerMenuScreen(MainMenuListener listener) {
+        this.listener = listener;
         mainTable = new Table();
-        mapSelector = new ScrollTable(Assets.mapArray);
-        vehicleSelector = new ScrollTable(Assets.vehicleArray);
+        mapSelector = new ScrollTable(Assets.mapArray, "map");
+        vehicleSelector = new ScrollTable(Assets.vehicleArray, "vehicle");
     }
 
 
@@ -36,7 +38,6 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         create();
         stage.addActor(mainTable);
         Gdx.input.setInputProcessor(stage);
-
     }
 
     private Table selectTable(){
@@ -69,16 +70,18 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenuScreen(game));
+                listener.displayStartMenu();
             }
         });
 
         startGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Number of Opponents" + stringToInt(numberOfOpponents.getSelected().toString()));
-                System .out.println("Number of Laps" + stringToInt(laps.getSelected().toString()));
-//                game.setScreen(new GameScreen(game.getGameWorld())); // TODO should use listeners
+                System.out.println("Number of Opponents: " + stringToInt(numberOfOpponents.getSelected().toString()));
+                System .out.println("Number of Laps: " + stringToInt(laps.getSelected().toString()));
+                System.out.println("Vehicle chosen: " + vehicleSelector.getImageName());
+                System.out.println("Map chosen: " + mapSelector.getImageName());
+                listener.startSinglePlayerRace();
 
             }
         });
@@ -94,10 +97,6 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         mainTable.debug();
         mainTable.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
-
-
-
-
 
     private int stringToInt(String s) {return Integer.parseInt(s);}
 
