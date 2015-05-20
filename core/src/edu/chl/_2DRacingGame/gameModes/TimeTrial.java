@@ -54,4 +54,10 @@ public class TimeTrial extends GameMode {
     public Comparator<Double> getScoreComparator() {
         return (a, b) -> a.compareTo(b);
     }
+
+    @Override
+    public String getModeName() {
+        return "TimeTrial";
+    }
+
 }

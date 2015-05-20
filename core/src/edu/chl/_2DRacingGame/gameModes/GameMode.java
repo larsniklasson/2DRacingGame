@@ -80,4 +80,6 @@ public abstract class GameMode implements LapListener {
     public List<RaceListener> getListeners() {
         return listeners;
     }
+
+    public abstract String getModeName();
 }
