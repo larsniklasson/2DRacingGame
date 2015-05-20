@@ -1,7 +1,10 @@
 package edu.chl._2DRacingGame.steering;
 
 /**
- * Created by Lars Niklasson on 2015-05-17.
+ * Class for holding multiple speed-related values.
+ * Used for the AI-steering-system.
+ *
+ *@author Lars Niklasson
  */
 public class AISpeedHolder {
 
@@ -49,14 +52,26 @@ public class AISpeedHolder {
         this.maxAngularAcceleration = maxAngularAcceleration;
     }
 
+    /**
+     *
+     * @return Some standard speed-values for an easy-difficulty bot.
+     */
     public static AISpeedHolder getStandardEasySpeed(){
         return new AISpeedHolder(5,1200,1000,1200);
     }
 
+    /**
+     *
+     * @return Some standard speed-values for a medium-difficulty bot.
+     */
     public static AISpeedHolder getStandardMediumSpeed(){
         return new AISpeedHolder(10,2000,1000,1200);
     }
 
+    /**
+     *
+     * @return Some standard speed-values for a hard-difficulty bot.
+     */
     public static AISpeedHolder getStandardHardSpeed(){
 
         return new AISpeedHolder(15,2000,1000,1200);

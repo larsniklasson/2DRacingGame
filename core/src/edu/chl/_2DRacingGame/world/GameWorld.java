@@ -27,6 +27,9 @@ import java.util.List;
 
 
 /**
+ * Holds all the game-objects and other things related to the world.
+ * Updates the ones the should be updated each frame.
+ *
  * Created by Lars Niklasson on 2015-04-21.
  * Revised by Daniel Sunnerberg on 2015-05-10.
  */
@@ -54,6 +57,10 @@ public class GameWorld implements Disposable {
 
     private final List<UpdateListener> updateListeners = new ArrayList<>();
 
+    /**
+     * Creates a world from the specified map
+     * @param gameMap the map this world will use.
+     */
     public GameWorld(GameMap gameMap) {
         tiledMap = new TmxMapLoader().load(gameMap.getPath());
         b2World = new World(new Vector2(0, 0), true);
@@ -64,20 +71,38 @@ public class GameWorld implements Disposable {
         }
     }
 
+    /**
+     * Adds a player to this world.
+     * @param player The player to be added.
+     */
     public void addPlayer(Player player) {
         players.add(player);
     }
 
+    /**
+     * Adds a list of players to this world.
+     * @param players The list of players to be added.
+     */
     public void addPlayers(List<Player> players) {
         for (Player player : players) {
             addPlayer(player);
         }
     }
 
+    /**
+     *
+     * @return The Box2D-world the GameWorld uses to simulate the physics.
+     */
     public World getb2World(){
         return b2World;
     }
 
+    /**
+     * Update the physics-engine and the vehicles of each player, based
+     * on the time elapsed since last update.
+     *
+     * @param delta Time elapsed since last update.
+     */
     public void update(float delta) {
         b2World.step(delta, 3, 3);
 
@@ -177,10 +202,17 @@ public class GameWorld implements Disposable {
 
     }
 
+    /**
+     *
+     * @return A list of the checkpoints used in this world.
+     */
     public List<Checkpoint> getCheckpoints() {
         return checkpoints;
     }
 
+    /**
+     * Spawns each player on the right spawn-location.
+     */
     public void spawnPlayers() {
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
@@ -191,14 +223,26 @@ public class GameWorld implements Disposable {
         }
     }
 
+    /**
+     *
+     * @return The TiledMap object of this game-world.
+     */
     public TiledMap getTiledMap(){
         return tiledMap;
     }
 
+    /**
+     *
+     * @return A list of all the players in this game-world.
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * NOTE: used by AI
+     * @return An array of all the wayPoints in this game-world.
+     */
     public Array<Vector2> getWayPoints() {
         return wayPoints;
     }
@@ -208,6 +252,7 @@ public class GameWorld implements Disposable {
         b2World.dispose();
         tiledMap.dispose();
     }
+
 
     public void addUpdateListener(UpdateListener listener) {
         updateListeners.add(listener);

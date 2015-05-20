@@ -23,9 +23,8 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
 
 /**
- * Created by Lars Niklasson on 2015-04-21.
- *
  * Class responsible for drawing the game to the screen.
+ * @author Lars Niklasson
  */
 public class GameRenderer extends Stage {
 
@@ -42,7 +41,11 @@ public class GameRenderer extends Stage {
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
 
-
+    /**
+     *
+     * @param world The GameWorld which should be drawn.
+     * @param gameMode The GameMode used.
+     */
     public GameRenderer(GameWorld world, GameMode gameMode) {
         this.gameWorld = world;
         this.gameMode = gameMode;
@@ -56,6 +59,9 @@ public class GameRenderer extends Stage {
         debugRenderer = new Box2DDebugRenderer();
     }
 
+    /**
+     * Draws everything to the screen
+     */
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
