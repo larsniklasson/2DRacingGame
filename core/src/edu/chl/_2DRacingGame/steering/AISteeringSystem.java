@@ -9,14 +9,19 @@ import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.  Most code from Libgdx's AI-LIB tests. https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests
+ * SteeringSystem controlled by AI using LibGDX's AI-library. Designed for and requires the OurVehicle class.
  *
- * file in particular: https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/steer/box2d/Box2dSteeringEntity.java
+ *
+ * IMPORTANT NOTE:
+ * Most code copied from LibGDX's AI-tests. See https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests
+ * File in particular: https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/steer/box2d/Box2dSteeringEntity.java
+ * Most credit goes to davebaol
+ *
+ * @author davebaol, Lars Niklasson
  */
 public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implements Steerable<Vector2>{
 
 
-    //TODO add random value to speed to make race more interesting
     private float wheelAngle;
 
     private AISpeedHolder speedHolder;
@@ -32,7 +37,11 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
     private static final SteeringAcceleration<Vector2> steeringOutput = new SteeringAcceleration<>(new Vector2());
 
 
-
+    /**
+     * Creates a SteeringSystem for the specified vehicle
+     *
+     * @param vehicle The vehicle which the steering-system is created for
+     */
     public AISteeringSystem(OurVehicle vehicle) {
         super(vehicle);
 
@@ -145,7 +154,6 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
     @Override
     public void update (float deltaTime) {
-        //TODO implement GroundMaterial support
 
 
         if (steeringBehavior != null) {
@@ -153,13 +161,6 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
             steeringBehavior.calculateSteering(steeringOutput);
 
-			/*
-			 * Here you might want to add a motor control layer filtering steering accelerations.
-			 *
-			 * For instance, a car in a driving game has physical constraints on its movement: it cannot turn while stationary; the
-			 * faster it moves, the slower it can turn (without going into a skid); it can brake much more quickly than it can
-			 * accelerate; and it only moves in the direction it is facing (ignoring power slides).
-			 */
 
             // Apply steering acceleration
             applySteering(deltaTime);
@@ -171,7 +172,6 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
     private void applySteering (float deltaTime) {
         boolean anyAccelerations = false;
-
 
 
         // Update position and linear velocity.
@@ -209,11 +209,9 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
 
                 for(Tire t : vehicle.getTires()){
                     t.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime);
-                    //t.getBody().setTransform(t.getBody().getPosition(), newOrientation);
+
                 }
                 vehicle.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
-                //getBody().setTransform(getBody().getPosition(), newOrientation);
-
 
 
                 float f = newOrientation - vehicle.getBody().getTransform().getRotation();
@@ -221,32 +219,13 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
                 vehicle.place(vehicle.getBody().getPosition(), newOrientation);
 
 
-                //System.out.println("f = " + f);
-
-
-                /*if(f < -0.04){
-                    wheelAngle += (float) Math.toRadians(-50);
-                } else if(f > 0.04){
-                    wheelAngle = (float) Math.toRadians(50);
-                } else if(f > -0.005 && f < 0.005){
-                    wheelAngle = 0;
-                }*/
-
-                /*if(f < 0.0){
-                    wheelAngle = (float) Math.max(Math.toRadians(-50), wheelAngle - Math.toRadians(2));
-                } else if(f > 0.0){
-                    wheelAngle = (float) Math.min(Math.toRadians(50), wheelAngle + Math.toRadians(2));
-                }*/
-
-                float desiredAngle = f * 20;       //WORKS SURPRISINGLY WELL
+                //calculate and apply the new wheel angle
+                float desiredAngle = f * 20;
                 if(wheelAngle < desiredAngle){
                     wheelAngle += Math.toRadians(2);
                 } else if (wheelAngle > desiredAngle){
                     wheelAngle -= Math.toRadians(2);
                 }
-
-                //System.out.println("wheelangle: " + wheelAngle);
-
 
                 for(int i = 0; i < vehicle.getTires().size(); i++){
                     if(vehicle.getIsFrontWheelBooleanList().get(i)){
@@ -289,6 +268,10 @@ public abstract class AISteeringSystem extends SteeringSystem<OurVehicle> implem
         }
     }
 
+    /**
+     * Sets the steering-behavior (See LibGDX's AI-library) used by the system.
+     * @param steeringBehavior The steering-behavior the system will use
+     */
     public void setSteeringBehavior(SteeringBehavior<Vector2> steeringBehavior) {
         this.steeringBehavior = steeringBehavior;
     }

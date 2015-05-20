@@ -44,10 +44,10 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
     private final List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
 
     /**
-     * {@inheritDoc}
+     * Creates a vehicle set in the specified Box2D-world.
+     * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle when subclassing.
      *
-     * NOTE: use the place function for custom spawning position.
-     *
+     * @param world the Box2D-world which the vehicle will be created in.
      */
     public OurVehicle(World world) {
         super(world);

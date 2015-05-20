@@ -17,8 +17,8 @@ public abstract class OneBodyVehicle extends Vehicle {
     protected final World world;
 
     /**
-     * Creates an instance of this class.
-     * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle.
+     * Creates a vehicle set in the specified Box2D-world.
+     * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle when subclassing.
      *
      * @param world the Box2D-world which the vehicle will be created in.
      */

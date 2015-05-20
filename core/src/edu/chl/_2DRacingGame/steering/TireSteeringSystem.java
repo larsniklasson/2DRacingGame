@@ -11,7 +11,11 @@ import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
 import java.util.Set;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.
+ * SteeringSystem for vehicles with tires. Designed for (requires) the OurVehicle class.
+ * Is used to control the player's vehicle by changing the direction of the front-wheels and
+ * applying forces to the tires.
+ *
+ *@author Lars Niklasson
  */
 public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
@@ -20,11 +24,22 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
     private final SteeringInputListener steeringListener;
 
+    /**
+     * Creates a steering-system for the specified vehicle with a specified steering-listener, which handles user input.
+     * @param ourVehicle The vehicle the steering-system is created for.
+     * @param steeringListener The steering-listener for this steering-system
+     */
     public TireSteeringSystem(OurVehicle ourVehicle, SteeringInputListener steeringListener) {
         super(ourVehicle);
         this.steeringListener = steeringListener;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Gets input from the listener steers/drives the vehicle based on the input.
+     * @param delta The time elapsed since last update.
+     */
     @Override
     public void update(float delta) {
 

@@ -5,9 +5,20 @@ import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.
+ * Class for steering a flying vehicle.
+ * Designed specifically for the MagicCarpet class. Instead of turning the wheels and applying forces,
+ * torque is applied to each tire (in MagicCarpet's case, the only tire) to rotate the vehicle even though it is standing still.
+ *
+ * Gives quite a different feel to the TireSteeringSystem
+ *@author Lars Niklasson
  */
 public class FlyingSteeringSystem extends TireSteeringSystem {
+
+    /**
+     * Creates a steering-system for the specified vehicle with a specified steering-listener, which handles user input.
+     * @param ourVehicle The vehicle the steering-system is created for.
+     * @param steeringListener The steering-listener for this steering-system
+     */
     public FlyingSteeringSystem(OurVehicle ourVehicle, SteeringInputListener steeringListener) {
         super(ourVehicle, steeringListener);
     }

@@ -7,7 +7,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created by Lars Niklasson on 2015-05-18.
+ * Class for polling for Input. Designed for Local multiplayer, where this class is used by player 2.
+ *@author Lars Niklasson
  */
 public class PlayerTwoInputListener implements SteeringInputListener {
     @Override

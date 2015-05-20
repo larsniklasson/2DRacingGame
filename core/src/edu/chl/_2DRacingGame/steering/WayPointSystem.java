@@ -7,12 +7,20 @@ import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.
+ * AI-steering-system where to AI-controlled vehicle is guided along a list of waypoints, positions in the world in a certain order.
+ *
+ *@author Lars Niklasson
  */
 public class WayPointSystem extends AISteeringSystem {
 
     private final Array<Vector2> wayPoints;
 
+    /**
+     * Creates a waypoint-system for the specified vehicle, with the specified waypoints and difficulty
+     * @param vehicle The vehicle the waypoint-system is created for
+     * @param wayPoints The waypoints the vehicle will be guided along
+     * @param difficulty The difficulty-setting for the AI-controlled vehicle
+     */
     public WayPointSystem(OurVehicle vehicle, Array<Vector2> wayPoints, Difficulty difficulty) {
         super(vehicle);
 

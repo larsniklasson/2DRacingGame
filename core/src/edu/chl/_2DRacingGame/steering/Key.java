@@ -1,7 +1,8 @@
 package edu.chl._2DRacingGame.steering;
 
 /**
- * Created by Lars Niklasson on 2015-05-18.
+ * Enum for the keys used to control a vehicle.
+ *@author Lars Niklasson
  */
 public enum Key{
     Up, Down, Left, Right

@@ -3,9 +3,15 @@ package edu.chl._2DRacingGame.steering;
 import java.util.Set;
 
 /**
- * Created by Lars Niklasson on 2015-05-18.
+ * Interface for getting input regarding the controlling of
+ * a vehicle.
+ * @author Lars Niklasson
  */
 
 public interface SteeringInputListener{
+    /**
+     *
+     * @return A Set of keys the user pressed.
+     */
     Set<Key> getInput();
 }
