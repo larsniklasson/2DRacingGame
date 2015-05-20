@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lars Niklasson on 2015-03-30.
+ * Class representing a wheel or a tire (they're the same thing). Used by steering-systems to control a vehicle, particularly TireSteeringSystem.
+ * Holds information such as max-speed, driveforce and friction, these values should be set by the vehicle using the tire.
+ *
+ * @author Lars Niklasson
  */
 public class Tire implements Drawable, Trackable {
     private Sprite sprite;
@@ -41,6 +44,16 @@ public class Tire implements Drawable, Trackable {
 
     private final List<GroundMaterial> grounds = new ArrayList<>();
 
+    /**
+     * Creates a tire (a rectangle) in the specified Box2D-world with the specified width, height and density
+     *
+     * IMPORTANT NOTE: Calling setCharacteristics is essential and should be done after the object is created.
+     *
+     * @param world The Box2D-world the tire will be created in
+     * @param width The width of the tire.
+     * @param height The height of the tire.
+     * @param density The density of the tire.
+     */
     public Tire(World world, float width, float height, float density) {
 
         this.world = world;
@@ -53,6 +66,7 @@ public class Tire implements Drawable, Trackable {
 
 
     }
+
 
     private void createBody() {
         BodyDef bodyDef = new BodyDef();
@@ -69,6 +83,17 @@ public class Tire implements Drawable, Trackable {
 
     }
 
+    /**
+     * Sets the characteristics of this tire. Should be called when creating the tire. Usually the maximum speeds
+     * should be the same in all tires of the vehicle.
+     *
+     * @param maxDriveForce The maximum drive-force of this tire.
+     * @param maxLateralImpulse The maximum amount of side-ways velocity that can be cancelled out. A lower value will result in more skidding,
+     *                          a higher value will make the vehicle seem like it's on rails.
+     * @param maxForwardSpeed The maximum forward speed of this tire.
+     * @param maxBackwardSpeed The maximum backward speed of this tire.
+     * @param roadFrictionBackwardsCoefficient The amount of friction in a backwards direction caused by the road. This makes the vehicle come to a stop on its own.
+     */
     public void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient) {
         this.driveForce = maxDriveForce;
         this.maxLateralImpulse = maxLateralImpulse;
@@ -78,9 +103,9 @@ public class Tire implements Drawable, Trackable {
     }
 
 
-
-
-
+    /**
+     * Update the tire-characteristics based on what kind of groundmaterial the tire is touching at the moment.
+     */
     public void updateValues(){
         if (grounds.isEmpty()) {
 
@@ -100,17 +125,23 @@ public class Tire implements Drawable, Trackable {
 
 
 
+    @Override
     public void addGroundMaterial(GroundMaterial gm) {
-        grounds.add(gm);  //TODO maybe updatevalues in here
+        grounds.add(gm);
 
     }
 
+
+    @Override
     public void removeGroundMaterial(GroundMaterial gm) {
         grounds.remove(gm);
     }
 
 
-
+    /**
+     * Draws the tire's sprite to the screen using a SpriteBatch
+     * @param batch The SpriteBatch used to draw the tire's sprite.
+     */
     @Override
     public void draw(SpriteBatch batch) {
         if(sprite == null)return;
@@ -119,7 +150,10 @@ public class Tire implements Drawable, Trackable {
         sprite.draw(batch);
     }
 
-
+    /**
+     *
+     * @return A copy of this tire.
+     */
     public Tire cpy(){
         Tire t = new Tire(world, width, height, density);
         t.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
@@ -127,60 +161,95 @@ public class Tire implements Drawable, Trackable {
         return t;
     }
 
+    /**
+     *
+     * @return The Box2D-body of this tire.
+     */
     public Body getBody() {
         return body;
     }
 
+    /**
+     *
+     * @return The sprite of this tire.
+     */
     public Sprite getSprite(){
         return sprite;
     }
 
+    /**
+     *
+     * @param sprite The sprite used to draw this tire.
+     */
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
 
     }
 
 
-
+    /**
+     *
+     * @return The drive-force of this tire
+     */
     public float getDriveForce(){
         return driveForce;
     }
 
+    /**
+     *
+     * @param driveForce The drive-force this tire will get.
+     */
     public void setDriveForce(float driveForce) {
         this.driveForce = driveForce;
     }
 
-    public void setMaxForwardSpeed(float maxForwardSpeed) {
-        this.maxForwardSpeed = maxForwardSpeed;
-    }
 
-    public void setMaxBackwardSpeed(float maxBackwardSpeed) {
-        this.maxBackwardSpeed = maxBackwardSpeed;
-    }
-
+    /**
+     *
+     * @param maxLateralImpulse The maximum amount of side-ways velocity that can be cancelled out. A lower value will result in more skidding,
+     *                          a higher value will make the vehicle seem like it's on rails.
+     */
     public void setMaxLateralImpulse(float maxLateralImpulse) {
         this.maxLateralImpulse = maxLateralImpulse;
     }
 
+    /**
+     *
+     * @param backwardsFriction The amount of friction in a backwards direction caused by the road.
+     */
     public void setBackwardsFriction(float backwardsFriction) {
         this.backwardsFriction = backwardsFriction;
     }
 
 
-
-
+    /**
+     *
+     * @return The CURRENT maximum amount of sideways velocity to be cancelled out.
+     */
     public float getCurrentMaxLateralImpulse() {
         return currentMaxLateralImpulse;
     }
 
+    /**
+     *
+     * @return The CURRENT maximum forward speed of this tire.
+     */
     public float getCurrentMaxForwardSpeed() {
         return currentMaxForwardSpeed;
     }
 
+    /**
+     *
+     * @return The CURRENT maximum backward speed of this tire.
+     */
     public float getCurrentBackwardsFriction() {
         return currentBackwardsFriction;
     }
 
+    /**
+     *
+     * @return The CURRENT amount of friction in a backwards direction caused by the road.
+     */
     public float getCurrentMaxBackwardSpeed() {
         return currentMaxBackwardSpeed;
     }

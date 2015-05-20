@@ -10,11 +10,12 @@ import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-09.
+ * Class for a Formula one car, fast but bad in tight spaces.
+ *
+ * @author Lars Niklasson
  */
 public class FormulaOneCar extends OurVehicle{
 
-    //comment out debugrenderer for full viewing pleasure
 
     private static final float SCALE = GameWorld.PIXELS_PER_METER;
 
@@ -41,6 +42,9 @@ public class FormulaOneCar extends OurVehicle{
 
     private static final float MAX_ANGLE = 25f;
 
+    /**
+     * {@inheritDoc}
+     */
     public FormulaOneCar(World world) {
         super(world);
 

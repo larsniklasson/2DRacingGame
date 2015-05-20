@@ -10,7 +10,8 @@ import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-09.
+ * Class for a motorcycle, a fast but weak vehicle.
+ *@author Lars Niklasson
  */
 public class MotorCycle extends OurVehicle{
 
@@ -33,7 +34,9 @@ public class MotorCycle extends OurVehicle{
     private static final float BACKWARDS_FRICTION = -0.02f;
 
 
-
+    /**
+     * {@inheritDoc}
+     */
     public MotorCycle(World world) {
         super(world);
 

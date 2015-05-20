@@ -10,7 +10,10 @@ import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-08.
+ * Class for a simple racing car, an all-round vehicle.
+ * Simple usage of the OurVehicle super-class
+ *
+ * @author Lars Niklasson
  */
 public class Car extends OurVehicle {
 
@@ -33,12 +36,13 @@ public class Car extends OurVehicle {
     private static final float BACKWARDS_FRICTION = -0.02f;
 
 
-
-
+    /**
+     * {@inheritDoc}
+     */
     public Car(World world) {
         super(world);
 
-
+        //create body
 
         Vector2[] vertices = new Vector2[8];
 
@@ -59,6 +63,7 @@ public class Car extends OurVehicle {
         Texture texture = Assets.carBody;
         setSprite(new Sprite(texture));
 
+        //create and attach tires
 
         Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
         Texture tireTexture = Assets.carTire;

@@ -46,7 +46,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
     /**
      * {@inheritDoc}
      *
-     * NOTE: Wheels are added using the attachTire method.
+     * NOTE: use the place function for custom spawning position.
+     *
      */
     public OurVehicle(World world) {
         super(world);

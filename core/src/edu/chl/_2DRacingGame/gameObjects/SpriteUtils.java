@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * Created by Lars Niklasson on 2015-05-16.
+ * Class used for linking sprites to Box2D-bodies.
+ * @author Lars Niklasson
  */
 public class SpriteUtils {
     public static void updateSprite(Body body, Sprite sprite, float scale){
