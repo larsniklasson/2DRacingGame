@@ -53,6 +53,13 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     private final MultiplayerSetupListener listener;
     private WarpClientNotificationAdapter notificationAdapter;
 
+    /**
+     * Connects to AppWarp-servers and prepares the instance to be able to find opponents.
+     *
+     * @param player Our clients player
+     * @param map Map to search opponents for
+     * @param listener Listener to be notified when related events occur
+     */
     public MultiplayerSetupController(Player player, GameMap map, MultiplayerSetupListener listener) {
         this.player = player;
         this.map = map;
@@ -75,6 +82,24 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         warpClient.addNotificationListener(notificationAdapter);
     }
 
+    private WarpClient getWarpInstance() {
+        try {
+            WarpClient.initialize(API_KEY, SECRET_KEY);
+            return WarpClient.getInstance();
+        } catch (Exception e) {
+            // getInstance doesn't throw an exception but Exception, hence
+            // the crazy catch
+            listener.connectionError("Failed to get AppWarp connection. Stacktrace: " + Throwables.getStackTraceAsString(e));
+            disconnect();
+            return null;
+        }
+    }
+
+    /**
+     * Called when we have attempted to connect to AppWarp-servers.
+     *
+     * @param connectEvent Event containing result codes etc.
+     */
     @Override
     public void onConnectDone(ConnectEvent connectEvent) {
         if (connectEvent.getResult() == WarpResponseResultCode.SUCCESS) {
@@ -92,19 +117,6 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         HashMap<String, Object> roomProperties = new HashMap<>();
         roomProperties.put("map", map.name());
         warpClient.joinRoomWithProperties(roomProperties);
-    }
-
-    private WarpClient getWarpInstance() {
-        try {
-            WarpClient.initialize(API_KEY, SECRET_KEY);
-            return WarpClient.getInstance();
-        } catch (Exception e) {
-            // getInstance doesn't throw an exception but Exception, hence
-            // the crazy catch
-            listener.connectionError("Failed to get AppWarp connection. Stacktrace: " + Throwables.getStackTraceAsString(e));
-            disconnect();
-            return null;
-        }
     }
 
     /**
@@ -155,7 +167,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     /**
      * Called when we've joined a room. Will start the game if we have enough players.
      *
-     * @param e
+     * @param e information about the joined room
      */
     @Override
     public void onGetLiveRoomInfoDone(LiveRoomInfoEvent e) {
@@ -212,6 +224,11 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         warpClient.disconnect();
     }
 
+    /**
+     * Called when we have created a room.
+     *
+     * @param roomEvent information about created room
+     */
     @Override
     public void onCreateRoomDone(RoomEvent roomEvent) {
         warpClient.joinRoom(roomEvent.getData().getId());
