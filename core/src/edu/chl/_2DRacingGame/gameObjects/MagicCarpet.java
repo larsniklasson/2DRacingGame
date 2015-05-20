@@ -10,15 +10,25 @@ import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-09.
+ * Class for a magic carpet-vehicle, which is a flying vehicle.
+ * Is designed using one big Tire used to control the vehicle.
+ *
+ * NOTE: Should not use the TireSteeringSystem directly but rather the FlyingSteeringSystem, which is designed for
+ * flying vehicles such as this one
+ *
+ * Uses FlyingTires to "fly" over ground-materials.
+ *
+ * @author Lars Niklasson
  */
-public class MagicCarpet extends OurVehicle{ //TODO could extend OneBodyVehicle but this works for now
+public class MagicCarpet extends OurVehicle{
 
     private static final float WIDTH = 20f/ GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;
 
 
-
+    /**
+     * {@inheritDoc}
+     */
     public MagicCarpet(World world) {
         super(world);
 

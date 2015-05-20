@@ -3,11 +3,20 @@ package edu.chl._2DRacingGame.gameObjects;
 import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
 
 /**
- * Created by Lars Niklasson on 2015-05-19.
+ * Interface for keeping track what groundmaterials an object is currently touching
+ *@author Lars Niklasson
  */
 public interface Trackable {
-
+    /**
+     *
+     * @param gm The groundmaterial to be added
+     */
     void addGroundMaterial(GroundMaterial gm);
+
+    /**
+     *
+     * @param gm The groundmaterial to be removed.
+     */
     void removeGroundMaterial(GroundMaterial gm);
 
 }

@@ -3,8 +3,10 @@ package edu.chl._2DRacingGame.gameObjects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- * Created by Lars Niklasson on 2015-05-15.
+ * Interface for drawing an object to the screen using a SpriteBatch
+ * @author Lars Niklasson
  */
 public interface Drawable {
+
     void draw(SpriteBatch batch);
 }

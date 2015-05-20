@@ -10,7 +10,8 @@ import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Created by Lars Niklasson on 2015-05-09.
+ * Class for a Monster Truck, a slow but powerful vehicle.
+ *@author Lars Niklasson
  */
 public class MonsterTruck extends OurVehicle {
 
@@ -35,7 +36,9 @@ public class MonsterTruck extends OurVehicle {
 
     private static final float BACKWARDS_FRICTION = -0.03f;
 
-
+    /**
+     * {@inheritDoc}
+     */
     public MonsterTruck(World world) {
         super(world);
 
