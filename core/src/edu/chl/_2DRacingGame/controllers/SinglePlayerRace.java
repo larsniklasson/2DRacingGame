@@ -11,13 +11,20 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.steering.*;
 
 /**
+ * Controls the process surrounding a single player race, such as choosing map/vehicle/...,
+ * controlling the logic flow between modules/other controllers, etc.
+ *
  * @author Daniel Sunnerberg
- *         TODO race -> game?
  */
 public class SinglePlayerRace extends RaceController {
 
     private MapScoresPersistor scoresPersistor;
 
+    /**
+     * Creates a new SinglePlayerRace instance which bases itself on the specified gameController.
+     *
+     * @param gameController Game basis
+     */
     public SinglePlayerRace(GameController gameController) {
         super(gameController);
     }
@@ -42,6 +49,7 @@ public class SinglePlayerRace extends RaceController {
         getWorld().addPlayer(new Player("p2", v));
 
         //testing adding ai-vehicles
+        // TODO extract to separate method
         for(int i = 0; i < 5; i ++){
 
             // how to use VehicleFactory
@@ -54,24 +62,26 @@ public class SinglePlayerRace extends RaceController {
             Player p = new Player("p" + i, ai_v);
             getWorld().addPlayer(p);
 
-
             //OR le epic oneliner
             //getWorld().addPlayer(new Player("ai " + i, VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, Difficulty.getRandomDifficulty())));
-
-
         }
-
 
         getWorld().spawnPlayers();
         gameController.setScreen(getScreen());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUp() {
         requestRaceSettings();
         startRace();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void restartRace() {
         // TODO
@@ -85,6 +95,12 @@ public class SinglePlayerRace extends RaceController {
         scoresPersistor.persistInstance();
     }
 
+    /**
+     * Callback for when the player finishes the race.
+     *
+     * @param score score determined by the game mode
+     * @param message message with details from the game mode
+     */
     @Override
     public void raceFinished(double score, String message) {
         saveScore(score);
@@ -97,6 +113,7 @@ public class SinglePlayerRace extends RaceController {
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + mapScores.getHighScore());
         }
 
+        // TODO probably shouldn't restart by default
         restartRace();
     }
 

@@ -22,6 +22,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 
 /**
+ * Controls the process surrounding a multiplayer race, such as choosing map/vehicle/...,
+ * finding opponents, controlling the logic flow between modules/other controllers, etc.
+ *
  * @author Daniel Sunnerberg
  */
 public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener {
@@ -29,6 +32,11 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
 
+    /**
+     * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
+     *
+     * @param gameController Game basis
+     */
     public MultiplayerRace(GameController gameController) {
         super(gameController);
     }
@@ -41,12 +49,22 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         getPlayer().setVehicle(vehicle);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUp() {
         requestRaceSettings();
         new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
     }
 
+    /**
+     * Callback for when our client player has finished the race.
+     * Displays a screen which shows the opponents race times as they finish.
+     *
+     * @param time time it took to finish the race
+     * @param message message from the game mode
+     */
     @Override
     public void raceFinished(double time, String message) {
         scoreBoard.addResult(getPlayer(), time);
@@ -55,6 +73,13 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         });
     }
 
+    /**
+     * Callback for when we have found enough opponents and have joined an online room with them.
+     *
+     * @param roomId id of the joined room
+     * @param client AppWarp-client for their API
+     * @param players list of opponents
+     */
     @Override
     public void raceReady(String roomId, WarpClient client, List<Player> players) {
         Gdx.app.postRunnable(() -> {
@@ -84,9 +109,9 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     /**
-     * Called when we failed to find opponents for the race.
+     * Callback for when we failed to find opponents for the race.
      *
-     * @param message
+     * @param message message describing the error
      */
     @Override
     public void connectionError(String message) {
@@ -99,12 +124,18 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         gameController.setScreen(errorScreen);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void restartRace() {
         // TODO
         throw new NotImplementedException();
     }
 
+    /**
+     * Disconnects from AppWarp-servers and displays the main menu.
+     */
     @Override
     public void displayMainMenu() {
         getWorld().removeUpdateListener(worldSyncer);
@@ -120,9 +151,17 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         player.getActor().addAction(Actions.sequence(Actions.delay(hideDelay), Actions.moveTo(-10, -10, 0)));
     }
 
+
+    /**
+     * Callback for when an opponent has finished the race.
+     *
+     * @param opponent
+     * @param time
+     */
     @Override
-    public void opponentFinished(Player player, double time) {
-        scoreBoard.addResult(player, time);
-        hideVehicle(player);
+    public void opponentFinished(Player opponent, double time) {
+        scoreBoard.addResult(opponent, time);
+        hideVehicle(opponent);
     }
+
 }

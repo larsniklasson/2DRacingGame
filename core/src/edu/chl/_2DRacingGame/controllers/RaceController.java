@@ -9,11 +9,10 @@ import edu.chl._2DRacingGame.screens.GameScreen;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
- * Serves as a basis for all race types.
+ * Serves as a controller-basis for the different race types.
+ * TODO remove Gdx.app.thread-ish?
  *
  * @author Daniel Sunnerberg
- *
- * TODO remove Gdx.app.thread-ish?
  */
 public abstract class RaceController implements RaceListener, Disposable {
 
@@ -28,7 +27,6 @@ public abstract class RaceController implements RaceListener, Disposable {
 
     public RaceController(GameController gameController) {
         this.gameController = gameController;
-
         player = new Player();
 
     }
@@ -36,8 +34,8 @@ public abstract class RaceController implements RaceListener, Disposable {
     /**
      * Sets the specified map and mode and builds up logic surrounding it, such as checkpoint, screens etc.
      *
-     * @param map
-     * @param mode
+     * @param map map which the race will run on
+     * @param mode mode which will determine when the race is complete etc.
      */
     protected void setRaceProperties(GameMap map, GameMode mode) {
         this.map = map;
@@ -56,21 +54,41 @@ public abstract class RaceController implements RaceListener, Disposable {
         screen = new GameScreen(world, mode);
     }
 
+    /**
+     * @return our clients player
+     */
     protected Player getPlayer() {
         return player;
     }
 
+    /**
+     * @return the map which the race is running, or null if none is set yet
+     */
     protected GameMap getMap() {
         return map;
     }
 
+    /**
+     * @return the mode which the race is running, or null if none is set yet
+     */
     protected GameMode getMode() {
         return mode;
     }
 
+    /**
+     * @return the game's screen
+     */
     public GameScreen getScreen() {
         return screen;
     }
+
+    /**
+     * @return the game world which contains our different game objects
+     */
+    public GameWorld getWorld() {
+        return world;
+    }
+
 
     /**
      * Gives away the control to the controller, which starts a series of actions (such as selection of map etc)
@@ -92,10 +110,6 @@ public abstract class RaceController implements RaceListener, Disposable {
     public void dispose() {
         screen.dispose();
         world.dispose();
-    }
-
-    public GameWorld getWorld() {
-        return world;
     }
 
 }

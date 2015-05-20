@@ -73,7 +73,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     /**
      * Adds a listener who will be notified when an opponent has finished the race.
      *
-     * @param listener
+     * @param listener listener who requires notifications
      */
     public void addOpponentListener(OpponentListener listener) {
         opponentListeners.add(listener);
@@ -141,11 +141,11 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * Does not perform any path finding to avoid walls etc, should therefore be called often to
      * ensure a smooth path.
      *
-     * @param opponent
-     * @param x
-     * @param y
-     * @param angle
-     * @param frontWheelAngle
+     * @param opponent opponent to be moved
+     * @param x destination x-coordinate
+     * @param y destination y-coordinate
+     * @param angle angle which the vehicle should be facing when destination is reached
+     * @param frontWheelAngle angle which eventual front wheels should be facing when destination is reached
      */
     private void moveOpponent(Player opponent, float x, float y, float angle, float frontWheelAngle) {
         Vehicle opponentVehicle = opponent.getVehicle();
@@ -184,7 +184,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     /**
      * Notify our opponents that we finished the race.
      *
-     * @param raceTime
+     * @param raceTime time it took to finish race
      */
     private void notifyFinishedRace(double raceTime) {
         Gdx.app.log("MultiplayerWorldSyncer", "Notifying opponents that we've finished the race.");
@@ -198,9 +198,9 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     /**
      * Sends our location to our opponents.
      *
-     * @param vehiclePosition
-     * @param angle
-     * @param frontWheelAngle
+     * @param vehiclePosition our vehicles position
+     * @param angle our vehicles angle
+     * @param frontWheelAngle our vehicles front wheels angle
      */
     private void sendLocation(Vector2 vehiclePosition, float angle, float frontWheelAngle) {
         Map<String, String> updateData = new HashMap<>();
@@ -221,7 +221,8 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     /**
-     * Called when the local world is updated. Will then send updates to our opponents if necessary.
+     * Callback for when the local world is updated.
+     * Will then send updates to our opponents if necessary.
      */
     @Override
     public void worldUpdated() {
@@ -240,10 +241,10 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     /**
-     * Called when our vehicle has finished the race.
+     * Callback for when our vehicle has finished the race.
      *
-     * @param raceTime
-     * @param message
+     * @param raceTime time it took to finish the race
+     * @param message message from game mode
      */
     @Override
     public void raceFinished(double raceTime, String message) {
