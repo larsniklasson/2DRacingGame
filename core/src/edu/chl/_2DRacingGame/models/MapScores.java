@@ -57,7 +57,7 @@ public class MapScores {
     }
 
     private String getPersistanceKey(GameMap map, GameMode mode) {
-        return map.toString() + "_" + mode.getClass().getSimpleName() + ".scores";
+        return map.toString() + "_" + mode.getModeName() + ".scores";
     }
 
     /**
@@ -71,9 +71,8 @@ public class MapScores {
             throw new IllegalStateException("No scores loaded. Try to find scores before saving them.");
         }
 
-        Gdx.app.log("MapScroes", "Saving scores to disk.");
         String instanceFileName = getPersistanceKey(map, mode);
-        persistor.persist(scores.getScores(), instanceFileName);
+        persistor.persist(scores, instanceFileName);
     }
 
     /**
