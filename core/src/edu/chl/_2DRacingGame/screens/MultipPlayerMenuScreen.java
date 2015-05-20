@@ -18,6 +18,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     private Table table;
 
+
     private TextButton startButton;
     private TextButton backButton;
 
@@ -43,9 +44,11 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     }
 
     public void create(){
+        table.setDebug(true);
 
         multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
-        table.add(multiPlayerLabel);
+        table.add(multiPlayerLabel).colspan(2);
+        table.row();
 
         backButton = new TextButton("back", skin);
         table.add(backButton);
@@ -88,7 +91,6 @@ public class MultipPlayerMenuScreen extends GUIScreen {
     @Override
     public void dispose() {
         stage.dispose();
-
         skin.dispose();
     }
 }
