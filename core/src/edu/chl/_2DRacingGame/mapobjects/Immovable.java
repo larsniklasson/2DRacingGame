@@ -4,12 +4,17 @@ package edu.chl._2DRacingGame.mapobjects;
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
- * Created by Lars Niklasson on 2015-04-21.
+ * An Immovable (static) gameobject
+ * @author Lars Niklasson
  */
 public class Immovable {
     //basically an immovable body
 
-
+    /**
+     * Creates an immovable object in the specified Box2D-world with the specified Box2D-shape.
+     * @param world
+     * @param shape
+     */
     public Immovable(World world, Shape shape){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;

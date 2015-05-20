@@ -3,7 +3,8 @@ package edu.chl._2DRacingGame.mapobjects;
 import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
 
 /**
- * Created by Lars Niklasson on 2015-05-13.
+ * GroundMaterial for Sand. Like a mild version of dirt.
+ * @author Lars Niklasson
  */
 public class Sand implements GroundMaterial {
     @Override

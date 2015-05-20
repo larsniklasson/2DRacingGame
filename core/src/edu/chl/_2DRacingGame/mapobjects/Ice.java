@@ -1,7 +1,8 @@
 package edu.chl._2DRacingGame.mapobjects;
 
 /**
- * Created by Lars Niklasson on 2015-04-24.
+ * GroundMaterial for Ice. Easier to slide/drift but less drag. (friction applied in a backwards direction)
+ *@author Lars Niklasson
  */
 public class Ice implements GroundMaterial{
     @Override

@@ -1,7 +1,8 @@
 package edu.chl._2DRacingGame.mapobjects;
 
 /**
- * Created by Lars Niklasson on 2015-04-24.
+ *GroundMaterial for Dirt. Slows down the vehicle significantly.
+ * @author Lars Niklasson
  */
 public class Dirt implements GroundMaterial{
     @Override

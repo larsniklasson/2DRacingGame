@@ -4,13 +4,22 @@ package edu.chl._2DRacingGame.mapobjects;
 import com.badlogic.gdx.physics.box2d.*;
 
 /**
- * Created by Lars Niklasson on 2015-04-24.
+ * Class representing an area on the ground.
+ *
+ *@author Lars Niklasson
  */
 public class TrackSection {
 
 
     private final GroundMaterial groundMaterial;
 
+    /**
+     * Creates a new TrackSection in the specified Box2D-world, with the specified Box2d-shape and groundmaterial
+     *
+     * @param world The Box2D-world the TrackSection will be created in
+     * @param shape The Box2D-shape the TrackSection will get
+     * @param groundMaterial The GroundMaterial the TrackSection will get.
+     */
     public TrackSection(World world, Shape shape, GroundMaterial groundMaterial){
         this.groundMaterial = groundMaterial;
 
@@ -32,6 +41,10 @@ public class TrackSection {
         body.createFixture(fixtureDef);
     }
 
+    /**
+     *
+     * @return The GroundMaterial of this TrackSection.
+     */
     public GroundMaterial getGroundMaterial(){
         return groundMaterial;
     }
