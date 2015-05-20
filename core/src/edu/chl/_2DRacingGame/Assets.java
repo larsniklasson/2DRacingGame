@@ -107,13 +107,15 @@ public class Assets {
             mapArray.get(i).setName(mapNames[i]);
         }
 
+
+
         String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1.jpg", "magiccarpet.jpg"};
         vehicleArray = new ArrayList<>();
-        for(int i = 0; i<vehicleNames.length;i++){
+       /* for(int i = 0; i<vehicleNames.length;i++){
             System.out.println(i);
             vehicleArray.add(textureToImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
             vehicleArray.get(i).setName(vehicleNames[i]);
-        }
+        }*/
     }
 
     public static Image textureToImage (Texture texture) {
