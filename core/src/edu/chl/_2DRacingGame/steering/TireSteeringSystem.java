@@ -110,6 +110,9 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
 
     protected void turnWheels() {
+        if(vehicle.getFrontJoints().size() == 0)return;
+
+
 
 
         float lockAngle = MathUtils.degreesToRadians * vehicle.getMaxTurnAngle();
