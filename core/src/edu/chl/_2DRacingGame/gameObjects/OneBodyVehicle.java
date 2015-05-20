@@ -7,12 +7,21 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * Created by Lars Niklasson on 2015-05-15.
+ * Model for a vehicle that uses only one instance of a Box2D-Body object
+ * as the main source for getting info from the vehicle, such as position, velocity, etc.
+ *
+ * @author Lars Niklasson
  */
 public abstract class OneBodyVehicle extends Vehicle {
     protected Body body;
     protected final World world;
 
+    /**
+     * Creates an instance of this class.
+     * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle.
+     *
+     * @param world the Box2D-world which the vehicle will be created in.
+     */
     public OneBodyVehicle(World world){
         this.world = world;
     }
@@ -42,12 +51,21 @@ public abstract class OneBodyVehicle extends Vehicle {
         body.setTransform(position, direction);
     }
 
+    /**
+     *
+     * @return The Body-object of this instance
+     */
     public Body getBody(){
         return body;
     }
 
 
-
+    /**
+     * Creates a dynamic body with the specified shape an density
+     *
+     * @param shape The shape the vehicle-body will have
+     * @param density The density the vehicle-body will have
+     */
     protected void createBody(Shape shape, float density){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;

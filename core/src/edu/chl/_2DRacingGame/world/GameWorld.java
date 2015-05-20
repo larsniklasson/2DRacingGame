@@ -84,7 +84,7 @@ public class GameWorld implements Disposable {
         for (Player player : players) {
             if (player.isControlledLocally()) {
                 // We should only control our own vehicle ...
-                
+
                 player.getVehicle().update(delta);
             }
         }
