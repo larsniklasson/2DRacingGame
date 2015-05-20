@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class GameMode implements LapListener {
 
-    private final ArrayList<ScreenText> screenTexts = new ArrayList<>();
+    private final List<ScreenText> screenTexts = new ArrayList<>();
     private final Stopwatch stopWatch = Stopwatch.createUnstarted();
 
     private final List<RaceListener> listeners = new ArrayList<>();
@@ -55,7 +55,7 @@ public abstract class GameMode implements LapListener {
      * Requests that all needed ScreenTexts are updated. Likely called before
      * drawing them on the screen.
      */
-    public void syncTexts() {}
+    public abstract void syncTexts();
 
     public List<ScreenText> getScreenTexts() {
         return screenTexts;

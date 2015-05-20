@@ -29,7 +29,7 @@ class CheckpointController {
 
     public CheckpointController(LapListener listener, List<Checkpoint> mapCheckpoints) {
         this.listener = listener;
-        this.checkpoints = mapCheckpoints;
+        checkpoints = mapCheckpoints;
     }
 
     public void invalidPassing(Checkpoint checkpoint) {
@@ -56,7 +56,7 @@ class CheckpointController {
         int currentCheckpointIndex = checkpoints.indexOf(checkpoint);
 
         boolean hasDrivenFullLap = checkpoints.size() == checkpointHistory.size();
-        boolean justStartedLap = checkpointHistory.size() == 0 && currentCheckpointIndex == 0;
+        boolean justStartedLap = checkpointHistory.isEmpty() && currentCheckpointIndex == 0;
         if (hasDrivenFullLap || justStartedLap) {
             return true;
         }

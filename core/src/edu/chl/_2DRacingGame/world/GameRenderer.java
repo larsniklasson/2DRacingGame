@@ -77,7 +77,7 @@ public class GameRenderer extends Stage {
         
         
         if(showWayPoints)drawWayPoints();
-        
+
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
             Vehicle vehicle = player.getVehicle();
@@ -137,6 +137,7 @@ public class GameRenderer extends Stage {
         }
     }
 
+    @Override
     public void dispose() {
         batch.dispose();
         font.dispose();

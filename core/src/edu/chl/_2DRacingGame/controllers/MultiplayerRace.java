@@ -116,7 +116,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         // Since removing bodies from the world while it is active is a potentially dangerous action
         // according to documentation, we will simply move it outside the map.
         player.getActor().clearActions();
-        player.getActor().addAction(Actions.sequence(Actions.delay(0.2f), Actions.moveTo(-10, -10, 0)));
+        float hideDelay = 0.2f;
+        player.getActor().addAction(Actions.sequence(Actions.delay(hideDelay), Actions.moveTo(-10, -10, 0)));
     }
 
     @Override

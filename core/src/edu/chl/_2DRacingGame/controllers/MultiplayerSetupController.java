@@ -21,7 +21,7 @@ import java.util.*;
  *
  * @author Daniel Sunnerberg
  */
-class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener {
+class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
 
     private static final String API_KEY = "1b1136c934963a62964ccdd973e52b476f3977a743451d54c4f5d427d573a517";
     private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
@@ -63,26 +63,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             return;
         }
 
-        warpClient.addConnectionRequestListener(new ConnectionRequestListener() {
-            @Override
-            public void onConnectDone(ConnectEvent connectEvent) {
-                if (connectEvent.getResult() == WarpResponseResultCode.SUCCESS) {
-                    Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
-                    joinRoom();
-                } else {
-                    listener.connectionError("Failed to findOpponent to AppWarp: " + connectEvent.getResult());
-                    disconnect();
-                }
-            }
-
-            @Override
-            public void onDisconnectDone(ConnectEvent connectEvent) {
-            }
-
-            @Override
-            public void onInitUDPDone(byte b) {
-            }
-        });
+        warpClient.addConnectionRequestListener(this);
         warpClient.addZoneRequestListener(this);
         warpClient.addRoomRequestListener(this);
         notificationAdapter = new WarpClientNotificationAdapter() {
@@ -92,6 +73,17 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             }
         };
         warpClient.addNotificationListener(notificationAdapter);
+    }
+
+    @Override
+    public void onConnectDone(ConnectEvent connectEvent) {
+        if (connectEvent.getResult() == WarpResponseResultCode.SUCCESS) {
+            Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
+            joinRoom();
+        } else {
+            listener.connectionError("Failed to findOpponent to AppWarp: " + connectEvent.getResult());
+            disconnect();
+        }
     }
 
     private void joinRoom() {
@@ -204,6 +196,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     private void removeClientListeners() {
+        warpClient.removeConnectionRequestListener(this);
         warpClient.removeZoneRequestListener(this);
         warpClient.removeZoneRequestListener(this);
         warpClient.removeNotificationListener(notificationAdapter);
@@ -249,6 +242,14 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     // Empty methods to satisfy required interfaces.
+
+    @Override
+    public void onDisconnectDone(ConnectEvent connectEvent) {
+    }
+
+    @Override
+    public void onInitUDPDone(byte b) {
+    }
 
     @Override
     public void onDeleteRoomDone(RoomEvent roomEvent) {

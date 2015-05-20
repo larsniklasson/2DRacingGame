@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class ScoreBoard {
 
-    private final TreeSet<RaceResult> scoreBoard = new TreeSet<>();
+    private final Set<RaceResult> scoreBoard = new TreeSet<>();
 
     public void addResult(Player player, Double time) {
         for (RaceResult result : scoreBoard) {
