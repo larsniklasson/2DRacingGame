@@ -19,6 +19,8 @@ import java.util.*;
  * Helps find opponents to a multiplayer race. Players are paired on a first-come basis, with the exception
  * that both must have selected the same map.
  *
+ * TODO name
+ *
  * @author Daniel Sunnerberg
  */
 class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
@@ -96,6 +98,14 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     /**
+     * Finds a room with a suitable number of opponents.
+     * If none are found, a room will be created while waiting for an opponent.
+     */
+    public void findRace() {
+        warpClient.connectWithUserName(player.getUserName());
+    }
+
+    /**
      * Called when we have attempted to connect to AppWarp-servers.
      *
      * @param connectEvent Event containing result codes etc.
@@ -106,7 +116,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
             joinRoom();
         } else {
-            listener.connectionError("Failed to findOpponent to AppWarp: " + connectEvent.getResult());
+            listener.connectionError("Failed to connect to AppWarp: " + connectEvent.getResult());
             disconnect();
         }
     }
@@ -117,14 +127,6 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         HashMap<String, Object> roomProperties = new HashMap<>();
         roomProperties.put("map", map.name());
         warpClient.joinRoomWithProperties(roomProperties);
-    }
-
-    /**
-     * Finds a room with a suitable number of opponents.
-     * If none are found, a room will be created while waiting for an opponent.
-     */
-    public void findRace() {
-        warpClient.connectWithUserName(player.getUserName());
     }
 
     @Override
