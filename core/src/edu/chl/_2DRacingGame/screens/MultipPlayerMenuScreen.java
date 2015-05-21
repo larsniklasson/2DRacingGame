@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.gameObjects.Vehicle;
 
 /**
  * Created by Victor Christoffersson on 2015-05-19.
@@ -32,8 +33,8 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
         this.listener = listener;
 
-        vehicleTable = new ScrollTable2(Assets.vehicleArray);
-        mapTable = new ScrollTable2((Assets.mapArray));
+        vehicleTable = new ScrollTable2(Assets.vehicleArray, "Vehicle");
+        mapTable = new ScrollTable2(Assets.mapArray, "Map");
         mainTable = new Table();
         carouselTable = new Table();
         buttonTable = new Table();

@@ -26,11 +26,14 @@ public class ScrollTable2 {
     private TextButton prevButton;
 
     private Label currentLabel;
+    private Label chooseTypeLabel;
 
+    private String chooseType;
     private int selectedImage;
 
-    public ScrollTable2(ArrayList<Image> images){
+    public ScrollTable2(ArrayList<Image> images, String chooseType){
         this.images = images;
+        this.chooseType = chooseType;
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
@@ -43,6 +46,7 @@ public class ScrollTable2 {
 
     public void setupTable(){
         currentLabel = new Label("Name here", skin);
+        chooseTypeLabel = new Label("Choose: " + chooseType, skin);
 
         nextButton = new TextButton(">", skin);
         nextButton.addListener(new ChangeListener() {
@@ -68,7 +72,7 @@ public class ScrollTable2 {
 
         table.setDebug(true);
 
-        table.add(currentLabel).colspan(images.size() + 2);
+        table.add(chooseTypeLabel).colspan(images.size() + 2);
         table.row();
 
         table.add(prevButton);
@@ -76,6 +80,11 @@ public class ScrollTable2 {
         setUpImages();
 
         table.add(nextButton);
+        table.row();
+
+        currentLabel.setText(images.get(selectedImage).getName());
+        table.add(currentLabel).colspan(images.size() + 2);
+        table.row();
     }
 
     private void setUpImages() {
