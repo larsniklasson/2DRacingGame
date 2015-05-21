@@ -24,11 +24,15 @@ import java.util.List;
  * finding opponents, controlling the logic flow between modules/other controllers, etc.
  *
  * @author Daniel Sunnerberg
+ * @author Victor Christoffersson
  */
 public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener, MultiPlayerMenuListener {
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
+
+    private String chosenVehicle;
+    private String chosenMap;
 
     /**
      * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
@@ -40,20 +44,13 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         gameController.setScreen(new MultipPlayerMenuScreen(this));
     }
 
-    private void requestRaceSettings() {
-        // TODO these should be chosen through in-game menu later
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
-
-        OurVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.MAGIC_CARPET, 1);
-        getPlayer().setVehicle(vehicle);
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void setUp() {
-        requestRaceSettings();
+        setRaceSettings();
         new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
     }
 
@@ -166,8 +163,10 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public void startMultiplayerRace(String vehicle, String map) {
-        System.out.println(vehicle + " " + map);
+    public void startMultiplayerRace(String chosenVehicle, String chosenMap) {
+        setChosenVehicle(chosenVehicle);
+        setChosenMap(chosenMap);
+
         setUp();
     }
 
@@ -175,4 +174,29 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     public void displayMainMenuScreen() {
         gameController.displayStartMenu();
     }
+
+    public void setRaceSettings(){
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
+
+        OurVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
+        getPlayer().setVehicle(vehicle);
+    }
+
+    public String getChosenVehicle() {
+        return chosenVehicle;
+    }
+
+    public void setChosenVehicle(String chosenVehicle) {
+        this.chosenVehicle = chosenVehicle;
+    }
+
+
+    public String getChosenMap() {
+        return chosenMap;
+    }
+
+    public void setChosenMap(String chosenMap) {
+        this.chosenMap = chosenMap;
+    }
+
 }
