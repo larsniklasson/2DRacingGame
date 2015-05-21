@@ -48,11 +48,6 @@ public class Assets {
     public static Texture ice;
     public static Texture dirt;
     public static Texture ful;
-    public static Texture magicCarpet;
-    public static Texture motorCycle;
-    public static Texture monsterTruck;
-    public static Texture formula1;
-    public static Texture car;
     public static BitmapFont arial40;
     public static ArrayList <Image> mapArray;
     public static ArrayList <Image> vehicleArray;
@@ -91,19 +86,12 @@ public class Assets {
         dirt = loadTexture("dirt.png");
         ful = loadTexture("ful.png");
 
-       /* magicCarpet = loadTexture("VehicleSelectorImages/magiccarpet.jpg");
-        motorCycle = loadTexture("VehicleSelectorImages/motorcycle.jpg");
-        car = loadTexture("VehicleSelectorImages/car.png");
-        monsterTruck = loadTexture("VehicleSelectorImages/monstertruck.jpg");
-        formula1 = loadTexture("VehicleSelectorImages/formula1.jpg");
-*/
-
         //--------Images for Vehicle and Map Selection
-        String [] mapNames  = new String[] {"map1.png", "spritesheet.png"};
+        String [] mapNames  = new String[] {"map1"};
         mapArray = new ArrayList<>();
         for(int i = 0; i<mapNames.length;i++){
             System.out.println(i);
-            mapArray.add(textureToImage(loadTexture(mapNames[i])));
+            mapArray.add(textureToImage(loadTexture(mapNames[i] + ".png")));
             mapArray.get(i).setName(mapNames[i]);
         }
 

@@ -8,6 +8,7 @@ import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
 
@@ -43,27 +44,19 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
 
         getWorld().addPlayer(new Player("p2", v));
 
+
         //testing adding ai-vehicles
         // TODO extract to separate method and call for it in setUpRace
-        for(int i = 0; i < 5; i ++){
 
-            // how to use VehicleFactory
-
-            String s = VehicleFactory.RANDOM_VEHICLE;
-            Difficulty d = Difficulty.getRandomDifficulty();
-
-            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld(), s, d);
-
-            Player p = new Player("p" + i, ai_v);
-            getWorld().addPlayer(p);
 
             //OR le epic oneliner
             //getWorld().addPlayer(new Player("ai " + i, VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, Difficulty.getRandomDifficulty())));
-        }
+
 
         getWorld().spawnPlayers();
         gameController.setScreen(getScreen());
     }
+
 
     /**
      * {@inheritDoc}
@@ -108,21 +101,39 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + mapScores.getHighScore());
         }
 
+        //TODO trådar
+        gameController.setScreen(new SinglePlayerFinishedScreen());
         // TODO probably shouldn't restart by default
         restartRace();
     }
 
     @Override
-    public void setUpRace(String vehicleType, String mapName, int laps, int opponents) {
-
-
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(laps, this));
-
+    public void setUpRace(String vehicleType, String mapName, int nbrOflaps, int nbrOfOpponents) {
+        setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOflaps, this));
         scoresPersistor = new MapScoresPersistor(getMap(), getMode());
         scoresPersistor.findInstance();
 
-        Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.CAR, 1);
+        //TODO gör det möjligt att välja svårighetsgrad med meny
+        Difficulty d = Difficulty.getRandomDifficulty();
+        createAIOpponents(nbrOfOpponents, d);
+
+        Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), vehicleType, 1);
         getPlayer().setVehicle(vehicle);
         startRace();
+    }
+
+    private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
+        for(int i = 0; i < nbrOfOpponents; i ++) {
+            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, d);
+            Player p = new Player("p" + i, ai_v);
+            getWorld().addPlayer(p);
+        }
+    }
+
+    private GameMap mapSetter(String mapName) {
+        if(mapName=="map1")
+            return GameMap.PLACEHOLDER_MAP;
+
+        throw new IllegalArgumentException("Found no matching map.");
     }
 }
