@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame._2DRacingGame;
+import edu.chl._2DRacingGame.controllers.setUpListener;
 import javafx.scene.control.RadioButton;
 
 
@@ -23,9 +24,9 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
     private Table mainTable;
-    private MainMenuListener listener;
+    private setUpListener listener;
 
-    public SinglePlayerMenuScreen(MainMenuListener listener) {
+    public SinglePlayerMenuScreen(setUpListener listener) {
         this.listener = listener;
         mainTable = new Table();
         mapSelector = new ScrollTable(Assets.mapArray, "map");
@@ -70,7 +71,7 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                listener.displayStartMenu();
+
             }
         });
 
@@ -81,7 +82,8 @@ public class SinglePlayerMenuScreen extends GUIScreen {
                 System .out.println("Number of Laps: " + stringToInt(laps.getSelected().toString()));
                 System.out.println("Vehicle chosen: " + vehicleSelector.getImageName());
                 System.out.println("Map chosen: " + mapSelector.getImageName());
-                listener.startSinglePlayerRace();
+                listener.setUpRace(vehicleSelector.getImageName(),mapSelector.getImageName(),stringToInt(laps.getSelected().toString())
+                        ,stringToInt(numberOfOpponents.getSelected().toString()));
 
             }
         });

@@ -59,7 +59,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     }
 
     @Override
-    public void displaySinglePlayerMenuScreen() {setScreen(new SinglePlayerMenuScreen(this));}
+    public void displaySinglePlayerMenuScreen() {startSinglePlayer();}
 
     @Override
     public void displayMultiPlayerMenuScreen() { startMultiplayer(); }

@@ -8,6 +8,7 @@ import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.MapScoresPersistor;
 import edu.chl._2DRacingGame.models.Player;
+import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
 
 /**
@@ -16,7 +17,7 @@ import edu.chl._2DRacingGame.steering.*;
  *
  * @author Daniel Sunnerberg
  */
-public class SinglePlayerRace extends RaceController {
+public class SinglePlayerRace extends RaceController implements setUpListener{
 
     private MapScoresPersistor scoresPersistor;
 
@@ -31,13 +32,7 @@ public class SinglePlayerRace extends RaceController {
 
     private void requestRaceSettings() {
         // TODO these should be chosen through in-game menu later
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
-
-        scoresPersistor = new MapScoresPersistor(getMap(), getMode());
-        scoresPersistor.findInstance();
-
-        Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.CAR, 1);
-        getPlayer().setVehicle(vehicle);
+        gameController.setScreen(new SinglePlayerMenuScreen(this));
     }
 
     private void startRace() {
@@ -49,7 +44,7 @@ public class SinglePlayerRace extends RaceController {
         getWorld().addPlayer(new Player("p2", v));
 
         //testing adding ai-vehicles
-        // TODO extract to separate method
+        // TODO extract to separate method and call for it in setUpRace
         for(int i = 0; i < 5; i ++){
 
             // how to use VehicleFactory
@@ -76,7 +71,7 @@ public class SinglePlayerRace extends RaceController {
     @Override
     public void setUp() {
         requestRaceSettings();
-        startRace();
+
     }
 
     /**
@@ -117,4 +112,17 @@ public class SinglePlayerRace extends RaceController {
         restartRace();
     }
 
+    @Override
+    public void setUpRace(String vehicleType, String mapName, int laps, int opponents) {
+
+
+        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(laps, this));
+
+        scoresPersistor = new MapScoresPersistor(getMap(), getMode());
+        scoresPersistor.findInstance();
+
+        Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.CAR, 1);
+        getPlayer().setVehicle(vehicle);
+        startRace();
+    }
 }
