@@ -109,12 +109,33 @@ public class Assets {
 
 
 
-        String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1car.jpg", "magiccarpet.jpg"};
+        String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1car.jpg", "magiccarpet.jpg", "random.jpg"};
         vehicleArray = new ArrayList<>();
         for(int i = 0; i<vehicleNames.length;i++){
             System.out.println(i);
             vehicleArray.add(textureToImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
-            vehicleArray.get(i).setName(vehicleNames[i]);
+            //vehicleArray.get(i).setName(vehicleNames[i]);
+            switch (vehicleNames[i]) {
+                case "motorcycle.jpg":
+                    vehicleArray.get(i).setName("motorcycle");
+                    break;
+                case "car.png":
+                    vehicleArray.get(i).setName("car");
+                    break;
+                case "monstertruck.jpg":
+                    vehicleArray.get(i).setName("formulaonecar");
+                    break;
+                case "formula1car.jpg":
+                    vehicleArray.get(i).setName("magiccarpet");
+                    break;
+                case "magiccarpet.jpg":
+                    vehicleArray.get(i).setName("monstertruck");
+                    break;
+                case "random.jpg":
+                    vehicleArray.get(i).setName("random_vehicle");
+                    break;
+
+            }
         }
     }
 

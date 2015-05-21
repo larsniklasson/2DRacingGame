@@ -46,7 +46,7 @@ public class ScrollTable2 {
 
     public void setupTable(){
         currentLabel = new Label("Name here", skin);
-        chooseTypeLabel = new Label("Choose: " + chooseType, skin);
+        chooseTypeLabel = new Label("Choose a " + chooseType, skin);
 
         nextButton = new TextButton(">", skin);
         nextButton.addListener(new ChangeListener() {
@@ -92,7 +92,7 @@ public class ScrollTable2 {
 
             Table temp = new Table();
             if(img.equals(images.get(selectedImage))){
-                temp.add(img).width(300).height(150);
+                temp.add(img).width(250).height(125);
             } else {
                 temp.add(img).width(200).height(100);
             }
