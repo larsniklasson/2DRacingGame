@@ -137,8 +137,10 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
      */
     @Override
     public void displayMainMenu() {
-        getWorld().removeUpdateListener(worldSyncer);
-        worldSyncer.disconnect();
+        if (worldSyncer != null) {
+            getWorld().removeUpdateListener(worldSyncer);
+            worldSyncer.disconnect();
+        }
         gameController.displayStartMenu();
     }
 
