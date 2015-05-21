@@ -126,6 +126,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         HashMap<String, Object> roomProperties = new HashMap<>();
         roomProperties.put("map", map.name());
+        roomProperties.put("started", false);
         warpClient.joinRoomWithProperties(roomProperties);
     }
 
@@ -184,6 +185,14 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
             playersJson = new Gson().toJson(playersList);
             roomProperties.put("players", playersJson);
+
+            // If we're the last player who is supposed to join, make sure to set the room-status to started
+            // to prevent more players from joining
+            if ((e.getJoinedUsers().length + 1) == RACE_SIZE) {
+                Gdx.app.log("MultiplayerSetupController", "Locking the room to prevent more players from joining");
+                roomProperties.put("started", true);
+            }
+
             warpClient.updateRoomProperties(roomId, roomProperties, null);
 
         } else if (e.getJoinedUsers().length == RACE_SIZE) {
@@ -198,6 +207,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         HashMap<String, Object> data = new HashMap<>();
         data.put("hostUserName", userName);
         data.put("map", map.name());
+        data.put("started", false);
 
         // We want the room to have a property with the players (serialized) in the room.
         // This functionality isn't automatically provided, hence the serialization below
