@@ -8,6 +8,5 @@ public interface MainMenuListener {
     void displayMultiPlayerMenuScreen();
     void displayOptionsScreen();
     void exitGame();
-    void startSinglePlayerRace();
-    void  displayStartMenu();
+
 }
