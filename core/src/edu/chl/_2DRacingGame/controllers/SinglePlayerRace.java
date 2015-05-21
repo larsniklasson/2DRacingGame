@@ -10,7 +10,6 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreList;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
-import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
 
@@ -105,8 +104,7 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + scores.getHighScore());
         }
 
-        //TODO trådar
-        gameController.setScreen(new SinglePlayerFinishedScreen());
+        //
         // TODO probably shouldn't restart by default
         restartRace();
     }
