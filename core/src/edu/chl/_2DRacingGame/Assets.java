@@ -123,13 +123,13 @@ public class Assets {
                     vehicleArray.get(i).setName("car");
                     break;
                 case "monstertruck.jpg":
-                    vehicleArray.get(i).setName("formulaonecar");
+                    vehicleArray.get(i).setName("monstertruck");
                     break;
                 case "formula1car.jpg":
-                    vehicleArray.get(i).setName("magiccarpet");
+                    vehicleArray.get(i).setName("formulaonecar");
                     break;
                 case "magiccarpet.jpg":
-                    vehicleArray.get(i).setName("monstertruck");
+                    vehicleArray.get(i).setName("magiccarpet");
                     break;
                 case "random.jpg":
                     vehicleArray.get(i).setName("random_vehicle");

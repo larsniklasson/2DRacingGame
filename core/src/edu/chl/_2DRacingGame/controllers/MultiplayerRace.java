@@ -166,7 +166,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public void startMultiplayerRace() {
+    public void startMultiplayerRace(String vehicle, String map) {
+        System.out.println(vehicle + " " + map);
         setUp();
     }
 

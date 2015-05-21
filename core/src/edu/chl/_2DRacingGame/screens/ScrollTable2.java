@@ -138,4 +138,9 @@ public class ScrollTable2 {
 
         drawTable();
     }
+
+    public String getImageName() {
+        return images.get(selectedImage).getName();
+    }
+
 }

@@ -76,15 +76,13 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("search for opponent");
-                listener.startMultiplayerRace();
+                listener.startMultiplayerRace(vehicleTable.getImageName(), mapTable.getImageName());
             }
         });
 
         backButton.addListener((new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("back");
                 listener.displayMainMenuScreen();
             }
         }));
