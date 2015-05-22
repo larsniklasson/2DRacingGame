@@ -92,7 +92,12 @@ public class Assets {
         for(int i = 0; i<mapNames.length;i++){
             System.out.println(i);
             mapArray.add(textureToImage(loadTexture(mapNames[i] + ".png")));
-            mapArray.get(i).setName(mapNames[i]);
+            //mapArray.get(i).setName(mapNames[i]);
+            switch (mapNames[i]) {
+                case "map1":
+                    mapArray.get(i).setName("PLACEHOLDER_MAP");
+                    break;
+            }
         }
 
 

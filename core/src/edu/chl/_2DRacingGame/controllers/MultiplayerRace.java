@@ -176,7 +176,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     public void setRaceSettings(){
-        setRaceProperties(GameMap.PLACEHOLDER_MAP, new TimeTrial(2, this));
+        setRaceProperties(GameMap.valueOf(chosenMap), new TimeTrial(2, this));
 
         OurVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
         getPlayer().setVehicle(vehicle);
