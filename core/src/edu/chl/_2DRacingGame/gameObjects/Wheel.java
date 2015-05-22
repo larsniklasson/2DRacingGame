@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing a wheel or a tire (they're the same thing). Used by steering-systems to control a vehicle, particularly TireSteeringSystem.
- * Holds information such as max-speed, driveforce and friction, these values should be set by the vehicle using the tire.
+ * Class representing a wheel or a wheel (they're the same thing). Used by steering-systems to control a vehicle, particularly WheelSteeringSystem.
+ * Holds information such as max-speed, driveforce and friction, these values should be set by the vehicle using the wheel.
  *
  * @author Lars Niklasson
  */
-public class Tire implements Drawable, Trackable {
+public class Wheel implements Drawable, Trackable {
     private Sprite sprite;
 
     private float maxForwardSpeed;
@@ -45,16 +45,16 @@ public class Tire implements Drawable, Trackable {
     private final List<GroundMaterial> grounds = new ArrayList<>();
 
     /**
-     * Creates a tire (a rectangle) in the specified Box2D-world with the specified width, height and density
+     * Creates a wheel (a rectangle) in the specified Box2D-world with the specified width, height and density
      *
      * IMPORTANT NOTE: Calling setCharacteristics is essential and should be done after the object is created.
      *
-     * @param world The Box2D-world the tire will be created in
-     * @param width The width of the tire.
-     * @param height The height of the tire.
-     * @param density The density of the tire.
+     * @param world The Box2D-world the wheel will be created in
+     * @param width The width of the wheel.
+     * @param height The height of the wheel.
+     * @param density The density of the wheel.
      */
-    public Tire(World world, float width, float height, float density) {
+    public Wheel(World world, float width, float height, float density) {
 
         this.world = world;
         this.width = width;
@@ -84,14 +84,14 @@ public class Tire implements Drawable, Trackable {
     }
 
     /**
-     * Sets the characteristics of this tire. Should be called when creating the tire. Usually the maximum speeds
-     * should be the same in all tires of the vehicle.
+     * Sets the characteristics of this wheel. Should be called when creating the wheel. Usually the maximum speeds
+     * should be the same in all wheels of the vehicle.
      *
-     * @param maxDriveForce The maximum drive-force of this tire.
+     * @param maxDriveForce The maximum drive-force of this wheel.
      * @param maxLateralImpulse The maximum amount of side-ways velocity that can be cancelled out. A lower value will result in more skidding,
      *                          a higher value will make the vehicle seem like it's on rails.
-     * @param maxForwardSpeed The maximum forward speed of this tire.
-     * @param maxBackwardSpeed The maximum backward speed of this tire.
+     * @param maxForwardSpeed The maximum forward speed of this wheel.
+     * @param maxBackwardSpeed The maximum backward speed of this wheel.
      * @param roadFrictionBackwardsCoefficient The amount of friction in a backwards direction caused by the road. This makes the vehicle come to a stop on its own.
      */
     public void setCharacteristics(float maxDriveForce, float maxLateralImpulse, float maxForwardSpeed, float maxBackwardSpeed, float roadFrictionBackwardsCoefficient) {
@@ -104,7 +104,7 @@ public class Tire implements Drawable, Trackable {
 
 
     /**
-     * Update the tire-characteristics based on what kind of groundmaterial the tire is touching at the moment.
+     * Update the wheel-characteristics based on what kind of groundmaterial the wheel is touching at the moment.
      */
     public void updateValues(){
         if (grounds.isEmpty()) {
@@ -139,8 +139,8 @@ public class Tire implements Drawable, Trackable {
 
 
     /**
-     * Draws the tire's sprite to the screen using a SpriteBatch
-     * @param batch The SpriteBatch used to draw the tire's sprite.
+     * Draws the wheel's sprite to the screen using a SpriteBatch
+     * @param batch The SpriteBatch used to draw the wheel's sprite.
      */
     @Override
     public void draw(SpriteBatch batch) {
@@ -152,10 +152,10 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return A copy of this tire.
+     * @return A copy of this wheel.
      */
-    public Tire cpy(){
-        Tire t = new Tire(world, width, height, density);
+    public Wheel cpy(){
+        Wheel t = new Wheel(world, width, height, density);
         t.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
         t.setSprite(new Sprite(sprite));
         return t;
@@ -163,7 +163,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return The Box2D-body of this tire.
+     * @return The Box2D-body of this wheel.
      */
     public Body getBody() {
         return body;
@@ -171,7 +171,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return The sprite of this tire.
+     * @return The sprite of this wheel.
      */
     public Sprite getSprite(){
         return sprite;
@@ -179,7 +179,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @param sprite The sprite used to draw this tire.
+     * @param sprite The sprite used to draw this wheel.
      */
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
@@ -189,7 +189,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return The drive-force of this tire
+     * @return The drive-force of this wheel
      */
     public float getDriveForce(){
         return driveForce;
@@ -197,7 +197,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @param driveForce The drive-force this tire will get.
+     * @param driveForce The drive-force this wheel will get.
      */
     public void setDriveForce(float driveForce) {
         this.driveForce = driveForce;
@@ -232,7 +232,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return The CURRENT maximum forward speed of this tire.
+     * @return The CURRENT maximum forward speed of this wheel.
      */
     public float getCurrentMaxForwardSpeed() {
         return currentMaxForwardSpeed;
@@ -240,7 +240,7 @@ public class Tire implements Drawable, Trackable {
 
     /**
      *
-     * @return The CURRENT maximum backward speed of this tire.
+     * @return The CURRENT maximum backward speed of this wheel.
      */
     public float getCurrentBackwardsFriction() {
         return currentBackwardsFriction;

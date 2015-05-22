@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.gameObjects.Trackable;
 import edu.chl._2DRacingGame.mapobjects.TrackSection;
-import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Checkpoint;
 

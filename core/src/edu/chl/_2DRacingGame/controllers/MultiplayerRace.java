@@ -13,7 +13,6 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.steering.PlayerOneInputListener;
-import edu.chl._2DRacingGame.steering.TireSteeringSystem;
 import edu.chl._2DRacingGame.world.GameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

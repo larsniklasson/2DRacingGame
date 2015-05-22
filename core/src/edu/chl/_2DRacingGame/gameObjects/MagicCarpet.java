@@ -11,12 +11,12 @@ import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * Class for a magic carpet-vehicle, which is a flying vehicle.
- * Is designed using one big Tire used to control the vehicle.
+ * Is designed using one big Wheel used to control the vehicle.
  *
- * NOTE: Should not use the TireSteeringSystem directly but rather the FlyingSteeringSystem, which is designed for
+ * NOTE: Should not use the WheelSteeringSystem directly but rather the FlyingSteeringSystem, which is designed for
  * flying vehicles such as this one
  *
- * Uses FlyingTires to "fly" over ground-materials.
+ * Uses FlyingWheels to "fly" over ground-materials.
  *
  * @author Lars Niklasson
  */
@@ -41,10 +41,10 @@ public class MagicCarpet extends OurVehicle{
 
         createBody(shape, 0.0001f);
 
-        Tire tire = new FlyingTire(world, WIDTH, HEIGHT, 0.5f);
-        tire.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
+        Wheel wheel = new FlyingWheel(world, WIDTH, HEIGHT, 0.5f);
+        wheel.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
 
-        attachTire(tire, new Vector2(0,0), false);
+        attachWheel(wheel, new Vector2(0,0), false);
     }
 
     @Override

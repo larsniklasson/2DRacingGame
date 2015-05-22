@@ -156,7 +156,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
             return;
         }
 
-        //Hack. We move the sprite instead of the actual tire-body, to avoid weird bugs.
+        //Hack. We move the sprite instead of the actual wheel-body, to avoid weird bugs.
         // hack in action can be seen clearest when playing against a MonsterTruck with debug-mode on.
         if(opponentVehicle instanceof OurVehicle){
             ((OurVehicle)opponentVehicle).setMP_FrontWheelAngle(frontWheelAngle);

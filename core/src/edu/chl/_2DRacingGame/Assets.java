@@ -18,23 +18,23 @@ public class Assets {
 
     //car
     public static Texture carBody;
-    public static Texture carTire;
+    public static Texture carWheel;
 
     //motorcycle
 
     public static Texture mcBody;
-    public static Texture mcTire;
+    public static Texture mcWheel;
 
     //monstertruck
 
     public static Texture monsterTruckBody;
-    public static Texture monsterTruckTire;
+    public static Texture monsterTruckWheel;
 
     //f1car
 
     public static Texture f1CarBody;
-    public static Texture f1CarBackTire;
-    public static Texture f1CarFrontTire;
+    public static Texture f1CarBackWheel;
+    public static Texture f1CarFrontWheel;
 
     //magic carpet
 
@@ -61,17 +61,17 @@ public class Assets {
         //-----vehicles-------
 
         carBody = loadTexture("vehicles/car_body.png");
-        carTire = loadTexture("vehicles/car_tire.png");
+        carWheel = loadTexture("vehicles/car_wheel.png");
 
         mcBody = loadTexture("vehicles/mc_body.png");
-        mcTire = loadTexture("vehicles/mc_tire.png");
+        mcWheel = loadTexture("vehicles/mc_wheel.png");
 
         monsterTruckBody = loadTexture("vehicles/mt_body.png");
-        monsterTruckTire = loadTexture("vehicles/mt_tire.png");
+        monsterTruckWheel = loadTexture("vehicles/mt_wheel.png");
 
         f1CarBody = loadTexture("vehicles/f1_body.png");
-        f1CarBackTire = loadTexture("vehicles/f1_back_tire.png");
-        f1CarFrontTire = loadTexture("vehicles/f1_front_tire.png");
+        f1CarBackWheel = loadTexture("vehicles/f1_back_wheel.png");
+        f1CarFrontWheel = loadTexture("vehicles/f1_front_wheel.png");
 
         magicCarpetBody = loadTexture("vehicles/magiccarpet2.png");
 

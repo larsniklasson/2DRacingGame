@@ -50,20 +50,20 @@ public class MotorCycle extends OurVehicle{
         createBody(shape, 0.1f);
 
 
-        Texture tireTexture = Assets.mcTire;
-        Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
-        frontTire.setSprite(new Sprite(tireTexture));
+        Texture wheelTexture = Assets.mcWheel;
+        Wheel frontWheel = new Wheel(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
+        frontWheel.setSprite(new Sprite(wheelTexture));
 
-        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        frontWheel.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
-        attachTire(frontTire, new Vector2(0, 10 / GameWorld.PIXELS_PER_METER), true);
+        attachWheel(frontWheel, new Vector2(0, 10 / GameWorld.PIXELS_PER_METER), true);
 
 
-        Tire backTire = frontTire.cpy();
-        backTire.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
-        backTire.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
+        Wheel backWheel = frontWheel.cpy();
+        backWheel.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
+        backWheel.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
 
-        attachTire(backTire, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
+        attachWheel(backWheel, new Vector2(0, -10 / GameWorld.PIXELS_PER_METER), false);
 
         setMaxTurnAngle(30f);
 

@@ -16,11 +16,11 @@ import java.util.List;
 
 /**
  * An implementation designed for the racing game 2DRacingGame
- * Has an option to add wheels using the Tire-class. The wheels can be placed anywhere but
+ * Has an option to add wheels using the Wheel-class. The wheels can be placed anywhere but
  * they will be divided into front wheels and back wheels.
  *
  * Is designed specifically to work with the steering-systems used in 2DRacingGame,
- * TireSteeringSystem and AISteeringSystem, and for the multi-player mode in said game.
+ * WheelSteeringSystem and AISteeringSystem, and for the multi-player mode in said game.
  *
  *
  *@author Lars Niklasson
@@ -30,8 +30,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
 
     private Sprite sprite;
 
-    private final List<Tire> tires = new ArrayList<>();
-    private final List<Vector2> tirePositions = new ArrayList<>();
+    private final List<Wheel> wheels = new ArrayList<>();
+    private final List<Vector2> wheelPositions = new ArrayList<>();
 
     private final List<RevoluteJoint> frontJoints = new ArrayList<>();
     private float maxTurnAngle = 50f;
@@ -57,38 +57,38 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
 
 
     /**
-     * Attaches a tire to the vehicle-body at the specified position.
-     * If the front-tire flag is set, creates a RevoluteJoint which is used to turn the wheel.
+     * Attaches a wheel to the vehicle-body at the specified position.
+     * If the front-wheel flag is set, creates a RevoluteJoint which is used to turn the wheel.
      * If not the wheel will not be able to turn.
      *
      * IMPORTANT NOTE: A body must be created before this method is called.
      *
-     * @param tire The tire that will be attached.
-     * @param position The position the tire will be placed at, relative to the body.
-     * @param frontTire If the tire is a front-tire or a back-tire.
+     * @param wheel The wheel that will be attached.
+     * @param position The position the wheel will be placed at, relative to the body.
+     * @param frontWheel If the wheel is a front-wheel or a back-wheel.
      */
-    protected void attachTire(Tire tire, Vector2 position, boolean frontTire){
+    protected void attachWheel(Wheel wheel, Vector2 position, boolean frontWheel){
         RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.bodyA = body;
         jointDef.enableLimit = true;
         jointDef.lowerAngle = 0;
         jointDef.upperAngle = 0;
         jointDef.localAnchorB.setZero();
-        jointDef.bodyB = tire.getBody();
+        jointDef.bodyB = wheel.getBody();
         jointDef.localAnchorA.set(position);
 
-        if(frontTire){
+        if(frontWheel){
             frontJoints.add((RevoluteJoint) world.createJoint(jointDef));
 
         } else {
             world.createJoint(jointDef);
         }
 
-        tirePositions.add(position);
+        wheelPositions.add(position);
 
-        tires.add(tire);
+        wheels.add(wheel);
 
-        isFrontWheelBooleanList.add(frontTire);
+        isFrontWheelBooleanList.add(frontWheel);
     }
 
 
@@ -96,9 +96,9 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
     @Override
     public void place(Vector2 position, float angle) {
         body.setTransform(position, angle);
-        for(int i = 0; i < tirePositions.size(); i++){
-            Tire t = tires.get(i);
-            Vector2 pos = tirePositions.get(i);
+        for(int i = 0; i < wheelPositions.size(); i++){
+            Wheel t = wheels.get(i);
+            Vector2 pos = wheelPositions.get(i);
             t.getBody().setTransform(body.getWorldPoint(pos), angle);
         }
     }
@@ -114,7 +114,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
         
         SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
-        for(Tire t : tires){
+        for(Wheel t : wheels){
             t.draw(batch);
         }
     }
@@ -132,8 +132,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
     public void MP_draw(SpriteBatch batch){
         SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
-        for(int i = 0; i < tires.size(); i ++){
-            Tire t = tires.get(i);
+        for(int i = 0; i < wheels.size(); i ++){
+            Wheel t = wheels.get(i);
 
             if(t.getSprite() == null)continue; //currently only for MagicCarpet but you shouldn't have to set the sprite;
 
@@ -203,7 +203,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
     }
 
     /**
-     * Sets the front-wheel angle used to draw the opponents front-tires in multi-player
+     * Sets the front-wheel angle used to draw the opponents front-wheels in multi-player
      * @param mp_frontWheelAngle The front-wheel angle of the opponent
      */
     public void setMP_FrontWheelAngle(float mp_frontWheelAngle){  //TODO bad variable names
@@ -216,12 +216,12 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
     }
 
     @Override
-    public List<Tire> getTires() {
-        return tires;
+    public List<Wheel> getWheels() {
+        return wheels;
     }
 
     /**
-     * Note: Is supposed to be used while looping through all the tires.
+     * Note: Is supposed to be used while looping through all the wheels.
      *
      * @return A list indicating if a wheel is a front-wheel or not.
      */

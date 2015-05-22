@@ -70,25 +70,25 @@ public class FormulaOneCar extends OurVehicle{
 
         createBody(shape, 0.1f);
 
-        Texture frontTireTexture = Assets.f1CarFrontTire;
-        Texture backTireTexture = Assets.f1CarBackTire;
+        Texture frontWheelTexture = Assets.f1CarFrontWheel;
+        Texture backWheelTexture = Assets.f1CarBackWheel;
 
 
-        Tire frontTire = new Tire(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);
-        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        frontTire.setSprite(new Sprite(frontTireTexture));
-        attachTire(frontTire, new Vector2(-7 / SCALE, 32 / SCALE), true);
+        Wheel frontWheel = new Wheel(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);
+        frontWheel.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        frontWheel.setSprite(new Sprite(frontWheelTexture));
+        attachWheel(frontWheel, new Vector2(-7 / SCALE, 32 / SCALE), true);
 
 
-        attachTire(frontTire.cpy(), new Vector2(7 / SCALE, 32 / SCALE), true);
+        attachWheel(frontWheel.cpy(), new Vector2(7 / SCALE, 32 / SCALE), true);
 
-        Tire backTire = new Tire(world,TIRE_WIDTH_BACK, TIRE_HEIGHT_BACK, 1f);
-        backTire.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
-        backTire.setSprite(new Sprite(backTireTexture));
-        attachTire(backTire, new Vector2(-7 / SCALE, 8 / SCALE), false);
+        Wheel backWheel = new Wheel(world,TIRE_WIDTH_BACK, TIRE_HEIGHT_BACK, 1f);
+        backWheel.setCharacteristics(DRIVE_FORCE_BACK_WHEELS, MAX_LATERAL_IMPULSE_BACK, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        backWheel.setSprite(new Sprite(backWheelTexture));
+        attachWheel(backWheel, new Vector2(-7 / SCALE, 8 / SCALE), false);
 
 
-        attachTire(backTire.cpy(),new Vector2(7/SCALE, 8/SCALE),false);
+        attachWheel(backWheel.cpy(),new Vector2(7/SCALE, 8/SCALE),false);
 
 
 

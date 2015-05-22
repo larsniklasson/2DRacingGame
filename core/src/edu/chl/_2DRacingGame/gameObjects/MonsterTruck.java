@@ -54,23 +54,23 @@ public class MonsterTruck extends OurVehicle {
         createBody(shape, 0.1f);
 
 
-        Texture tireTexture = Assets.monsterTruckTire;
+        Texture wheelTexture = Assets.monsterTruckWheel;
 
-        Tire frontTire = new Tire(world,TIRE_WIDTH, TIRE_HEIGHT,1f);
-        frontTire.setSprite(new Sprite(tireTexture));
-        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        Wheel frontWheel = new Wheel(world,TIRE_WIDTH, TIRE_HEIGHT,1f);
+        frontWheel.setSprite(new Sprite(wheelTexture));
+        frontWheel.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
-        Tire backTire = frontTire.cpy();
-        backTire.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
-        backTire.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
+        Wheel backWheel = frontWheel.cpy();
+        backWheel.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
+        backWheel.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
 
-        attachTire(frontTire, new Vector2(-16 / SCALE, 16 / SCALE), true);
+        attachWheel(frontWheel, new Vector2(-16 / SCALE, 16 / SCALE), true);
 
-        attachTire(frontTire.cpy(), new Vector2(16 / SCALE, 16 / SCALE), true);
+        attachWheel(frontWheel.cpy(), new Vector2(16 / SCALE, 16 / SCALE), true);
 
-        attachTire(backTire, new Vector2(-16 / SCALE, -16 / SCALE), false);
+        attachWheel(backWheel, new Vector2(-16 / SCALE, -16 / SCALE), false);
 
-        attachTire(backTire.cpy(),new Vector2(16/SCALE, -16/SCALE),false);
+        attachWheel(backWheel.cpy(),new Vector2(16/SCALE, -16/SCALE),false);
 
     }
 

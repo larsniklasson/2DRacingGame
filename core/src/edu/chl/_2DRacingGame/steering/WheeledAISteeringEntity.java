@@ -4,7 +4,7 @@ import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import edu.chl._2DRacingGame.gameObjects.OurVehicle;
-import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Wheel;
 
 /**
  * AI-Steering entity designed for the WheeledVehicle-class.
@@ -143,7 +143,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
         speedHolder.setMaxAngularAcceleration(maxAngularAcceleration);
     }
 
-    
+
 
     @Override
     public void applySteering (SteeringAcceleration<Vector2> steeringOutput, float deltaTime) {
@@ -155,7 +155,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
             Vector2 force = steeringOutput.linear.scl(deltaTime);
             vehicle.getBody().applyForceToCenter(force, true);
-            for(Tire t : vehicle.getTires()){
+            for(Wheel t : vehicle.getWheels()){
                 t.getBody().applyForceToCenter(force, true);
             }
 
@@ -168,7 +168,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
                 vehicle.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
 
-                for(Tire t : vehicle.getTires()){
+                for(Wheel t : vehicle.getWheels()){
                     t.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
                 }
                 anyAccelerations = true;
@@ -183,7 +183,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
                 float newOrientation = vectorToAngle(linVel);
 
 
-                for(Tire t : vehicle.getTires()){
+                for(Wheel t : vehicle.getWheels()){
                     t.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime);
 
                 }
@@ -203,9 +203,9 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
                     wheelAngle -= Math.toRadians(2);
                 }
 
-                for(int i = 0; i < vehicle.getTires().size(); i++){
+                for(int i = 0; i < vehicle.getWheels().size(); i++){
                     if(vehicle.getIsFrontWheelBooleanList().get(i)){
-                        Body b = vehicle.getTires().get(i).getBody();
+                        Body b = vehicle.getWheels().get(i).getBody();
                         b.setTransform(b.getTransform().getPosition(), b.getTransform().getRotation() + wheelAngle);
 
 
@@ -226,7 +226,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
             float maxLinearSpeed = getMaxLinearSpeed();
             if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
                 vehicle.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
-                for(Tire t : vehicle.getTires()){
+                for(Wheel t : vehicle.getWheels()){
                     t.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
 
                 }
@@ -236,7 +236,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
             float maxAngVelocity = getMaxAngularSpeed();
             if (vehicle.getBody().getAngularVelocity() > maxAngVelocity) {
                 vehicle.getBody().setAngularVelocity(maxAngVelocity);
-                for(Tire t : vehicle.getTires()){
+                for(Wheel t : vehicle.getWheels()){
                     t.getBody().setAngularVelocity(maxAngVelocity);
 
                 }

@@ -1,12 +1,12 @@
 package edu.chl._2DRacingGame.steering;
 
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Wheel;
 
 import java.util.List;
 
 /**
- * Interface created for the TireSteeringSystem.
+ * Interface created for the WheelSteeringSystem.
  *
  *@author Lars Niklasson
  */
@@ -14,9 +14,9 @@ public interface WheelSteerable {
 
     /**
      *
-     * @return A List containing the steerable's tires.
+     * @return A List containing the steerable's wheels.
      */
-    List<Tire> getTires();
+    List<Wheel> getWheels();
 
     /**
      *

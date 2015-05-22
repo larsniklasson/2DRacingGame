@@ -99,7 +99,7 @@ public class GameRenderer extends Stage {
 
                 if(vehicle instanceof OurVehicle){
 
-                    //A bit of a hack to change front wheel sprites and not actually the tire-bodies.
+                    //A bit of a hack to change front wheel sprites and not actually the wheel-bodies.
                     ((OurVehicle)vehicle).MP_draw(batch);
                 } else {
                     //is never called - all vehicle-implementations extend OurVehicle (as of 2015-05-17)

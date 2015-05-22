@@ -2,18 +2,18 @@ package edu.chl._2DRacingGame.steering;
 
 
 
-import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Wheel;
 
 /**
  * Class for steering a flying vehicle.
  * Designed specifically for the MagicCarpet class. Instead of turning the wheels and applying forces,
- * torque is applied to each tire (in MagicCarpet's case, the only tire) to rotate the vehicle even though it is standing still.
+ * torque is applied to each wheel (in MagicCarpet's case, the only wheel) to rotate the vehicle even though it is standing still.
  * Works best when the vehicle has only one wheel.
  *
- * Gives quite a different feel compared to the TireSteeringSystem
+ * Gives quite a different feel compared to the WheelSteeringSystem
  *@author Lars Niklasson
  */
-public class FlyingSteeringSystem extends TireSteeringSystem {
+public class FlyingSteeringSystem extends WheelSteeringSystem {
 
     /**
      * Creates a steering-system for the specified wheelsteerable with a specified steering-listener, which handles user input.
@@ -27,7 +27,7 @@ public class FlyingSteeringSystem extends TireSteeringSystem {
 
     @Override
     protected void turnWheels(){
-        for(Tire tire : getWheelSteerable().getTires()){
+        for(Wheel wheel : getWheelSteerable().getWheels()){
             float torque = 0;
             if(keys.contains(Key.Left)){
                 torque = 3;
@@ -37,8 +37,8 @@ public class FlyingSteeringSystem extends TireSteeringSystem {
                 torque = -3;
             }
 
-            tire.getBody().applyAngularImpulse(0.1f * tire.getBody().getInertia() * -tire.getBody().getAngularVelocity(), true);
-            tire.getBody().applyTorque(torque, true);
+            wheel.getBody().applyAngularImpulse(0.1f * wheel.getBody().getInertia() * -wheel.getBody().getAngularVelocity(), true);
+            wheel.getBody().applyTorque(torque, true);
         }
 
     }

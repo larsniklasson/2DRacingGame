@@ -63,25 +63,25 @@ public class Car extends OurVehicle {
         Texture texture = Assets.carBody;
         setSprite(new Sprite(texture));
 
-        //create and attach tires
+        //create and attach wheels
 
-        Tire frontTire = new Tire(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        Texture tireTexture = Assets.carTire;
-        frontTire.setSprite(new Sprite(tireTexture));
-        frontTire.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
+        Wheel frontWheel = new Wheel(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
+        Texture wheelTexture = Assets.carWheel;
+        frontWheel.setSprite(new Sprite(wheelTexture));
+        frontWheel.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 
-        Tire backTire = frontTire.cpy();
-        backTire.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
-        backTire.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
+        Wheel backWheel = frontWheel.cpy();
+        backWheel.setDriveForce(DRIVE_FORCE_BACK_WHEELS);
+        backWheel.setMaxLateralImpulse(MAX_LATERAL_IMPULSE_BACK);
 
 
-        attachTire(frontTire, new Vector2(-3f / SCALE, 8.5f / SCALE), true);
+        attachWheel(frontWheel, new Vector2(-3f / SCALE, 8.5f / SCALE), true);
 
-        attachTire(frontTire.cpy(), new Vector2(3f / SCALE, 8.5f / SCALE), true);
+        attachWheel(frontWheel.cpy(), new Vector2(3f / SCALE, 8.5f / SCALE), true);
 
-        attachTire(backTire, new Vector2(3f / SCALE, 0), false);
+        attachWheel(backWheel, new Vector2(3f / SCALE, 0), false);
 
-        attachTire(backTire.cpy(), new Vector2(-3f / SCALE, 0), false);
+        attachWheel(backWheel.cpy(), new Vector2(-3f / SCALE, 0), false);
 
 
 

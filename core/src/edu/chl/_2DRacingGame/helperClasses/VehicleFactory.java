@@ -115,7 +115,7 @@ public class VehicleFactory {
         if(vehicleType.equals(MAGIC_CARPET)){
             ss = new FlyingSteeringSystem(ov, sl);
         } else {
-            ss = new TireSteeringSystem(ov, sl);
+            ss = new WheelSteeringSystem(ov, sl);
         }
 
         ov.setSteeringSystem(ss);

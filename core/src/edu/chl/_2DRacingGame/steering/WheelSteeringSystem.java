@@ -3,19 +3,19 @@ package edu.chl._2DRacingGame.steering;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import edu.chl._2DRacingGame.gameObjects.Tire;
+import edu.chl._2DRacingGame.gameObjects.Wheel;
 import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
 
 import java.util.Set;
 
 /**
- * SteeringSystem for vehicles with tires. Designed for the WheeledVehicle class
+ * SteeringSystem for vehicles with wheels. Designed for the WheeledVehicle class
  * Is used to control the player's vehicle by changing the direction of the front-wheels and
- * applying forces to the tires.
+ * applying forces to the wheels.
  *
  *@author Lars Niklasson
  */
-public class TireSteeringSystem implements ISteeringSystem{
+public class WheelSteeringSystem implements ISteeringSystem{
 
 
     private final WheelSteerable ws;
@@ -30,7 +30,7 @@ public class TireSteeringSystem implements ISteeringSystem{
      * @param wheelSteerable The wheel-steerable the steering-system is created for.
      * @param steeringListener The steering-listener for this steering-system
      */
-    public TireSteeringSystem(WheelSteerable wheelSteerable, SteeringInputListener steeringListener) {
+    public WheelSteeringSystem(WheelSteerable wheelSteerable, SteeringInputListener steeringListener) {
         this.ws = wheelSteerable;
         this.steeringListener = steeringListener;
     }
@@ -47,7 +47,7 @@ public class TireSteeringSystem implements ISteeringSystem{
         keys = steeringListener.getInput();
 
         turnWheels();
-        for(Tire t : ws.getTires()){
+        for(Wheel t : ws.getWheels()){
             t.updateValues();
             updateDrive(t);
             updateFriction(t);
@@ -55,7 +55,7 @@ public class TireSteeringSystem implements ISteeringSystem{
 
     }
 
-    private void updateDrive(Tire t) { //TODO make a general method for any body - so it can be used in other SteeringSystems (includes friction methods)
+    private void updateDrive(Wheel t) { //TODO make a general method for any body - so it can be used in other SteeringSystems (includes friction methods)
 
 
 
@@ -95,7 +95,7 @@ public class TireSteeringSystem implements ISteeringSystem{
     }
 
 
-    private void updateFriction(Tire t) {
+    private void updateFriction(Wheel t) {
         reduceSideWaysVelocity(t);
 
 
@@ -104,13 +104,13 @@ public class TireSteeringSystem implements ISteeringSystem{
 
     }
 
-    private void applyRoadFriction(Tire t) {
+    private void applyRoadFriction(Wheel t) {
         Vector2 currentForwardNormal = Box2DUtils.getForwardVelocity(t.getBody());
 
         t.getBody().applyForceToCenter(currentForwardNormal.scl(t.getCurrentBackwardsFriction()), true);
     }
 
-    private void reduceSideWaysVelocity(Tire t) {
+    private void reduceSideWaysVelocity(Wheel t) {
         Vector2 impulse = Box2DUtils.getLateralVelocity(t.getBody()).cpy().scl(t.getBody().getMass() * -1);
 
         //the amount of sideways velocity cancelled cant exceed a certain maximum value - creating the skidding/sliding effect
