@@ -47,10 +47,10 @@ public class WheelSteeringSystem implements ISteeringSystem{
         keys = steeringListener.getInput();
 
         turnWheels();
-        for(Wheel t : ws.getWheels()){
-            t.updateValues();
-            updateDrive(t);
-            updateFriction(t);
+        for(Wheel w : ws.getWheels()){
+            w.updateValues();
+            updateDrive(w);
+            updateFriction(w);
         }
 
     }

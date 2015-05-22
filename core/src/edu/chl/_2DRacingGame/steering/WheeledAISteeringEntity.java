@@ -155,8 +155,8 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
             Vector2 force = steeringOutput.linear.scl(deltaTime);
             vehicle.getBody().applyForceToCenter(force, true);
-            for(Wheel t : vehicle.getWheels()){
-                t.getBody().applyForceToCenter(force, true);
+            for(Wheel w : vehicle.getWheels()){
+                w.getBody().applyForceToCenter(force, true);
             }
 
             anyAccelerations = true;
@@ -168,8 +168,8 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
                 vehicle.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
 
-                for(Wheel t : vehicle.getWheels()){
-                    t.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
+                for(Wheel w : vehicle.getWheels()){
+                    w.getBody().applyTorque(steeringOutput.angular * deltaTime, true);
                 }
                 anyAccelerations = true;
             }
@@ -183,8 +183,8 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
                 float newOrientation = vectorToAngle(linVel);
 
 
-                for(Wheel t : vehicle.getWheels()){
-                    t.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime);
+                for(Wheel w : vehicle.getWheels()){
+                    w.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime);
 
                 }
                 vehicle.getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
@@ -226,8 +226,8 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
             float maxLinearSpeed = getMaxLinearSpeed();
             if (currentSpeedSquare > maxLinearSpeed * maxLinearSpeed) {
                 vehicle.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
-                for(Wheel t : vehicle.getWheels()){
-                    t.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
+                for(Wheel w : vehicle.getWheels()){
+                    w.getBody().setLinearVelocity(velocity.scl(maxLinearSpeed / (float) Math.sqrt(currentSpeedSquare)));
 
                 }
             }
@@ -236,8 +236,8 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
             float maxAngVelocity = getMaxAngularSpeed();
             if (vehicle.getBody().getAngularVelocity() > maxAngVelocity) {
                 vehicle.getBody().setAngularVelocity(maxAngVelocity);
-                for(Wheel t : vehicle.getWheels()){
-                    t.getBody().setAngularVelocity(maxAngVelocity);
+                for(Wheel w : vehicle.getWheels()){
+                    w.getBody().setAngularVelocity(maxAngVelocity);
 
                 }
             }

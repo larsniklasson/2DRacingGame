@@ -97,9 +97,9 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
     public void place(Vector2 position, float angle) {
         body.setTransform(position, angle);
         for(int i = 0; i < wheelPositions.size(); i++){
-            Wheel t = wheels.get(i);
+            Wheel w = wheels.get(i);
             Vector2 pos = wheelPositions.get(i);
-            t.getBody().setTransform(body.getWorldPoint(pos), angle);
+            w.getBody().setTransform(body.getWorldPoint(pos), angle);
         }
     }
 
@@ -114,8 +114,8 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
         
         SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
-        for(Wheel t : wheels){
-            t.draw(batch);
+        for(Wheel w : wheels){
+            w.draw(batch);
         }
     }
 
@@ -133,16 +133,16 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
         SpriteUtils.updateSprite(body, sprite, GameWorld.PIXELS_PER_METER);
         sprite.draw(batch);
         for(int i = 0; i < wheels.size(); i ++){
-            Wheel t = wheels.get(i);
+            Wheel w = wheels.get(i);
 
-            if(t.getSprite() == null)continue; //currently only for MagicCarpet but you shouldn't have to set the sprite;
+            if(w.getSprite() == null)continue; //currently only for MagicCarpet but you shouldn't have to set the sprite;
 
-            SpriteUtils.updateSprite(t.getBody(), t.getSprite(), GameWorld.PIXELS_PER_METER);
+            SpriteUtils.updateSprite(w.getBody(), w.getSprite(), GameWorld.PIXELS_PER_METER);
             if(isFrontWheelBooleanList.get(i)){
 
-                SpriteUtils.rotateSpriteBy(t.getSprite(), MP_FrontWheelAngle);
+                SpriteUtils.rotateSpriteBy(w.getSprite(), MP_FrontWheelAngle);
             }
-            t.getSprite().draw(batch);
+            w.getSprite().draw(batch);
         }
 
     }

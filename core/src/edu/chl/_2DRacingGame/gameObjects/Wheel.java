@@ -155,10 +155,10 @@ public class Wheel implements Drawable, Trackable {
      * @return A copy of this wheel.
      */
     public Wheel cpy(){
-        Wheel t = new Wheel(world, width, height, density);
-        t.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
-        t.setSprite(new Sprite(sprite));
-        return t;
+        Wheel w = new Wheel(world, width, height, density);
+        w.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
+        w.setSprite(new Sprite(sprite));
+        return w;
     }
 
     /**
