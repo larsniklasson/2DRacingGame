@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *
  * @author Lars Niklasson
  */
-public abstract class OneBodyVehicle extends Vehicle {
+public abstract class SingleBodyVehicle extends Vehicle {
     protected Body body;
     protected final World world;
 
@@ -22,7 +22,7 @@ public abstract class OneBodyVehicle extends Vehicle {
      *
      * @param world the Box2D-world which the vehicle will be created in.
      */
-    public OneBodyVehicle(World world){
+    public SingleBodyVehicle(World world){
         this.world = world;
     }
 

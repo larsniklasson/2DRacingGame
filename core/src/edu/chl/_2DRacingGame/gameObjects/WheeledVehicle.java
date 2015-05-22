@@ -25,7 +25,7 @@ import java.util.List;
  *
  *@author Lars Niklasson
  */
-public abstract class WheeledVehicle extends OneBodyVehicle implements Drawable, WheelSteerable {
+public abstract class WheeledVehicle extends SingleBodyVehicle implements Drawable, WheelSteerable {
 
 
     private Sprite sprite;
