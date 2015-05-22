@@ -104,7 +104,8 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + scores.getHighScore());
         }
 
-        //
+        
+
         // TODO probably shouldn't restart by default
         restartRace();
     }

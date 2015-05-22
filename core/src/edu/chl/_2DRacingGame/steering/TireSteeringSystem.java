@@ -3,21 +3,24 @@ package edu.chl._2DRacingGame.steering;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import edu.chl._2DRacingGame.gameObjects.OurVehicle;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
+
 
 
 import java.util.Set;
 
 /**
- * SteeringSystem for vehicles with tires. Designed for (requires) the OurVehicle class.
+ * SteeringSystem for vehicles with tires. Designed for the WheeledVehicle class
  * Is used to control the player's vehicle by changing the direction of the front-wheels and
  * applying forces to the tires.
  *
  *@author Lars Niklasson
  */
-public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
+public class TireSteeringSystem implements ISteeringSystem{
+
+
+    private WheelSteerable ws;
 
 
     protected Set<Key> keys;
@@ -25,17 +28,17 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
     private final SteeringInputListener steeringListener;
 
     /**
-     * Creates a steering-system for the specified vehicle with a specified steering-listener, which handles user input.
-     * @param ourVehicle The vehicle the steering-system is created for.
+     * Creates a steering-system for the specified wheel-steerable with the specified steering-listener, which handles user input.
+     * @param wheelSteerable The wheel-steerable the steering-system is created for.
      * @param steeringListener The steering-listener for this steering-system
      */
-    public TireSteeringSystem(OurVehicle ourVehicle, SteeringInputListener steeringListener) {
-        super(ourVehicle);
+    public TireSteeringSystem(WheelSteerable wheelSteerable, SteeringInputListener steeringListener) {
+        this.ws = wheelSteerable;
         this.steeringListener = steeringListener;
     }
 
     /**
-     * {@inheritDoc}
+     * Updates the steering-system's wheel-steerable based on the time elapsed since last update.
      *
      * Gets input from the listener steers/drives the vehicle based on the input.
      * @param delta The time elapsed since last update.
@@ -46,7 +49,7 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
         keys = steeringListener.getInput(); //TODO make some kind of inputprocessor instead, so you dont have to poll every frame. this works fine though
 
         turnWheels();
-        for(Tire t : vehicle.getTires()){
+        for(Tire t : ws.getTires()){
             t.updateValues();
             updateDrive(t);
             updateFriction(t);
@@ -125,14 +128,14 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
 
     protected void turnWheels() {
-        if(vehicle.getFrontJoints().size() == 0)return;
+        if(ws.getFrontJoints().size() == 0)return;
 
 
 
 
-        float lockAngle = MathUtils.degreesToRadians * vehicle.getMaxTurnAngle();
+        float lockAngle = MathUtils.degreesToRadians * ws.getMaxTurnAngle();
 
-        float turnRadiansPerSec = vehicle.getTurnDegreesPerSecond() * MathUtils.degreesToRadians; //instant as it is now
+        float turnRadiansPerSec = ws.getTurnDegreesPerSecond() * MathUtils.degreesToRadians; //instant as it is now
         float turnPerTimeStep = turnRadiansPerSec / 60f;
         float desiredAngle = 0;
 
@@ -143,7 +146,7 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
             desiredAngle = -lockAngle;
         }
 
-        float angleNow = vehicle.getFrontJoints().get(0).getJointAngle();
+        float angleNow = ws.getFrontJoints().get(0).getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
 
         if (angleToTurn < -turnPerTimeStep) {
@@ -154,13 +157,21 @@ public class TireSteeringSystem extends SteeringSystem<OurVehicle>{
 
         float newAngle = angleNow + angleToTurn;
 
-        for(RevoluteJoint rj : vehicle.getFrontJoints()){
+        for(RevoluteJoint rj : ws.getFrontJoints()){
             rj.setLimits(newAngle, newAngle);
         }
 
-        vehicle.setCurrentFrontWheelAngle(newAngle);
+        ws.setCurrentFrontWheelAngle(newAngle);
 
 
+    }
+
+    /**
+     *
+     * @return This steering-system's wheel-steerable
+     */
+    public WheelSteerable getWheelSteerable(){
+        return ws;
     }
 
 

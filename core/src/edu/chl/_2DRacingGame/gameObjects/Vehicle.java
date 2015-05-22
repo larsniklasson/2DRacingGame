@@ -1,7 +1,8 @@
 package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl._2DRacingGame.steering.SteeringSystem;
+import edu.chl._2DRacingGame.steering.ISteeringSystem;
+
 
 /**
  * Model for a simple vehicle in a 2D-world.
@@ -10,7 +11,7 @@ import edu.chl._2DRacingGame.steering.SteeringSystem;
 public abstract class Vehicle{
 
 
-    private SteeringSystem steeringSystem;
+    private ISteeringSystem steeringSystem;
 
     /**
      *
@@ -58,7 +59,7 @@ public abstract class Vehicle{
     /**
      * @param steeringSystem The new SteeringSystem
      */
-    public void setSteeringSystem(SteeringSystem steeringSystem){
+    public void setSteeringSystem(ISteeringSystem steeringSystem){
         this.steeringSystem = steeringSystem;
     }
 

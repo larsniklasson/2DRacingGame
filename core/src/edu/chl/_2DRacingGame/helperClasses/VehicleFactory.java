@@ -90,7 +90,7 @@ public class VehicleFactory {
      */
     public static OurVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
         OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
-        ov.setSteeringSystem(new WayPointSystem(ov, gameWorld.getWayPoints(), difficulty));
+        ov.setSteeringSystem(new WayPointSystem(new WheeledAISteeringEntity(ov, ov.getAISpeeds(difficulty)), gameWorld.getWayPoints()));
         return ov;
     }
 
@@ -111,7 +111,7 @@ public class VehicleFactory {
         OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
         SteeringInputListener sl = getSteeringInputListener(playerNumber);
 
-        SteeringSystem ss;
+        ISteeringSystem ss;
         if(vehicleType.equals(MAGIC_CARPET)){
             ss = new FlyingSteeringSystem(ov, sl);
         } else {

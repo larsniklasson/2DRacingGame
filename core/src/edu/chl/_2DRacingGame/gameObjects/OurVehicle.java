@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import edu.chl._2DRacingGame.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.steering.Difficulty;
+import edu.chl._2DRacingGame.steering.WheelSteerable;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  *@author Lars Niklasson
  */
-public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
+public abstract class OurVehicle extends OneBodyVehicle implements Drawable, WheelSteerable {
 
 
     private Sprite sprite;
@@ -162,10 +163,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
         this.sprite = sprite;
     }
 
-    /**
-     *
-     * @return The maximum angle which the front-wheels can be turned.
-     */
+    @Override
     public float getMaxTurnAngle() {
         return maxTurnAngle;
     }
@@ -178,10 +176,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
         this.maxTurnAngle = maxTurnAngle;
     }
 
-    /**
-     *
-     * @return The Degrees per Second which the front-wheels can be turned.
-     */
+    @Override
     public float getTurnDegreesPerSecond() {
         return turnDegreesPerSecond;
     }
@@ -202,11 +197,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
         return currentFrontWheelAngle;
     }
 
-    /**
-     * Sets the current angle of the front wheels.
-     * NOTE: this does not affect the steering-systems, but is only used for multi-player purposes.
-     * @param currentFrontWheelAngle The current angle of the frontwheels.
-     */
+    @Override
     public void setCurrentFrontWheelAngle(float currentFrontWheelAngle) {
         this.currentFrontWheelAngle = currentFrontWheelAngle;
     }
@@ -219,18 +210,12 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable {
         this.MP_FrontWheelAngle = mp_frontWheelAngle;
     }
 
-    /**
-     *
-     * @return A List of the Revolute-joints of the front-wheels.
-     */
+    @Override
     public List<RevoluteJoint> getFrontJoints(){
         return frontJoints;
     }
 
-    /**
-     *
-     * @return A List containing the vehicle's tires.
-     */
+    @Override
     public List<Tire> getTires() {
         return tires;
     }
