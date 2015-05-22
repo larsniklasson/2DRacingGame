@@ -18,10 +18,5 @@ public interface AISteeringEntity extends Steerable<Vector2>{
      */
     void applySteering(SteeringAcceleration<Vector2> steeringAcceleration, float deltaTime);
 
-    /**
-     * Set the different speeds/accelerations for this entity
-     *
-     * @param speedHolder The speedholder that this entity will get.
-     */
-    void setSpeeds(AISpeedHolder speedHolder);
+
 }

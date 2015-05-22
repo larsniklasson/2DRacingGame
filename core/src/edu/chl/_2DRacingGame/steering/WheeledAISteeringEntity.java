@@ -1,8 +1,6 @@
 package edu.chl._2DRacingGame.steering;
 
-import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
-import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import edu.chl._2DRacingGame.gameObjects.OurVehicle;
@@ -20,7 +18,7 @@ import edu.chl._2DRacingGame.gameObjects.Tire;
  */
 public class WheeledAISteeringEntity implements AISteeringEntity {
 
-    private OurVehicle vehicle;
+    private final OurVehicle vehicle;
 
     private float wheelAngle;
 
@@ -36,9 +34,11 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
 
     /**
-     * Creates a SteeringEntity for the specified vehicle
+     * Creates a SteeringEntity for the specified vehicle with the specified
+     * speeds/accelerations for the steering-entity
      *
      * @param vehicle The vehicle which the SteeringEntity is created for
+     * @param speedHolder The speedholder that this entity will get
      */
     public WheeledAISteeringEntity(OurVehicle vehicle, AISpeedHolder speedHolder) {
         this.vehicle = vehicle;

@@ -13,7 +13,7 @@ import edu.chl._2DRacingGame.gameObjects.OurVehicle;
  */
 public class WayPointSystem extends AISteeringSystem {
 
-    private final Array<Vector2> wayPoints;
+
 
     /**
      * Creates a waypoint-system for the specified AISteeringEntity, with the specified waypoints
@@ -23,9 +23,8 @@ public class WayPointSystem extends AISteeringSystem {
     public WayPointSystem(AISteeringEntity steeringEntity, Array<Vector2> wayPoints) {
         super(steeringEntity);
 
-        this.wayPoints = wayPoints;
 
-        LinePath<Vector2> linePath = new LinePath<Vector2>(wayPoints, false);
+        LinePath<Vector2> linePath = new LinePath<>(wayPoints, false);
 
         FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(steeringEntity, linePath, 3, 0);
 

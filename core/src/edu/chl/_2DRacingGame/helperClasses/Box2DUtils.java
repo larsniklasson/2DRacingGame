@@ -12,8 +12,8 @@ public class Box2DUtils {
      * NOTE: "forward" is in this case along the positive direction of the y-axis.
      * (Upwards on downwards depending on coordinate-system.)
      *
-     * @param body
-     * @return The current forward velocity of a body.
+     * @param body The body to get the velocity from
+     * @return The current forward velocity of the specified body.
      */
     public static Vector2 getForwardVelocity(Body body) {
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
@@ -25,8 +25,8 @@ public class Box2DUtils {
      * Returns the current lateral (sideways) velocity of the specified body.
      * NOTE: "sideways" is in this case along the x-axis
      *
-     * @param body
-     * @return
+     * @param body The body to get the velocity from
+     * @return The current lateral velocity of the specified body
      */
     public static Vector2 getLateralVelocity(Body body) {
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1, 0));

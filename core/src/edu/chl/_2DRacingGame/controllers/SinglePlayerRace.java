@@ -43,9 +43,9 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
         getWorld().addPlayer(getPlayer());
 
         //New player-controlled random vehicle. using player2-controls
-        Vehicle v = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, 2);
+        //Vehicle v = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, 2);
 
-        getWorld().addPlayer(new Player("p2", v));
+        //getWorld().addPlayer(new Player("p2", v));
 
 
         //testing adding ai-vehicles
@@ -104,7 +104,7 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + scores.getHighScore());
         }
 
-        
+
 
         // TODO probably shouldn't restart by default
         restartRace();
@@ -136,9 +136,8 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     }
 
     private GameMap mapSetter(String mapName) {
-        if(mapName=="map1")
-            return GameMap.PLACEHOLDER_MAP;
+        return GameMap.PLACEHOLDER_MAP;
 
-        throw new IllegalArgumentException("Found no matching map.");
+        //throw new IllegalArgumentException("Found no matching map.");
     }
 }

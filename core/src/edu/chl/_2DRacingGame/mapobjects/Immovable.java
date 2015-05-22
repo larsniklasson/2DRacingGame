@@ -12,8 +12,8 @@ public class Immovable {
 
     /**
      * Creates an immovable object in the specified Box2D-world with the specified Box2D-shape.
-     * @param world
-     * @param shape
+     * @param world The Box2D-world the immovable will be created in.
+     * @param shape The Box2D-shape the immovable will get.
      */
     public Immovable(World world, Shape shape){
         BodyDef bodyDef = new BodyDef();

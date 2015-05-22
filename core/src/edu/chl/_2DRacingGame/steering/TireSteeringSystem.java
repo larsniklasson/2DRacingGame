@@ -6,8 +6,6 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import edu.chl._2DRacingGame.gameObjects.Tire;
 import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
 
-
-
 import java.util.Set;
 
 /**
@@ -20,7 +18,7 @@ import java.util.Set;
 public class TireSteeringSystem implements ISteeringSystem{
 
 
-    private WheelSteerable ws;
+    private final WheelSteerable ws;
 
 
     protected Set<Key> keys;
@@ -46,7 +44,7 @@ public class TireSteeringSystem implements ISteeringSystem{
     @Override
     public void update(float delta) {
 
-        keys = steeringListener.getInput(); //TODO make some kind of inputprocessor instead, so you dont have to poll every frame. this works fine though
+        keys = steeringListener.getInput();
 
         turnWheels();
         for(Tire t : ws.getTires()){

@@ -1,12 +1,9 @@
 package edu.chl._2DRacingGame.steering;
 
-import com.badlogic.gdx.ai.steer.Steerable;
+
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import edu.chl._2DRacingGame.gameObjects.OurVehicle;
-import edu.chl._2DRacingGame.gameObjects.Tire;
 
 /**
  * SteeringSystem controlled by AI using LibGDX's AI-library. Designed for and requires the OurVehicle class.
@@ -21,7 +18,7 @@ import edu.chl._2DRacingGame.gameObjects.Tire;
  */
 public abstract class AISteeringSystem implements ISteeringSystem{
 
-    private AISteeringEntity steeringEntity;
+    private final AISteeringEntity steeringEntity;
 
     private SteeringBehavior<Vector2> steeringBehavior;
 
