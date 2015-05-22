@@ -9,8 +9,10 @@ import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
+import java.awt.*;
 
-public class _2DRacingGame extends Game implements GameController, MainMenuListener {
+
+public class _2DRacingGame extends Game implements GameController, MainMenuListener, OptionsScreenListener {
 
     // TODO
     private final boolean useMultiplayer = false;
@@ -54,6 +56,14 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
         Gdx.app.postRunnable(() -> setScreen(new MainMenuScreen(this)));
     }
 
+    @Override
+    public void applyNewOptions(float sound, Boolean fullscreen) {
+        System.out.println("Sound set to: " + sound);
+        System.out.println("Fullscreen set to: " + fullscreen);
+
+        Gdx.graphics.setDisplayMode(1280, 704, fullscreen);
+    }
+
     public void restartRace() {
         raceController.restartRace();
     }
@@ -65,7 +75,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     public void displayMultiPlayerMenuScreen() { startMultiplayer(); }
 
     @Override
-    public void displayOptionsScreen() {setScreen(new OptionsMenuScreen());}
+    public void displayOptionsScreen() {setScreen(new OptionsMenuScreen(this));}
 
     @Override
     public void exitGame() {Gdx.app.exit();}

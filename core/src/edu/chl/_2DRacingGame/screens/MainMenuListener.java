@@ -8,5 +8,4 @@ public interface MainMenuListener {
     void displayMultiPlayerMenuScreen();
     void displayOptionsScreen();
     void exitGame();
-
 }
