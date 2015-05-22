@@ -227,7 +227,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         warpClient.removeNotificationListener(notificationAdapter);
     }
 
-    private void disconnect() {
+    void disconnect() {
         if (roomId != null && !roomId.isEmpty()) {
             warpClient.unsubscribeRoom(roomId);
             warpClient.leaveRoom(roomId);

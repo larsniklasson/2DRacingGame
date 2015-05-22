@@ -164,7 +164,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
         setRaceSettings();
 
-        gameController.setScreen(new SearchingForPlayerScreen());
+        gameController.setScreen(new SearchingForPlayerScreen(this));
 
         new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
 
@@ -173,6 +173,12 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void displayMainMenuScreen() {
         gameController.displayStartMenu();
+    }
+
+    @Override
+    public void cancelSearch() {
+        System.out.print("race cancelled");
+
     }
 
     public void setRaceSettings(){

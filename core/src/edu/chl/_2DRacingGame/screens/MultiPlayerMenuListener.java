@@ -6,5 +6,5 @@ package edu.chl._2DRacingGame.screens;
 public interface MultiPlayerMenuListener {
     void startMultiplayerRace(String vehicle, String map);
     void displayMainMenuScreen();
-
+    void cancelSearch();
 }

@@ -14,10 +14,14 @@ public class SearchingForPlayerScreen extends GUIScreen {
 
     private Table table;
 
+    private MultiPlayerMenuListener listener;
+
     private TextButton cancelButton;
 
-    public SearchingForPlayerScreen(){
+    public SearchingForPlayerScreen(MultiPlayerMenuListener listener){
         table = new Table();
+
+        this.listener = listener;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class SearchingForPlayerScreen extends GUIScreen {
         cancelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("cancel");
+                listener.cancelSearch();
             }
         });
 
