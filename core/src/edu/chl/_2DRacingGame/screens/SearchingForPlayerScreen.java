@@ -42,7 +42,7 @@ public class SearchingForPlayerScreen extends GUIScreen {
 
         table.add(cancelButton);
 
-
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override

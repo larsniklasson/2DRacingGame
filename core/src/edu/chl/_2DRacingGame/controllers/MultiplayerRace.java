@@ -163,6 +163,9 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         setChosenMap(chosenMap);
 
         setRaceSettings();
+
+        gameController.setScreen(new SearchingForPlayerScreen());
+
         new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
 
     }
