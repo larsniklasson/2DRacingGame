@@ -143,13 +143,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
         speedHolder.setMaxAngularAcceleration(maxAngularAcceleration);
     }
 
-    @Override
-    public void setSpeeds(AISpeedHolder speeds){
-        this.speedHolder = speeds;
-    }
-
-
-
+    
 
     @Override
     public void applySteering (SteeringAcceleration<Vector2> steeringOutput, float deltaTime) {
