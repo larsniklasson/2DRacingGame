@@ -157,7 +157,9 @@ public class Wheel implements Drawable, Trackable {
     public Wheel cpy(){
         Wheel w = new Wheel(world, width, height, density);
         w.setCharacteristics(driveForce, maxLateralImpulse, maxForwardSpeed, maxBackwardSpeed, backwardsFriction);
-        w.setSprite(new Sprite(sprite));
+
+        if(sprite != null)w.setSprite(new Sprite(sprite));
+
         return w;
     }
 
