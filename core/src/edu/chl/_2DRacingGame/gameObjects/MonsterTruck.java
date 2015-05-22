@@ -13,7 +13,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
  * Class for a Monster Truck, a slow but powerful vehicle.
  *@author Lars Niklasson
  */
-public class MonsterTruck extends OurVehicle {
+public class MonsterTruck extends WheeledVehicle {
 
     private static final float SCALE = GameWorld.PIXELS_PER_METER;
     private static final float TIRE_WIDTH = 8 / SCALE;
@@ -70,7 +70,7 @@ public class MonsterTruck extends OurVehicle {
 
         attachWheel(backWheel, new Vector2(-16 / SCALE, -16 / SCALE), false);
 
-        attachWheel(backWheel.cpy(),new Vector2(16/SCALE, -16/SCALE),false);
+        attachWheel(backWheel.cpy(), new Vector2(16 / SCALE, -16 / SCALE), false);
 
     }
 

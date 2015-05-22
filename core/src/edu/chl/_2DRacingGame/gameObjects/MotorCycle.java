@@ -13,7 +13,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
  * Class for a motorcycle, a fast but weak vehicle.
  *@author Lars Niklasson
  */
-public class MotorCycle extends OurVehicle{
+public class MotorCycle extends WheeledVehicle {
 
 
 

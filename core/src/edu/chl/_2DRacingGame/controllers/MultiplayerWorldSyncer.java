@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
-import edu.chl._2DRacingGame.gameObjects.OurVehicle;
+import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.helperClasses.WarpClientNotificationAdapter;
 import edu.chl._2DRacingGame.models.Player;
@@ -158,8 +158,8 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
         //Hack. We move the sprite instead of the actual wheel-body, to avoid weird bugs.
         // hack in action can be seen clearest when playing against a MonsterTruck with debug-mode on.
-        if(opponentVehicle instanceof OurVehicle){
-            ((OurVehicle)opponentVehicle).setMP_FrontWheelAngle(frontWheelAngle);
+        if(opponentVehicle instanceof WheeledVehicle){
+            ((WheeledVehicle)opponentVehicle).setMP_FrontWheelAngle(frontWheelAngle);
         }
 
         if(oldAngle > 1.5 && angle < -1.5){
@@ -230,8 +230,8 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
 
         //if vehicle doesn't have front wheels to turn, set it to 0.
         float wheelAngle = 0;
-        if(vehicle instanceof OurVehicle){
-            wheelAngle = ((OurVehicle)vehicle).getCurrentFrontWheelAngle();
+        if(vehicle instanceof WheeledVehicle){
+            wheelAngle = ((WheeledVehicle)vehicle).getCurrentFrontWheelAngle();
         }
 
         if (lastSyncTime == 0 || getTimeSinceUpdate() > MIN_UPDATE_WAIT) {

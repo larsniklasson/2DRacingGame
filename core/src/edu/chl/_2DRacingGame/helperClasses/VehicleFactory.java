@@ -81,17 +81,17 @@ public class VehicleFactory {
      * For the type of vehicle use constants defined in this class, or the name of the class
      * in all lower case letters.
      *
-     * NOTE: returns an OurVehicle since the AI-system requires a body and wheels.
+     * NOTE: returns a WheeledVehicle since the AI-system requires a body and wheels.
      *
      * @param gameWorld The GameWorld the vehicle will be created in.
      * @param vehicleType The type of vehicle.
      * @param difficulty The difficulty-setting of the AI.
      * @return The created AI-controlled vehicle.
      */
-    public static OurVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
-        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
-        ov.setSteeringSystem(new WayPointSystem(new WheeledAISteeringEntity(ov, ov.getAISpeeds(difficulty)), gameWorld.getWayPoints()));
-        return ov;
+    public static WheeledVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
+        WheeledVehicle wv = (WheeledVehicle) createVehicle(gameWorld, vehicleType);
+        wv.setSteeringSystem(new WayPointSystem(new WheeledAISteeringEntity(wv, wv.getAISpeeds(difficulty)), gameWorld.getWayPoints()));
+        return wv;
     }
 
 
@@ -106,20 +106,20 @@ public class VehicleFactory {
      * @param playerNumber The player-number. (Player 1, Player 2, etc.)
      * @return The created user-controllable vehicle.
      */
-    public static OurVehicle createPlayerVehicle(GameWorld gameWorld, String vehicleType, int playerNumber){
+    public static WheeledVehicle createPlayerVehicle(GameWorld gameWorld, String vehicleType, int playerNumber){
 
-        OurVehicle ov = (OurVehicle) createVehicle(gameWorld, vehicleType);
+        WheeledVehicle wv = (WheeledVehicle) createVehicle(gameWorld, vehicleType);
         SteeringInputListener sl = getSteeringInputListener(playerNumber);
 
         ISteeringSystem ss;
         if(vehicleType.equals(MAGIC_CARPET)){
-            ss = new FlyingSteeringSystem(ov, sl);
+            ss = new FlyingSteeringSystem(wv, sl);
         } else {
-            ss = new WheelSteeringSystem(ov, sl);
+            ss = new WheelSteeringSystem(wv, sl);
         }
 
-        ov.setSteeringSystem(ss);
-        return ov;
+        wv.setSteeringSystem(ss);
+        return wv;
     }
 
 

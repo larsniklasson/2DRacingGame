@@ -25,7 +25,7 @@ import java.util.List;
  *
  *@author Lars Niklasson
  */
-public abstract class OurVehicle extends OneBodyVehicle implements Drawable, WheelSteerable {
+public abstract class WheeledVehicle extends OneBodyVehicle implements Drawable, WheelSteerable {
 
 
     private Sprite sprite;
@@ -50,7 +50,7 @@ public abstract class OurVehicle extends OneBodyVehicle implements Drawable, Whe
      *
      * @param world the Box2D-world which the vehicle will be created in.
      */
-    public OurVehicle(World world) {
+    public WheeledVehicle(World world) {
         super(world);
 
     }

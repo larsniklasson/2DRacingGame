@@ -20,7 +20,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
  *
  * @author Lars Niklasson
  */
-public class MagicCarpet extends OurVehicle{
+public class MagicCarpet extends WheeledVehicle {
 
     private static final float WIDTH = 20f/ GameWorld.PIXELS_PER_METER;
     private static final float HEIGHT = 30f/GameWorld.PIXELS_PER_METER;
@@ -44,7 +44,7 @@ public class MagicCarpet extends OurVehicle{
         Wheel wheel = new FlyingWheel(world, WIDTH, HEIGHT, 0.5f);
         wheel.setCharacteristics(10f, 0.2f, 15f, -5f, -0.2f);
 
-        attachWheel(wheel, new Vector2(0,0), false);
+        attachWheel(wheel, new Vector2(0, 0), false);
     }
 
     @Override

@@ -4,15 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.Car;
-import edu.chl._2DRacingGame.gameObjects.OurVehicle;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
 import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.screens.*;
-import edu.chl._2DRacingGame.steering.PlayerOneInputListener;
 import edu.chl._2DRacingGame.world.GameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -178,7 +175,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     public void setRaceSettings(){
         setRaceProperties(GameMap.valueOf(chosenMap), new TimeTrial(2, this));
 
-        OurVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
+        WheeledVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
         getPlayer().setVehicle(vehicle);
     }
 

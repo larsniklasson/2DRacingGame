@@ -11,11 +11,11 @@ import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * Class for a simple racing car, an all-round vehicle.
- * Simple usage of the OurVehicle super-class
+ * Simple usage of the WheeledVehicle super-class
  *
  * @author Lars Niklasson
  */
-public class Car extends OurVehicle {
+public class Car extends WheeledVehicle {
 
     private static final float SCALE = 0.4f * GameWorld.PIXELS_PER_METER;
     private static final float TIRE_WIDTH = 0.5f * 2 / SCALE;

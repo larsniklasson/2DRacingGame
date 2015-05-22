@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * SteeringSystem controlled by AI using LibGDX's AI-library. Designed for and requires the OurVehicle class.
+ * SteeringSystem controlled by AI using LibGDX's AI-library. Designed for the WheeledVehicle class.
  *
  *
  * IMPORTANT NOTE:

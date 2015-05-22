@@ -14,7 +14,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
  *
  * @author Lars Niklasson
  */
-public class FormulaOneCar extends OurVehicle{
+public class FormulaOneCar extends WheeledVehicle {
 
 
     private static final float SCALE = GameWorld.PIXELS_PER_METER;
@@ -88,7 +88,7 @@ public class FormulaOneCar extends OurVehicle{
         attachWheel(backWheel, new Vector2(-7 / SCALE, 8 / SCALE), false);
 
 
-        attachWheel(backWheel.cpy(),new Vector2(7/SCALE, 8/SCALE),false);
+        attachWheel(backWheel.cpy(), new Vector2(7 / SCALE, 8 / SCALE), false);
 
 
 
