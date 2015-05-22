@@ -37,7 +37,9 @@ public class Car extends WheeledVehicle {
 
 
     /**
-     * {@inheritDoc}
+     * Creates a car set in the specified Box2D-world.
+     *
+     * @param world the Box2D-world which the car will be created in.
      */
     public Car(World world) {
         super(world);

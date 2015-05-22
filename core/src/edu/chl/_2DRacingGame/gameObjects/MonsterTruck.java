@@ -37,7 +37,9 @@ public class MonsterTruck extends WheeledVehicle {
     private static final float BACKWARDS_FRICTION = -0.03f;
 
     /**
-     * {@inheritDoc}
+     * Creates a monster truck set in the specified Box2D-world.
+     *
+     * @param world the Box2D-world which the monster truck will be created in.
      */
     public MonsterTruck(World world) {
         super(world);

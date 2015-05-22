@@ -43,7 +43,9 @@ public class FormulaOneCar extends WheeledVehicle {
     private static final float MAX_ANGLE = 25f;
 
     /**
-     * {@inheritDoc}
+     * Creates a formula one car set in the specified Box2D-world.
+     *
+     * @param world the Box2D-world which the car will be created in.
      */
     public FormulaOneCar(World world) {
         super(world);

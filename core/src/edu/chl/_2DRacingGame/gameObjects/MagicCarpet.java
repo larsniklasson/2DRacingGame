@@ -27,7 +27,9 @@ public class MagicCarpet extends WheeledVehicle {
 
 
     /**
-     * {@inheritDoc}
+     * Creates a magic carpet set in the specified Box2D-world.
+     *
+     * @param world the Box2D-world which the magic carpet will be created in.
      */
     public MagicCarpet(World world) {
         super(world);

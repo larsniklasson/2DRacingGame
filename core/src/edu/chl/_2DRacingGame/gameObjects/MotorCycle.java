@@ -35,7 +35,9 @@ public class MotorCycle extends WheeledVehicle {
 
 
     /**
-     * {@inheritDoc}
+     * Creates a motorcycle set in the specified Box2D-world.
+     *
+     * @param world the Box2D-world which the motorcycle will be created in.
      */
     public MotorCycle(World world) {
         super(world);
