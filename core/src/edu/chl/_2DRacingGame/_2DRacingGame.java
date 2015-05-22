@@ -37,7 +37,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
     private void startMultiplayer() {
         raceController = new MultiplayerRace(this);
-        //raceController.setUp();
+        raceController.setUp();
     }
 
     public GameWorld getGameWorld() {

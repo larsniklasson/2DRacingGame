@@ -2,8 +2,10 @@ package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
  * Created by Victor Christoffersson on 2015-05-21.
@@ -31,7 +33,15 @@ public class SearchingForPlayerScreen extends GUIScreen {
     public void create(){
 
         cancelButton = new TextButton("cancel", skin);
+        cancelButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("cancel");
+            }
+        });
+
         table.add(cancelButton);
+
 
     }
 

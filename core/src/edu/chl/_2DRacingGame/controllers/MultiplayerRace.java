@@ -41,7 +41,6 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
      */
     public MultiplayerRace(GameController gameController) {
         super(gameController);
-        gameController.setScreen(new MultipPlayerMenuScreen(this));
     }
 
 
@@ -50,8 +49,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
      */
     @Override
     public void setUp() {
-        setRaceSettings();
-        new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
+        gameController.setScreen(new MultipPlayerMenuScreen(this));
+
     }
 
     /**
@@ -167,7 +166,9 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         setChosenVehicle(chosenVehicle);
         setChosenMap(chosenMap);
 
-        setUp();
+        setRaceSettings();
+        new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
+
     }
 
     @Override
