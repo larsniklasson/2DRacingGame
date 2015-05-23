@@ -20,7 +20,7 @@ public class SinglePlayerMenuScreen extends GUIScreen {
 
     private SelectBox<Integer> laps;
     private SelectBox<Integer> numberOfOpponents;
-
+    private SelectBox<String> difficulty;
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
     private Table mainTable;
@@ -46,17 +46,24 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         t.bottom();
         final Label lapsLabel = new Label("Number of laps:",skin,"default");
         final Label oppLabel = new Label("Number of opponents:",skin,"default");
+        final Label difficultyLabel = new Label ("Select a difficulty:", skin, "default");
         numberOfOpponents = new SelectBox<>(skin);
         laps = new SelectBox<>(skin);
-        laps.setItems(1,2,3);
-        numberOfOpponents.setItems(1,2,3,4,5,6);
+        difficulty = new SelectBox<>(skin);
+        laps.setItems(1, 2, 3);
+        numberOfOpponents.setItems(1, 2, 3, 4, 5, 6);
+        difficulty.setItems("Easy", "Medium","Hard");
         t.add(lapsLabel);
         t.row();
-        t.add(laps).padBottom(30);
+        t.add(laps).padBottom(15);
         t.row();
         t.add(oppLabel);
         t.row();
-        t.add(numberOfOpponents);
+        t.add(numberOfOpponents).padBottom(15);
+        t.row();
+        t.add(difficultyLabel);
+        t.row();
+        t.add(difficulty);
         t.bottom();
 
         return t;
@@ -82,8 +89,9 @@ public class SinglePlayerMenuScreen extends GUIScreen {
                 System .out.println("Number of Laps: " + stringToInt(laps.getSelected().toString()));
                 System.out.println("Vehicle chosen: " + vehicleSelector.getImageName());
                 System.out.println("Map chosen: " + mapSelector.getImageName());
-                listener.setUpRace(vehicleSelector.getImageName(),mapSelector.getImageName(),stringToInt(laps.getSelected().toString())
-                        ,stringToInt(numberOfOpponents.getSelected().toString()));
+                System.out.println("Difficulty chosen: " + difficulty.getSelected());
+                listener.setUpRace(vehicleSelector.getImageName(),mapSelector.getImageName(),difficulty.getSelected(),
+                        stringToInt(laps.getSelected().toString()),stringToInt(numberOfOpponents.getSelected().toString()));
 
             }
         });

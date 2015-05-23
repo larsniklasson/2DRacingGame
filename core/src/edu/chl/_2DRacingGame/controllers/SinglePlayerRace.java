@@ -111,7 +111,7 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     }
 
     @Override
-    public void setUpRace(String vehicleType, String mapName, int nbrOflaps, int nbrOfOpponents) {
+    public void setUpRace(String vehicleType, String mapName,String difficulty, int nbrOflaps, int nbrOfOpponents) {
         setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOflaps, this));
 
         Persistor<List<Double>> persistor = new DiskPersistor<>();
