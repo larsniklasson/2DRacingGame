@@ -1,6 +1,5 @@
 package edu.chl._2DRacingGame.models;
 
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import org.junit.Test;
 import persistance.DummyPersistor;
@@ -27,7 +26,6 @@ public class SettingsTest {
         Settings savedSettings = new Settings(persistor);
         savedSettings.load();
         assertEquals("bar", savedSettings.getSetting("foo"));
-
     }
 
     @Test

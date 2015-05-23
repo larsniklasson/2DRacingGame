@@ -16,13 +16,15 @@ import java.util.List;
  */
 public class DiskPersistor<T> implements Persistor<T> {
 
+    private static final String SUFFIX = ".json";
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void persist(T instance, String persistKey) {
         String serializedInstance = new Gson().toJson(instance);
-        FileHandle fileHandle = Gdx.files.local(persistKey);
+        FileHandle fileHandle = Gdx.files.local(persistKey + SUFFIX);
         fileHandle.writeString(serializedInstance, false);
     }
 
@@ -31,7 +33,7 @@ public class DiskPersistor<T> implements Persistor<T> {
      */
     @Override
     public T getPersistedInstance(String persistKey, Type originType) throws PersistorException {
-        FileHandle persistedInstance = Gdx.files.local(persistKey);
+        FileHandle persistedInstance = Gdx.files.local(persistKey + SUFFIX);
         List<Double> scores = new ArrayList<>();
         try {
             String serialized = persistedInstance.readString();
