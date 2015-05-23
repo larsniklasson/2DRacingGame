@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Daniel Sunnerberg
  */
-public class SinglePlayerRace extends RaceController implements setUpListener{
+public class SinglePlayerRace extends RaceController implements SetUpListener{
 
     private MapScores mapScores;
 

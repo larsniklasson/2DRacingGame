@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame._2DRacingGame;
-import edu.chl._2DRacingGame.controllers.setUpListener;
+import edu.chl._2DRacingGame.controllers.SetUpListener;
 import javafx.scene.control.RadioButton;
 
 
@@ -24,9 +24,9 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     private ScrollTable mapSelector;
     private ScrollTable vehicleSelector;
     private Table mainTable;
-    private setUpListener listener;
+    private SetUpListener listener;
 
-    public SinglePlayerMenuScreen(setUpListener listener) {
+    public SinglePlayerMenuScreen(SetUpListener listener) {
         this.listener = listener;
         mainTable = new Table();
         mapSelector = new ScrollTable(Assets.mapArray, "map");
