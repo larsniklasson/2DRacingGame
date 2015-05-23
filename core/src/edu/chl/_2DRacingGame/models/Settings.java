@@ -90,8 +90,8 @@ public class Settings extends HashMap<String, String> implements Persistable {
      *
      * @param key
      */
-    public void getSetting(String key) {
-        get(key);
+    public String getSetting(String key) {
+        return get(key);
     }
 
 }
