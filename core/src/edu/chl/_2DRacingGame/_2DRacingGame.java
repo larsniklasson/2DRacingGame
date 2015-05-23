@@ -6,30 +6,34 @@ import edu.chl._2DRacingGame.controllers.GameController;
 import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.RaceController;
 import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
+import edu.chl._2DRacingGame.models.Settings;
+import edu.chl._2DRacingGame.persistance.DiskPersistor;
+import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.awt.*;
+import java.util.Map;
 
-
+/**
+ * The absolute starting point for the application.
+ * Responsible for displaying the correct screen, storing settings etc.
+ */
 public class _2DRacingGame extends Game implements GameController, MainMenuListener, OptionsScreenListener {
 
-    // TODO
-    private final boolean useMultiplayer = false;
-
+    private Settings settings;
     private RaceController raceController;
 
     @Override
     public void create() {
-
         Gdx.app.log("_2DRacingGame", "created");
         Assets.load();
+
+        Persistor<Map<String, String>> persistor = new DiskPersistor<>();
+        settings = new Settings(persistor);
+        settings.load();
+
         displayStartMenu();
-        if (useMultiplayer) {
-            startMultiplayer();
-        } else {
-            startSinglePlayer();
-        }
     }
 
     private void startSinglePlayer() {
@@ -48,7 +52,9 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
     @Override
     public void dispose() {
-        raceController.dispose();
+        if (raceController != null) {
+            raceController.dispose();
+        }
     }
 
     @Override
@@ -57,7 +63,13 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     }
 
     @Override
+    public Settings getSettings() {
+        return settings;
+    }
+
+    @Override
     public void applyNewOptions(float sound, Boolean fullscreen) {
+        // TODO use this.settings
         System.out.println("Sound set to: " + sound);
         System.out.println("Fullscreen set to: " + fullscreen);
 
