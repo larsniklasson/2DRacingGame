@@ -111,8 +111,8 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     }
 
     @Override
-    public void setUpRace(String vehicleType, String mapName,String difficulty, int nbrOflaps, int nbrOfOpponents) {
-        setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOflaps, this));
+    public void setUpRace(String vehicleType, String mapName,String difficulty, int nbrOfLaps, int nbrOfOpponents) {
+        setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOfLaps, this));
 
         Persistor<List<Double>> persistor = new DiskPersistor<>();
         mapScores = new MapScores(getMap(), getMode(), persistor);
@@ -148,8 +148,10 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
     }
 
     private GameMap mapSetter(String mapName) {
-        return GameMap.PLACEHOLDER_MAP;
+        if(mapName.equals("PLACEHOLDER_MAP"))
+            return GameMap.PLACEHOLDER_MAP;
+        //Andra fler if för andra maps
 
-        //throw new IllegalArgumentException("Found no matching map.");
+        throw new IllegalArgumentException("Found no matching map.");
     }
 }
