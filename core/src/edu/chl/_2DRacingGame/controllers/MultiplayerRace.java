@@ -9,6 +9,7 @@ import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
+import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -27,9 +28,6 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
 
-    private String chosenVehicle;
-    private String chosenMap;
-
     /**
      * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
      *
@@ -39,14 +37,12 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         super(gameController);
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void setUp() {
         gameController.setScreen(new MultipPlayerMenuScreen(this));
-
     }
 
     /**
@@ -159,15 +155,18 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     @Override
     public void startMultiplayerRace(String chosenVehicle, String chosenMap) {
-        setChosenVehicle(chosenVehicle);
-        setChosenMap(chosenMap);
-
-        setRaceSettings();
+        setRaceSettings(chosenVehicle, chosenMap);
 
         gameController.setScreen(new SearchingForPlayerScreen(this));
 
-        new MultiplayerSetupController(getPlayer(), getMap(), this).findRace();
+        Settings settings = gameController.getSettings();
+        System.out.println(settings == null);
+        String apiKey = settings.getSetting("APPWARP_API_KEY");
+        String secretKey = settings.getSetting("APPWARP_SECRET_KEY");
 
+        MultiplayerSetupController multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, this);
+        multiplayerSetupController.setPreferences(getPlayer(), getMap());
+        multiplayerSetupController.findRace();
     }
 
     @Override
@@ -178,31 +177,13 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void cancelSearch() {
         System.out.print("race cancelled");
-
     }
 
-    public void setRaceSettings(){
+    private void setRaceSettings(String chosenVehicle, String chosenMap){
         setRaceProperties(GameMap.valueOf(chosenMap), new TimeTrial(2, this));
 
         WheeledVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
         getPlayer().setVehicle(vehicle);
-    }
-
-    public String getChosenVehicle() {
-        return chosenVehicle;
-    }
-
-    public void setChosenVehicle(String chosenVehicle) {
-        this.chosenVehicle = chosenVehicle;
-    }
-
-
-    public String getChosenMap() {
-        return chosenMap;
-    }
-
-    public void setChosenMap(String chosenMap) {
-        this.chosenMap = chosenMap;
     }
 
 }

@@ -25,9 +25,6 @@ import java.util.*;
  */
 class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
 
-    private static final String API_KEY = "1b1136c934963a62964ccdd973e52b476f3977a743451d54c4f5d427d573a517";
-    private static final String SECRET_KEY = "a641f46a9b4ce012d502ae86d235de8aa5445c8fa6d16fd76b9ea0d494ea1327";
-
     /**
      * We have, for now, decided that a multiplayer race will only have two players.
      */
@@ -36,7 +33,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     /**
      * Player controlled by our client.
      */
-    private final Player player;
+    private Player player;
 
     /**
      * Players in the room; including our player if we've successfully joined the room.
@@ -46,7 +43,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     /**
      * We want to find other players who want to play the same map
      */
-    private final GameMap map;
+    private GameMap map;
 
     private String roomId = null;
 
@@ -58,16 +55,14 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     /**
      * Connects to AppWarp-servers and prepares the instance to be able to find opponents.
      *
-     * @param player Our clients player
-     * @param map Map to search opponents for
+     * @param appWarpApiKey API key for the AppWarp-API
+     * @param appWarpSecretKeyPlayer Secret key for the AppWarp-API
      * @param listener Listener to be notified when related events occur
      */
-    public MultiplayerSetupController(Player player, GameMap map, MultiplayerSetupListener listener) {
-        this.player = player;
-        this.map = map;
+    public MultiplayerSetupController(String appWarpApiKey, String appWarpSecretKeyPlayer, MultiplayerSetupListener listener) {
         this.listener = listener;
 
-        warpClient = getWarpInstance();
+        warpClient = getWarpInstance(appWarpApiKey, appWarpSecretKeyPlayer);
         if (warpClient == null) {
             return;
         }
@@ -84,9 +79,9 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         warpClient.addNotificationListener(notificationAdapter);
     }
 
-    private WarpClient getWarpInstance() {
+    private WarpClient getWarpInstance(String apiKey, String secretKey) {
         try {
-            WarpClient.initialize(API_KEY, SECRET_KEY);
+            WarpClient.initialize(apiKey, secretKey);
             return WarpClient.getInstance();
         } catch (Exception e) {
             // getInstance doesn't throw an exception but Exception, hence
@@ -98,10 +93,25 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     /**
+     * Sets the preferences for the room to search for.
+     *
+     * @param player our clients player
+     * @param map the map the player wants to play
+     */
+    public void setPreferences(Player player, GameMap map) {
+        this.player = player;
+        this.map = map;
+    }
+
+    /**
      * Finds a room with a suitable number of opponents.
      * If none are found, a room will be created while waiting for an opponent.
      */
     public void findRace() {
+        if (player == null || map == null) {
+            throw new IllegalStateException("No preferences set");
+        }
+
         warpClient.connectWithUserName(player.getUserName());
     }
 
