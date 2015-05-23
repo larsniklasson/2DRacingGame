@@ -120,11 +120,23 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
 
         //TODO gör det möjligt att välja svårighetsgrad med meny
         Difficulty d = Difficulty.getRandomDifficulty();
-        createAIOpponents(nbrOfOpponents, d);
+        createAIOpponents(nbrOfOpponents, setDifficulty(difficulty));
 
         Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), vehicleType, 1);
         getPlayer().setVehicle(vehicle);
         startRace();
+    }
+
+    private Difficulty setDifficulty(String d) {
+        if(d.equals("Easy"))
+            return Difficulty.Easy;
+        else if(d.equals("Medium"))
+            return Difficulty.Medium;
+        else if (d.equals("Hard"))
+            return Difficulty.Hard;
+        else
+            throw new IllegalArgumentException("Found no matching Difficulty");
+
     }
 
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
