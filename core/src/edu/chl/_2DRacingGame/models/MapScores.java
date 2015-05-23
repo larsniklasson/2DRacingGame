@@ -1,8 +1,8 @@
 package edu.chl._2DRacingGame.models;
 
-import com.badlogic.gdx.Gdx;
 import com.google.gson.reflect.TypeToken;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.persistance.Persistable;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.persistance.PersistorException;
 
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Daniel Sunnerberg
  */
-public class MapScores {
+public class MapScores implements Persistable {
 
     private final GameMap map;
     private final GameMode mode;
@@ -43,7 +43,8 @@ public class MapScores {
      * To retrieve the found scores:
      * @see MapScores#getScores()
      */
-    public void findSavedScores() {
+    @Override
+    public void load() {
         List<Double> scores;
         try {
             Type listType = new TypeToken<ArrayList<Double>>() {}.getType();
@@ -64,8 +65,9 @@ public class MapScores {
      * Saves the scores saved for the map/mode combination, making them available for later retrieval.
      * Any existing saved scores will be replaced.
      *
-     * @see MapScores#findSavedScores()
+     * @see MapScores#load()
      */
+    @Override
     public void save() {
         if (scores == null) {
             throw new IllegalStateException("No scores loaded. Try to find scores before saving them.");
@@ -76,14 +78,14 @@ public class MapScores {
     }
 
     /**
-     * Returns the scores found by #findSavedScores().
+     * Returns the scores found by #load().
      *
-     * @return scores previously found by #findInstance()
-     * @see MapScores#findSavedScores()
+     * @return scores previously found by #load()
+     * @see MapScores#load()
      */
     public ScoreList getScores() {
         if (scores == null) {
-            throw new IllegalStateException("No scores has been set. You need to find one using #findSavedScores.");
+            throw new IllegalStateException("No scores has been set. You need to find one using #load.");
         }
 
         return scores;

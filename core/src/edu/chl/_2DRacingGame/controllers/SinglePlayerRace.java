@@ -116,7 +116,7 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
 
         Persistor<List<Double>> persistor = new DiskPersistor<>();
         mapScores = new MapScores(getMap(), getMode(), persistor);
-        mapScores.findSavedScores();
+        mapScores.load();
 
         //TODO gör det möjligt att välja svårighetsgrad med meny
         Difficulty d = Difficulty.getRandomDifficulty();

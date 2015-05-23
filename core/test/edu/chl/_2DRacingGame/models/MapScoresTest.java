@@ -1,12 +1,10 @@
 package edu.chl._2DRacingGame.models;
 
-import com.badlogic.gdx.Game;
 import com.google.common.collect.Lists;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import persistance.DummyPersistor;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class MapScoresTest {
 
     @Test
     public void testFindSavedScores() throws Exception {
-        mapScores.findSavedScores();
+        mapScores.load();
         assertTrue("No previous save should yield empty scores", mapScores.getScores().isEmpty());
 
         ArrayList<Double> values = Lists.newArrayList(5d, 42d, 1d, 9d);
@@ -49,7 +47,7 @@ public class MapScoresTest {
         mapScores.save();
 
         MapScores persistedScores = new MapScores(gameMap, gameMode, listPersistor);
-        persistedScores.findSavedScores();
+        persistedScores.load();
         assertEquals("Should be able to find previous sorted scores", sortedValues, persistedScores.getScores());
 
         mapScores.getScores().add(0.1d);
@@ -57,7 +55,7 @@ public class MapScoresTest {
         mapScores.save();
 
         persistedScores = new MapScores(gameMap, gameMode, listPersistor);
-        persistedScores.findSavedScores();
+        persistedScores.load();
         assertEquals("Should be able to save multiple times", sortedValues, persistedScores.getScores());
         assertEquals("Highscore shouldn't be altered by save", 0.1d, persistedScores.getScores().getHighScore(), 0);
     }
