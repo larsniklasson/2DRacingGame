@@ -127,6 +127,11 @@ public class SinglePlayerRace extends RaceController implements setUpListener{
         startRace();
     }
 
+    @Override
+    public void displayMainMenu() {
+        gameController.displayStartMenu();
+    }
+
     private Difficulty setDifficulty(String d) {
         if(d.equals("Easy"))
             return Difficulty.Easy;
