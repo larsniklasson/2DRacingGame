@@ -12,7 +12,6 @@ import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.screens.*;
 import edu.chl._2DRacingGame.world.GameWorld;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -117,7 +116,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void restartRace() {
         // TODO
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     /**

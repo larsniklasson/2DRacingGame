@@ -60,7 +60,7 @@ public enum CheckpointDirection {
     }
 
     /**
-     * Returns all checkpoints direction found in argument, separated by "|".
+     * Returns all checkpoint directions found in argument, separated by "|".
      *
      * @return
      */
