@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.math.Vector2;
-import jdk.internal.org.objectweb.asm.util.CheckSignatureAdapter;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
