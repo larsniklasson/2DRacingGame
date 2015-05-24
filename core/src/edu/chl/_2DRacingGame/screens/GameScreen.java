@@ -15,7 +15,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
 /**
  * Created by Lars Niklasson on 2015-04-21.
  */
-public class GameScreen implements Screen {
+public class GameScreen extends GUIScreen implements Screen {
 
     private GameWorld world;
     private GameMode gameMode; // TODO this dependency is crazy
@@ -128,7 +128,9 @@ public class GameScreen implements Screen {
     }
 
     private void drawPaused() {
-        spriteBatch.draw(Assets.pauseMenu,centerWidth-Assets.pauseMenu.getWidth()/2 ,0);
+        stage.addActor(new PauseScreen().getPausedScreen());
+        stage.draw();
+        //spriteBatch.draw(Assets.pauseMenu,centerWidth-Assets.pauseMenu.getWidth()/2 ,0);
     }
 
     private void drawRunning(float delta) {
