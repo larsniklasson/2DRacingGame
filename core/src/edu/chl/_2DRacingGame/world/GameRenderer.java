@@ -84,6 +84,7 @@ public class GameRenderer extends Stage {
         
         if(showWayPoints)drawWayPoints();
 
+
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
             Vehicle vehicle = player.getVehicle();
