@@ -28,6 +28,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     private final ScoreBoard scoreBoard = new ScoreBoard();
     private MultiplayerSetupController multiplayerSetupController;
     private SearchingForPlayerScreen searchingForPlayerScreen;
+
     /**
      * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
      *
@@ -103,15 +104,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void connectionError(String message) {
         Gdx.app.error("MultiplayerRace", "Failed to setup multiplayer race. Error message: " + message);
-        /*Gdx.app.postRunnable(() -> {
-            ErrorScreen errorScreen = new ErrorScreen(
-                    "Failed to start multiplayer game",
-                    "Please check your connection and try again.",
-                    this
-            );
-            gameController.setScreen(errorScreen);
-        });*/
-       Gdx.app.postRunnable(() ->{
+        Gdx.app.postRunnable(() -> {
             searchingForPlayerScreen.displayErrorInfo();
         });
     }
@@ -145,12 +138,11 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         player.getActor().addAction(Actions.sequence(Actions.delay(hideDelay), Actions.moveTo(-10, -10, 0)));
     }
 
-
     /**
      * Callback for when an opponent has finished the race.
      *
-     * @param opponent
-     * @param time
+     * @param opponent opponent who finished the race
+     * @param time time it took for the opponent to finish
      */
     @Override
     public void opponentFinished(Player opponent, double time) {
@@ -158,8 +150,14 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         hideVehicle(opponent);
     }
 
+    /**
+     * Finds opponents based on chosen map.
+     *
+     * @param chosenVehicle the chosen vehicle
+     * @param chosenMap the chosen map to find opponents for
+     */
     @Override
-    public void startMultiplayerRace(String chosenVehicle, String chosenMap) {
+    public void findOpponents(String chosenVehicle, String chosenMap) {
         setRaceSettings(chosenVehicle, chosenMap);
 
         searchingForPlayerScreen = new SearchingForPlayerScreen(this);

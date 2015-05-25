@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl._2DRacingGame.Assets;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
 
 /**
  * Created by Victor Christoffersson on 2015-05-19.
@@ -76,7 +75,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
         startButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                listener.startMultiplayerRace(vehicleTable.getImageName(), mapTable.getImageName());
+                listener.findOpponents(vehicleTable.getImageName(), mapTable.getImageName());
             }
         });
 
