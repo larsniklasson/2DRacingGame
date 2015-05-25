@@ -20,3 +20,10 @@ Be aware that Gradle is smart enough to not run the tests twice unless they have
 ## Documentation, RAD, SDD
 Link to RAD, SDD and meeting protocols:
 https://drive.google.com/folderview?id=0BxRJZY1j9wVVflVyM0huMmhwYWRxbURRVnZUSGE5aXZZOW9BYkVOUG5QdHpVT0dqYWZqVDQ&usp=sharing
+
+## Third-party credits
+* Nemo (2015). Car. http://pixabay.com/p-30984/?no_redirect
+* Mohammad Seirafian (2014). Magic carpet. http://commons.wikimedia.org/wiki/File:Beautiful_silk_rug_by_Mohammad_Seirafian,_Isfahan,_Iran.JPG
+* Brian Snelson (2009). Formel 1. http://en.wikipedia.org/wiki/Ferrari_F300#/media/File:1998_F1_car_Ferrari_F300_Goodwood
+* Monster truck. http://upload.wikimedia.org/wikipedia/commons/c/c9/Monster_truck_2.JPG
+* Simon Broen (2008). Motorcycle. http://commons.wikimedia.org/wiki/File:Megelli_Sports_motorcycle.jpg
