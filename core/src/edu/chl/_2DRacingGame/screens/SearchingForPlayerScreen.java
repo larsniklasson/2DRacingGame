@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -17,6 +18,9 @@ public class SearchingForPlayerScreen extends GUIScreen {
     private MultiPlayerMenuListener listener;
 
     private TextButton cancelButton;
+    private TextButton tryAgainButton;
+
+    private Label infoLabel;
 
     public SearchingForPlayerScreen(MultiPlayerMenuListener listener){
         table = new Table();
@@ -35,7 +39,15 @@ public class SearchingForPlayerScreen extends GUIScreen {
     }
 
     public void create(){
-
+        infoLabel = new Label("Searching for player", skin);
+        tryAgainButton = new TextButton("Try again", skin);
+        tryAgainButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.print("Started new search");
+                listener.searchAgain();
+            }
+        });
         cancelButton = new TextButton("cancel", skin);
         cancelButton.addListener(new ChangeListener() {
             @Override
@@ -43,7 +55,8 @@ public class SearchingForPlayerScreen extends GUIScreen {
                 listener.cancelSearch();
             }
         });
-
+        table.add(infoLabel);
+        table.row();
         table.add(cancelButton);
 
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -68,5 +81,17 @@ public class SearchingForPlayerScreen extends GUIScreen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+    }
+
+    public void displayErrorInfo(){
+        table.reset();
+        infoLabel.setText("Failed to start multiplayer game, please check your connection and try again.");
+        table.add(infoLabel).colspan(2);
+        table.row();
+        table.add(cancelButton);
+        table.add(tryAgainButton);
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.debug();
+
     }
 }

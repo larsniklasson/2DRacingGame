@@ -72,6 +72,7 @@ public class OptionsMenuScreen extends GUIScreen {
 
         soundLabel = new Label("Sound:",skin);
         soundSlider = new Slider(0, 100, 1, false, skin);
+        soundSlider.setValue(50);
 
         fullscreenCheckBox = new CheckBox("Fullscreen", skin);
 

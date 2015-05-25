@@ -7,4 +7,5 @@ public interface MultiPlayerMenuListener {
     void startMultiplayerRace(String vehicle, String map);
     void displayMainMenuScreen();
     void cancelSearch();
+    void searchAgain();
 }

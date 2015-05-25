@@ -27,7 +27,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
     private MultiplayerSetupController multiplayerSetupController;
-
+    private SearchingForPlayerScreen searchingForPlayerScreen;
     /**
      * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
      *
@@ -103,13 +103,16 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void connectionError(String message) {
         Gdx.app.error("MultiplayerRace", "Failed to setup multiplayer race. Error message: " + message);
-        Gdx.app.postRunnable(() -> {
+        /*Gdx.app.postRunnable(() -> {
             ErrorScreen errorScreen = new ErrorScreen(
                     "Failed to start multiplayer game",
                     "Please check your connection and try again.",
                     this
             );
             gameController.setScreen(errorScreen);
+        });*/
+       Gdx.app.postRunnable(() ->{
+            searchingForPlayerScreen.displayErrorInfo();
         });
     }
 
@@ -159,7 +162,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     public void startMultiplayerRace(String chosenVehicle, String chosenMap) {
         setRaceSettings(chosenVehicle, chosenMap);
 
-        gameController.setScreen(new SearchingForPlayerScreen(this));
+        searchingForPlayerScreen = new SearchingForPlayerScreen(this);
+        gameController.setScreen(searchingForPlayerScreen);
 
         Settings settings = gameController.getSettings();
         System.out.println(settings == null);
@@ -186,6 +190,11 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         gameController.setScreen(new MultipPlayerMenuScreen(this));
         Gdx.app.log("Search cancelled by user", "Returning to menu");
 
+    }
+
+    @Override
+    public void searchAgain() {
+        multiplayerSetupController.findRace();
     }
 
     private void setRaceSettings(String chosenVehicle, String chosenMap){
