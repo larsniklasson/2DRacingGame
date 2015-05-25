@@ -26,15 +26,9 @@ import java.util.*;
 class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
 
     /**
-     * We have, for now, decided that a multiplayer race will only have two players.
-     */
-    private static final int RACE_SIZE = 2;
-
-    /**
      * Player controlled by our client.
      */
     private Player player;
-
     /**
      * Players in the room; including our player if we've successfully joined the room.
      */
@@ -46,6 +40,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     private GameMap map;
 
     private String roomId = null;
+    private final int desiredOpponents;
 
     private final WarpClient warpClient;
 
@@ -59,7 +54,8 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
      * @param appWarpSecretKeyPlayer Secret key for the AppWarp-API
      * @param listener Listener to be notified when related events occur
      */
-    public MultiplayerSetupController(String appWarpApiKey, String appWarpSecretKeyPlayer, MultiplayerSetupListener listener) {
+    public MultiplayerSetupController(String appWarpApiKey, String appWarpSecretKeyPlayer, int desiredOpponents, MultiplayerSetupListener listener) {
+        this.desiredOpponents = desiredOpponents;
         this.listener = listener;
 
         warpClient = getWarpInstance(appWarpApiKey, appWarpSecretKeyPlayer);
@@ -184,7 +180,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
      */
     @Override
     public void onGetLiveRoomInfoDone(LiveRoomInfoEvent e) {
-        boolean raceIsFull = e.getJoinedUsers().length == RACE_SIZE;
+        boolean raceIsFull = e.getJoinedUsers().length == desiredOpponents;
         HashMap<String, Object> roomProperties = e.getProperties();
         if (! roomProperties.get("hostUserName").equals(player.getUserName())) {
             Gdx.app.log("MultiplayerSetupController", "Updating room data to include our player.");
@@ -227,7 +223,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         String roomName = "quickrace-" + userName;
         // Create the room. The listener "onCreateRoomDone" will then subscribe to the room
-        warpClient.createRoom(roomName, userName, RACE_SIZE, data);
+        warpClient.createRoom(roomName, userName, desiredOpponents, data);
     }
 
     private void removeClientListeners() {
@@ -277,7 +273,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
         roomPlayers = getPlayersFromJson(playersJson);
-        if (roomPlayers.size() == RACE_SIZE) {
+        if (roomPlayers.size() == desiredOpponents) {
             raceReady();
         }
     }

@@ -167,7 +167,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         System.out.println(settings == null);
         String apiKey = settings.getSetting("APPWARP_API_KEY");
         String secretKey = settings.getSetting("APPWARP_SECRET_KEY");
-        multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, this);
+        int desiredOpponents = 2; // Should probably be chosen through UI in the future
+        multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, desiredOpponents, this);
         multiplayerSetupController.setPreferences(getPlayer(), getMap());
         multiplayerSetupController.findRace();
     }
