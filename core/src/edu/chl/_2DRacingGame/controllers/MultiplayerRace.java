@@ -102,12 +102,14 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     @Override
     public void connectionError(String message) {
         Gdx.app.error("MultiplayerRace", "Failed to setup multiplayer race. Error message: " + message);
-        ErrorScreen errorScreen = new ErrorScreen(
-            "Failed to start multiplayer game",
-            "Please check your connection and try again.",
-            this
-        );
-        gameController.setScreen(errorScreen);
+        Gdx.app.postRunnable(() -> {
+            ErrorScreen errorScreen = new ErrorScreen(
+                    "Failed to start multiplayer game",
+                    "Please check your connection and try again.",
+                    this
+            );
+            gameController.setScreen(errorScreen);
+        });
     }
 
     /**
