@@ -51,12 +51,6 @@ public abstract class GameMode implements LapListener {
         screenTexts.add(text);
     }
 
-    /**
-     * Requests that all needed ScreenTexts are updated. Likely called before
-     * drawing them on the screen.
-     */
-    public abstract void syncTexts();
-
     public List<ScreenText> getScreenTexts() {
         return screenTexts;
     }

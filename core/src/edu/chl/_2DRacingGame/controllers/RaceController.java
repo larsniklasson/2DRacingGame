@@ -52,6 +52,7 @@ public abstract class RaceController implements RaceListener, Disposable {
         }));
 
         screen = new GameScreen(world, mode);
+        screen.addScreenTexts(mode.getScreenTexts());
     }
 
     /**
@@ -100,7 +101,6 @@ public abstract class RaceController implements RaceListener, Disposable {
      * Restarts the race.
      */
     public abstract void restartRace();
-
 
     /**
      * Disposes all resources for the actual controller.

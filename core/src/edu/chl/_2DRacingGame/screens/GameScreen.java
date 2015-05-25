@@ -9,8 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.models.ScreenText;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
+
+import java.util.List;
 
 /**
  * Created by Lars Niklasson on 2015-04-21.
@@ -42,7 +45,7 @@ public class GameScreen extends GUIScreen implements Screen {
     public GameScreen(GameWorld world, GameMode mode) {
         this.world = world;
         this.gameMode = mode;
-        renderer = new GameRenderer(world, mode);
+        renderer = new GameRenderer(world);
 
         state = State.GAME_RUNNING;
         touchPoint = new Vector3();
@@ -137,6 +140,10 @@ public class GameScreen extends GUIScreen implements Screen {
         renderer.render();
         renderer.draw();
         renderer.act(delta);
+    }
+
+    public void addScreenTexts(List<ScreenText> texts) {
+        renderer.addScreenTexts(texts);
     }
 
     @Override

@@ -15,12 +15,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
+import javafx.stage.Screen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class responsible for drawing the game to the screen.
@@ -32,8 +35,6 @@ public class GameRenderer extends Stage {
     private boolean showWayPoints = true;
 
     private final GameWorld gameWorld;
-    private final GameMode gameMode;
-
     private final SpriteBatch batch;
     private final BitmapFont font;
 
@@ -41,14 +42,14 @@ public class GameRenderer extends Stage {
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
 
+    private List<ScreenText> screenTexts = new ArrayList<>();
+
     /**
      *
      * @param world The GameWorld which should be drawn.
-     * @param gameMode The GameMode used.
      */
-    public GameRenderer(GameWorld world, GameMode gameMode) {
+    public GameRenderer(GameWorld world) {
         this.gameWorld = world;
-        this.gameMode = gameMode;
         font = new BitmapFont();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
 
@@ -80,10 +81,8 @@ public class GameRenderer extends Stage {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
         if(showDebug) debugRenderer.render(gameWorld.getb2World(), camera.combined.cpy().scale(GameWorld.PIXELS_PER_METER, GameWorld.PIXELS_PER_METER, 0));
-        
-        
-        if(showWayPoints)drawWayPoints();
 
+        if(showWayPoints) drawWayPoints();
 
         batch.begin();
         for (Player player : gameWorld.getPlayers()) {
@@ -136,9 +135,13 @@ public class GameRenderer extends Stage {
 
     }
 
+    public void addScreenTexts(List<ScreenText> texts) {
+        screenTexts.addAll(texts);
+    }
+
     private void drawScreenTexts() {
-        gameMode.syncTexts();
-        for (ScreenText text : gameMode.getScreenTexts()) {
+        for (ScreenText text : screenTexts) {
+            text.syncText();
             font.setColor(text.getColor());
             font.draw(batch, text.getText(), text.getX(), text.getY());
         }

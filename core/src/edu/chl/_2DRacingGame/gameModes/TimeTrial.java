@@ -26,19 +26,16 @@ public class TimeTrial extends GameMode {
         currentRaceTimeText = new ScreenText(new Vector2(1200, 655));
         addScreenText(currentRaceTimeText);
 
-        syncTexts();
+        setupTextSync();
     }
 
-    @Override
-    public void syncTexts() {
-        currentLapText.setText(String.format("Lap %d/%d", currentLap, lapGoal));
-        currentRaceTimeText.setText(getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d + "s");
+    private void setupTextSync() {
+        currentLapText.setSyncer(() -> String.format("Lap %d/%d", currentLap, lapGoal));
+        currentRaceTimeText.setSyncer(() -> getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d + "s");
     }
 
     @Override
     public void lap() {
-        syncTexts();
-
         if (currentLap == lapGoal) {
             getStopWatch().stop();
             double elapsedTime = getStopWatch().elapsed(TimeUnit.MILLISECONDS) / 1000d;
