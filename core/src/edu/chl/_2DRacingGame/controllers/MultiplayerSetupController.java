@@ -245,6 +245,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         removeClientListeners();
         warpClient.disconnect();
+        Gdx.app.log("MultiplayerSetupController", "Disconnecting from server");
     }
 
     /**

@@ -26,6 +26,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
+    private MultiplayerSetupController multiplayerSetupController;
 
     /**
      * Creates a new MultiplayerRace instance which bases itself on the specified gameController.
@@ -164,8 +165,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         System.out.println(settings == null);
         String apiKey = settings.getSetting("APPWARP_API_KEY");
         String secretKey = settings.getSetting("APPWARP_SECRET_KEY");
-
-        MultiplayerSetupController multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, this);
+        multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, this);
         multiplayerSetupController.setPreferences(getPlayer(), getMap());
         multiplayerSetupController.findRace();
     }
@@ -177,7 +177,15 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     @Override
     public void cancelSearch() {
-        System.out.print("race cancelled");
+        if(multiplayerSetupController != null){
+            multiplayerSetupController.disconnect();
+        }
+        if(worldSyncer != null) {
+            worldSyncer.disconnect();
+        }
+        gameController.setScreen(new MultipPlayerMenuScreen(this));
+        Gdx.app.log("Search cancelled by user", "Returning to menu");
+
     }
 
     private void setRaceSettings(String chosenVehicle, String chosenMap){
