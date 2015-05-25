@@ -26,7 +26,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();
-    private MultiplayerSetupController multiplayerSetupController;
+    private MultiplayerRaceFinder multiplayerRaceFinder;
     private SearchingForPlayerScreen searchingForPlayerScreen;
 
     /**
@@ -168,9 +168,9 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
         String apiKey = settings.getSetting("APPWARP_API_KEY");
         String secretKey = settings.getSetting("APPWARP_SECRET_KEY");
         int desiredOpponents = 2; // Should probably be chosen through UI in the future
-        multiplayerSetupController = new MultiplayerSetupController(apiKey, secretKey, desiredOpponents, this);
-        multiplayerSetupController.setPreferences(getPlayer(), getMap());
-        multiplayerSetupController.findRace();
+        multiplayerRaceFinder = new MultiplayerRaceFinder(apiKey, secretKey, desiredOpponents, this);
+        multiplayerRaceFinder.setPreferences(getPlayer(), getMap());
+        multiplayerRaceFinder.findRace();
     }
 
     @Override
@@ -180,8 +180,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     @Override
     public void cancelSearch() {
-        if(multiplayerSetupController != null){
-            multiplayerSetupController.disconnect();
+        if(multiplayerRaceFinder != null){
+            multiplayerRaceFinder.disconnect();
         }
         if(worldSyncer != null) {
             worldSyncer.disconnect();
@@ -193,7 +193,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
 
     @Override
     public void searchAgain() {
-        multiplayerSetupController.findRace();
+        multiplayerRaceFinder.findRace();
     }
 
     private void setRaceSettings(String chosenVehicle, String chosenMap){

@@ -23,7 +23,7 @@ import java.util.*;
  *
  * @author Daniel Sunnerberg
  */
-class MultiplayerSetupController implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
+class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
 
     /**
      * Player controlled by our client.
@@ -54,7 +54,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
      * @param appWarpSecretKeyPlayer Secret key for the AppWarp-API
      * @param listener Listener to be notified when related events occur
      */
-    public MultiplayerSetupController(String appWarpApiKey, String appWarpSecretKeyPlayer, int desiredOpponents, MultiplayerSetupListener listener) {
+    public MultiplayerRaceFinder(String appWarpApiKey, String appWarpSecretKeyPlayer, int desiredOpponents, MultiplayerSetupListener listener) {
         this.desiredOpponents = desiredOpponents;
         this.listener = listener;
 
@@ -69,7 +69,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         notificationAdapter = new WarpClientNotificationAdapter() {
             @Override
             public void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
-                MultiplayerSetupController.this.onUserChangeRoomProperty(roomData, sender, properties, lockedPropertiesTable);
+                MultiplayerRaceFinder.this.onUserChangeRoomProperty(roomData, sender, properties, lockedPropertiesTable);
             }
         };
         warpClient.addNotificationListener(notificationAdapter);
@@ -119,7 +119,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     @Override
     public void onConnectDone(ConnectEvent connectEvent) {
         if (connectEvent.getResult() == WarpResponseResultCode.SUCCESS) {
-            Gdx.app.log("MultiplayerSetupController", "Successfully connected to AppWarp-servers.");
+            Gdx.app.log("MultiplayerRaceFinder", "Successfully connected to AppWarp-servers.");
             joinRoom();
         } else {
             listener.connectionError("Failed to connect to AppWarp: " + connectEvent.getResult());
@@ -153,7 +153,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     private void successfullyJoinedRoom(String roomId) {
-        Gdx.app.log("MultiplayerSetupController", "Joined room. Subscribing to it.");
+        Gdx.app.log("MultiplayerRaceFinder", "Joined room. Subscribing to it.");
         this.roomId = roomId;
         warpClient.subscribeRoom(roomId);
         warpClient.getLiveRoomInfo(roomId);
@@ -183,7 +183,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
         boolean raceIsFull = e.getJoinedUsers().length == desiredOpponents;
         HashMap<String, Object> roomProperties = e.getProperties();
         if (! roomProperties.get("hostUserName").equals(player.getUserName())) {
-            Gdx.app.log("MultiplayerSetupController", "Updating room data to include our player.");
+            Gdx.app.log("MultiplayerRaceFinder", "Updating room data to include our player.");
 
             // We joined a room which we didn't create, add our Player-information to it.
             String playersJson = (String) roomProperties.get("players");
@@ -196,7 +196,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
             // If we're the last player who is supposed to join, make sure to set the room-status to started
             // to prevent more players from joining
             if (raceIsFull) {
-                Gdx.app.log("MultiplayerSetupController", "Locking the room to prevent more players from joining");
+                Gdx.app.log("MultiplayerRaceFinder", "Locking the room to prevent more players from joining");
                 roomProperties.put("started", true);
             }
 
@@ -208,7 +208,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     private void createEmptyRoom() {
-        Gdx.app.log("MultiplayerSetupController", "Found no room, creating a new one.");
+        Gdx.app.log("MultiplayerRaceFinder", "Found no room, creating a new one.");
         String userName = player.getUserName();
 
         HashMap<String, Object> data = new HashMap<>();
@@ -241,7 +241,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
 
         removeClientListeners();
         warpClient.disconnect();
-        Gdx.app.log("MultiplayerSetupController", "Disconnecting from server");
+        Gdx.app.log("MultiplayerRaceFinder", "Disconnecting from server");
     }
 
     /**
@@ -255,7 +255,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
     }
 
     private void raceReady() {
-        Gdx.app.log("MultiplayerSetupController", "Race is ready");
+        Gdx.app.log("MultiplayerRaceFinder", "Race is ready");
         removeClientListeners();
         listener.raceReady(roomId, warpClient, roomPlayers);
     }
@@ -270,7 +270,7 @@ class MultiplayerSetupController implements RoomRequestListener, ZoneRequestList
      * @param lockedPropertiesTable
      */
     private void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
-        Gdx.app.log("MultiplayerSetupController", "Recieved room update with player data.");
+        Gdx.app.log("MultiplayerRaceFinder", "Recieved room update with player data.");
         String playersJson = (String) properties.get("players");
         roomPlayers = getPlayersFromJson(playersJson);
         if (roomPlayers.size() == desiredOpponents) {
