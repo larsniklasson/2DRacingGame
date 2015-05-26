@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import edu.chl._2DRacingGame.controllers.MainMenuDisplayer;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;

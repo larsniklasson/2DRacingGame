@@ -10,11 +10,10 @@ import edu.chl._2DRacingGame.world.GameWorld;
 
 /**
  * Serves as a controller-basis for the different race types.
- * TODO remove Gdx.app.thread-ish?
  *
  * @author Daniel Sunnerberg
  */
-public abstract class RaceController implements RaceListener, Disposable {
+public abstract class RaceController implements RaceListener, MainMenuDisplayer, Disposable {
 
     private final Player player;
     private GameMap map;
@@ -28,7 +27,6 @@ public abstract class RaceController implements RaceListener, Disposable {
     public RaceController(GameController gameController) {
         this.gameController = gameController;
         player = new Player();
-
     }
 
     /**
@@ -101,6 +99,14 @@ public abstract class RaceController implements RaceListener, Disposable {
      * Restarts the race.
      */
     public abstract void restartRace();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void displayMainMenu() {
+        gameController.displayStartMenu();
+    }
 
     /**
      * Disposes all resources for the actual controller.

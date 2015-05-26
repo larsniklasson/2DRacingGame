@@ -6,9 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame.Assets;
-import edu.chl._2DRacingGame._2DRacingGame;
 import edu.chl._2DRacingGame.controllers.SetUpListener;
-import javafx.scene.control.RadioButton;
 
 
 /**
@@ -90,8 +88,8 @@ public class SinglePlayerMenuScreen extends GUIScreen {
                 System.out.println("Vehicle chosen: " + vehicleSelector.getImageName());
                 System.out.println("Map chosen: " + mapSelector.getImageName());
                 System.out.println("Difficulty chosen: " + difficulty.getSelected());
-                listener.setUpRace(vehicleSelector.getImageName(),mapSelector.getImageName(),difficulty.getSelected(),
-                        stringToInt(laps.getSelected().toString()),stringToInt(numberOfOpponents.getSelected().toString()));
+                listener.startRace(vehicleSelector.getImageName(), mapSelector.getImageName(), difficulty.getSelected(),
+                        stringToInt(laps.getSelected().toString()), stringToInt(numberOfOpponents.getSelected().toString()));
 
             }
         });

@@ -82,7 +82,7 @@ public class MultipPlayerMenuScreen extends GUIScreen {
         backButton.addListener((new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                listener.displayMainMenuScreen();
+                listener.displayMainMenu();
             }
         }));
         mainTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

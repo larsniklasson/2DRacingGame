@@ -123,11 +123,22 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
      */
     @Override
     public void displayMainMenu() {
+        disconnect();
+        super.displayMainMenu();
+    }
+
+    /**
+     * Disconnects from AppWarp.
+     */
+    private void disconnect() {
         if (worldSyncer != null) {
             getWorld().removeUpdateListener(worldSyncer);
             worldSyncer.disconnect();
         }
-        gameController.displayStartMenu();
+
+        if(multiplayerRaceFinder != null){
+            multiplayerRaceFinder.disconnect();
+        }
     }
 
     private void hideVehicle(Player player) {
@@ -174,21 +185,10 @@ public class MultiplayerRace extends RaceController implements MultiplayerSetupL
     }
 
     @Override
-    public void displayMainMenuScreen() {
-        gameController.displayStartMenu();
-    }
-
-    @Override
     public void cancelSearch() {
-        if(multiplayerRaceFinder != null){
-            multiplayerRaceFinder.disconnect();
-        }
-        if(worldSyncer != null) {
-            worldSyncer.disconnect();
-        }
+        disconnect();
         gameController.setScreen(new MultipPlayerMenuScreen(this));
         Gdx.app.log("Search cancelled by user", "Returning to menu");
-
     }
 
     @Override

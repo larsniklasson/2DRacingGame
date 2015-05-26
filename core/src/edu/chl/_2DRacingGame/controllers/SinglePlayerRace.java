@@ -13,7 +13,6 @@ import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
-import sun.java2d.windows.GDIBlitLoops;
 
 import java.util.List;
 
@@ -21,9 +20,12 @@ import java.util.List;
  * Controls the process surrounding a single player race, such as choosing map/vehicle/...,
  * controlling the logic flow between modules/other controllers, etc.
  *
+ * Be aware that when settings screens/using the world etc, LibGDX expects to be in its own thread.
+ * This can be achieved by using: Gdx.app.postRunnable(...).
+ *
  * @author Daniel Sunnerberg
  */
-public class SinglePlayerRace extends RaceController implements SetUpListener, SinglePlayerFinishedScreenListener{
+public class SinglePlayerRace extends RaceController implements SetUpListener, SinglePlayerFinishedScreenListener {
 
     private MapScores mapScores;
 
@@ -40,34 +42,19 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
         gameController.setScreen(new SinglePlayerMenuScreen(this));
     }
 
-    private void startRace() {
-        getWorld().addPlayer(getPlayer());
-
-        //New player-controlled random vehicle. using player2-controls
-        //Vehicle v = VehicleFactory.createPlayerVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, 2);
-
-        //getWorld().addPlayer(new Player("p2", v));
-
-
-        //testing adding ai-vehicles
-        // TODO extract to separate method and call for it in setUpRace
-
-
-            //OR le epic oneliner
-            //getWorld().addPlayer(new Player("ai " + i, VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, Difficulty.getRandomDifficulty())));
-
-
-        getWorld().spawnPlayers();
-        gameController.setScreen(getScreen());
-    }
-
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void setUp() {
         requestRaceSettings();
+    }
+
+    private void startRace() {
+        getWorld().addPlayer(getPlayer());
+        getWorld().spawnPlayers();
+
+        gameController.setScreen(getScreen());
     }
 
     /**
@@ -110,14 +97,19 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
         Gdx.app.postRunnable(() -> gameController.setScreen(new SinglePlayerFinishedScreen(scores, score, this)));
     }
 
+    /**
+     * Starts a new single player race with the specified options.
+     *
+     * @param vehicleType name of the selected vehicle
+     * @param mapName name of the selected map
+     * @param difficulty selected difficulty of opponents
+     * @param nbrOfLaps how many laps the race consists of
+     * @param nbrOfOpponents how many opponents the player wants
+     */
     @Override
-    public void setUpRace(String vehicleType, String mapName,String difficulty, int nbrOfLaps, int nbrOfOpponents) {
+    public void startRace(String vehicleType, String mapName, String difficulty, int nbrOfLaps, int nbrOfOpponents) {
         setRaceProperties(GameMap.valueOf(mapName), new TimeTrial(nbrOfLaps, this));
-
-        Persistor<List<Double>> persistor = new DiskPersistor<>();
-        mapScores = new MapScores(getMap(), getMode(), persistor);
-        mapScores.load();
-
+        loadSavedScores();
         createAIOpponents(nbrOfOpponents, Difficulty.valueOf(difficulty));
 
         Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), vehicleType, 1);
@@ -125,12 +117,15 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
         startRace();
     }
 
-    @Override
-    public void displayMainMenu() {
-        gameController.displayStartMenu();
+    private void loadSavedScores() {
+        if (getMap() == null || getMode() == null) {
+            throw new IllegalStateException("A map and mode needs to be selected before loading saved scores.");
+        }
+
+        Persistor<List<Double>> persistor = new DiskPersistor<>();
+        mapScores = new MapScores(getMap(), getMode(), persistor);
+        mapScores.load();
     }
-
-
 
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
         for(int i = 0; i < nbrOfOpponents; i ++) {
