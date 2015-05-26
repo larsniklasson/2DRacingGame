@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.controllers.PauseScreenListener;
 
 
 /**
@@ -21,8 +22,10 @@ public class PauseScreen extends GUIScreen {
 
     private Table table;
     private Window window;
+    private PauseScreenListener listener;
 
-    public PauseScreen() {
+    public PauseScreen(PauseScreenListener listener) {
+        this.listener = listener;
         show();
     }
 
@@ -78,7 +81,7 @@ public class PauseScreen extends GUIScreen {
         table.debug();
         window.setResizable(false);
         window.setMovable(false);
-        window.setSize(table.getWidth()/3f, table.getHeight()/1.5f);
+        window.setSize(table.getWidth() / 3f, table.getHeight() / 1.5f);
         window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2 ,stage.getHeight() / 2 - window.getWidth() / 2);
 
         window.add(table);
