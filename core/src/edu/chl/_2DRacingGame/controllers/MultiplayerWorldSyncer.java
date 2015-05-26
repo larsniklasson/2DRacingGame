@@ -45,7 +45,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
      * Assumed lancety in ms between client and server.
      * TODO estimate this on the fly for a more individual and realistic approximation
      */
-    private int ASSUMED_LANCETY = 30;
+    private static final int ASSUMED_LANCETY = 30;
 
     /**
      * The time when the last update was sent.
