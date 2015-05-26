@@ -131,8 +131,8 @@ public class GameScreen extends GUIScreen implements Screen {
     }
 
     private void drawPaused() {
-        stage.addActor(new PauseScreen().getPausedScreen());
-        stage.draw();
+        //stage.addActor(new PauseScreen().getPausedScreen());
+        //stage.draw();
         //spriteBatch.draw(Assets.pauseMenu,centerWidth-Assets.pauseMenu.getWidth()/2 ,0);
     }
 
