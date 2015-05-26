@@ -13,6 +13,7 @@ import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.steering.*;
+import sun.java2d.windows.GDIBlitLoops;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author Daniel Sunnerberg
  */
-public class SinglePlayerRace extends RaceController implements SetUpListener{
+public class SinglePlayerRace extends RaceController implements SetUpListener, SinglePlayerFinishedScreenListener{
 
     private MapScores mapScores;
 
@@ -67,7 +68,6 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
     @Override
     public void setUp() {
         requestRaceSettings();
-
     }
 
     /**
@@ -75,9 +75,12 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
      */
     @Override
     public void restartRace() {
-        // TODO
         requestRaceSettings();
-        startRace();
+    }
+
+    @Override
+    public void exitGame() {
+        Gdx.app.exit();
     }
 
     private void saveScore(double score) {
@@ -103,11 +106,8 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
         } else {
             Gdx.app.log("SinglePlayerRace", "Not a highscore. Current highscore: " + scores.getHighScore());
         }
-        Gdx.app.postRunnable(() -> gameController.setScreen(new SinglePlayerFinishedScreen(scores, score)));
 
-
-        // TODO probably shouldn't restart by default
-        //restartRace();
+        Gdx.app.postRunnable(() -> gameController.setScreen(new SinglePlayerFinishedScreen(scores, score, this)));
     }
 
     @Override
@@ -117,8 +117,6 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
         Persistor<List<Double>> persistor = new DiskPersistor<>();
         mapScores = new MapScores(getMap(), getMode(), persistor);
         mapScores.load();
-
-        //TODO gör det möjligt att välja svårighetsgrad med meny
 
         createAIOpponents(nbrOfOpponents, Difficulty.valueOf(difficulty));
 
@@ -131,6 +129,8 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
     public void displayMainMenu() {
         gameController.displayStartMenu();
     }
+
+
 
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
         for(int i = 0; i < nbrOfOpponents; i ++) {

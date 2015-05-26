@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import edu.chl._2DRacingGame._2DRacingGame;
+import edu.chl._2DRacingGame.controllers.SinglePlayerFinishedScreenListener;
 import edu.chl._2DRacingGame.models.ScoreList;
 
 import javax.xml.soap.Text;
@@ -21,9 +22,12 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
 
     private ScoreList scoreList;
     private double playerScore;
-    public SinglePlayerFinishedScreen(ScoreList scoreList, double playerScore) {
+    private SinglePlayerFinishedScreenListener listener;
+
+    public SinglePlayerFinishedScreen(ScoreList scoreList, double playerScore, SinglePlayerFinishedScreenListener listener) {
         this.scoreList = scoreList;
         this.playerScore = playerScore;
+        this.listener = listener;
     }
 
     @Override
@@ -36,39 +40,31 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         TextButton restartRace = new TextButton("Restart Race", skin, "default");
         TextButton exit = new TextButton("Exit", skin, "default");
         TextButton mainMenu = new TextButton("Main Menu", skin, "default");
-        TextButton newRace = new TextButton("New Race", skin, "default");
-
-        newRace.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-            }
-        });
 
         restartRace.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                listener.restartRace();
             }
         });
 
         mainMenu.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.displayMainMenu();
+                listener.displayMainMenu();
             }
         });
 
         exit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                listener.exitGame();
             }
         });
 
         table.setBounds(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.debug();
-        table.add(raceFinished).padBottom(50);
+        table.add(raceFinished).padBottom(30);
         table.row();
         if(scoreList.isHighScore(playerScore))
             table.add(newHighscore).padBottom(20);
@@ -77,8 +73,6 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         table.add(playerTime).padBottom(20);
         table.row();
         table.add(restartRace).padBottom(30).width(200f).height(30f);
-        table.row();
-        table.add(newRace).padBottom(30).width(200f).height(30f);
         table.row();
         table.add(mainMenu).padBottom(30).width(200f).height(30f);
         table.row();
