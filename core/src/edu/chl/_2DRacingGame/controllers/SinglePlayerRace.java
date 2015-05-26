@@ -65,11 +65,6 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
         requestRaceSettings();
     }
 
-    @Override
-    public void exitGame() {
-        Gdx.app.exit();
-    }
-
     private void saveScore(double score) {
         ScoreList scores = mapScores.getScores();
         scores.addScore(score);

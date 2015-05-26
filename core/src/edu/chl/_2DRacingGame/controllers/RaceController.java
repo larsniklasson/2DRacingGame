@@ -109,6 +109,13 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
     }
 
     /**
+     * Exits the game.
+     */
+    public void exitGame() {
+        gameController.exitGame();
+    }
+
+    /**
      * Disposes all resources for the actual controller.
      * All subclasses should make sure to properly implement this method as needed.
      */

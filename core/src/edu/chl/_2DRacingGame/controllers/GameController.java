@@ -10,4 +10,5 @@ public interface GameController {
     void setScreen(Screen screen);
     void displayStartMenu();
     Settings getSettings();
+    void exitGame();
 }

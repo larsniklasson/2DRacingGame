@@ -4,15 +4,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.controllers.GameController;
 import edu.chl._2DRacingGame.controllers.MultiplayerRace;
-import edu.chl._2DRacingGame.controllers.RaceController;
 import edu.chl._2DRacingGame.controllers.SinglePlayerRace;
 import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.*;
-import edu.chl._2DRacingGame.world.GameWorld;
-
-import java.awt.*;
 import java.util.Map;
 
 /**
@@ -22,7 +18,6 @@ import java.util.Map;
 public class _2DRacingGame extends Game implements GameController, MainMenuListener, OptionsScreenListener {
 
     private Settings settings;
-    private RaceController raceController;
 
     @Override
     public void create() {
@@ -34,27 +29,6 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
         settings.load();
 
         displayStartMenu();
-    }
-
-    private void startSinglePlayer() {
-        raceController = new SinglePlayerRace(this);
-        raceController.setUp();
-    }
-
-    private void startMultiplayer() {
-        raceController = new MultiplayerRace(this);
-        raceController.setUp();
-    }
-
-    public GameWorld getGameWorld() {
-        return raceController.getWorld();
-    }
-
-    @Override
-    public void dispose() {
-        if (raceController != null) {
-            raceController.dispose();
-        }
     }
 
     @Override
@@ -76,15 +50,15 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
         Gdx.graphics.setDisplayMode(1280, 704, fullscreen);
     }
 
-    public void restartRace() {
-        raceController.restartRace();
+    @Override
+    public void displaySinglePlayerMenuScreen() {
+        new SinglePlayerRace(this).setUp();
     }
 
     @Override
-    public void displaySinglePlayerMenuScreen() {startSinglePlayer();}
-
-    @Override
-    public void displayMultiPlayerMenuScreen() { startMultiplayer(); }
+    public void displayMultiPlayerMenuScreen() {
+        new MultiplayerRace(this).setUp();
+    }
 
     @Override
     public void displayOptionsScreen() {setScreen(new OptionsMenuScreen(this));}
