@@ -39,7 +39,13 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     /**
      * Minimum time in ms before next update is sent to opponents.
      */
-    private static final int MIN_UPDATE_WAIT = 250;
+    private static final int MIN_UPDATE_WAIT = 100;
+
+    /**
+     * Assumed lancety in ms between client and server.
+     * TODO estimate this on the fly for a more individual and realistic approximation
+     */
+    private int ASSUMED_LANCETY = 30;
 
     /**
      * The time when the last update was sent.
@@ -170,7 +176,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
             angle -= 2*Math.PI;
         }
 
-        float animationDuration = MIN_UPDATE_WAIT / 1000f;
+        float animationDuration = (MIN_UPDATE_WAIT + ASSUMED_LANCETY) / 1000f;
         Action moveAction = Actions.moveTo(x, y, animationDuration);
 
         Action rotateAction = Actions.rotateTo(angle, animationDuration);
