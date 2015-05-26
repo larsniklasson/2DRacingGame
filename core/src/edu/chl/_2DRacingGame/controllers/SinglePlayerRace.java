@@ -35,7 +35,6 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
     }
 
     private void requestRaceSettings() {
-        // TODO these should be chosen through in-game menu later
         gameController.setScreen(new SinglePlayerMenuScreen(this));
     }
 
@@ -112,15 +111,15 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
 
     @Override
     public void setUpRace(String vehicleType, String mapName,String difficulty, int nbrOfLaps, int nbrOfOpponents) {
-        setRaceProperties(mapSetter(mapName), new TimeTrial(nbrOfLaps, this));
+        setRaceProperties(GameMap.valueOf(mapName), new TimeTrial(nbrOfLaps, this));
 
         Persistor<List<Double>> persistor = new DiskPersistor<>();
         mapScores = new MapScores(getMap(), getMode(), persistor);
         mapScores.load();
 
         //TODO gör det möjligt att välja svårighetsgrad med meny
-        Difficulty d = Difficulty.getRandomDifficulty();
-        createAIOpponents(nbrOfOpponents, setDifficulty(difficulty));
+
+        createAIOpponents(nbrOfOpponents, Difficulty.valueOf(difficulty));
 
         Vehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), vehicleType, 1);
         getPlayer().setVehicle(vehicle);
@@ -132,31 +131,11 @@ public class SinglePlayerRace extends RaceController implements SetUpListener{
         gameController.displayStartMenu();
     }
 
-    private Difficulty setDifficulty(String d) {
-        if(d.equals("Easy"))
-            return Difficulty.Easy;
-        else if(d.equals("Medium"))
-            return Difficulty.Medium;
-        else if (d.equals("Hard"))
-            return Difficulty.Hard;
-        else
-            throw new IllegalArgumentException("Found no matching Difficulty");
-
-    }
-
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
         for(int i = 0; i < nbrOfOpponents; i ++) {
             Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld(), VehicleFactory.RANDOM_VEHICLE, d);
             Player p = new Player("p" + i, ai_v);
             getWorld().addPlayer(p);
         }
-    }
-
-    private GameMap mapSetter(String mapName) {
-        if(mapName.equals("PLACEHOLDER_MAP"))
-            return GameMap.PLACEHOLDER_MAP;
-        //Andra fler if för andra maps
-
-        throw new IllegalArgumentException("Found no matching map.");
     }
 }
