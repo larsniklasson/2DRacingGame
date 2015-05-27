@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class ScrollTable {
 
 
-    private Skin skin;
-    private Table table;
-    private TextButton previousItemButton;
+    final private Skin skin;
+    final private Table table;
+     private TextButton previousItemButton;
     private TextButton nextItemButton;
     private Label itemName;
-    private String s;
-    private ArrayList <Image> imageArray;
+    final private String s;
+    final private ArrayList <Image> imageArray;
     private int imageIndex = 0;
 
     public ScrollTable(ArrayList <Image> images, String typeOfSelector) {

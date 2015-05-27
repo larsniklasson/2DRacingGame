@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame._2DRacingGame;
  */
 public class MainMenuScreen extends GUIScreen {
 
-    private MainMenuListener listener;
+    final private MainMenuListener listener;
 
     public MainMenuScreen(MainMenuListener listener) {
 

@@ -20,9 +20,9 @@ import javax.xml.soap.Text;
 public class SinglePlayerFinishedScreen extends GUIScreen {
 
 
-    private ScoreList scoreList;
-    private double playerScore;
-    private SinglePlayerFinishedScreenListener listener;
+    final private ScoreList scoreList;
+    final private double playerScore;
+    final private SinglePlayerFinishedScreenListener listener;
 
     public SinglePlayerFinishedScreen(ScoreList scoreList, double playerScore, SinglePlayerFinishedScreenListener listener) {
         this.scoreList = scoreList;

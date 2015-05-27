@@ -22,7 +22,7 @@ public class PauseScreen extends GUIScreen {
 
     private Table table;
     private Window window;
-    private PauseScreenListener listener;
+    final private PauseScreenListener listener;
 
     public PauseScreen(PauseScreenListener listener) {
         this.listener = listener;
