@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import edu.chl._2DRacingGame.controllers.GameScreenListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.models.ScreenText;
 import edu.chl._2DRacingGame.world.GameRenderer;
@@ -17,7 +18,6 @@ import java.util.List;
 public class GameScreen extends GUIScreen implements Screen {
 
     private GameWorld world;
-    private GameMode gameMode; // TODO this dependency is crazy
     private GameRenderer renderer;
     private Boolean gameStart;
 
@@ -32,10 +32,12 @@ public class GameScreen extends GUIScreen implements Screen {
     private Texture ctdwnGo;
 
     private SpriteBatch spriteBatch;
+    private GameScreenListener listener;
 
-    public GameScreen(GameWorld world, GameMode mode) {
+
+    public GameScreen(GameWorld world, GameScreenListener listener) {
         this.world = world;
-        this.gameMode = mode;
+        this.listener = listener;
         renderer = new GameRenderer(world);
 
         gameStart = true;
@@ -59,7 +61,6 @@ public class GameScreen extends GUIScreen implements Screen {
     public void show() {
         startTime = System.nanoTime();
         renderer.retrieveActors();
-
         // There is a countdown before the race begins, however the world should still be drawn
         // and the vehicles spawned.
         world.update(0);
@@ -86,7 +87,7 @@ public class GameScreen extends GUIScreen implements Screen {
                 spriteBatch.draw(ctdwnGo, centerWidth - 393/2, centerHeight - 248/2);
             } else if (elapsedTime < 5f) {
                 gameStart = false;
-                gameMode.start();
+                listener.resume();
             }
             spriteBatch.end();
         } else {

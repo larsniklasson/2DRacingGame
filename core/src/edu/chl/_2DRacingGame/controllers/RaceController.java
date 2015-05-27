@@ -13,7 +13,7 @@ import edu.chl._2DRacingGame.world.GameWorld;
  *
  * @author Daniel Sunnerberg
  */
-public abstract class RaceController implements RaceListener, MainMenuDisplayer, Disposable {
+public abstract class RaceController implements RaceListener, MainMenuDisplayer, Disposable, GameScreenListener {
 
     private final Player player;
     private GameMap map;
@@ -49,7 +49,7 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
             }
         }));
 
-        screen = new GameScreen(world, mode);
+        screen = new GameScreen(world, this);
         screen.addScreenTexts(mode.getScreenTexts());
     }
 
@@ -129,4 +129,13 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
         }
     }
 
+    @Override
+    public void resume() {
+        getMode().resume();
+    }
+
+    @Override
+    public void pause() {
+        getMode().pause();
+    }
 }
