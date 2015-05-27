@@ -22,7 +22,7 @@ import java.util.List;
  * @author Daniel Sunnerberg
  * @author Victor Christoffersson
  */
-public class MultiplayerRace extends RaceController implements MultiplayerSetupListener, MainMenuDisplayer, OpponentListener, MultiPlayerMenuListener {
+public class MultiplayerRace extends RaceController implements MultiplayerRaceFinderListener, MainMenuDisplayer, OpponentListener, MultiPlayerMenuListener {
 
     private MultiplayerWorldSyncer worldSyncer;
     private final ScoreBoard scoreBoard = new ScoreBoard();

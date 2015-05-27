@@ -18,9 +18,7 @@ import java.util.*;
 /**
  * Helps find opponents to a multiplayer race. Players are paired on a first-come basis, with the exception
  * that both must have selected the same map.
- *
- * TODO name
- *
+ **
  * @author Daniel Sunnerberg
  */
 class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener, ConnectionRequestListener {
@@ -44,7 +42,7 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
 
     private final WarpClient warpClient;
 
-    private final MultiplayerSetupListener listener;
+    private final MultiplayerRaceFinderListener listener;
     private WarpClientNotificationAdapter notificationAdapter;
 
     /**
@@ -54,7 +52,7 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
      * @param appWarpSecretKeyPlayer Secret key for the AppWarp-API
      * @param listener Listener to be notified when related events occur
      */
-    public MultiplayerRaceFinder(String appWarpApiKey, String appWarpSecretKeyPlayer, int desiredOpponents, MultiplayerSetupListener listener) {
+    public MultiplayerRaceFinder(String appWarpApiKey, String appWarpSecretKeyPlayer, int desiredOpponents, MultiplayerRaceFinderListener listener) {
         this.desiredOpponents = desiredOpponents;
         this.listener = listener;
 
