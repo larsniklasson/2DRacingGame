@@ -131,11 +131,11 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
 
     @Override
     public void resume() {
-        getMode().resume();
+        mode.resume();
     }
 
     @Override
     public void pause() {
-        getMode().pause();
+        mode.pause();
     }
 }
