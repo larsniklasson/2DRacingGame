@@ -62,17 +62,19 @@ public class ScoreBoardTest {
         Player p3 = new Player("c", null);
 
         assertFalse("If no players have finished the race, there are no winners", scoreBoard.isWinner(p1));
+        assertNull(scoreBoard.getWinner());
 
         scoreBoard.addResult(p1, 4d);
-        Player winner = scoreBoard.getResults().iterator().next().getPlayer();
-        assertEquals(winner, p1);
+        assertEquals(p1, scoreBoard.getWinner());
+        assertTrue(scoreBoard.isWinner(p1));
 
         scoreBoard.addResult(p2, 2d);
-        winner = scoreBoard.getResults().iterator().next().getPlayer();
-        assertEquals(winner, p2);
+        assertEquals(p2, scoreBoard.getWinner());
+        assertTrue(scoreBoard.isWinner(p2));
 
         scoreBoard.addResult(p3, 8d);
-        assertTrue(winner.equals(p2));
+        assertEquals(p2, scoreBoard.getWinner());
+        assertTrue(scoreBoard.isWinner(p2));
     }
 
     @Test
