@@ -9,30 +9,32 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import edu.chl._2DRacingGame.Assets;
 
 /**
- * Created by Victor Christoffersson on 2015-05-17.
+ * @author Victor Christoffersson
  */
 public class WayPoints {
 
-    private Pathfollower pathfollower;
-    private ShapeRenderer shapeRenderer;
+    private final Array<Pathfollower> pathfollowers;
+    private final ShapeRenderer shapeRenderer;
 
-    public WayPoints(Vector2 startingPosition){
-
-        Vector2 startingPosition1 = startingPosition;
+    public WayPoints(){
 
         shapeRenderer = new ShapeRenderer();
+        pathfollowers = new Array<>();
 
-        Sprite sprite = new Sprite(new Texture(Gdx.files.internal("carbody.png")));
+        Sprite sprite = new Sprite(Assets.nyanCat);
         sprite.setOrigin(0, 0);
 
-        pathfollower = new Pathfollower(sprite, createPath());
-        pathfollower.setPosition(startingPosition.x, startingPosition.y);
-
+        for(int i = 0; i <= 50; i++) {
+            Pathfollower pathfollower = new Pathfollower(sprite, createPath());
+            pathfollower.setPosition(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight()));
+            pathfollowers.add(pathfollower);
+        }
     }
 
-    public Array<Vector2> createPath(){
+    private Array<Vector2> createPath(){
         Array<Vector2> path = new Array<Vector2>();
         for(int i = 0; i < MathUtils.random(5, 20); i++){
             path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
@@ -40,21 +42,46 @@ public class WayPoints {
         return path;
     }
 
-    public Pathfollower getPathfollower(){
-        return pathfollower;
-    }
+    public void draw(SpriteBatch batch){
 
-    public void update(SpriteBatch batch){
-
+        for(Pathfollower pathfollower : pathfollowers) {
             pathfollower.draw(batch);
-
+        }
     }
 
-    public void drawPath(){
+    public void drawPath() {
 
-        Vector2 prev = pathfollower.getPath().first();
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (Pathfollower pathfollower : pathfollowers) {
+            Vector2 prev = pathfollower.getPath().first();
+            for (Vector2 wayPoint : pathfollower.getPath()) {
+                shapeRenderer.line(prev, wayPoint);
+                prev = wayPoint;
+            }
+        }
+        shapeRenderer.end();
 
-        for(Vector2 wayPoint : pathfollower.getPath()) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        for (Pathfollower pathfollower : pathfollowers){
+            for (Vector2 wayPoint : pathfollower.getPath()) {
+                shapeRenderer.circle(wayPoint.x, wayPoint.y, 5);
+            }
+        }
+        shapeRenderer.end();
+
+        shapeRenderer.setColor(Color.CYAN);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (Pathfollower pathfollower : pathfollowers) {
+            shapeRenderer.line(new Vector2(pathfollower.getX(), pathfollower.getY()), pathfollower.getPath().get(pathfollower.getWayPoint()));
+        }
+        shapeRenderer.end();
+
+        /*
+        Vector2 prev = pathfollowers.get(0).getPath().first();
+
+        for(Vector2 wayPoint : pathfollowers.get(0).getPath()) {
+
             shapeRenderer.setColor(Color.WHITE);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.line(prev, wayPoint);
@@ -70,10 +97,7 @@ public class WayPoints {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.line(new Vector2(pathfollower.getX(), pathfollower.getY()), pathfollower.getPath().get(pathfollower.getWayPoint()));
         shapeRenderer.end();
+        */
     }
-
-
-
-
 }
 

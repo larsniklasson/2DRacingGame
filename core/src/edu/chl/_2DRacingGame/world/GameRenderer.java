@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import edu.chl._2DRacingGame.AI.WayPoints;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
@@ -33,6 +34,7 @@ public class GameRenderer extends Stage {
 
     private boolean showDebug = true;
     private boolean showWayPoints = true;
+    private boolean nyanMode = false;
 
     private final GameWorld gameWorld;
     private final SpriteBatch batch;
@@ -43,6 +45,8 @@ public class GameRenderer extends Stage {
     private final TiledMapRenderer tiledMapRenderer;
 
     private List<ScreenText> screenTexts = new ArrayList<>();
+
+    WayPoints wp;
 
     /**
      *
@@ -58,6 +62,8 @@ public class GameRenderer extends Stage {
 
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
+
+        wp = new WayPoints();
     }
 
     /**
@@ -73,6 +79,10 @@ public class GameRenderer extends Stage {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
             showWayPoints = !showWayPoints;
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.N)){
+            nyanMode = !nyanMode;
         }
 
         batch.setProjectionMatrix(camera.combined);
@@ -115,6 +125,8 @@ public class GameRenderer extends Stage {
 
 
         }
+
+        if(nyanMode) wp.draw(batch);
 
         drawScreenTexts();
 

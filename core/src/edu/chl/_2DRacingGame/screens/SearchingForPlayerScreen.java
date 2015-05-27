@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
- * Created by Victor Christoffersson on 2015-05-21.
+ * @author Victor Christoffersson
  */
 public class SearchingForPlayerScreen extends GUIScreen {
 
-    private Table table;
+    private final Table table;
 
-    private MultiPlayerMenuListener listener;
+    private final MultiPlayerMenuListener listener;
 
     private TextButton cancelButton;
     private TextButton tryAgainButton;
@@ -38,7 +38,7 @@ public class SearchingForPlayerScreen extends GUIScreen {
 
     }
 
-    public void create(){
+    private void create(){
         infoLabel = new Label("Searching for player", skin);
         tryAgainButton = new TextButton("Try again", skin);
         tryAgainButton.addListener(new ChangeListener() {

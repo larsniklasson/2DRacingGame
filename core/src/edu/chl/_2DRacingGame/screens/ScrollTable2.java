@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Victor Christoffersson on 2015-05-20.
+ * @author Victor Christoffersson
  */
 public class ScrollTable2 {
 
-    private Table table;
+    private final Table table;
 
-    private ArrayList<Image> images;
+    private final ArrayList<Image> images;
 
-    private Skin skin;
+    private final Skin skin;
 
     private TextButton nextButton;
     private TextButton prevButton;
@@ -28,7 +28,7 @@ public class ScrollTable2 {
     private Label currentLabel;
     private Label chooseTypeLabel;
 
-    private String chooseType;
+    private final String chooseType;
     private int selectedImage;
 
     public ScrollTable2(ArrayList<Image> images, String chooseType){
@@ -44,7 +44,7 @@ public class ScrollTable2 {
 
     }
 
-    public void setupTable(){
+    private void setupTable(){
         currentLabel = new Label("Name here", skin);
         chooseTypeLabel = new Label("Choose a " + chooseType, skin);
 
@@ -120,7 +120,7 @@ public class ScrollTable2 {
         return table;
     }
 
-    public void previousItem(){
+    private void previousItem(){
         if(selectedImage == 0){
             selectedImage = images.size() - 1;
         } else {
@@ -129,7 +129,7 @@ public class ScrollTable2 {
         drawTable();
     }
 
-    public void nextItem(){
+    private void nextItem(){
         if(selectedImage == images.size() - 1){
             selectedImage = 0;
         } else {

@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame.screens;
 
 /**
- * Created by Victor Christoffersson on 2015-05-22.
+ * @author Victor Christoffersson
  */
 public interface OptionsScreenListener {
     void displayStartMenu();

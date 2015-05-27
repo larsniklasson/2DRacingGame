@@ -39,6 +39,7 @@ public class Assets {
 
     public static Texture magicCarpetBody;
 
+    public static Texture nyanCat;
 
     public static ArrayList <Image> mapArray;
     public static ArrayList <Image> vehicleArray;
@@ -113,6 +114,7 @@ public class Assets {
 
             }
         }
+        nyanCat = loadTexture("nyancat.png");
     }
 
     private static Image createImage(Texture texture) {

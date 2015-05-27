@@ -8,15 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by Victor Christoffersson on 2015-05-17.
+ * @author Victor Christoffersson
  */
 public class Pathfollower extends Sprite{
 
-    private Vector2 velocity = new Vector2();
-    private float speed = 300;
+    private final Vector2 velocity = new Vector2();
+    private final float speed = 300;
 
-    private Array<Vector2> path;
-    private float closeness = 3;
+    private final Array<Vector2> path;
     private int wayPoint = 0;
 
     public Pathfollower(Sprite sprite, Array<Vector2> path){
@@ -31,7 +30,7 @@ public class Pathfollower extends Sprite{
         super.draw(spriteBatch);
     }
 
-    public void update(float delta){
+    private void update(float delta){
         float angle = (float) Math.atan2(path.get(wayPoint).y - getY(), path.get(wayPoint).x - getX());
         velocity.set((float) Math.cos(angle) * speed ,(float) Math.sin(angle) * speed);
 
@@ -52,8 +51,8 @@ public class Pathfollower extends Sprite{
         return path;
     }
 
-    public boolean isAtWayPoint(){
-        return path.get(wayPoint).x - getX() <= speed / closeness * Gdx.graphics.getDeltaTime() && path.get(wayPoint).y - getY() <= speed / closeness * Gdx.graphics.getDeltaTime();
+    private boolean isAtWayPoint(){
+        return Math.abs(path.get(wayPoint).x - getX()) <= speed * Gdx.graphics.getDeltaTime() && Math.abs(path.get(wayPoint).y - getY()) <= speed * Gdx.graphics.getDeltaTime();
     }
 
     public int getWayPoint(){
