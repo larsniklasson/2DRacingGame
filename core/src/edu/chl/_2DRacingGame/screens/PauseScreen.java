@@ -11,7 +11,7 @@ import edu.chl._2DRacingGame.controllers.PauseScreenListener;
 
 
 /**
- * Created by Anton on 2015-05-17.
+ * @author Anton Ingvarsson
  */
 public class PauseScreen extends GUIScreen {
 

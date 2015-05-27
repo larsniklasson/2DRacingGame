@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.ArrayList;
 
 /**
- * Created by Anton on 2015-05-10.
+ * @author Anton Ingvarsson
  */
-public class ScrollTable {
+class ScrollTable {
 
 
     final private Skin skin;

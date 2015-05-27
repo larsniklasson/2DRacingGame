@@ -10,7 +10,7 @@ import edu.chl._2DRacingGame.controllers.SetUpListener;
 
 
 /**
- * Created by Anton on 2015-05-08.
+ * @author Anton Ingvarsson
  */
 public class SinglePlayerMenuScreen extends GUIScreen {
 

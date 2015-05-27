@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.models.ScoreList;
 
 
 /**
- * Created by Anton on 2015-05-12.
+ * @author Anton Ingvarsson
  */
 public class SinglePlayerFinishedScreen extends GUIScreen {
 

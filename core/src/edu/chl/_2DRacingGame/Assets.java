@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Anton on 2015-04-27.
+ * @author Anton Ingvarsson
  */
 public class Assets {
 
@@ -40,8 +40,6 @@ public class Assets {
     public static Texture magicCarpetBody;
 
 
-
-    public static BitmapFont arial40;
     public static ArrayList <Image> mapArray;
     public static ArrayList <Image> vehicleArray;
 

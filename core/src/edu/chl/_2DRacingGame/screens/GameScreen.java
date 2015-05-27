@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class GameScreen extends GUIScreen implements Screen {
 
-    private GameWorld world;
+    private final GameWorld world;
     private GameRenderer renderer;
     private Boolean gameStart;
 
@@ -31,8 +31,8 @@ public class GameScreen extends GUIScreen implements Screen {
     private Texture ctdwnThree;
     private Texture ctdwnGo;
 
-    private SpriteBatch spriteBatch;
-    private GameScreenListener listener;
+    private final SpriteBatch spriteBatch;
+    private final GameScreenListener listener;
 
 
     public GameScreen(GameWorld world, GameScreenListener listener) {
