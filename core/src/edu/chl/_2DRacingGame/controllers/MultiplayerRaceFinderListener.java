@@ -27,5 +27,5 @@ interface MultiplayerRaceFinderListener {
      * @param message error details/message
      */
     void connectionError(String message);
-    
+
 }

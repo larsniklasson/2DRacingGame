@@ -48,6 +48,13 @@ public class SettingsTest {
     }
 
     @Test
+    public void testLoad() throws Exception {
+        Settings settings = new Settings(persistor);
+        settings.load();
+        assertNull(settings.getSetting("foo"));
+    }
+
+    @Test
     public void testAddSetting() throws Exception {
         Settings settings = new Settings(persistor);
         assertNull(settings.getSetting("foo"));
