@@ -77,27 +77,6 @@ public class WayPoints {
         }
         shapeRenderer.end();
 
-        /*
-        Vector2 prev = pathfollowers.get(0).getPath().first();
-
-        for(Vector2 wayPoint : pathfollowers.get(0).getPath()) {
-
-            shapeRenderer.setColor(Color.WHITE);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.line(prev, wayPoint);
-            shapeRenderer.end();
-
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.circle(wayPoint.x, wayPoint.y, 5);
-            shapeRenderer.end();
-
-            prev = wayPoint;
-        }
-        shapeRenderer.setColor(Color.CYAN);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.line(new Vector2(pathfollower.getX(), pathfollower.getY()), pathfollower.getPath().get(pathfollower.getWayPoint()));
-        shapeRenderer.end();
-        */
     }
 }
 
