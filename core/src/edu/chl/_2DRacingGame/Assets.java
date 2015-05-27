@@ -1,7 +1,6 @@
 package edu.chl._2DRacingGame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -42,17 +41,11 @@ public class Assets {
 
 
 
-    public static Texture mainMenuBackground;
-    public static Texture pauseMenu;
-    public static Sound carHorn;
-    public static Texture ice;
-    public static Texture dirt;
-    public static Texture ful;
     public static BitmapFont arial40;
     public static ArrayList <Image> mapArray;
     public static ArrayList <Image> vehicleArray;
 
-    public static Texture loadTexture (String file) {
+    private static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
     }
 
@@ -78,20 +71,12 @@ public class Assets {
         //-------------------
 
 
-        //--- stuff that will probably be deleted
-        mainMenuBackground = loadTexture("mainMenuBackground.jpg");
-        pauseMenu = loadTexture("pauseMenu.png");
-        carHorn = Gdx.audio.newSound(Gdx.files.internal("carHorn.wav"));
-        ice = loadTexture("ice.png");
-        dirt = loadTexture("dirt.png");
-        ful = loadTexture("ful.png");
-
         //--------Images for Vehicle and Map Selection
         String [] mapNames  = new String[] {"map1"};
         mapArray = new ArrayList<>();
         for(int i = 0; i<mapNames.length;i++){
             System.out.println(i);
-            mapArray.add(textureToImage(loadTexture(mapNames[i] + ".png")));
+            mapArray.add(createImage(loadTexture(mapNames[i] + ".png")));
             //mapArray.get(i).setName(mapNames[i]);
             switch (mapNames[i]) {
                 case "map1":
@@ -106,7 +91,7 @@ public class Assets {
         vehicleArray = new ArrayList<>();
         for(int i = 0; i<vehicleNames.length;i++){
             System.out.println(i);
-            vehicleArray.add(textureToImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
+            vehicleArray.add(createImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
             //vehicleArray.get(i).setName(vehicleNames[i]);
             switch (vehicleNames[i]) {
                 case "motorcycle.jpg":
@@ -132,11 +117,7 @@ public class Assets {
         }
     }
 
-    public static Image textureToImage (Texture texture) {
+    private static Image createImage(Texture texture) {
         return new Image(texture);
-    }
-
-    public static void carHorn(){
-        carHorn.play(1);
     }
 }
