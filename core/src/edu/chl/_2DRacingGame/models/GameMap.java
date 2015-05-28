@@ -18,11 +18,11 @@ import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.mapobjects.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
+ * TODO way to nested with Shape objects. They are very comfortable, though.
+ *
  * @author Daniel Sunnerberg
  */
 public enum GameMap implements Disposable {
@@ -34,7 +34,7 @@ public enum GameMap implements Disposable {
     private final String overviewImagePath;
     private TiledMap tiledMap;
 
-    private final List<Checkpoint> checkpoints = new ArrayList<>();
+    private final Map<Checkpoint, Shape> checkpoints = new HashMap<>();
     private final Array<Vector2> wayPoints = new Array<>();
     private final List<Vector2> spawnPoints = new ArrayList<>();
     private final List<Float> spawnAngles = new ArrayList<>();
@@ -139,14 +139,16 @@ public enum GameMap implements Disposable {
                 (String) object.getProperties().get("checkpointDirection")
         );
 
-        Checkpoint cp = CheckpointFactory.createCheckpoint(world, shape, type);
+        Checkpoint checkpoint = new Checkpoint(type);
         for (CheckpointDirection direction : directions) {
-            cp.addAllowedPassingDirection(direction);
+            checkpoint.addAllowedPassingDirection(direction);
         }
-        checkpoints.add(cp);
+        checkpoints.put(checkpoint, shape);
     }
 
     private void createShapesFromMap() {
+
+        // TODO place in another class
 
         MapLayers ml = tiledMap.getLayers();
         Iterator<MapLayer> it = ml.iterator();
@@ -189,7 +191,7 @@ public enum GameMap implements Disposable {
         }
     }
 
-    public List<Checkpoint> getCheckpoints() {
+    public Map<Checkpoint, Shape> getCheckpoints() {
         return checkpoints;
     }
 

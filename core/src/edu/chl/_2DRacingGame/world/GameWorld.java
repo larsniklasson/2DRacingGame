@@ -1,29 +1,14 @@
 package edu.chl._2DRacingGame.world;
 
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.maps.objects.PolylineMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Ellipse;
-import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.mapobjects.*;
-import edu.chl._2DRacingGame.models.CheckpointFactory;
-import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
 
-
-import javax.sound.midi.Track;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -60,6 +45,7 @@ public class GameWorld implements Disposable {
     private void insertMap() {
         insertTrackSections();
         insertImmovables();
+        insertCheckpoints();
     }
 
     private void insertTrackSections() {
@@ -71,6 +57,14 @@ public class GameWorld implements Disposable {
     private void insertImmovables() {
         for (Immovable immovable : gameMap.getImmovables()) {
             BodyFactory.createStaticBody(b2World, immovable.getShape(), false);
+        }
+    }
+
+    private void insertCheckpoints() {
+        for (Map.Entry<Checkpoint, Shape> entry : gameMap.getCheckpoints().entrySet()) {
+            Shape shape = entry.getValue();
+            Checkpoint checkpoint = entry.getKey();
+            BodyFactory.createStaticBody(b2World, shape, true, checkpoint);
         }
     }
 
