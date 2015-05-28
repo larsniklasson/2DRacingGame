@@ -11,25 +11,27 @@ import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.controllers.MultiPlayerMenuListener;
 
 /**
+ * GUI screen which let's the user decide which settings to use in a multiplayer race.
+ *
  * @author Victor Christoffersson
  */
-public class MultipPlayerMenuScreen extends GUIScreen {
+public class MultiPlayerMenuScreen extends GUIScreen {
 
-    private MultiPlayerMenuListener listener;
+    private final MultiPlayerMenuListener listener;
 
-    private Table mainTable;
-    private Table carouselTable;
-    private Table buttonTable;
-    private ScrollTable2 vehicleTable;
-    private ScrollTable2 mapTable;
+    private final Table mainTable;
+    private final Table carouselTable;
+    private final Table buttonTable;
+    private final ScrollTable2 vehicleTable;
+    private final ScrollTable2 mapTable;
 
-
-    private TextButton startButton;
-    private TextButton backButton;
-
-    private Label multiPlayerLabel;
-
-    public MultipPlayerMenuScreen(MultiPlayerMenuListener listener) {
+    /**
+     * Creates an instance of the screen and adds a listener to handle the events.
+     * Creates instances of ScrollTable2 which will be added to this table.
+     *
+     * @param listener
+     */
+    public MultiPlayerMenuScreen(MultiPlayerMenuListener listener) {
 
         this.listener = listener;
 
@@ -41,6 +43,11 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     }
 
+    /**
+     * Creates a table and all it's components, also adds the table to the stage.
+     *
+     * Sets the input processor so that the tables components becomes clickable.
+     */
     @Override
     public void show() {
         create();
@@ -51,10 +58,10 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     }
 
-    public void create(){
+    private void create(){
         mainTable.setDebug(true);
 
-        multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
+        Label multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
         mainTable.add(multiPlayerLabel).colspan(2);
         mainTable.row();
 
@@ -66,10 +73,10 @@ public class MultipPlayerMenuScreen extends GUIScreen {
         mainTable.add(carouselTable);
         mainTable.row();
 
-        backButton = new TextButton("back", skin);
+        TextButton backButton = new TextButton("back", skin);
         buttonTable.add(backButton).left();
 
-        startButton = new TextButton("Find race", skin);
+        TextButton startButton = new TextButton("Find race", skin);
         buttonTable.add(startButton).right();
 
         mainTable.add(buttonTable);
@@ -90,11 +97,19 @@ public class MultipPlayerMenuScreen extends GUIScreen {
 
     }
 
+    /**
+     * Disposes the stage
+     */
     @Override
     public void hide() {
         stage.dispose();
     }
 
+    /**
+     * Draws the stage on the screen
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
 
@@ -105,7 +120,9 @@ public class MultipPlayerMenuScreen extends GUIScreen {
         stage.draw();
     }
 
-
+    /**
+     * Disposes the stage and skin
+     */
     @Override
     public void dispose() {
         stage.dispose();

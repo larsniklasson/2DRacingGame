@@ -43,7 +43,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
      */
     @Override
     public void setUp() {
-        gameController.setScreen(new MultipPlayerMenuScreen(this));
+        gameController.setScreen(new MultiPlayerMenuScreen(this));
     }
 
     /**

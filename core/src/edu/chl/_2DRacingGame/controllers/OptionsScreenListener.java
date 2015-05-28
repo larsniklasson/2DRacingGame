@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.controllers;
 
 /**
+ * Class that can display start menu and apply saved changes to settings.
+ *
  * @author Victor Christoffersson
  */
 public interface OptionsScreenListener {
