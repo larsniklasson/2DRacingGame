@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.controllers.GameScreenListener;
+import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.PauseScreenListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.models.ScreenText;
@@ -45,6 +46,7 @@ public class GameScreen extends GUIScreen implements Screen {
 
 
     public GameScreen(GameWorld world, GameScreenListener listener) {
+
 
         this.world = world;
         this.listener = listener;
@@ -95,7 +97,7 @@ public class GameScreen extends GUIScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P) && !(listener instanceof MultiplayerRace)){
             pauseGame();
 
         }
