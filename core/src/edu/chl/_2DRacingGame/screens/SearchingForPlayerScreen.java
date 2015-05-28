@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl._2DRacingGame.controllers.MultiPlayerMenuListener;
 
 /**
+ * Screen that displays status when searching for opponents in multiplayer.
+ * Gives the user a chance to cancel and retry a new search.
+ *
  * @author Victor Christoffersson
  */
 public class SearchingForPlayerScreen extends GUIScreen {
@@ -23,12 +26,22 @@ public class SearchingForPlayerScreen extends GUIScreen {
 
     private Label infoLabel;
 
+    /**
+     * Creates the screen and table where all components will be added.
+     *
+     * @param listener will handle all events
+     */
     public SearchingForPlayerScreen(MultiPlayerMenuListener listener){
         table = new Table();
 
         this.listener = listener;
     }
 
+    /**
+     * Creates the tables all it's components, also adds the table to the stage.
+     *
+     * Sets the input processor so that the tables components becomes clickable.
+     */
     @Override
     public void show() {
         create();
@@ -63,11 +76,19 @@ public class SearchingForPlayerScreen extends GUIScreen {
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Disposes the stage.
+     */
     @Override
     public void hide() {
         stage.dispose();
     }
 
+    /**
+     * Draws the stage on the screen
+     *
+     * @param delta time between two frames
+     */
     @Override
     public void render(float delta) {
 
@@ -78,12 +99,18 @@ public class SearchingForPlayerScreen extends GUIScreen {
         stage.draw();
     }
 
+    /**
+     * Disposes the stage and the skin.
+     */
     @Override
     public void dispose() {
         stage.dispose();
         skin.dispose();
     }
 
+    /**
+     * Gets called when an error has occured and changes the table to display info about that error.
+     */
     public void displayErrorInfo(){
         table.reset();
         infoLabel.setText("Failed to start multiplayer game, please check your connection and try again.");

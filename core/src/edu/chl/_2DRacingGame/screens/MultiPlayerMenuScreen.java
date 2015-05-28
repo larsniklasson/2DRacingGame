@@ -26,10 +26,10 @@ public class MultiPlayerMenuScreen extends GUIScreen {
     private final ScrollTable2 mapTable;
 
     /**
-     * Creates an instance of the screen and adds a listener to handle the events.
+     * Creates an instance of the screen.
      * Creates instances of ScrollTable2 which will be added to this table.
      *
-     * @param listener
+     * @param listener will handle all events
      */
     public MultiPlayerMenuScreen(MultiPlayerMenuListener listener) {
 
@@ -44,7 +44,7 @@ public class MultiPlayerMenuScreen extends GUIScreen {
     }
 
     /**
-     * Creates a table and all it's components, also adds the table to the stage.
+     * Creates the tables and all it's components, also adds the table to the stage.
      *
      * Sets the input processor so that the tables components becomes clickable.
      */
@@ -108,7 +108,7 @@ public class MultiPlayerMenuScreen extends GUIScreen {
     /**
      * Draws the stage on the screen
      *
-     * @param delta
+     * @param delta time between two frames
      */
     @Override
     public void render(float delta) {

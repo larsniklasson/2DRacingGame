@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 
 /**
+ * Takes an array of images and set's it up to select between them
+ *
  * @author Victor Christoffersson
  */
 public class ScrollTable2 {
@@ -31,6 +33,12 @@ public class ScrollTable2 {
     private final String chooseType;
     private int selectedImage;
 
+    /**
+     * Creates an instance of ScrollTable2 and will set up the table
+     *
+     * @param images an array of images to be selected from
+     * @param chooseType the type of images
+     */
     public ScrollTable2(ArrayList<Image> images, String chooseType){
         this.images = images;
         this.chooseType = chooseType;
@@ -39,7 +47,7 @@ public class ScrollTable2 {
         table = new Table();
 
         selectedImage = images.size() / 2;
-        System.out.print(selectedImage);
+
         setupTable();
 
     }
@@ -112,10 +120,20 @@ public class ScrollTable2 {
         drawTable();
     }
 
+    /**
+     * returns an array of images
+     *
+     * @return an arraylist of images
+     */
     public ArrayList<Image> getImages() {
         return images;
     }
 
+    /**
+     * Returnsthe table which all of the components are drawn upon
+     *
+     * @return table which all components are drawn upon
+     */
     public Table getTable() {
         return table;
     }
@@ -139,6 +157,11 @@ public class ScrollTable2 {
         drawTable();
     }
 
+    /**
+     * Returns the name of the selected image
+     *
+     * @return name of the selected image
+     */
     public String getImageName() {
         return images.get(selectedImage).getName();
     }
