@@ -70,10 +70,10 @@ public class GameScreen extends GUIScreen implements Screen {
         }).getPausedScreen());
         gameStart = true;
 
-        ctdwnOne = new Texture("one.png");
-        ctdwnTwo = new Texture("two.png");
-        ctdwnThree = new Texture("three.png");
-        ctdwnGo = new Texture("go.png");
+        ctdwnOne = new Texture("countdown/one.png");
+        ctdwnTwo = new Texture("countdown/two.png");
+        ctdwnThree = new Texture("countdown/three.png");
+        ctdwnGo = new Texture("countdown/go.png");
 
         centerWidth = Gdx.graphics.getWidth()/2;
         centerHeight = Gdx.graphics.getHeight()/2;
