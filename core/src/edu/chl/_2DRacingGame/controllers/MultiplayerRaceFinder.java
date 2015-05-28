@@ -178,7 +178,7 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
      */
     @Override
     public void onGetLiveRoomInfoDone(LiveRoomInfoEvent e) {
-        boolean raceIsFull = e.getJoinedUsers().length == desiredOpponents;
+        boolean raceIsFull = e.getJoinedUsers().length >= desiredOpponents;
         HashMap<String, Object> roomProperties = e.getProperties();
         if (! roomProperties.get("hostUserName").equals(player.getUserName())) {
             Gdx.app.log("MultiplayerRaceFinder", "Updating room data to include our player.");
@@ -227,7 +227,7 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
     private void removeClientListeners() {
         warpClient.removeConnectionRequestListener(this);
         warpClient.removeZoneRequestListener(this);
-        warpClient.removeZoneRequestListener(this);
+        warpClient.removeRoomRequestListener(this);
         warpClient.removeNotificationListener(notificationAdapter);
     }
 
