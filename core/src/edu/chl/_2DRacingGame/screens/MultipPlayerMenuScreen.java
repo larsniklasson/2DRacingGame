@@ -8,9 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.controllers.MultiPlayerMenuListener;
 
 /**
- * Created by Victor Christoffersson on 2015-05-19.
+ * @author Victor Christoffersson
  */
 public class MultipPlayerMenuScreen extends GUIScreen {
 

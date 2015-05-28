@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import edu.chl._2DRacingGame._2DRacingGame;
+import edu.chl._2DRacingGame.controllers.OptionsScreenListener;
 
 /**
  * Created by Anton on 2015-05-08 revised by Victor Christoffersson 2015-05-22
