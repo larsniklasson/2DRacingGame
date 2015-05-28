@@ -178,31 +178,31 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
      */
     @Override
     public void onGetLiveRoomInfoDone(LiveRoomInfoEvent e) {
-        boolean raceIsFull = e.getJoinedUsers().length >= desiredOpponents;
         HashMap<String, Object> roomProperties = e.getProperties();
-        if (! roomProperties.get("hostUserName").equals(player.getUserName())) {
-            Gdx.app.log("MultiplayerRaceFinder", "Updating room data to include our player.");
-
-            // We joined a room which we didn't create, add our Player-information to it.
-            String playersJson = (String) roomProperties.get("players");
-            List<Player> playersList = getPlayersFromJson(playersJson);
-            playersList.add(player);
-
-            playersJson = new Gson().toJson(playersList);
-            roomProperties.put("players", playersJson);
-
-            // If we're the last player who is supposed to join, make sure to set the room-status to started
-            // to prevent more players from joining
-            if (raceIsFull) {
-                Gdx.app.log("MultiplayerRaceFinder", "Locking the room to prevent more players from joining");
-                roomProperties.put("started", true);
-            }
-
-            warpClient.updateRoomProperties(roomId, roomProperties, null);
-
-        } else if (raceIsFull) {
-            raceReady();
+        String playersJson = (String) roomProperties.get("players");
+        List<Player> connectedPlayers = getPlayersFromJson(playersJson);
+        if (connectedPlayers.contains(player)) {
+            // Our information is already included in the room
+            return;
+        } else {
+            addPlayerDataToRoom(connectedPlayers, roomProperties);
         }
+    }
+
+    private void addPlayerDataToRoom(List<Player> connectedPlayers, HashMap<String, Object> roomProperties) {
+        Gdx.app.log("MultiplayerRaceFinder", "Updating room data to include our player.");
+        connectedPlayers.add(player);
+        String playersJson = new Gson().toJson(connectedPlayers);
+        roomProperties.put("players", playersJson);
+
+        // If we're the last player who is supposed to join, make sure to set the room-status to started
+        // to prevent more players from joining
+        if (connectedPlayers.size() >= desiredOpponents) {
+            Gdx.app.log("MultiplayerRaceFinder", "Locking the room to prevent more players from joining");
+            roomProperties.put("started", true);
+        }
+
+        warpClient.updateRoomProperties(roomId, roomProperties, null);
     }
 
     private void createEmptyRoom() {
@@ -268,7 +268,7 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
      * @param lockedPropertiesTable
      */
     private void onUserChangeRoomProperty(RoomData roomData, String sender, HashMap<String, Object> properties, HashMap<String, String> lockedPropertiesTable) {
-        Gdx.app.log("MultiplayerRaceFinder", "Recieved room update with player data.");
+        Gdx.app.log("MultiplayerRaceFinder", "Received room update with player data.");
         String playersJson = (String) properties.get("players");
         roomPlayers = getPlayersFromJson(playersJson);
         if (roomPlayers.size() == desiredOpponents) {
