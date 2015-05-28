@@ -1,12 +1,16 @@
 package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.controllers.GameScreenListener;
+import edu.chl._2DRacingGame.controllers.PauseScreenListener;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.models.ScreenText;
+import edu.chl._2DRacingGame.steering.Key;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -17,9 +21,14 @@ import java.util.List;
  */
 public class GameScreen extends GUIScreen implements Screen {
 
+
+    private boolean paused = false;
     private final GameWorld world;
     private GameRenderer renderer;
+    private Stage pauseStage;
+
     private Boolean gameStart;
+
 
     private float elapsedTime;
     private long startTime;
@@ -36,10 +45,27 @@ public class GameScreen extends GUIScreen implements Screen {
 
 
     public GameScreen(GameWorld world, GameScreenListener listener) {
+
         this.world = world;
         this.listener = listener;
         renderer = new GameRenderer(world);
 
+        pauseStage =  new Stage();
+        Gdx.input.setInputProcessor(pauseStage);
+
+        pauseStage.addActor(new PauseScreen(new PauseScreenListener() {
+            @Override
+            public void resumeRace() {
+                pauseGame();
+
+            }
+
+            @Override
+            public void displayMainMenu() {
+                listener.displayMainMenu();
+
+            }
+        }).getPausedScreen());
         gameStart = true;
 
         ctdwnOne = new Texture("one.png");
@@ -69,30 +95,40 @@ public class GameScreen extends GUIScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        renderer.render();
-        renderer.draw();
-        renderer.act(delta);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            pauseGame();
 
-        if(gameStart) {
-            elapsedTime = (System.nanoTime() - startTime) / 1000000000.0f;
-            spriteBatch.begin();
-
-            if (elapsedTime < 1f) {
-                spriteBatch.draw(ctdwnThree, centerWidth - 178/2, centerHeight - 248/2);
-            } else if (elapsedTime < 2f) {
-                spriteBatch.draw(ctdwnTwo, centerWidth - 178/2, centerHeight - 248/2);
-            } else if (elapsedTime < 3f) {
-                spriteBatch.draw(ctdwnOne, centerWidth - 178/2, centerHeight - 248/2);
-            } else if (elapsedTime < 4f) {
-                spriteBatch.draw(ctdwnGo, centerWidth - 393/2, centerHeight - 248/2);
-            } else if (elapsedTime < 5f) {
-                gameStart = false;
-                listener.resume();
-            }
-            spriteBatch.end();
-        } else {
-            world.update(delta);
         }
+        if(!paused) {
+            renderer.render();
+            renderer.draw();
+            renderer.act(delta);
+
+            if (gameStart) {
+                elapsedTime = (System.nanoTime() - startTime) / 1000000000.0f;
+                spriteBatch.begin();
+
+                if (elapsedTime < 1f) {
+                    spriteBatch.draw(ctdwnThree, centerWidth - 178 / 2, centerHeight - 248 / 2);
+                } else if (elapsedTime < 2f) {
+                    spriteBatch.draw(ctdwnTwo, centerWidth - 178 / 2, centerHeight - 248 / 2);
+                } else if (elapsedTime < 3f) {
+                    spriteBatch.draw(ctdwnOne, centerWidth - 178 / 2, centerHeight - 248 / 2);
+                } else if (elapsedTime < 4f) {
+                    spriteBatch.draw(ctdwnGo, centerWidth - 393 / 2, centerHeight - 248 / 2);
+                } else if (elapsedTime < 5f) {
+                    gameStart = false;
+                    listener.resume();
+                }
+                spriteBatch.end();
+            } else {
+                world.update(delta);
+            }
+        } else {
+            pauseStage.act();
+            pauseStage.draw();
+        }
+
 
     }
 
@@ -107,6 +143,17 @@ public class GameScreen extends GUIScreen implements Screen {
 
     @Override
     public void hide() {}
+
+    public void pauseGame(){
+        if(!gameStart){
+            paused = !paused;
+            if(paused){
+                listener.pause();
+            } else {
+                listener.resume();
+            }
+        }
+    }
 
     @Override
     public void dispose() {

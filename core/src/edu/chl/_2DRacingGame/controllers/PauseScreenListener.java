@@ -5,6 +5,4 @@ package edu.chl._2DRacingGame.controllers;
  */
 public interface PauseScreenListener extends MainMenuDisplayer {
     void resumeRace();
-    void restartRace();
-
 }

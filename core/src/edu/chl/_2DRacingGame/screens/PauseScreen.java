@@ -27,35 +27,22 @@ public class PauseScreen extends GUIScreen {
     @Override
     public void show() {
         final TextButton resumeButton = new TextButton("Resume", skin, "default");
-        final TextButton restartRaceButton = new TextButton("Restart Race", skin, "default");
-        final TextButton optionsButton = new TextButton("Options", skin, "default");
         final TextButton quitRaceButton = new TextButton("Quit Race", skin, "default");
         final Label pausedLabel = new Label("Paused", skin, "arial40");
 
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                listener.resumeRace();
             }
         });
 
-        restartRaceButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
 
-            }
-        });
-
-        optionsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-            }
-        });
 
         quitRaceButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                listener.displayMainMenu();
 
             }
         });
@@ -65,10 +52,6 @@ public class PauseScreen extends GUIScreen {
         table.add(pausedLabel);
         table.row();
         table.add(resumeButton).padTop(50).width(200f).height(30f);
-        table.row();
-        table.add(restartRaceButton).padTop(50).width(200f).height(30f);
-        table.row();
-        table.add(optionsButton).padTop(50).width(200f).height(30f);
         table.row();
         table.add(quitRaceButton).padTop(50).width(200f).height(30f);
         table.row();

@@ -25,6 +25,7 @@ public abstract class GameMode implements LapListener {
      * Starts the race.
      */
     public void start() {
+
         stopWatch.start();
     }
 
@@ -32,6 +33,7 @@ public abstract class GameMode implements LapListener {
      * Pauses the race.
      */
     public void pause() {
+        if(stopWatch.isRunning())
         stopWatch.stop();
     }
 
@@ -39,6 +41,7 @@ public abstract class GameMode implements LapListener {
      * Resumes the race.
      */
     public void resume() {
+        if(!stopWatch.isRunning())
         stopWatch.start();
     }
 
