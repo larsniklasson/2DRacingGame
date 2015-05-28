@@ -1,10 +1,8 @@
-package edu.chl._2DRacingGame.helperClasses;
+package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.models.Checkpoint;
-import edu.chl._2DRacingGame.models.CheckpointType;
 
 /**
  * @author Daniel Sunnerberg

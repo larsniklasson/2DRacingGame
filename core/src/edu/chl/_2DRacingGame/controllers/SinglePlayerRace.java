@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.*;
-import edu.chl._2DRacingGame.helperClasses.VehicleFactory;
+import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
 import edu.chl._2DRacingGame.models.GameMap;
 import edu.chl._2DRacingGame.models.MapScores;
 import edu.chl._2DRacingGame.models.Player;

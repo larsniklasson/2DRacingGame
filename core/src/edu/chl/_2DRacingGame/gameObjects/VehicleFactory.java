@@ -1,7 +1,6 @@
-package edu.chl._2DRacingGame.helperClasses;
+package edu.chl._2DRacingGame.gameObjects;
 
 
-import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.steering.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -12,7 +11,6 @@ import java.util.Random;
  * Used to easily create different kinds of vehicles with the right steering-system set automatically.
  *
  * @author Daniel Sunnerberg
- *
  * revised by Lars Niklasson 2015-05-19, added alot of functionality
  */
 public class VehicleFactory {
@@ -23,7 +21,6 @@ public class VehicleFactory {
     public static final String MAGIC_CARPET = "magiccarpet";
     public static final String MONSTER_TRUCK = "monstertruck";
     public static final String RANDOM_VEHICLE = "random_vehicle";
-
 
     private static SteeringInputListener getSteeringInputListener(int playerNumber){
         switch (playerNumber){
@@ -38,7 +35,6 @@ public class VehicleFactory {
     }
 
     private static final String[] vehicles = {CAR, FORMULA_ONE_CAR, MOTORCYCLE, MONSTER_TRUCK, MAGIC_CARPET};
-
 
     private static String getRandomVehicleType(){
         return vehicles[new Random().nextInt(vehicles.length)];
@@ -121,8 +117,5 @@ public class VehicleFactory {
         wv.setSteeringSystem(ss);
         return wv;
     }
-
-
-
 
 }

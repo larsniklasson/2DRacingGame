@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.helperClasses;
+package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.physics.box2d.*;
 

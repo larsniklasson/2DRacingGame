@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.mapobjects.*;
-import edu.chl._2DRacingGame.helperClasses.CheckpointFactory;
+import edu.chl._2DRacingGame.models.CheckpointFactory;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
 

@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.helperClasses;
+package edu.chl._2DRacingGame.controllers;
 
 import com.shephertz.app42.gaming.multiplayer.client.events.*;
 import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * @author Daniel Sunnerberg
  */
-public class WarpClientNotificationAdapter implements NotifyListener {
+class WarpClientNotificationAdapter implements NotifyListener {
 
     @Override
     public void onRoomCreated(RoomData roomData) {

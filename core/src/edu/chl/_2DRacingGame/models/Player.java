@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame.models;
 
 import edu.chl._2DRacingGame.gameObjects.Vehicle;
-import edu.chl._2DRacingGame.helperClasses.VehicleActor;
+import edu.chl._2DRacingGame.gameObjects.VehicleActor;
 
 import java.util.Date;
 
