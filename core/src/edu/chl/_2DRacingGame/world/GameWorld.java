@@ -59,23 +59,18 @@ public class GameWorld implements Disposable {
     // TODO name
     private void insertMap() {
         insertTrackSections();
+        insertImmovables();
     }
 
     private void insertTrackSections() {
         for (TrackSection trackSection : gameMap.getTrackSections()) {
+            BodyFactory.createStaticBody(b2World, trackSection.getShape(), true, trackSection);
+        }
+    }
 
-            // TODO extract
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-
-            Body body = b2World.createBody(bodyDef);
-            body.setUserData(trackSection);
-
-            FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = trackSection.getShape();
-            fixtureDef.isSensor = true;
-
-            body.createFixture(fixtureDef);
+    private void insertImmovables() {
+        for (Immovable immovable : gameMap.getImmovables()) {
+            BodyFactory.createStaticBody(b2World, immovable.getShape(), false);
         }
     }
 

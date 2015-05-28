@@ -40,6 +40,7 @@ public enum GameMap implements Disposable {
     private final List<Float> spawnAngles = new ArrayList<>();
 
     private final List<TrackSection> trackSections = new ArrayList<>();
+    private List<Immovable> immovables = new ArrayList<>();
 
     private float PIXELS_PER_METER = 20f; // TODO remove
     private World world; // TODO remove
@@ -89,6 +90,12 @@ public enum GameMap implements Disposable {
         trackSections.add(new TrackSection(shape, material));
     }
 
+    private void processImmovable(String objectName, Shape shape) {
+        if (objectName.equals("solid")) {
+            immovables.add(new Immovable(shape));
+        }
+    }
+
     private void createShapesFromMap(){
 
         MapLayers ml = tiledMap.getLayers();
@@ -107,11 +114,9 @@ public enum GameMap implements Disposable {
                 String objectName = object.getName();
 
                 processTrackSection(objectName, shape);
+                processImmovable(objectName, shape);
 
                 switch (objectName){
-                    case "solid":
-                        new Immovable(world, shape);
-                        break;
                     case "path":
                         if(object instanceof EllipseMapObject){
                             Ellipse c = ((EllipseMapObject)object).getEllipse();
@@ -189,5 +194,9 @@ public enum GameMap implements Disposable {
 
     public List<TrackSection> getTrackSections() {
         return trackSections;
+    }
+
+    public List<Immovable> getImmovables() {
+        return immovables;
     }
 }
