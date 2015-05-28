@@ -170,12 +170,17 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     @Override
     public void findOpponents(String chosenVehicle, String chosenMap) {
         setRaceSettings(chosenVehicle, chosenMap);
+        findOpponents();
+    }
 
+    /**
+     * Finds opponents based on previously set map.
+     */
+    private void findOpponents() {
         searchingForPlayerScreen = new SearchingForPlayerScreen(this);
         gameController.setScreen(searchingForPlayerScreen);
 
         Settings settings = gameController.getSettings();
-        System.out.println(settings == null);
         String apiKey = settings.getSetting("APPWARP_API_KEY");
         String secretKey = settings.getSetting("APPWARP_SECRET_KEY");
         int desiredOpponents = 2; // Should probably be chosen through UI in the future
@@ -187,13 +192,15 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     @Override
     public void cancelSearch() {
         disconnect();
-        gameController.setScreen(new MultipPlayerMenuScreen(this));
+        setUp();
         Gdx.app.log("Search cancelled by user", "Returning to menu");
     }
 
     @Override
     public void searchAgain() {
-        multiplayerRaceFinder.findRace();
+        disconnect();
+        Gdx.app.log("MultiplayerRace", "Creating a new RaceFinder based on set properties.");
+        findOpponents();
     }
 
     private void setRaceSettings(String chosenVehicle, String chosenMap){
