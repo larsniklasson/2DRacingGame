@@ -96,17 +96,67 @@ public enum GameMap implements Disposable {
         }
     }
 
-    private void createShapesFromMap(){
+    private void processPath(String objectName, MapObject object, Shape shape) {
+        if (!objectName.equals("path")) {
+            return;
+        }
+
+        if (!(object instanceof EllipseMapObject)) {
+            throw new IllegalStateException("Path must be an Ellipse in Tiled");
+        }
+
+        Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
+        wayPoints.add(new Vector2(ellipse.x / PIXELS_PER_METER, ellipse.y / PIXELS_PER_METER));
+    }
+
+    private void processSpawnPosition(String objectName, MapObject object, Shape shape) {
+        if (!objectName.equals("spawn_pos")) {
+            return;
+        }
+
+        if (!(object instanceof PolylineMapObject)) {
+            throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
+        }
+
+        Polyline pl = ((PolylineMapObject) object).getPolyline();
+        float[] vertices = pl.getVertices();
+        Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
+
+        spawnPoints.add(new Vector2(vertices[0], vertices[1]));
+        spawnAngles.add((float) (v.angleRad() - Math.PI / 2));
+    }
+
+    private void processCheckpoint(String objectType, MapObject object, Shape shape) {
+        if (objectType == null || ! objectType.equals("checkpoint")) {
+            return;
+        }
+
+        CheckpointType type = CheckpointType.getTypeFromName(
+                (String) object.getProperties().get("checkpointType")
+        );
+
+        List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
+                (String) object.getProperties().get("checkpointDirection")
+        );
+
+        Checkpoint cp = CheckpointFactory.createCheckpoint(world, shape, type);
+        for (CheckpointDirection direction : directions) {
+            cp.addAllowedPassingDirection(direction);
+        }
+        checkpoints.add(cp);
+    }
+
+    private void createShapesFromMap() {
 
         MapLayers ml = tiledMap.getLayers();
         Iterator<MapLayer> it = ml.iterator();
 
-        while(it.hasNext()){
+        while (it.hasNext()) {
             MapLayer layer = it.next();
             MapObjects mo = layer.getObjects();
             Iterator<MapObject> it2 = mo.iterator();
 
-            while(it2.hasNext()){
+            while (it2.hasNext()) {
                 MapObject object = it2.next();
                 Shape shape = ShapeFactory.createShape(object, PIXELS_PER_METER);
 
@@ -115,54 +165,9 @@ public enum GameMap implements Disposable {
 
                 processTrackSection(objectName, shape);
                 processImmovable(objectName, shape);
-
-                switch (objectName){
-                    case "path":
-                        if(object instanceof EllipseMapObject){
-                            Ellipse c = ((EllipseMapObject)object).getEllipse();
-                            wayPoints.add(new Vector2(c.x/ PIXELS_PER_METER, c.y/ PIXELS_PER_METER));
-                        } else {
-                            throw new IllegalStateException("path must be an Ellipse in Tiled");
-                        }
-
-                        break;
-                    case "spawn_pos":
-
-                        if(object instanceof PolylineMapObject){
-                            Polyline pl = ((PolylineMapObject) object).getPolyline();
-                            float[] vertices = pl.getVertices();
-                            Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
-
-                            spawnPoints.add(new Vector2(vertices[0], vertices[1]));
-                            spawnAngles.add((float) (v.angleRad() - Math.PI / 2));
-                        } else {
-                            throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
-                        }
-
-                        break;
-                }
-
-                if(objectType == null){
-                    continue;
-                }
-
-                switch (objectType){
-                    case "checkpoint":
-
-                        CheckpointType type = CheckpointType.getTypeFromName(
-                                (String) object.getProperties().get("checkpointType")
-                        );
-
-                        List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
-                                (String) object.getProperties().get("checkpointDirection")
-                        );
-                        Checkpoint cp = CheckpointFactory.createCheckpoint(world, shape, type);
-                        for (CheckpointDirection direction : directions) {
-                            cp.addAllowedPassingDirection(direction);
-                        }
-                        checkpoints.add(cp);
-                        break;
-                }
+                processPath(objectName, object, shape);
+                processSpawnPosition(objectName, object, shape);
+                processCheckpoint(objectType, object, shape);
 
             }
         }
