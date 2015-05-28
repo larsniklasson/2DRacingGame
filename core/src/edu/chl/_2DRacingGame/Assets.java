@@ -71,7 +71,7 @@ public class Assets {
 
 
         //--------Images for Vehicle and Map Selection
-        String [] mapNames  = new String[] {"map1"};
+        String [] mapNames  = new String[] {"map1", "map2"};
         mapArray = new ArrayList<>();
         for(int i = 0; i<mapNames.length;i++){
             System.out.println(i);
@@ -79,7 +79,10 @@ public class Assets {
             //mapArray.get(i).setName(mapNames[i]);
             switch (mapNames[i]) {
                 case "map1":
-                    mapArray.get(i).setName("PLACEHOLDER_MAP");
+                    mapArray.get(i).setName("MAP_1");
+                    break;
+                case "map2":
+                    mapArray.get(i).setName("MAP_2");
                     break;
             }
         }

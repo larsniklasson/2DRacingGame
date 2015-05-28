@@ -5,7 +5,8 @@ package edu.chl._2DRacingGame.models;
  */
 public enum GameMap {
 
-    PLACEHOLDER_MAP("map4.tmx");
+    MAP_1("map3.tmx"),
+    MAP_2("map4.tmx");
 
     private final String mapPath;
 
