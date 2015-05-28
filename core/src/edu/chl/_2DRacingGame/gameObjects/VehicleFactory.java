@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.gameObjects;
 
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.steering.*;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -86,7 +88,10 @@ public class VehicleFactory {
      */
     public static WheeledVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
         WheeledVehicle wv = (WheeledVehicle) createVehicle(gameWorld, vehicleType);
-        wv.setSteeringSystem(new WayPointSystem(new WheeledAISteeringEntity(wv, wv.getAISpeeds(difficulty)), gameWorld.getWayPoints()));
+        WheeledAISteeringEntity steeringEntity = new WheeledAISteeringEntity(wv, wv.getAISpeeds(difficulty));
+        Array<Vector2> wayPoints = gameWorld.getGameMap().getWayPoints();
+
+        wv.setSteeringSystem(new WayPointSystem(steeringEntity, wayPoints));
         return wv;
     }
 

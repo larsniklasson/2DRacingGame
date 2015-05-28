@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Kethupflaskaa on 2015-05-08.
  */
-public class AICar implements Steerable<Vector2>{
+public class AIcar implements Steerable<Vector2>{
 
     private Vector2 position;
     private Vector2 linearVelocity;
@@ -23,7 +23,7 @@ public class AICar implements Steerable<Vector2>{
     SteeringBehavior<Vector2> steeringBehavior;
     private SteeringAcceleration<Vector2> steeringAcceleration;
 
-    public AICar(){
+    public AIcar(){
 
         this.position = new Vector2();
         this.linearVelocity = new Vector2();

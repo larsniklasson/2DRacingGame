@@ -45,7 +45,7 @@ public class Checkpoint {
     }
 
     /**
-     * Returns wether the passing is valid, considering all allowed passing directions.
+     * Returns whether the passing is valid, considering all allowed passing directions.
      *
      * @param beginContactPosition position when entered the checkpoint
      * @param endContactPosition position when exited the checkpoint
@@ -62,8 +62,6 @@ public class Checkpoint {
     }
 
     /**
-     * Returns the checkpoints type
-     *
      * @return the checkpoints type
      */
     public CheckpointType getType() {

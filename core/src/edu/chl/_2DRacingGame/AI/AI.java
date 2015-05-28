@@ -24,7 +24,7 @@ public class AI {
     private Texture AITexture;
     private Body body;
     FollowPath<Vector2, LinePath.LinePathParam> followPath;
-    AICar aiCar;
+    AIcar aiCar;
 
     public static float PIXELS_PER_METER = 20f;
 
@@ -37,7 +37,7 @@ public class AI {
 
         this.world = world;
 
-        AITexture = new Texture(Gdx.files.internal("carbody.png"));
+        AITexture = new Texture(Gdx.files.internal("vehicles/car_body.png"));
 
         sprite = new Sprite(AITexture);
 
@@ -48,7 +48,7 @@ public class AI {
 
         aiCar.setSteeringBehavior(followPath);
 
-        aiCar = new AICar();
+        aiCar = new AIcar();
 
     }
 

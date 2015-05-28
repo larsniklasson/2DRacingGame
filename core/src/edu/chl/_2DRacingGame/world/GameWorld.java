@@ -11,8 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.mapobjects.*;
@@ -21,6 +20,7 @@ import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
 import edu.chl._2DRacingGame.models.*;
 
 
+import javax.sound.midi.Track;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,33 +41,41 @@ public class GameWorld implements Disposable {
     public static final float PIXELS_PER_METER = 20f;
 
     private final List<Player> players = new ArrayList<>();
-
-    // TODO not sure if these are supposed to be here
-    private final List<Checkpoint> checkpoints = new ArrayList<>();
-
-
-
-    private final  Array<Vector2> wayPoints = new Array<>();
-    private final World b2World;
-
-    private final TiledMap tiledMap;
-
-    private final List<Vector2> mapSpawnPoints = new ArrayList<>();
-    private final List<Float> mapSpawnAngles = new ArrayList<>();
-
     private final List<UpdateListener> updateListeners = new ArrayList<>();
+    private final World b2World;
+    private final GameMap gameMap;
 
     /**
      * Creates a world from the specified map
      * @param gameMap the map this world will use.
      */
     public GameWorld(GameMap gameMap) {
-        tiledMap = new TmxMapLoader().load(gameMap.getPath());
+        this.gameMap = gameMap;
         b2World = new World(new Vector2(0, 0), true);
+        gameMap.load(b2World);
+        insertMap();
+    }
 
-        createShapesFromMap();
-        if (mapSpawnPoints.isEmpty()) {
-            throw new IllegalStateException("Found no spawn-areas on the map.");
+    // TODO name
+    private void insertMap() {
+        insertTrackSections();
+    }
+
+    private void insertTrackSections() {
+        for (TrackSection trackSection : gameMap.getTrackSections()) {
+
+            // TODO extract
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+
+            Body body = b2World.createBody(bodyDef);
+            body.setUserData(trackSection);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = trackSection.getShape();
+            fixtureDef.isSensor = true;
+
+            body.createFixture(fixtureDef);
         }
     }
 
@@ -119,101 +127,14 @@ public class GameWorld implements Disposable {
         }
     }
 
-    private void createShapesFromMap(){
-
-        MapLayers ml = tiledMap.getLayers();
-        Iterator<MapLayer> it = ml.iterator();
-
-        while(it.hasNext()){
-            MapLayer layer = it.next();
-            MapObjects mo = layer.getObjects();
-            Iterator<MapObject> it2 = mo.iterator();
-
-            while(it2.hasNext()){
-                MapObject object = it2.next();
-                Shape shape = ShapeFactory.createShape(object, PIXELS_PER_METER);
-
-                String objectType = (String) object.getProperties().get("type");
-                String objectName = object.getName();
-
-
-                switch (objectName){
-                    case "dirt":
-                        new TrackSection(b2World, shape, new Dirt());
-                        break;
-                    case "ice":
-                        new TrackSection(b2World, shape, new Ice());
-                        break;
-                    case "sand":
-                        new TrackSection(b2World, shape, new Sand());
-                        break;
-                    case "solid":
-                        new Immovable(b2World, shape);
-                        break;
-                    case "path":
-                        if(object instanceof EllipseMapObject){
-                            Ellipse c = ((EllipseMapObject)object).getEllipse();
-                            wayPoints.add(new Vector2(c.x/PIXELS_PER_METER, c.y/PIXELS_PER_METER));
-                        } else {
-                            throw new IllegalStateException("path must be an Ellipse in Tiled");
-                        }
-
-                        break;
-                    case "spawn_pos":
-
-                        if(object instanceof PolylineMapObject){
-                            Polyline pl = ((PolylineMapObject) object).getPolyline();
-                            float[] vertices = pl.getVertices();
-                            Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
-
-                            mapSpawnPoints.add(new Vector2(vertices[0], vertices[1]));
-                            mapSpawnAngles.add((float) (v.angleRad() - Math.PI/2));
-                        } else {
-                            throw new IllegalStateException("spawn_pos must be a PolyLine in Tiled");
-                        }
-
-                        break;
-                }
-
-                if(objectType == null){
-                    continue;
-                }
-
-                switch (objectType){
-                    case "checkpoint":
-
-                        CheckpointType type = CheckpointType.getTypeFromName(
-                                (String) object.getProperties().get("checkpointType")
-                        );
-
-                        List<CheckpointDirection> directions = CheckpointDirection.getDirectionsFromNames(
-                                (String) object.getProperties().get("checkpointDirection")
-                        );
-                        Checkpoint cp = CheckpointFactory.createCheckpoint(b2World, shape, type);
-                        for (CheckpointDirection direction : directions) {
-                            cp.addAllowedPassingDirection(direction);
-                        }
-                        checkpoints.add(cp);
-                        break;
-                }
-
-            }
-        }
-
-    }
-
-    /**
-     *
-     * @return A list of the checkpoints used in this world.
-     */
-    public List<Checkpoint> getCheckpoints() {
-        return checkpoints;
-    }
 
     /**
      * Spawns each player on the right spawn-location.
      */
     public void spawnPlayers() {
+        List<Vector2> mapSpawnPoints = gameMap.getSpawnPoints();
+        List<Float> mapSpawnAngles = gameMap.getSpawnAngles();
+
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
             Vector2 spawnPoint = mapSpawnPoints.get(i);
@@ -223,13 +144,6 @@ public class GameWorld implements Disposable {
         }
     }
 
-    /**
-     *
-     * @return The TiledMap object of this game-world.
-     */
-    public TiledMap getTiledMap(){
-        return tiledMap;
-    }
 
     /**
      *
@@ -239,18 +153,10 @@ public class GameWorld implements Disposable {
         return players;
     }
 
-    /**
-     * NOTE: used by AI
-     * @return An array of all the wayPoints in this game-world.
-     */
-    public Array<Vector2> getWayPoints() {
-        return wayPoints;
-    }
-
     @Override
     public void dispose() {
         b2World.dispose();
-        tiledMap.dispose();
+        gameMap.dispose();
     }
 
 
@@ -260,5 +166,9 @@ public class GameWorld implements Disposable {
 
     public void removeUpdateListener(UpdateListener listener) {
         updateListeners.remove(listener);
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 }

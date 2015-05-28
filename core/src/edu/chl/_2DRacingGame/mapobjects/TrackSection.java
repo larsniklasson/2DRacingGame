@@ -12,33 +12,17 @@ public class TrackSection {
 
 
     private final GroundMaterial groundMaterial;
+    private final Shape shape;
 
     /**
      * Creates a new TrackSection in the specified Box2D-world, with the specified Box2d-shape and groundmaterial
      *
-     * @param world The Box2D-world the TrackSection will be created in
      * @param shape The Box2D-shape the TrackSection will get
      * @param groundMaterial The GroundMaterial the TrackSection will get.
      */
-    public TrackSection(World world, Shape shape, GroundMaterial groundMaterial){
+    public TrackSection(Shape shape, GroundMaterial groundMaterial){
         this.groundMaterial = groundMaterial;
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        Body body = world.createBody(bodyDef);
-        body.setUserData(this);
-
-
-
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-
-
-
-        body.createFixture(fixtureDef);
+        this.shape = shape;
     }
 
     /**
@@ -49,4 +33,7 @@ public class TrackSection {
         return groundMaterial;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
 }

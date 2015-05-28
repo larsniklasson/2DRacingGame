@@ -55,7 +55,7 @@ public class GameRenderer extends Stage {
     public GameRenderer(GameWorld world) {
         this.gameWorld = world;
         font = new BitmapFont();
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getTiledMap());
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getGameMap().getTiledMap());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -134,7 +134,7 @@ public class GameRenderer extends Stage {
         sr.setColor(Color.BLACK);
         sr.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Vector2 v2 : gameWorld.getWayPoints()) {
+        for (Vector2 v2 : gameWorld.getGameMap().getWayPoints()) {
 
             sr.circle(v2.x*GameWorld.PIXELS_PER_METER, v2.y*GameWorld.PIXELS_PER_METER, 10);
         }
