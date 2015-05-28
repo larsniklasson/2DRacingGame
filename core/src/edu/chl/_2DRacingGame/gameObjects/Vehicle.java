@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import edu.chl._2DRacingGame.steering.ISteeringSystem;
+import edu.chl._2DRacingGame.steering.WheelSteeringSystem;
 
 
 /**
@@ -61,6 +62,14 @@ public abstract class Vehicle{
      */
     public void setSteeringSystem(ISteeringSystem steeringSystem){
         this.steeringSystem = steeringSystem;
+    }
+
+    /**
+     * @return whether the vehicle is controlled by our clients player
+     */
+    public boolean isControlledLocally() {
+        // TODO improve
+        return steeringSystem instanceof WheelSteeringSystem;
     }
 
 }

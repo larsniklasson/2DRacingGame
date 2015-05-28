@@ -74,7 +74,7 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
     public void render(float delta) {
         super.render(delta);
 
-        String entryFormat = "%s. %s finished in %s\n";
+        String entryFormat = "%s. %s finished in %s seconds\n";
 
         int position = 1;
         StringBuilder boardLabelBuilder = new StringBuilder();

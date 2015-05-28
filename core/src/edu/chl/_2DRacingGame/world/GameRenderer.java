@@ -120,10 +120,6 @@ public class GameRenderer extends Stage {
 
             }
 
-
-
-
-
         }
 
         if(nyanMode) wp.draw(batch);

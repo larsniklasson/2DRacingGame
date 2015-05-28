@@ -42,7 +42,11 @@ class ContactController implements ContactListener {
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
-            beginContactPosition = ((Vehicle) b.getUserData()).getPosition().cpy();
+            Vehicle vehicle = (Vehicle) b.getUserData();
+            if (! vehicle.isControlledLocally()) {
+                return;
+            }
+            beginContactPosition = vehicle.getPosition().cpy();
         }
 
     }
@@ -69,8 +73,11 @@ class ContactController implements ContactListener {
         }
 
         if (a.getUserData() instanceof Checkpoint && b.getUserData() instanceof Vehicle) {
-            Checkpoint checkpoint = (Checkpoint) a.getUserData();
             Vehicle vehicle = (Vehicle) b.getUserData();
+            if (! vehicle.isControlledLocally()) {
+                return;
+            }
+            Checkpoint checkpoint = (Checkpoint) a.getUserData();
 
             processCheckpointCollision(checkpoint, vehicle);
         }
