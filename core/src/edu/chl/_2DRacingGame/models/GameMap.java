@@ -5,16 +5,22 @@ package edu.chl._2DRacingGame.models;
  */
 public enum GameMap {
 
-    MAP_1("map3.tmx"),
-    MAP_2("map4.tmx");
+    MAP_1("maps/map1.tmx", "maps/map1.png"),
+    MAP_2("maps/map2.tmx", "maps/map2.png");
 
     private final String mapPath;
+    private final String overviewImagePath;
 
-    GameMap(String mapPath) {
+    GameMap(String mapPath, String overviewImagePath) {
         this.mapPath = mapPath;
+        this.overviewImagePath = overviewImagePath;
     }
 
     public String getPath() {
         return mapPath;
+    }
+
+    public String getOverviewImagePath() {
+        return overviewImagePath;
     }
 }

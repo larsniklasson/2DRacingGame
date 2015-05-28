@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import edu.chl._2DRacingGame.models.GameMap;
 
 import java.util.ArrayList;
 
@@ -71,23 +72,12 @@ public class Assets {
 
 
         //--------Images for Vehicle and Map Selection
-        String [] mapNames  = new String[] {"map1", "map2"};
         mapArray = new ArrayList<>();
-        for(int i = 0; i<mapNames.length;i++){
-            System.out.println(i);
-            mapArray.add(createImage(loadTexture(mapNames[i] + ".png")));
-            //mapArray.get(i).setName(mapNames[i]);
-            switch (mapNames[i]) {
-                case "map1":
-                    mapArray.get(i).setName("MAP_1");
-                    break;
-                case "map2":
-                    mapArray.get(i).setName("MAP_2");
-                    break;
-            }
+        for (GameMap map : GameMap.values()) {
+            Image mapOverview = createImage(loadTexture(map.getOverviewImagePath()));
+            mapOverview.setName(map.name());
+            mapArray.add(mapOverview);
         }
-
-
 
         String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1car.jpg", "magiccarpet.jpg", "random.jpg"};
         vehicleArray = new ArrayList<>();
