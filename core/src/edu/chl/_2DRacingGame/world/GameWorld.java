@@ -37,7 +37,7 @@ public class GameWorld implements Disposable {
     public GameWorld(GameMap gameMap) {
         this.gameMap = gameMap;
         b2World = new World(new Vector2(0, 0), true);
-        gameMap.load(b2World);
+        gameMap.load(PIXELS_PER_METER);
         insertMap();
     }
 

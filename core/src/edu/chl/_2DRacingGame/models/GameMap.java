@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
@@ -22,6 +21,7 @@ import java.util.*;
 
 /**
  * TODO way to nested with Shape objects. They are very comfortable, though.
+ * TODO Shapes should ideally be created in World.
  *
  * @author Daniel Sunnerberg
  */
@@ -42,8 +42,7 @@ public enum GameMap implements Disposable {
     private final List<TrackSection> trackSections = new ArrayList<>();
     private List<Immovable> immovables = new ArrayList<>();
 
-    private float PIXELS_PER_METER = 20f; // TODO remove
-    private World world; // TODO remove
+    private float scaleFactor;
 
     GameMap(String mapPath, String overviewImagePath) {
         this.mapPath = mapPath;
@@ -62,11 +61,12 @@ public enum GameMap implements Disposable {
         return tiledMap;
     }
 
-    public void load(World world) {
+    public void load(float scaleFactor) {
+        this.scaleFactor = scaleFactor;
         tiledMap = new TmxMapLoader().load(getPath());
-        this.world = world;
         createShapesFromMap();
-        if (spawnPoints.isEmpty()) { // TODO
+
+        if (spawnPoints.isEmpty()) {
             throw new IllegalStateException("Found no spawn-areas on the map.");
         }
     }
@@ -106,7 +106,7 @@ public enum GameMap implements Disposable {
         }
 
         Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
-        wayPoints.add(new Vector2(ellipse.x / PIXELS_PER_METER, ellipse.y / PIXELS_PER_METER));
+        wayPoints.add(new Vector2(ellipse.x / scaleFactor, ellipse.y / scaleFactor));
     }
 
     private void processSpawnPosition(String objectName, MapObject object, Shape shape) {
@@ -160,7 +160,7 @@ public enum GameMap implements Disposable {
 
             while (it2.hasNext()) {
                 MapObject object = it2.next();
-                Shape shape = ShapeFactory.createShape(object, PIXELS_PER_METER);
+                Shape shape = ShapeFactory.createShape(object, scaleFactor);
 
                 String objectType = (String) object.getProperties().get("type");
                 String objectName = object.getName();
