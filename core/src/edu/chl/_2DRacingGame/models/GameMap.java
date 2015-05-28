@@ -22,6 +22,7 @@ import java.util.*;
 /**
  * TODO way to nested with Shape objects. They are very comfortable, though.
  * TODO Shapes should ideally be created in World.
+ * TODO extract map loading to a separate class
  *
  * @author Daniel Sunnerberg
  */
@@ -34,7 +35,7 @@ public enum GameMap implements Disposable {
     private final String overviewImagePath;
     private TiledMap tiledMap;
 
-    private final Map<Checkpoint, Shape> checkpoints = new HashMap<>();
+    private final Map<Checkpoint, Shape> checkpoints = new LinkedHashMap<>();
     private final Array<Vector2> wayPoints = new Array<>();
     private final List<Vector2> spawnPoints = new ArrayList<>();
     private final List<Float> spawnAngles = new ArrayList<>();
