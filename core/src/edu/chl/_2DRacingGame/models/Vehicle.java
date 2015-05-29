@@ -1,9 +1,6 @@
 package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import edu.chl._2DRacingGame.gameObjects.VehicleActor;
-import edu.chl._2DRacingGame.gameObjects.steering.WheelSteeringSystem;
 
 
 /**
@@ -69,10 +66,7 @@ public abstract class Vehicle implements Actable {
      * @return whether the vehicle is controlled by our clients player
      */
     public boolean isControlledByClientPlayer() {
-        if(steeringSystem == null){
-            return false;
-        }
-        return steeringSystem.isControlledByPlayer();
+        return steeringSystem != null && steeringSystem.isControlledByPlayer();
     }
 
 }

@@ -7,10 +7,6 @@ import com.badlogic.gdx.physics.box2d.*;
  */
 public class BodyFactory {
 
-    public static Body createStaticBody(World world, Shape shape) {
-        return createStaticBody(world, shape, false, null);
-    }
-
     public static Body createStaticBody(World world, Shape shape, boolean isSensor) {
         return createStaticBody(world, shape, isSensor, null);
     }

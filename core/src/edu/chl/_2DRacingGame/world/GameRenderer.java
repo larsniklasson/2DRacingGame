@@ -43,9 +43,8 @@ public class GameRenderer extends Stage {
     private final Box2DDebugRenderer debugRenderer;
     private final TiledMapRenderer tiledMapRenderer;
 
-    private List<ScreenText> screenTexts = new ArrayList<>();
-
-    WayPoints wp;
+    private final List<ScreenText> screenTexts = new ArrayList<>();
+    private final WayPoints nyanWayPoints = new WayPoints();
 
     /**
      *
@@ -61,8 +60,6 @@ public class GameRenderer extends Stage {
 
         batch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
-
-        wp = new WayPoints();
     }
 
     /**
@@ -121,7 +118,7 @@ public class GameRenderer extends Stage {
 
         }
 
-        if(nyanMode) wp.draw(batch);
+        if(nyanMode) nyanWayPoints.draw(batch);
 
         drawScreenTexts();
 

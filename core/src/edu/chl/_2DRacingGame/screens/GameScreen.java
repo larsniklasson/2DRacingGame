@@ -143,7 +143,7 @@ public class GameScreen extends GUIScreen implements Screen {
     @Override
     public void hide() {}
 
-    public void pauseGame(){
+    private void pauseGame(){
         if(!gameStart){
             paused = !paused;
             if(paused){

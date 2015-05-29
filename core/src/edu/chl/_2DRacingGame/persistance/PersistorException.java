@@ -6,5 +6,7 @@ package edu.chl._2DRacingGame.persistance;
  * @author Daniel Sunnerberg
  */
 public class PersistorException extends Exception {
-    public PersistorException(String message) {}
+    public PersistorException(String message) {
+        super(message);
+    }
 }

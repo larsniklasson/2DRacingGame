@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Daniel Sunnerberg
@@ -51,9 +50,8 @@ public class IdentifiableScoresTest {
         scores.load();
         assertTrue("No previous save should yield empty scores", scores.getScores().isEmpty());
 
-        ArrayList<Double> values = Lists.newArrayList(5d, 42d, 1d, 9d);
-        scores.getScores().addAll(values);
-        List<Double> sortedValues = scores.getScores(); // Scores should be sorted after adding them
+        scores.getScores().addAll(Lists.newArrayList(5d, 42d, 1d, 9d));
+        ScoreList sortedValues = scores.getScores(); // Scores should be sorted after adding them
         scores.save();
 
         IdentifiableScores persistedScores = new IdentifiableScores(identifiers, scoreComparator, listPersistor);

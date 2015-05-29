@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
  * Small helper-class.
  * @author Lars Niklasson
  */
-public class MathHelper {
+class MathHelper {
 
     /**
      * Scales a rectangle.

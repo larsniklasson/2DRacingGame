@@ -7,8 +7,6 @@ import java.util.Date;
  */
 public class Player {
 
-
-
     /**
      * The player's username must be unique when playing online.
      */

@@ -7,7 +7,6 @@ import com.google.common.collect.Sets;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
 import edu.chl._2DRacingGame.map.GameMap;
-import edu.chl._2DRacingGame.models.IdentifiableScores;
 import edu.chl._2DRacingGame.models.*;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;

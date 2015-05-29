@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.models.Vehicle;
  *
  * @author Daniel Sunnerberg
  */
-public class VehicleActor extends Actor {
+class VehicleActor extends Actor {
 
     private final Vehicle vehicle;
 

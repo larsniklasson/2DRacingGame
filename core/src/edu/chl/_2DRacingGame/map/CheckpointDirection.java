@@ -60,9 +60,7 @@ public enum CheckpointDirection {
     }
 
     /**
-     * Returns all checkpoint directions found in argument, separated by "|".
-     *
-     * @return
+     * @return all checkpoint directions found in argument, separated by "|"
      */
     public static List<CheckpointDirection> getDirectionsFromNames(String names) {
         List<CheckpointDirection> directions = new ArrayList<>();

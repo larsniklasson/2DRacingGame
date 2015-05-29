@@ -6,7 +6,6 @@ import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.persistance.PersistorException;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,7 +87,7 @@ public class Settings extends HashMap<String, String> implements Persistable {
      * Retreives the setting stored under the specified key.
      * NOTE: alias of #get(key)
      *
-     * @param key
+     * @param key key to find setting for
      */
     public String getSetting(String key) {
         return get(key);

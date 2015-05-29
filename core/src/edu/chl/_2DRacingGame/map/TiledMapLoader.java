@@ -27,7 +27,7 @@ import java.util.List;
 public class TiledMapLoader implements MapLoader {
 
     private TiledMap tiledMap;
-    private float scaleFactor;
+    private final float scaleFactor;
 
     private final MapObjects mapObjects = new MapObjects();
 

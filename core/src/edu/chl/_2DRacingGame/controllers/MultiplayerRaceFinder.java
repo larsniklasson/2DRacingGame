@@ -180,10 +180,9 @@ class MultiplayerRaceFinder implements RoomRequestListener, ZoneRequestListener,
         HashMap<String, Object> roomProperties = e.getProperties();
         String playersJson = (String) roomProperties.get("players");
         List<Player> connectedPlayers = getPlayersFromJson(playersJson);
-        if (connectedPlayers.contains(player)) {
-            // Our information is already included in the room
-            return;
-        } else {
+
+        if (! connectedPlayers.contains(player)) {
+            // Our information is not already included in the room, add it
             addPlayerDataToRoom(connectedPlayers, roomProperties);
         }
     }

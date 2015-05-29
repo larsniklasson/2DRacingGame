@@ -6,8 +6,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Persists instances of classes to disk using Gson and LibGDX's file handler.
@@ -34,7 +32,6 @@ public class DiskPersistor<T> implements Persistor<T> {
     @Override
     public T getPersistedInstance(String persistKey, Type originType) throws PersistorException {
         FileHandle persistedInstance = Gdx.files.local(persistKey + SUFFIX);
-        List<Double> scores = new ArrayList<>();
         try {
             String serialized = persistedInstance.readString();
             return new Gson().fromJson(serialized, originType);

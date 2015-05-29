@@ -46,7 +46,7 @@ public class Checkpoint {
      *
      * @param beginContactPosition position when entered the checkpoint
      * @param endContactPosition position when exited the checkpoint
-     * @return
+     * @return whether the passing is valid
      */
     public boolean isValidEntry(Vector2 beginContactPosition, Vector2 endContactPosition) {
         for (CheckpointDirection direction : allowedPassingDirections) {
