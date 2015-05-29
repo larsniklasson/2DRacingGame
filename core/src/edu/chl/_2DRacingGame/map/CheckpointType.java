@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.map;
 
 /**
+ * All possible checkpoint types.
+ *
  * @author Daniel Sunnerberg
  */
 public enum CheckpointType {

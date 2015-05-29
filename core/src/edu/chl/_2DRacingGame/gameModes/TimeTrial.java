@@ -7,7 +7,10 @@ import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author  Daniel Sunnerberg
+ * A simple lap-based game mode. The players are supposed to drive a specified numbers of laps in the shortest
+ * time possible. Shortest time wins.
+ *
+ * @author Daniel Sunnerberg
  */
 public class TimeTrial extends GameMode {
 
@@ -17,6 +20,12 @@ public class TimeTrial extends GameMode {
     private final ScreenText currentLapText;
     private final ScreenText currentRaceTimeText;
 
+    /**
+     * Creates a new TimeTrial game mode.
+     *
+     * @param lapGoal how many goals that should be driven before the race is considered complete
+     * @param listener listener who wants game mode events
+     */
     public TimeTrial(int lapGoal, RaceListener listener) {
         super(listener);
         this.lapGoal = lapGoal;

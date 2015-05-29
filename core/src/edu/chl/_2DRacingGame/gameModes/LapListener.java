@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.gameModes;
 
 /**
+ * Signifies a class who wants to receive events when a lap has been completed.
+ *
  * @author Daniel Sunnerberg
  */
 public interface LapListener {
