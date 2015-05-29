@@ -7,11 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.controllers.GameScreenListener;
-import edu.chl._2DRacingGame.controllers.MultiplayerRace;
 import edu.chl._2DRacingGame.controllers.PauseScreenListener;
-import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.models.ScreenText;
-import edu.chl._2DRacingGame.steering.Key;
 import edu.chl._2DRacingGame.world.GameRenderer;
 import edu.chl._2DRacingGame.world.GameWorld;
 

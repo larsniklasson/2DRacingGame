@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.steering;
+package edu.chl._2DRacingGame.gameObjects.steering;
 
 /**
  * Class for holding multiple speed-related values.

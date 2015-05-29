@@ -1,15 +1,16 @@
-package edu.chl._2DRacingGame.gameObjects;
+package edu.chl._2DRacingGame.models;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl._2DRacingGame.steering.ISteeringSystem;
-import edu.chl._2DRacingGame.steering.WheelSteeringSystem;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import edu.chl._2DRacingGame.gameObjects.VehicleActor;
+import edu.chl._2DRacingGame.gameObjects.steering.WheelSteeringSystem;
 
 
 /**
  * Model for a simple vehicle in a 2D-world.
  * @author Lars Niklasson
  */
-public abstract class Vehicle{
+public abstract class Vehicle implements Actable {
 
 
     private ISteeringSystem steeringSystem;

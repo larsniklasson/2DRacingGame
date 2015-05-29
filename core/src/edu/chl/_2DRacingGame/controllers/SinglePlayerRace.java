@@ -2,17 +2,13 @@ package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.*;
 import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
-import edu.chl._2DRacingGame.models.GameMap;
-import edu.chl._2DRacingGame.models.MapScores;
-import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.models.ScoreList;
+import edu.chl._2DRacingGame.models.*;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
-import edu.chl._2DRacingGame.steering.*;
+import edu.chl._2DRacingGame.gameObjects.steering.*;
 
 import java.util.List;
 

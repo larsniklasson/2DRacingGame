@@ -1,8 +1,5 @@
 package edu.chl._2DRacingGame.models;
 
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
-import edu.chl._2DRacingGame.gameObjects.VehicleActor;
-
 import java.util.Date;
 
 /**
@@ -10,7 +7,7 @@ import java.util.Date;
  */
 public class Player {
 
-    private transient VehicleActor actor;
+
 
     /**
      * The player's username must be unique when playing online.
@@ -32,7 +29,7 @@ public class Player {
     public Player(String userName, Vehicle vehicle) {
         this.userName = userName;
         this.vehicle = vehicle;
-        this.actor = new VehicleActor(vehicle);
+
     }
 
     public Player() {
@@ -54,7 +51,6 @@ public class Player {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
         vehicleType = vehicle.getClass().getSimpleName();
-        this.actor = new VehicleActor(vehicle);
     }
 
 
@@ -79,9 +75,6 @@ public class Player {
         return vehicleType;
     }
 
-    public VehicleActor getActor(){
-        return actor;
-    }
 
 
     public boolean isControlledLocally() {

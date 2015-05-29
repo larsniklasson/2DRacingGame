@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.steering;
+package edu.chl._2DRacingGame.gameObjects.steering;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;

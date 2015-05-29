@@ -3,7 +3,9 @@ package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import edu.chl._2DRacingGame.steering.*;
+import edu.chl._2DRacingGame.gameObjects.steering.*;
+import edu.chl._2DRacingGame.models.ISteeringSystem;
+import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.Random;

@@ -1,10 +1,11 @@
-package edu.chl._2DRacingGame.steering;
+package edu.chl._2DRacingGame.gameObjects.steering;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import edu.chl._2DRacingGame.gameObjects.Wheel;
 import edu.chl._2DRacingGame.helperClasses.Box2DUtils;
+import edu.chl._2DRacingGame.models.ISteeringSystem;
 
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import java.util.Set;
  *
  *@author Lars Niklasson
  */
-public class WheelSteeringSystem implements ISteeringSystem{
+public class WheelSteeringSystem implements ISteeringSystem {
 
 
     private final WheelSteerable ws;

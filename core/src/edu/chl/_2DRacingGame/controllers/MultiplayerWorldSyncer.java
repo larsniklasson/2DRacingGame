@@ -10,7 +10,7 @@ import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
 import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.world.UpdateListener;
 
@@ -179,7 +179,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
         Action moveAction = Actions.moveTo(x, y, animationDuration);
 
         Action rotateAction = Actions.rotateTo(angle, animationDuration);
-        opponent.getActor().addAction(Actions.parallel(moveAction, rotateAction));
+        opponent.getVehicle().getActor().addAction(Actions.parallel(moveAction, rotateAction));
     }
 
     private long getTimeSinceUpdate() {

@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.steering;
+package edu.chl._2DRacingGame.models;
 
 /**
  * Interface for a steering-system, typically used to control a vehicle.

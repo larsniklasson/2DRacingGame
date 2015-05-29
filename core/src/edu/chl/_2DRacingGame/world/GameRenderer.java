@@ -18,10 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.AI.WayPoints;
 import edu.chl._2DRacingGame.gameObjects.Drawable;
 import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;
-import javafx.stage.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +162,7 @@ public class GameRenderer extends Stage {
 
     public void retrieveActors() {
         for (Player player : gameWorld.getPlayers()) {
-            addActor(player.getActor());
+            addActor(player.getVehicle().getActor());
         }
     }
 }

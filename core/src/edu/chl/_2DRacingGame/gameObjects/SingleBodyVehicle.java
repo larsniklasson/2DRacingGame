@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import edu.chl._2DRacingGame.models.Vehicle;
 
 /**
  * Model for a vehicle that uses only one instance of a Box2D-Body object
@@ -16,6 +18,8 @@ public abstract class SingleBodyVehicle extends Vehicle {
     protected Body body;
     protected final World world;
 
+    private transient VehicleActor actor;
+
     /**
      * Creates a vehicle set in the specified Box2D-world.
      * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle when subclassing.
@@ -24,6 +28,7 @@ public abstract class SingleBodyVehicle extends Vehicle {
      */
     public SingleBodyVehicle(World world){
         this.world = world;
+        this.actor = new VehicleActor(this);
     }
 
     @Override
@@ -72,5 +77,11 @@ public abstract class SingleBodyVehicle extends Vehicle {
         body = world.createBody(bodyDef);
         body.setUserData(this);
         body.createFixture(shape, density);
+    }
+
+
+    @Override
+    public Actor getActor(){
+        return actor;
     }
 }

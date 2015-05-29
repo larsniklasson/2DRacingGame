@@ -144,9 +144,9 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     private void hideVehicle(Player player) {
         // Since removing bodies from the world while it is active is a potentially dangerous action
         // according to documentation, we will simply move it outside the map.
-        player.getActor().clearActions();
+        player.getVehicle().getActor().clearActions();
         float hideDelay = 0.2f;
-        player.getActor().addAction(Actions.sequence(Actions.delay(hideDelay), Actions.moveTo(-10, -10, 0)));
+        player.getVehicle().getActor().addAction(Actions.sequence(Actions.delay(hideDelay), Actions.moveTo(-10, -10, 0)));
     }
 
     /**

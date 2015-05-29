@@ -2,7 +2,7 @@ package edu.chl._2DRacingGame.gameObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import edu.chl._2DRacingGame.gameObjects.Vehicle;
+import edu.chl._2DRacingGame.models.Vehicle;
 
 /**
  * Ports basic Actor usability to Vehicles.

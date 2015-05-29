@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import edu.chl._2DRacingGame.steering.AISpeedHolder;
-import edu.chl._2DRacingGame.steering.Difficulty;
-import edu.chl._2DRacingGame.steering.WheelSteerable;
+import edu.chl._2DRacingGame.gameObjects.steering.AISpeedHolder;
+import edu.chl._2DRacingGame.gameObjects.steering.Difficulty;
+import edu.chl._2DRacingGame.gameObjects.steering.WheelSteerable;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;

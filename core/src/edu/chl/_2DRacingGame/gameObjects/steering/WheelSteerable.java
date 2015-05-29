@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.steering;
+package edu.chl._2DRacingGame.gameObjects.steering;
 
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import edu.chl._2DRacingGame.gameObjects.Wheel;
