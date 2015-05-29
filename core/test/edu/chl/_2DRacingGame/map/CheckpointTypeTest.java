@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.models;
+package edu.chl._2DRacingGame.map;
 
 import edu.chl._2DRacingGame.map.CheckpointType;
 import org.junit.Test;
