@@ -12,13 +12,16 @@ public class Immovable {
     private final Shape shape;
     
     /**
-     * Creates an immovable object in the specified Box2D-world with the specified Box2D-shape.
+     * Creates an immovable object with the specified Box2D-shape.
      * @param shape The Box2D-shape the immovable will get.
      */
     public Immovable(Shape shape) {
         this.shape = shape;
     }
 
+    /**
+     * @return the immovable's shape
+     */
     public Shape getShape() {
         return shape;
     }

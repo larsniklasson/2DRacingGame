@@ -15,7 +15,7 @@ public class TrackSection {
     private final Shape shape;
 
     /**
-     * Creates a new TrackSection in the specified Box2D-world, with the specified Box2d-shape and groundmaterial
+     * Creates a new TrackSection with the specified Box2d-shape and ground material
      *
      * @param shape The Box2D-shape the TrackSection will get
      * @param groundMaterial The GroundMaterial the TrackSection will get.
@@ -26,13 +26,15 @@ public class TrackSection {
     }
 
     /**
-     *
      * @return The GroundMaterial of this TrackSection.
      */
     public GroundMaterial getGroundMaterial(){
         return groundMaterial;
     }
 
+    /**
+     * @return the track section's shape
+     */
     public Shape getShape() {
         return shape;
     }
