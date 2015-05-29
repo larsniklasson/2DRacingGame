@@ -1,7 +1,5 @@
 package edu.chl._2DRacingGame.screens;
 
-import edu.chl._2DRacingGame.controllers.MainMenuDisplayer;
-
 /**
  * A class that manages searches for opponents in multiplayer.
  *

@@ -1,5 +1,7 @@
 package edu.chl._2DRacingGame.controllers;
 
+import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
+
 /**
  * @author Anton Ingvarsson
  */

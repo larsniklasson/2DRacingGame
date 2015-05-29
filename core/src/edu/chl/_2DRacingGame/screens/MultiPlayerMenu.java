@@ -15,11 +15,10 @@ import edu.chl._2DRacingGame._2DRacingGame;
  */
 public class MultiPlayerMenu extends GUIScreen{
 
-    private _2DRacingGame game;
+    private final MainMenuDisplayer listener;
 
-
-    public MultiPlayerMenu(_2DRacingGame game) {
-        this.game = game;
+    public MultiPlayerMenu(MainMenuDisplayer listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class MultiPlayerMenu extends GUIScreen{
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenuScreen(game));
+                listener.displayMainMenu();
             }
         });
 
