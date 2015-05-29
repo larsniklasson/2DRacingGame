@@ -34,7 +34,7 @@ public enum GameMap implements Disposable {
     private final List<Immovable> immovables = new ArrayList<>();
     private final List<SpawnPoint> spawnPoints = new ArrayList<>();
     private final Map<Checkpoint, Shape> checkpoints = new LinkedHashMap<>();
-    private final Array<Vector2> wayPoints = new Array<>(); // TODO array?
+    private final Array<Vector2> wayPoints = new Array<>();
 
     /**
      * Creates a new GameMap.

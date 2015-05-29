@@ -122,7 +122,7 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
 
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
         for(int i = 0; i < nbrOfOpponents; i ++) {
-            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld().getb2World(), VehicleFactory.RANDOM_VEHICLE, d, getWorld().getGameMap().getWayPoints());
+            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld().getb2World(), VehicleFactory.RANDOM_VEHICLE, d, getMap().getWayPoints());
             Player p = new Player("p" + i, ai_v);
             getWorld().addPlayer(p);
         }

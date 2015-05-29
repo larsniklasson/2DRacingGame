@@ -27,9 +27,9 @@ public class GameWorld implements Disposable {
     public static final float PIXELS_PER_METER = 20f;
 
     private final List<Player> players = new ArrayList<>();
+    private final GameMap gameMap;
     private final List<UpdateListener> updateListeners = new ArrayList<>();
     private final World b2World;
-    private final GameMap gameMap;
 
     /**
      * Creates a world from the specified map
@@ -109,7 +109,6 @@ public class GameWorld implements Disposable {
         for (Player player : players) {
             if (player.isControlledLocally()) {
                 // We should only control our own vehicle ...
-
                 player.getVehicle().update(delta);
             }
         }
@@ -145,13 +144,6 @@ public class GameWorld implements Disposable {
         return players;
     }
 
-    @Override
-    public void dispose() {
-        b2World.dispose();
-        gameMap.dispose();
-    }
-
-
     public void addUpdateListener(UpdateListener listener) {
         updateListeners.add(listener);
     }
@@ -162,5 +154,11 @@ public class GameWorld implements Disposable {
 
     public GameMap getGameMap() {
         return gameMap;
+    }
+
+    @Override
+    public void dispose() {
+        b2World.dispose();
+        gameMap.dispose();
     }
 }

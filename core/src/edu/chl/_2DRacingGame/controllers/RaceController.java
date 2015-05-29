@@ -42,9 +42,7 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
     protected void setRaceProperties(GameMap map, GameMode mode) {
         this.map = map;
         this.mode = mode;
-
-        // TODO where should the map be .load'ed()?
-
+        
         world = new GameWorld(map);
         List<Checkpoint> checkpoints = new ArrayList<>(map.getCheckpoints().keySet());
         CheckpointController checkpointController = new CheckpointController(mode, checkpoints);
