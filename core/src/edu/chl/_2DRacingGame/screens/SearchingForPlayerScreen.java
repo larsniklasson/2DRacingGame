@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import edu.chl._2DRacingGame.controllers.MultiPlayerMenuListener;
 
 /**
  * Screen that displays status when searching for opponents in multiplayer.

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import edu.chl._2DRacingGame.Assets;
-import edu.chl._2DRacingGame.controllers.MultiPlayerMenuListener;
 
 /**
  * GUI screen which let's the user decide which settings to use in a multiplayer race.
