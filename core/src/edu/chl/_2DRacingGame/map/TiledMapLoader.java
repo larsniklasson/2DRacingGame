@@ -18,6 +18,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * A map loader which loads TiledMaps and related objects.
+ *
+ * NOTE: A lot of the logic is written by Lars, I've (Daniel) mostly extracted it.
+ * @author Lars Niklasson
  * @author Daniel Sunnerberg
  */
 public class TiledMapLoader implements MapLoader {
@@ -26,15 +30,28 @@ public class TiledMapLoader implements MapLoader {
     private GameMap gameMap;
     private float scaleFactor;
 
+    /**
+     * Creates a new MapLoader with the specified scale.
+     *
+     * @param scaleFactor scale to be used when loading shapes
+     */
     public TiledMapLoader(float scaleFactor) {
         this.scaleFactor = scaleFactor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TiledMap loadMap(String mapPath) {
         return new TmxMapLoader().load(mapPath);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param gameMap map where the objects should be inserted
+     */
     @Override
     public void insertMapObjects(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -50,7 +67,6 @@ public class TiledMapLoader implements MapLoader {
             while (it2.hasNext()) {
                 MapObject object = it2.next();
                 Shape shape = ShapeFactory.createShape(object, scaleFactor);
-
                 String objectType = (String) object.getProperties().get("type");
                 String objectName = object.getName();
 
