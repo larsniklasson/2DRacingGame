@@ -95,7 +95,6 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
         return world;
     }
 
-
     /**
      * Gives away the control to the controller, which starts a series of actions (such as selection of map etc)
      * which eventually leads to the start of the race.

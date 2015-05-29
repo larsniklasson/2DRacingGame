@@ -18,6 +18,9 @@ abstract class GUIScreen extends ScreenAdapter {
     protected final Skin skin;
     protected final Stage stage;
 
+    /**
+     * Creates a new GUIScreen.
+     */
     public GUIScreen() {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("uiskin.json"));

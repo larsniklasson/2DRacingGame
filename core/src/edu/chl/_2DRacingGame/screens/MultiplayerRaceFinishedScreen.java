@@ -12,6 +12,8 @@ import edu.chl._2DRacingGame.models.RaceResult;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 
 /**
+ * Screen which displays a scoreboard when a multiplayer race has been finished.
+ *
  * @author Daniel Sunnerberg
  */
 public class MultiplayerRaceFinishedScreen extends GUIScreen {
@@ -26,6 +28,13 @@ public class MultiplayerRaceFinishedScreen extends GUIScreen {
 
     private final MainMenuDisplayer listener;
 
+    /**
+     * Creates a new screen with specified arguments.
+     *
+     * @param clientPlayer our clients player
+     * @param scoreBoard scoreboard which holds the race's scores
+     * @param listener listener who will handle button-clicks etc.
+     */
     public MultiplayerRaceFinishedScreen(Player clientPlayer, ScoreBoard scoreBoard, MainMenuDisplayer listener) {
         this.scoreBoard = scoreBoard;
         this.clientPlayer = clientPlayer;

@@ -8,6 +8,8 @@ import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.map.Checkpoint;
 
 /**
+ * A controller which is responsible for handling logic related to collisions.
+ *
  * Created by Lasse on 2015-04-24.
  * Revised by Daniel Sunnerberg on 2015-04-26.
  * Revised by Lars Niklasson on 2015-05-03.
@@ -18,6 +20,11 @@ class ContactController implements ContactListener {
 
     private Vector2 beginContactPosition;
 
+    /**
+     * Creates a new ContactController which will delegate specific events to the delegate.
+     *
+     * @param contactDelegator delegate who wishes to be notified about specific events
+     */
     public ContactController(ContactDelegator contactDelegator) {
         this.contactDelegator = contactDelegator;
     }

@@ -143,14 +143,27 @@ public class GameWorld implements Disposable {
         return players;
     }
 
+    /**
+     * Adds a listener which will get notified when the world has been updated.
+     *
+     * @param listener listener who request notifications
+     */
     public void addUpdateListener(UpdateListener listener) {
         updateListeners.add(listener);
     }
 
+    /**
+     * Removes a world updated subscriber.
+     *
+     * @param listener listener who no longer wants notifications
+     */
     public void removeUpdateListener(UpdateListener listener) {
         updateListeners.remove(listener);
     }
 
+    /**
+     * @return the game's map
+     */
     public GameMap getGameMap() {
         return gameMap;
     }

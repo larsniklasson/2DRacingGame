@@ -6,6 +6,9 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 import java.util.HashMap;
 
 /**
+ * A simple adapter for AppWarp's NotifyListener, to avoid implementing the interface's
+ * bazillion methods if we're only interested in a specific few.
+ *
  * @author Daniel Sunnerberg
  */
 class WarpClientNotificationAdapter implements NotifyListener {
