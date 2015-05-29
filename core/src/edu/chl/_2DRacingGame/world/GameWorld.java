@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.map.Checkpoint;
 import edu.chl._2DRacingGame.map.GameMap;
+import edu.chl._2DRacingGame.map.MapLoader;
+import edu.chl._2DRacingGame.map.TiledMapLoader;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.models.*;
 
@@ -39,7 +41,9 @@ public class GameWorld implements Disposable {
     public GameWorld(GameMap gameMap) {
         this.gameMap = gameMap;
         b2World = new World(new Vector2(0, 0), true);
-        gameMap.load(PIXELS_PER_METER);
+
+        MapLoader mapLoader = new TiledMapLoader(PIXELS_PER_METER);
+        gameMap.load(mapLoader);
         insertMap();
     }
 
