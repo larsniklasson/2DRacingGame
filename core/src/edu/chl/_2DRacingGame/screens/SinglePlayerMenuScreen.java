@@ -81,11 +81,6 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         startGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Number of Opponents: " + stringToInt(numberOfOpponents.getSelected().toString()));
-                System .out.println("Number of Laps: " + stringToInt(laps.getSelected().toString()));
-                System.out.println("Vehicle chosen: " + vehicleSelector.getImageName());
-                System.out.println("Map chosen: " + mapSelector.getImageName());
-                System.out.println("Difficulty chosen: " + difficulty.getSelected());
                 listener.startRace(vehicleSelector.getImageName(), mapSelector.getImageName(), difficulty.getSelected(),
                         stringToInt(laps.getSelected().toString()), stringToInt(numberOfOpponents.getSelected().toString()));
 

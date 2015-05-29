@@ -44,10 +44,7 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
 
     @Override
     public void applyNewOptions(float sound, Boolean fullscreen) {
-        // TODO use this.settings
-        System.out.println("Sound set to: " + sound);
-        System.out.println("Fullscreen set to: " + fullscreen);
-
+        // TODO implement settings (use this.settings)
         Gdx.graphics.setDisplayMode(1280, 704, fullscreen);
     }
 

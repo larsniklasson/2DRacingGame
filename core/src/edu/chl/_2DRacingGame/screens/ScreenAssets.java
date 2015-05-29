@@ -32,7 +32,6 @@ public class ScreenAssets {
         String[] vehicleNames = new String [] {"motorcycle.jpg", "car.png", "monstertruck.jpg", "formula1car.jpg", "magiccarpet.jpg", "random.jpg"};
         vehicleArray = new ArrayList<>();
         for(int i = 0; i<vehicleNames.length;i++){
-            System.out.println(i);
             vehicleArray.add(createImage(loadTexture("VehicleSelectorImages/" + vehicleNames[i])));
             //vehicleArray.get(i).setName(vehicleNames[i]);
             switch (vehicleNames[i]) {

@@ -57,7 +57,6 @@ public class SearchingForPlayerScreen extends GUIScreen {
         tryAgainButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.print("Started new search");
                 listener.searchAgain();
             }
         });
