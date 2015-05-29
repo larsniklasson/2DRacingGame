@@ -16,8 +16,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.AI.WayPoints;
-import edu.chl._2DRacingGame.gameObjects.Drawable;
-import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
+import edu.chl._2DRacingGame.vehicle.Drawable;
+import edu.chl._2DRacingGame.vehicle.gameVehicles.WheeledVehicle;
 import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScreenText;

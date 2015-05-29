@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
-import edu.chl._2DRacingGame.gameObjects.WheeledVehicle;
+import edu.chl._2DRacingGame.vehicle.gameVehicles.WheeledVehicle;
 import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.world.UpdateListener;

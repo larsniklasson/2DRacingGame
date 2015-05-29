@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.google.common.collect.Sets;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
-import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
+import edu.chl._2DRacingGame.vehicle.factory.VehicleFactory;
 import edu.chl._2DRacingGame.map.GameMap;
 import edu.chl._2DRacingGame.models.*;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
@@ -14,7 +14,7 @@ import edu.chl._2DRacingGame.screens.SetUpListener;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreenListener;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
-import edu.chl._2DRacingGame.gameObjects.steering.*;
+import edu.chl._2DRacingGame.vehicle.Difficulty;
 
 import java.util.List;
 import java.util.Set;

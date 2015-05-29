@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.AI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -23,7 +24,7 @@ public class WayPoints {
         shapeRenderer = new ShapeRenderer();
         pathfollowers = new Array<>();
 
-        Sprite sprite = new Sprite(ScreenAssets.nyanCat);
+        Sprite sprite = new Sprite(new Texture("nyancat.png"));
         sprite.setOrigin(0, 0);
 
         for(int i = 0; i <= 50; i++) {

@@ -14,7 +14,7 @@ public class ScreenAssets {
 
     public static ArrayList<Image> mapArray;
     public static ArrayList <Image> vehicleArray;
-    public static Texture nyanCat;
+
 
     private static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
@@ -57,7 +57,7 @@ public class ScreenAssets {
 
             }
         }
-        nyanCat = loadTexture("nyancat.png");
+
     }
 
     private static Image createImage(Texture texture) {

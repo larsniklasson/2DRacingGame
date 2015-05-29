@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.controllers.*;
-import edu.chl._2DRacingGame.gameObjects.VehicleAssets;
+import edu.chl._2DRacingGame.vehicle.VehicleAssets;
 import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
