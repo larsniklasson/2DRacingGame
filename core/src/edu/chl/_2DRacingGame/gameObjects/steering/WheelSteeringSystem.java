@@ -56,6 +56,11 @@ public class WheelSteeringSystem implements ISteeringSystem {
 
     }
 
+    @Override
+    public boolean isControlledByPlayer() {
+        return true;
+    }
+
     private void updateDrive(Wheel t) { //TODO make a general method for any body - so it can be used in other SteeringSystems (includes friction methods)
 
 

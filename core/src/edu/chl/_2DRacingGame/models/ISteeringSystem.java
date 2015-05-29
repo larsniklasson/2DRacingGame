@@ -12,4 +12,10 @@ public interface ISteeringSystem {
      */
     void update(float delta);
 
+    /**
+     *
+     * @return Returns true if this steeringsystem is controlled by the player
+     */
+    boolean isControlledByPlayer();
+
 }

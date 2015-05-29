@@ -68,9 +68,11 @@ public abstract class Vehicle implements Actable {
     /**
      * @return whether the vehicle is controlled by our clients player
      */
-    public boolean isControlledLocally() {
-        // TODO improve
-        return steeringSystem instanceof WheelSteeringSystem;
+    public boolean isControlledByClientPlayer() {
+        if(steeringSystem == null){
+            return false;
+        }
+        return steeringSystem.isControlledByPlayer();
     }
 
 }

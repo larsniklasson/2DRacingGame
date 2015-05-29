@@ -52,6 +52,11 @@ public abstract class AISteeringSystem implements ISteeringSystem {
 
     }
 
+    @Override
+    public boolean isControlledByPlayer() {
+        return false;
+    }
+
 
     /**
      * Sets the steering-behavior (See LibGDX's AI-library) used by the system.
