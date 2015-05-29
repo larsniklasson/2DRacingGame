@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame.mapobjects;
 
 /**
- * Factory which finds and creates a GroundMaterial based on different agruments.
+ * Factory which finds and creates a GroundMaterial based on different arguments.
  *
  * @author Daniel Sunnerberg
  */

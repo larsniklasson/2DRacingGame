@@ -4,6 +4,8 @@ import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 
 /**
+ * Represents a player's result during a race.
+ *
  * @author Daniel Sunnerberg
  */
 public class RaceResult implements Comparable<RaceResult> {
@@ -15,19 +17,27 @@ public class RaceResult implements Comparable<RaceResult> {
      */
     private Double time;
 
+    /**
+     * Creates a new result for the specified player and time.
+     *
+     * @param player player which drove the race
+     * @param time time it took to run the race, or null if not yet complete
+     */
     public RaceResult(Player player, Double time) {
         this.player = player;
         this.time = time;
     }
 
-    public RaceResult(Player player) {
-        this(player, null);
-    }
-
+    /**
+     * @return the result's player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * @return the time it took to finish the race, or null if not yet complete
+     */
     public Double getTime() {
         return time;
     }
@@ -60,6 +70,9 @@ public class RaceResult implements Comparable<RaceResult> {
 
     }
 
+    /**
+     * @param time new time
+     */
     public void updateTime(Double time) {
         this.time = time;
     }
