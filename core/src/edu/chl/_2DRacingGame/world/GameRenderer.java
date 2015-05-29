@@ -31,8 +31,8 @@ import java.util.List;
  */
 public class GameRenderer extends Stage {
 
-    private boolean showDebug = true;
-    private boolean showWayPoints = true;
+    private boolean showDebug = false;
+    private boolean showWayPoints = false;
     private boolean nyanMode = false;
 
     private final GameWorld gameWorld;
