@@ -75,7 +75,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
 
             for (Player player : players) {
                 if (player.getVehicle() == null) {
-                    player.setVehicle(VehicleFactory.createVehicle(world, player.getVehicleType()));
+                    player.setVehicle(VehicleFactory.createVehicle(world.getb2World(), player.getVehicleType()));
                 }
             }
 
@@ -206,7 +206,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     private void setRaceSettings(String chosenVehicle, String chosenMap){
         setRaceProperties(GameMap.valueOf(chosenMap), new TimeTrial(2, this));
 
-        WheeledVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld(), chosenVehicle, 1);
+        WheeledVehicle vehicle = VehicleFactory.createPlayerVehicle(getWorld().getb2World(), chosenVehicle, 1);
         getPlayer().setVehicle(vehicle);
     }
 

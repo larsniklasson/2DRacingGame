@@ -2,6 +2,7 @@ package edu.chl._2DRacingGame.gameObjects;
 
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.gameObjects.steering.*;
 import edu.chl._2DRacingGame.models.ISteeringSystem;
@@ -51,25 +52,25 @@ public class VehicleFactory {
      * in all lower case letters.
      * 
      * NOTE: does not have a steering-system.
-     * @param gameWorld the GameWorld the vehicle will be created in.
+     * @param world The Box2D-world the vehicle will be created in
      * @param vehicleType The type of vehicle.
      *
      * @return The created vehicle.
      */
-    public static Vehicle createVehicle(GameWorld gameWorld, String vehicleType) {
+    public static Vehicle createVehicle(World world, String vehicleType) {
         switch (vehicleType.toLowerCase()) {
             case CAR:
-                return new Car(gameWorld.getb2World());
+                return new Car(world);
             case FORMULA_ONE_CAR:
-                return new FormulaOneCar(gameWorld.getb2World());
+                return new FormulaOneCar(world);
             case MAGIC_CARPET:
-                return new MagicCarpet(gameWorld.getb2World());
+                return new MagicCarpet(world);
             case MOTORCYCLE:
-                return new MotorCycle(gameWorld.getb2World());
+                return new MotorCycle(world);
             case MONSTER_TRUCK:
-                return new MonsterTruck(gameWorld.getb2World());
+                return new MonsterTruck(world);
             case RANDOM_VEHICLE:
-                return createVehicle(gameWorld, getRandomVehicleType());
+                return createVehicle(world, getRandomVehicleType());
             default:
                 throw new IllegalArgumentException("Found no matching vehicle.");
         }
@@ -83,15 +84,16 @@ public class VehicleFactory {
      *
      * NOTE: returns a WheeledVehicle since the AI-system requires a body and wheels.
      *
-     * @param gameWorld The GameWorld the vehicle will be created in.
+     * @param world The Box2D-world the vehicle will be created in
      * @param vehicleType The type of vehicle.
      * @param difficulty The difficulty-setting of the AI.
+     * @param wayPoints The points the vehicle's AI-system will follow
      * @return The created AI-controlled vehicle.
      */
-    public static WheeledVehicle createAIVehicle(GameWorld gameWorld, String vehicleType, Difficulty difficulty){
-        WheeledVehicle wv = (WheeledVehicle) createVehicle(gameWorld, vehicleType);
+    public static WheeledVehicle createAIVehicle(World world, String vehicleType, Difficulty difficulty, Array<Vector2> wayPoints){
+        WheeledVehicle wv = (WheeledVehicle) createVehicle(world, vehicleType);
         WheeledAISteeringEntity steeringEntity = new WheeledAISteeringEntity(wv, wv.getAISpeeds(difficulty));
-        Array<Vector2> wayPoints = gameWorld.getGameMap().getWayPoints();
+
 
         wv.setSteeringSystem(new WayPointSystem(steeringEntity, wayPoints));
         return wv;
@@ -104,14 +106,14 @@ public class VehicleFactory {
      * For the type of vehicle use constants defined in this class, or the name of the class
      * in all lower case letters.
      *
-     * @param gameWorld The GameWorld the vehicle will be created in.
+     * @param world The Box2D-world the vehicle will be created in
      * @param vehicleType The type of vehicle.
      * @param playerNumber The player-number. (Player 1, Player 2, etc.)
      * @return The created user-controllable vehicle.
      */
-    public static WheeledVehicle createPlayerVehicle(GameWorld gameWorld, String vehicleType, int playerNumber){
+    public static WheeledVehicle createPlayerVehicle(World world, String vehicleType, int playerNumber){
 
-        WheeledVehicle wv = (WheeledVehicle) createVehicle(gameWorld, vehicleType);
+        WheeledVehicle wv = (WheeledVehicle) createVehicle(world, vehicleType);
         SteeringInputListener sl = getSteeringInputListener(playerNumber);
 
         ISteeringSystem ss;
