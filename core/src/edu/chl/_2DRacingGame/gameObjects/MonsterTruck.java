@@ -47,7 +47,7 @@ public class MonsterTruck extends WheeledVehicle {
         setTurnDegreesPerSecond(300);
 
 
-        Texture bodyTexture = Assets.monsterTruckBody;
+        Texture bodyTexture = VehicleAssets.monsterTruckBody;
         setSprite(new Sprite(bodyTexture));
 
         PolygonShape shape = new PolygonShape();
@@ -56,7 +56,7 @@ public class MonsterTruck extends WheeledVehicle {
         createBody(shape, 0.1f);
 
 
-        Texture wheelTexture = Assets.monsterTruckWheel;
+        Texture wheelTexture = VehicleAssets.monsterTruckWheel;
 
         Wheel frontWheel = new Wheel(world,TIRE_WIDTH, TIRE_HEIGHT,1f);
         frontWheel.setSprite(new Sprite(wheelTexture));

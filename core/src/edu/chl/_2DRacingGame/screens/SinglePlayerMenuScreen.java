@@ -27,8 +27,8 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     public SinglePlayerMenuScreen(SetUpListener listener) {
         this.listener = listener;
         mainTable = new Table();
-        mapSelector = new ScrollTable(Assets.mapArray, "map");
-        vehicleSelector = new ScrollTable(Assets.vehicleArray, "vehicle");
+        mapSelector = new ScrollTable(ScreenAssets.mapArray, "map");
+        vehicleSelector = new ScrollTable(ScreenAssets.vehicleArray, "vehicle");
     }
 
 

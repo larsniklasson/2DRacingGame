@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.gameObjects.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
@@ -50,7 +49,7 @@ public class FormulaOneCar extends WheeledVehicle {
     public FormulaOneCar(World world) {
         super(world);
 
-        Texture texture = Assets.f1CarBody;
+        Texture texture = VehicleAssets.f1CarBody;
         setSprite(new Sprite(texture));
 
 
@@ -72,8 +71,8 @@ public class FormulaOneCar extends WheeledVehicle {
 
         createBody(shape, 0.1f);
 
-        Texture frontWheelTexture = Assets.f1CarFrontWheel;
-        Texture backWheelTexture = Assets.f1CarBackWheel;
+        Texture frontWheelTexture = VehicleAssets.f1CarFrontWheel;
+        Texture backWheelTexture = VehicleAssets.f1CarBackWheel;
 
 
         Wheel frontWheel = new Wheel(world,TIRE_WIDTH_FRONT, TIRE_HEIGHT_FRONT, 1f);

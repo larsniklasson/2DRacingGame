@@ -1,75 +1,26 @@
-package edu.chl._2DRacingGame;
+package edu.chl._2DRacingGame.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import edu.chl._2DRacingGame.map.GameMap;
 
 import java.util.ArrayList;
 
-
 /**
- * @author Anton Ingvarsson
+ * Created by Anton on 2015-05-29.
  */
-public class Assets {
+public class ScreenAssets {
 
-    // Vehicle textures
-
-    //car
-    public static Texture carBody;
-    public static Texture carWheel;
-
-    //motorcycle
-
-    public static Texture mcBody;
-    public static Texture mcWheel;
-
-    //monstertruck
-
-    public static Texture monsterTruckBody;
-    public static Texture monsterTruckWheel;
-
-    //f1car
-
-    public static Texture f1CarBody;
-    public static Texture f1CarBackWheel;
-    public static Texture f1CarFrontWheel;
-
-    //magic carpet
-
-    public static Texture magicCarpetBody;
-
-    public static Texture nyanCat;
-
-    public static ArrayList <Image> mapArray;
+    public static ArrayList<Image> mapArray;
     public static ArrayList <Image> vehicleArray;
+    public static Texture nyanCat;
 
     private static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
     }
 
     public static void load(){
-
-        //-----vehicles-------
-
-        carBody = loadTexture("vehicles/car_body.png");
-        carWheel = loadTexture("vehicles/car_wheel.png");
-
-        mcBody = loadTexture("vehicles/mc_body.png");
-        mcWheel = loadTexture("vehicles/mc_wheel.png");
-
-        monsterTruckBody = loadTexture("vehicles/mt_body.png");
-        monsterTruckWheel = loadTexture("vehicles/mt_wheel.png");
-
-        f1CarBody = loadTexture("vehicles/f1_body.png");
-        f1CarBackWheel = loadTexture("vehicles/f1_back_wheel.png");
-        f1CarFrontWheel = loadTexture("vehicles/f1_front_wheel.png");
-
-        magicCarpetBody = loadTexture("vehicles/magiccarpet2.png");
-
-        //-------------------
-
-
         //--------Images for Vehicle and Map Selection
         mapArray = new ArrayList<>();
         for (GameMap map : GameMap.values()) {
@@ -113,3 +64,5 @@ public class Assets {
         return new Image(texture);
     }
 }
+
+

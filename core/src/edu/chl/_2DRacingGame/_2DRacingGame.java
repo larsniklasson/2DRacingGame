@@ -3,6 +3,7 @@ package edu.chl._2DRacingGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.controllers.*;
+import edu.chl._2DRacingGame.gameObjects.VehicleAssets;
 import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
@@ -20,7 +21,9 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     @Override
     public void create() {
         Gdx.app.log("_2DRacingGame", "created");
-        Assets.load();
+
+        VehicleAssets.load();
+        ScreenAssets.load();
 
         Persistor<Map<String, String>> persistor = new DiskPersistor<>();
         settings = new Settings(persistor);

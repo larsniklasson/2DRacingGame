@@ -62,13 +62,13 @@ public class Car extends WheeledVehicle {
 
         createBody(shape, 0.1f);
 
-        Texture texture = Assets.carBody;
+        Texture texture = VehicleAssets.carBody;
         setSprite(new Sprite(texture));
 
         //create and attach wheels
 
         Wheel frontWheel = new Wheel(world, TIRE_WIDTH, TIRE_HEIGHT, 1.0f);
-        Texture wheelTexture = Assets.carWheel;
+        Texture wheelTexture = VehicleAssets.carWheel;
         frontWheel.setSprite(new Sprite(wheelTexture));
         frontWheel.setCharacteristics(DRIVE_FORCE_FRONT_WHEELS, MAX_LATERAL_IMPULSE_FRONT, MAX_FORWARD_SPEED, MAX_BACKWARD_SPEED, BACKWARDS_FRICTION);
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.Assets;
+import edu.chl._2DRacingGame.screens.ScreenAssets;
 
 /**
  * @author Victor Christoffersson
@@ -23,7 +24,7 @@ public class WayPoints {
         shapeRenderer = new ShapeRenderer();
         pathfollowers = new Array<>();
 
-        Sprite sprite = new Sprite(Assets.nyanCat);
+        Sprite sprite = new Sprite(ScreenAssets.nyanCat);
         sprite.setOrigin(0, 0);
 
         for(int i = 0; i <= 50; i++) {

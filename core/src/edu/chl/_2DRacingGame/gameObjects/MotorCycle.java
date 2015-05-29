@@ -43,7 +43,7 @@ public class MotorCycle extends WheeledVehicle {
         super(world);
 
 
-        Texture texture = Assets.mcBody;
+        Texture texture = VehicleAssets.mcBody;
         setSprite(new Sprite(texture));
 
 
@@ -52,7 +52,7 @@ public class MotorCycle extends WheeledVehicle {
         createBody(shape, 0.1f);
 
 
-        Texture wheelTexture = Assets.mcWheel;
+        Texture wheelTexture = VehicleAssets.mcWheel;
         Wheel frontWheel = new Wheel(world, TIRE_WIDTH, TIRE_HEIGHT, 1);
         frontWheel.setSprite(new Sprite(wheelTexture));
 

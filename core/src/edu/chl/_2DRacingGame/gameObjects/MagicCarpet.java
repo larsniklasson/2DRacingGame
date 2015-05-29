@@ -35,7 +35,7 @@ public class MagicCarpet extends WheeledVehicle {
         super(world);
 
 
-        Texture texture = Assets.magicCarpetBody;
+        Texture texture = VehicleAssets.magicCarpetBody;
         setSprite(new Sprite(texture));
 
         PolygonShape shape = new PolygonShape();

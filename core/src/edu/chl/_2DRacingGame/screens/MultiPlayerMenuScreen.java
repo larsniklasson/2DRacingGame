@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import edu.chl._2DRacingGame.Assets;
 
 /**
  * GUI screen which let's the user decide which settings to use in a multiplayer race.
@@ -34,8 +33,8 @@ public class MultiPlayerMenuScreen extends GUIScreen {
 
         this.listener = listener;
 
-        vehicleTable = new ScrollTable2(Assets.vehicleArray, "Vehicle");
-        mapTable = new ScrollTable2(Assets.mapArray, "Map");
+        vehicleTable = new ScrollTable2(ScreenAssets.vehicleArray, "Vehicle");
+        mapTable = new ScrollTable2(ScreenAssets.mapArray, "Map");
         mainTable = new Table();
         carouselTable = new Table();
         buttonTable = new Table();

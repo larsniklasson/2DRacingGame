@@ -11,6 +11,7 @@ import edu.chl._2DRacingGame.models.*;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreen;
+import edu.chl._2DRacingGame.screens.SinglePlayerFinishedScreenListener;
 import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.gameObjects.steering.*;
 
@@ -54,7 +55,6 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
     private void startRace() {
         getWorld().addPlayer(getPlayer());
         getWorld().spawnPlayers();
-
         gameController.setScreen(getScreen());
     }
 
