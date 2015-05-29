@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.controllers;
+package edu.chl._2DRacingGame.screens;
 
 /**
  * @author Anton Ingvarsson
