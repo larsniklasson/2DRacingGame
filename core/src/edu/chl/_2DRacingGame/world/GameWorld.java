@@ -3,10 +3,7 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
-import edu.chl._2DRacingGame.map.Checkpoint;
-import edu.chl._2DRacingGame.map.GameMap;
-import edu.chl._2DRacingGame.map.MapLoader;
-import edu.chl._2DRacingGame.map.TiledMapLoader;
+import edu.chl._2DRacingGame.map.*;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.models.*;
 
@@ -127,15 +124,15 @@ public class GameWorld implements Disposable {
      * Spawns each player on the right spawn-location.
      */
     public void spawnPlayers() {
-        List<Vector2> mapSpawnPoints = gameMap.getSpawnPoints();
-        List<Float> mapSpawnAngles = gameMap.getSpawnAngles();
+        List<SpawnPoint> spawnPoints = gameMap.getSpawnPoints();
+        if (players.size() > spawnPoints.size()) {
+            throw new IllegalStateException("There are more players than spawn points. Aborting.");
+        }
 
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
-            Vector2 spawnPoint = mapSpawnPoints.get(i);
-            float spawnAngle = mapSpawnAngles.get(i);
-
-            p.getVehicle().place(spawnPoint, spawnAngle);
+            SpawnPoint spawnPoint = spawnPoints.get(i);
+            p.getVehicle().place(spawnPoint.getPosition(), spawnPoint.getAngle());
         }
     }
 

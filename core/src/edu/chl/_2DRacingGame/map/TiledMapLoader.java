@@ -125,9 +125,10 @@ public class TiledMapLoader implements MapLoader {
         float[] vertices = pl.getVertices();
         Vector2 v = new Vector2(vertices[2] - vertices[0], vertices[3] - vertices[1]);
 
-        // TODO SpawnPoint should be a wrapper class
-        gameMap.addSpawnPoint(new Vector2(vertices[0], vertices[1]));
-        gameMap.addSpawnAngle((float) (v.angleRad() - Math.PI / 2));
+        Vector2 position = new Vector2(vertices[0], vertices[1]);
+        float angle = (float) (v.angleRad() - Math.PI / 2);
+
+        gameMap.addSpawnPoint(new SpawnPoint(position, angle));
     }
 
     private void insertCheckpoint(MapObject object, Shape shape) {

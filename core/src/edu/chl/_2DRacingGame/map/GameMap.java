@@ -27,8 +27,7 @@ public enum GameMap implements Disposable {
 
     private final Map<Checkpoint, Shape> checkpoints = new LinkedHashMap<>();
     private final Array<Vector2> wayPoints = new Array<>();
-    private final List<Vector2> spawnPoints = new ArrayList<>();
-    private final List<Float> spawnAngles = new ArrayList<>();
+    private final List<SpawnPoint> spawnPoints = new ArrayList<>();
 
     private final List<TrackSection> trackSections = new ArrayList<>();
     private List<Immovable> immovables = new ArrayList<>();
@@ -64,12 +63,8 @@ public enum GameMap implements Disposable {
         }
     }
 
-    public List<Vector2> getSpawnPoints() {
+    public List<SpawnPoint> getSpawnPoints() {
         return spawnPoints;
-    }
-
-    public List<Float> getSpawnAngles() {
-        return spawnAngles;
     }
 
     @Override
@@ -103,12 +98,8 @@ public enum GameMap implements Disposable {
         wayPoints.add(wayPoint);
     }
 
-    void addSpawnPoint(Vector2 spawnPoint) {
+    void addSpawnPoint(SpawnPoint spawnPoint) {
         spawnPoints.add(spawnPoint);
-    }
-
-    void addSpawnAngle(float spawnAngle) {
-        spawnAngles.add(spawnAngle);
     }
 
     void addCheckpoint(Checkpoint checkpoint, Shape shape) {
