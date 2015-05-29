@@ -19,10 +19,10 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     private SelectBox<Integer> laps;
     private SelectBox<Integer> numberOfOpponents;
     private SelectBox<String> difficulty;
-    private ScrollTable mapSelector;
-    private ScrollTable vehicleSelector;
-    private Table mainTable;
-    private SetUpListener listener;
+    private final ScrollTable mapSelector;
+    private final ScrollTable vehicleSelector;
+    private final Table mainTable;
+    private final SetUpListener listener;
 
     public SinglePlayerMenuScreen(SetUpListener listener) {
         this.listener = listener;

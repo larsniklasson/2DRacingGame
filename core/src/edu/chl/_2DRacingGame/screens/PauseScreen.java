@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class PauseScreen extends GUIScreen {
 
-    private Table table;
     private Window window;
     final private PauseScreenListener listener;
 
@@ -46,7 +45,7 @@ public class PauseScreen extends GUIScreen {
             }
         });
 
-        table = new Table(skin);
+        Table table = new Table(skin);
         window = new Window("", skin);
         table.add(pausedLabel);
         table.row();
