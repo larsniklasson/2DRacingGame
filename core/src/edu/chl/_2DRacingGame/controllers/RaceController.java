@@ -44,7 +44,7 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
         this.mode = mode;
 
         world = new GameWorld(map);
-        List<Checkpoint> checkpoints = new ArrayList<>(map.getCheckpoints().keySet());
+        List<Checkpoint> checkpoints = new ArrayList<>(map.getMapObjects().getCheckpoints().keySet());
         CheckpointController checkpointController = new CheckpointController(mode, checkpoints);
         world.getb2World().setContactListener(new ContactController((checkpoint, validEntry) -> {
             if (validEntry) {

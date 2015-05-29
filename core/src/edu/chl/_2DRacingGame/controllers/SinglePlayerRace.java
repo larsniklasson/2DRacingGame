@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
 import edu.chl._2DRacingGame.map.GameMap;
@@ -122,7 +124,8 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
 
     private void createAIOpponents(int nbrOfOpponents, Difficulty d) {
         for(int i = 0; i < nbrOfOpponents; i ++) {
-            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld().getb2World(), VehicleFactory.RANDOM_VEHICLE, d, getMap().getWayPoints());
+            Array<Vector2> wayPoints = getMap().getMapObjects().getWayPoints();
+            Vehicle ai_v = VehicleFactory.createAIVehicle(getWorld().getb2World(), VehicleFactory.RANDOM_VEHICLE, d, wayPoints);
             Player p = new Player("p" + i, ai_v);
             getWorld().addPlayer(p);
         }

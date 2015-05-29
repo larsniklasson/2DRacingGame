@@ -27,8 +27,9 @@ import java.util.List;
 public class TiledMapLoader implements MapLoader {
 
     private TiledMap tiledMap;
-    private GameMap gameMap;
     private float scaleFactor;
+
+    private final MapObjects mapObjects = new MapObjects();
 
     /**
      * Creates a new MapLoader with the specified scale.
@@ -44,18 +45,12 @@ public class TiledMapLoader implements MapLoader {
      */
     @Override
     public TiledMap loadMap(String mapPath) {
-        return new TmxMapLoader().load(mapPath);
+        tiledMap = new TmxMapLoader().load(mapPath);
+        loadMapObjects();
+        return tiledMap;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param gameMap map where the objects should be inserted
-     */
-    @Override
-    public void insertMapObjects(GameMap gameMap) {
-        this.gameMap = gameMap;
-        this.tiledMap = gameMap.getTiledMap();
+    private void loadMapObjects() {
 
         MapLayers ml = tiledMap.getLayers();
         Iterator<MapLayer> it = ml.iterator();
@@ -101,11 +96,11 @@ public class TiledMapLoader implements MapLoader {
 
     private void insertTrackSection(String objectName, Shape shape) {
         GroundMaterial material = GroundMaterialFactory.create(objectName);
-        gameMap.addTrackSection(new TrackSection(shape, material));
+        mapObjects.addTrackSection(new TrackSection(shape, material));
     }
 
     private void insertImmovable(Shape shape) {
-        gameMap.addImmovable(new Immovable(shape));
+        mapObjects.addImmovable(new Immovable(shape));
     }
 
     private void insertPath(MapObject object) {
@@ -115,7 +110,7 @@ public class TiledMapLoader implements MapLoader {
 
         Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
         Vector2 wayPoint = new Vector2(ellipse.x / scaleFactor, ellipse.y / scaleFactor);
-        gameMap.addWayPoint(wayPoint);
+        mapObjects.addWayPoint(wayPoint);
     }
 
     private void insertSpawnPosition(MapObject object) {
@@ -130,7 +125,7 @@ public class TiledMapLoader implements MapLoader {
         Vector2 position = new Vector2(vertices[0], vertices[1]);
         float angle = (float) (v.angleRad() - Math.PI / 2);
 
-        gameMap.addSpawnPoint(new SpawnPoint(position, angle));
+        mapObjects.addSpawnPoint(new SpawnPoint(position, angle));
     }
 
     private void insertCheckpoint(MapObject object, Shape shape) {
@@ -147,7 +142,12 @@ public class TiledMapLoader implements MapLoader {
             checkpoint.addAllowedPassingDirection(direction);
         }
 
-        gameMap.addCheckpoint(checkpoint, shape);
+        mapObjects.addCheckpoint(checkpoint, shape);
     }
 
+    @Override
+    public MapObjects getMapObjects() {
+        return mapObjects;
+    }
+    
 }

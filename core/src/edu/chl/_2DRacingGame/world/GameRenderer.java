@@ -133,7 +133,7 @@ public class GameRenderer extends Stage {
         sr.setColor(Color.BLACK);
         sr.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Vector2 v2 : gameWorld.getGameMap().getWayPoints()) {
+        for (Vector2 v2 : gameWorld.getGameMap().getMapObjects().getWayPoints()) {
             sr.circle(v2.x*GameWorld.PIXELS_PER_METER, v2.y*GameWorld.PIXELS_PER_METER, 10);
         }
 

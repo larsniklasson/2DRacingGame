@@ -51,19 +51,19 @@ public class GameWorld implements Disposable {
     }
 
     private void insertTrackSections() {
-        for (TrackSection trackSection : gameMap.getTrackSections()) {
+        for (TrackSection trackSection : gameMap.getMapObjects().getTrackSections()) {
             BodyFactory.createStaticBody(b2World, trackSection.getShape(), true, trackSection);
         }
     }
 
     private void insertImmovables() {
-        for (Immovable immovable : gameMap.getImmovables()) {
+        for (Immovable immovable : gameMap.getMapObjects().getImmovables()) {
             BodyFactory.createStaticBody(b2World, immovable.getShape(), false);
         }
     }
 
     private void insertCheckpoints() {
-        for (Map.Entry<Checkpoint, Shape> entry : gameMap.getCheckpoints().entrySet()) {
+        for (Map.Entry<Checkpoint, Shape> entry : gameMap.getMapObjects().getCheckpoints().entrySet()) {
             Shape shape = entry.getValue();
             Checkpoint checkpoint = entry.getKey();
             BodyFactory.createStaticBody(b2World, shape, true, checkpoint);
@@ -122,7 +122,7 @@ public class GameWorld implements Disposable {
      * Spawns each player on the right spawn-location.
      */
     public void spawnPlayers() {
-        List<SpawnPoint> spawnPoints = gameMap.getSpawnPoints();
+        List<SpawnPoint> spawnPoints = gameMap.getMapObjects().getSpawnPoints();
         if (players.size() > spawnPoints.size()) {
             throw new IllegalStateException("There are more players than spawn points. Aborting.");
         }

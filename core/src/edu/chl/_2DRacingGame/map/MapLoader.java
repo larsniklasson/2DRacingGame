@@ -18,10 +18,8 @@ public interface MapLoader {
     TiledMap loadMap(String mapPath);
 
     /**
-     * Inserts all map objects found in the map resource to the map instance.
-     *
-     * @param gameMap map where the objects should be inserted
+     * @return all map objects found in loaded map
      */
-    void insertMapObjects(GameMap gameMap);
+    MapObjects getMapObjects();
 
 }
