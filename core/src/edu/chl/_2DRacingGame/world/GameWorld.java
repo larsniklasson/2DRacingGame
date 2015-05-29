@@ -44,7 +44,6 @@ public class GameWorld implements Disposable {
         insertMap();
     }
 
-    // TODO name
     private void insertMap() {
         insertTrackSections();
         insertImmovables();

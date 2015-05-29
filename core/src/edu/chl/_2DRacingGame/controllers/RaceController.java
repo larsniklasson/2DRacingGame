@@ -42,7 +42,7 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
     protected void setRaceProperties(GameMap map, GameMode mode) {
         this.map = map;
         this.mode = mode;
-        
+
         world = new GameWorld(map);
         List<Checkpoint> checkpoints = new ArrayList<>(map.getCheckpoints().keySet());
         CheckpointController checkpointController = new CheckpointController(mode, checkpoints);
@@ -99,15 +99,6 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
      * which eventually leads to the start of the race.
      */
     public abstract void setUp();
-
-
-
-    /**
-     * Restarts the race.
-     */
-    public abstract void restartRace();
-
-
 
     /**
      * {@inheritDoc}

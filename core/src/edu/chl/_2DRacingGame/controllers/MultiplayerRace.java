@@ -110,15 +110,6 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void restartRace() {
-        // TODO
-        throw new UnsupportedOperationException("Not yet implemented.");
-    }
-
-    /**
      * Disconnects from AppWarp-servers and displays the main menu.
      */
     @Override
