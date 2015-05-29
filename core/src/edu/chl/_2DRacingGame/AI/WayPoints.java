@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.screens.ScreenAssets;
 
 /**

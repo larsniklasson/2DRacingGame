@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.Assets;
 import edu.chl._2DRacingGame.gameObjects.steering.AISpeedHolder;
 import edu.chl._2DRacingGame.world.GameWorld;
 
