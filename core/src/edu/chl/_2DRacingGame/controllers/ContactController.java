@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.gameObjects.Trackable;
 import edu.chl._2DRacingGame.mapobjects.TrackSection;
 import edu.chl._2DRacingGame.models.Vehicle;
-import edu.chl._2DRacingGame.models.Checkpoint;
+import edu.chl._2DRacingGame.map.Checkpoint;
 
 /**
  * Created by Lasse on 2015-04-24.

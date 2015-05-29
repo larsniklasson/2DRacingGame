@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.models;
+package edu.chl._2DRacingGame.map;
 
 import com.badlogic.gdx.math.Vector2;
 

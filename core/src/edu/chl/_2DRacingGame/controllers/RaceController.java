@@ -1,20 +1,16 @@
 package edu.chl._2DRacingGame.controllers;
 
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
-import edu.chl._2DRacingGame.models.Checkpoint;
-import edu.chl._2DRacingGame.models.GameMap;
+import edu.chl._2DRacingGame.map.Checkpoint;
+import edu.chl._2DRacingGame.map.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;
-import edu.chl._2DRacingGame.screens.MainMenuScreen;
-import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.world.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Serves as a controller-basis for the different race types.

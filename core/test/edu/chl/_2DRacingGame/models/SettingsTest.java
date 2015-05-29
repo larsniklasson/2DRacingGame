@@ -2,7 +2,7 @@ package edu.chl._2DRacingGame.models;
 
 import edu.chl._2DRacingGame.persistance.Persistor;
 import org.junit.Test;
-import persistance.DummyPersistor;
+import edu.chl._2DRacingGame.persistance.DummyPersistor;
 
 import java.util.Map;
 

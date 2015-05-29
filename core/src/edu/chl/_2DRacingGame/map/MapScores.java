@@ -1,7 +1,8 @@
-package edu.chl._2DRacingGame.models;
+package edu.chl._2DRacingGame.map;
 
 import com.google.gson.reflect.TypeToken;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.models.ScoreList;
 import edu.chl._2DRacingGame.persistance.Persistable;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import edu.chl._2DRacingGame.persistance.PersistorException;

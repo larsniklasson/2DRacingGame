@@ -1,5 +1,6 @@
 package edu.chl._2DRacingGame.models;
 
+import edu.chl._2DRacingGame.map.CheckpointType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

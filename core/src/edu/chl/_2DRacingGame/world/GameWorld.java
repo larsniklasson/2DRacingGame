@@ -3,6 +3,8 @@ package edu.chl._2DRacingGame.world;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import edu.chl._2DRacingGame.map.Checkpoint;
+import edu.chl._2DRacingGame.map.GameMap;
 import edu.chl._2DRacingGame.mapobjects.*;
 import edu.chl._2DRacingGame.models.*;
 

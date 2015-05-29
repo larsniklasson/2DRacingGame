@@ -2,9 +2,8 @@ package edu.chl._2DRacingGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import edu.chl._2DRacingGame.models.GameMap;
+import edu.chl._2DRacingGame.map.GameMap;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,7 @@ import com.shephertz.app42.gaming.multiplayer.client.events.*;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListener;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ZoneRequestListener;
-import edu.chl._2DRacingGame.models.GameMap;
+import edu.chl._2DRacingGame.map.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 
 import java.util.*;

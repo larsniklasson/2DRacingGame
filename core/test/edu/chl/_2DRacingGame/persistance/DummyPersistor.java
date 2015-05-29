@@ -1,7 +1,4 @@
-package persistance;
-
-import edu.chl._2DRacingGame.persistance.Persistor;
-import edu.chl._2DRacingGame.persistance.PersistorException;
+package edu.chl._2DRacingGame.persistance;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

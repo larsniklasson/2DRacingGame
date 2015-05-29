@@ -2,10 +2,12 @@ package edu.chl._2DRacingGame.models;
 
 import com.google.common.collect.Lists;
 import edu.chl._2DRacingGame.gameModes.GameMode;
+import edu.chl._2DRacingGame.map.GameMap;
+import edu.chl._2DRacingGame.map.MapScores;
 import edu.chl._2DRacingGame.persistance.Persistor;
 import org.junit.Before;
 import org.junit.Test;
-import persistance.DummyPersistor;
+import edu.chl._2DRacingGame.persistance.DummyPersistor;
 
 import java.util.ArrayList;
 import java.util.List;

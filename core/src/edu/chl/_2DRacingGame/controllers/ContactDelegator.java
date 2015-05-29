@@ -1,6 +1,6 @@
 package edu.chl._2DRacingGame.controllers;
 
-import edu.chl._2DRacingGame.models.Checkpoint;
+import edu.chl._2DRacingGame.map.Checkpoint;
 
 /**
  * @author Daniel Sunnerberg

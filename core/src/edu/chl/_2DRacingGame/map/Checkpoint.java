@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.models;
+package edu.chl._2DRacingGame.map;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,9 +8,6 @@ import java.util.List;
 /**
  * Represents a checkpoint which can be passed in different specified directions. Every checkpoint has a type,
  * specifying its purpose.
- *
- * Important note: This class is NOT coupled with any texture/body, this is done separately.
- * For automated coupling with a body, see CheckpointFactory.
  *
  * @author Daniel Sunnerberg
  */
