@@ -53,8 +53,8 @@ public class TimeTrial extends GameMode {
     }
 
     @Override
-    public String getModeName() {
-        return "TimeTrial";
+    public String toString() {
+        return "TimeTrial-with-" + lapGoal + "-laps";
     }
 
 }

@@ -3,10 +3,11 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.google.common.collect.Sets;
 import edu.chl._2DRacingGame.gameModes.TimeTrial;
 import edu.chl._2DRacingGame.gameObjects.VehicleFactory;
 import edu.chl._2DRacingGame.map.GameMap;
-import edu.chl._2DRacingGame.map.MapScores;
+import edu.chl._2DRacingGame.models.IdentifiableScores;
 import edu.chl._2DRacingGame.models.*;
 import edu.chl._2DRacingGame.persistance.DiskPersistor;
 import edu.chl._2DRacingGame.persistance.Persistor;
@@ -15,6 +16,7 @@ import edu.chl._2DRacingGame.screens.SinglePlayerMenuScreen;
 import edu.chl._2DRacingGame.gameObjects.steering.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Controls the process surrounding a single player race, such as choosing map/vehicle/...,
@@ -27,7 +29,7 @@ import java.util.List;
  */
 public class SinglePlayerRace extends RaceController implements SetUpListener, SinglePlayerFinishedScreenListener {
 
-    private MapScores mapScores;
+    private IdentifiableScores mapScores;
 
     /**
      * Creates a new SinglePlayerRace instance which bases itself on the specified gameController.
@@ -117,8 +119,9 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
             throw new IllegalStateException("A map and mode needs to be selected before loading saved scores.");
         }
 
+        Set<Object> identifiers = Sets.newHashSet(getMap(), getMode());
         Persistor<List<Double>> persistor = new DiskPersistor<>();
-        mapScores = new MapScores(getMap(), getMode(), persistor);
+        mapScores = new IdentifiableScores(identifiers, getMode().getScoreComparator(), persistor);
         mapScores.load();
     }
 

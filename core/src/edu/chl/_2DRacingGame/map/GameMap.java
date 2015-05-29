@@ -81,4 +81,11 @@ public enum GameMap implements Disposable {
     public MapObjects getMapObjects() {
         return mapObjects;
     }
+
+
+    @Override
+    public String toString() {
+        return name();
+    }
+
 }

@@ -78,5 +78,5 @@ public abstract class GameMode implements LapListener {
         return listeners;
     }
 
-    public abstract String getModeName();
+    public abstract String toString();
 }
