@@ -97,7 +97,7 @@ public class GameScreen extends GUIScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P) && !(listener instanceof MultiplayerRace)){
+        if(listener.isPauseable() && Gdx.input.isKeyJustPressed(Input.Keys.P)){
             pauseGame();
 
         }

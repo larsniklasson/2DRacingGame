@@ -210,4 +210,8 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
         getPlayer().setVehicle(vehicle);
     }
 
+    @Override
+    public boolean isPauseable() {
+        return false;
+    }
 }

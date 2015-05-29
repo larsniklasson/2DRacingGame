@@ -6,6 +6,7 @@ package edu.chl._2DRacingGame.controllers;
 public interface GameScreenListener extends MainMenuDisplayer{
     void resume();
     void pause();
+    boolean isPauseable();
 
 
 }

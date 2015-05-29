@@ -129,4 +129,9 @@ public class SinglePlayerRace extends RaceController implements SetUpListener, S
             getWorld().addPlayer(p);
         }
     }
+
+    @Override
+    public boolean isPauseable() {
+        return true;
+    }
 }
