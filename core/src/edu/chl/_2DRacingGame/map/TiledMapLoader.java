@@ -100,21 +100,7 @@ public class TiledMapLoader implements MapLoader {
     }
 
     private void insertTrackSection(String objectName, Shape shape) {
-        GroundMaterial material;
-        switch (objectName) {
-            case "dirt": // TODO repetition
-                material = new Dirt();
-                break;
-            case "ice":
-                material = new Ice();
-                break;
-            case "sand":
-                material = new Sand();
-                break;
-            default:
-                return;
-        }
-
+        GroundMaterial material = GroundMaterialFactory.create(objectName);
         gameMap.addTrackSection(new TrackSection(shape, material));
     }
 
