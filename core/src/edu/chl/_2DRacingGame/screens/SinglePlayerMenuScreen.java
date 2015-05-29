@@ -49,7 +49,7 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         laps = new SelectBox<>(skin);
         difficulty = new SelectBox<>(skin);
         laps.setItems(1, 2, 3);
-        numberOfOpponents.setItems(1, 2, 3, 4, 5, 6);
+        numberOfOpponents.setItems(0, 1, 2, 3, 4, 5, 6);
         difficulty.setItems("Easy", "Medium","Hard");
         t.add(lapsLabel);
         t.row();
