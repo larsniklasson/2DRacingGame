@@ -24,7 +24,7 @@ public class AI {
     private Texture AITexture;
     private Body body;
     FollowPath<Vector2, LinePath.LinePathParam> followPath;
-    AIcar aiCar;
+    AICar aiCar;
 
     public static float PIXELS_PER_METER = 20f;
 
@@ -48,7 +48,7 @@ public class AI {
 
         aiCar.setSteeringBehavior(followPath);
 
-        aiCar = new AIcar();
+        aiCar = new AICar();
 
     }
 
