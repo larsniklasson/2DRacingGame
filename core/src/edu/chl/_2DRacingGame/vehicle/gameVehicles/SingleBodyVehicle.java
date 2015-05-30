@@ -18,7 +18,7 @@ public abstract class SingleBodyVehicle extends Vehicle {
     protected Body body;
     protected final World world;
 
-    private transient VehicleActor actor;
+    private final transient VehicleActor actor;
 
     /**
      * Creates a vehicle set in the specified Box2D-world.

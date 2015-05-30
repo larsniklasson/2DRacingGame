@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class WheeledVehicleTest {
 
-    float epsilon = 0.0001f;
+    private final float epsilon = 0.0001f;
 
     @Test
     public void placeTest(){

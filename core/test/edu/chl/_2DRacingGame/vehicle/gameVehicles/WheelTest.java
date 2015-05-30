@@ -14,7 +14,7 @@ import org.junit.Test;
  * Created by Lars Niklasson on 2015-05-22.
  */
 public class WheelTest {
-    float epsilon = 0.0001f;
+    private final float epsilon = 0.0001f;
 
     @Test
     public void testAddingAndRemovingGroundMaterials(){

@@ -23,7 +23,7 @@ public class WheeledAISteeringEntity implements AISteeringEntity {
 
     private float wheelAngle;
 
-    private AISpeedHolder speedHolder;
+    private final AISpeedHolder speedHolder;
 
     private float boundingRadius;
     private boolean tagged = false;

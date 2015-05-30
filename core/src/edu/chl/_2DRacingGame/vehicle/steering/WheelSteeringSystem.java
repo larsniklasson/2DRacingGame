@@ -15,6 +15,9 @@ import java.util.Set;
  * Is used to control the player's vehicle by changing the direction of the front-wheels and
  * applying forces to the wheels.
  *
+ * The method used to move around the vehicle is described  at http://www.iforce2d.net/b2dtut/top-down-car.
+ * Credit to iforce2d
+ *
  *@author Lars Niklasson
  */
 public class WheelSteeringSystem implements ISteeringSystem {
