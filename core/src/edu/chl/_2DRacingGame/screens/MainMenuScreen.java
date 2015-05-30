@@ -24,11 +24,11 @@ public class MainMenuScreen extends GUIScreen {
     public void show() {
         final TextButton singlePlayer = new TextButton("Single Player", skin, "default");
         final TextButton multiPlayer = new TextButton("MultiPlayer", skin, "default");
-        final TextButton options = new TextButton("options", skin, "default");
+        final TextButton options = new TextButton("Options", skin, "default");
         final TextButton exit = new TextButton("Exit", skin, "default");
         final Label gameTitle = new Label("2D Racing Game!", skin, "arial40");
         final Table table = new Table();
-
+        final TextButton controls = new TextButton("Controls", skin, "default");
 
         //Adds Listeners to all buttons
         singlePlayer.addListener(new ClickListener() {
@@ -59,12 +59,21 @@ public class MainMenuScreen extends GUIScreen {
             }
         });
 
+        controls.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                listener.displayControlsMenuScreen();
+            }
+        });
+
         table.add(gameTitle).padBottom(60).colspan(2).center();
         table.row();
         table.add(singlePlayer).width(400f).height(40f).padRight(50);
         table.add(multiPlayer).width(400f).height(40f);
         table.row();
         table.add(options).width(150f).height(30f).padTop(30).colspan(2).center();
+        table.row();
+        table.add(controls).width(150f).height(30f).padTop(30).colspan(2).center();
         table.row();
         table.add(exit).width(150f).height(30f).padTop(30).colspan(2).center();
         table.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());

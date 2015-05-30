@@ -64,5 +64,10 @@ public class _2DRacingGame extends Game implements GameController, MainMenuListe
     @Override
     public void exitGame() {Gdx.app.exit();}
 
+    @Override
+    public void displayControlsMenuScreen() {
+        setScreen(new ControlsMenuScreen(this));
+    }
+
 
 }

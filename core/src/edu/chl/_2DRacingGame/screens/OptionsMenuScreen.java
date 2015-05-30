@@ -7,7 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Created by Anton on 2015-05-08 revised by Victor Christoffersson 2015-05-22
+ * @author Anton Ingvarsson
+ * @author Victor Christoffersson
  */
 public class OptionsMenuScreen extends GUIScreen {
 
