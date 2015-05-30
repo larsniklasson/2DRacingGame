@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import edu.chl._2DRacingGame.screens.ScreenAssets;
 
 /**
+ * Makes pathfollowers and their set path to follow
+ *
  * @author Victor Christoffersson
  */
 public class WayPoints {
@@ -19,6 +21,9 @@ public class WayPoints {
     private final Array<Pathfollower> pathfollowers;
     private final ShapeRenderer shapeRenderer;
 
+    /**
+     * Creates the pathfollowers and a random path on the screen for them to follow
+     */
     public WayPoints(){
 
         shapeRenderer = new ShapeRenderer();
@@ -42,6 +47,11 @@ public class WayPoints {
         return path;
     }
 
+    /**
+     * Draws all the pathfollower on a batch
+     *
+     * @param batch batch where pathfollower will be drawn
+     */
     public void draw(SpriteBatch batch){
 
         for(Pathfollower pathfollower : pathfollowers) {
@@ -49,6 +59,9 @@ public class WayPoints {
         }
     }
 
+    /**
+     * Draws the path for all pathfollowers
+     */
     public void drawPath() {
 
         shapeRenderer.setColor(Color.WHITE);
