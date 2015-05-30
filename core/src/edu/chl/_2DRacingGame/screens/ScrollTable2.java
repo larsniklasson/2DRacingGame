@@ -104,20 +104,9 @@ public class ScrollTable2 {
             } else {
                 temp.add(img).width(200).height(100);
             }
-            temp.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    changeSelectedImage(event.getButton());
-                }
 
-            });
             table.add(temp);
         }
-    }
-
-    private void changeSelectedImage(int i) {
-        selectedImage = i;
-        drawTable();
     }
 
     /**
