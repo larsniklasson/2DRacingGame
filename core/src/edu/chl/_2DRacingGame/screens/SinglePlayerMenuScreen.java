@@ -21,6 +21,10 @@ public class SinglePlayerMenuScreen extends GUIScreen {
     private final Table mainTable;
     private final SetUpListener listener;
 
+    /**
+     *
+     * @param listener Listener to be notified when related events occur
+     */
     public SinglePlayerMenuScreen(SetUpListener listener) {
         this.listener = listener;
         mainTable = new Table();

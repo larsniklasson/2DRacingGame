@@ -11,6 +11,7 @@ import edu.chl._2DRacingGame.models.ScoreList;
 
 
 /**
+ * A class which creates a screen to show the race result and options for new game or exit
  * @author Anton Ingvarsson
  */
 public class SinglePlayerFinishedScreen extends GUIScreen {
@@ -20,6 +21,12 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
     final private double playerScore;
     final private SinglePlayerFinishedScreenListener listener;
 
+    /**
+     *
+     * @param scoreList     list of previous scores
+     * @param playerScore   the players score for the race
+     * @param listener      Listener to be notified when related events occur
+     */
     public SinglePlayerFinishedScreen(ScoreList scoreList, double playerScore, SinglePlayerFinishedScreenListener listener) {
         this.scoreList = scoreList;
         this.playerScore = playerScore;

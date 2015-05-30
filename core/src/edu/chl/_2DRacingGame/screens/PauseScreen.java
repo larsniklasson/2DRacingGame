@@ -18,6 +18,10 @@ public class PauseScreen extends GUIScreen {
     private Window window;
     final private PauseScreenListener listener;
 
+    /**
+     *
+     * @param listener Listener to be notified when related events occur
+     */
     public PauseScreen(PauseScreenListener listener) {
         this.listener = listener;
         show();

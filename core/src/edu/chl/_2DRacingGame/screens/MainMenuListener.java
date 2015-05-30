@@ -1,6 +1,8 @@
 package edu.chl._2DRacingGame.screens;
 
 /**
+ * A class which displays the correct screen or exits the game
+ *
  * @author Anton Ingvarsson
  */
 public interface MainMenuListener {
