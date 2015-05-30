@@ -1,8 +1,7 @@
 package edu.chl._2DRacingGame.screens;
 
-import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
-
 /**
+ * Sets up the single player race
  * @author Anton Ingvarsson
  */
 public interface SetUpListener extends MainMenuDisplayer {

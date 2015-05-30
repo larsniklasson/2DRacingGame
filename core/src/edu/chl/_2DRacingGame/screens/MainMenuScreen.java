@@ -7,16 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
+ * Creates a the main menu screen
  * @author Anton Ingvarsson
  */
 public class MainMenuScreen extends GUIScreen {
 
     final private MainMenuListener listener;
 
-    public MainMenuScreen(MainMenuListener listener) {
-
-        this.listener = listener;
-    }
+    /**
+     *
+     * @param listener Listener to be notified when related events occur
+     */
+    public MainMenuScreen(MainMenuListener listener) {this.listener = listener;}
 
     @Override
     public void show() {
@@ -56,8 +58,6 @@ public class MainMenuScreen extends GUIScreen {
                 listener.exitGame();
             }
         });
-
-        // colspan(2) +center() gör att elementen centreras när det bara är ett element på raden men table har 2 kolumner
 
         table.add(gameTitle).padBottom(60).colspan(2).center();
         table.row();

@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Created by Anton on 2015-05-29.
+ * A class which handles the vehicles image assets
+ * @author Anton Ingvarsson
  */
 public class VehicleAssets {
 
@@ -33,11 +34,18 @@ public class VehicleAssets {
     //Magic Carpet
     public static Texture magicCarpetBody;
 
-
+    /**
+     *
+     * @param file the path of the file
+     * @return  A texture of the file
+     */
     private static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
     }
 
+    /**
+     * Initialize the vehicles textures
+     */
     public static void load() {
 
         //-----vehicles-------

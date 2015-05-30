@@ -8,7 +8,7 @@ import edu.chl._2DRacingGame.map.GameMap;
 import java.util.ArrayList;
 
 /**
- * A class which
+ * A class which handles the screen image assets
  * @author Anton Ingvarsson
  */
 public class ScreenAssets {
