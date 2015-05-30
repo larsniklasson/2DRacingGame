@@ -8,18 +8,25 @@ import edu.chl._2DRacingGame.map.GameMap;
 import java.util.ArrayList;
 
 /**
- * Created by Anton on 2015-05-29.
+ * A class which
+ * @author Anton Ingvarsson
  */
 public class ScreenAssets {
 
     public static ArrayList<Image> mapArray;
     public static ArrayList <Image> vehicleArray;
 
-
+    /**
+     *
+     * @param file the path of the file
+     * @return  A texture of the file
+     */
     private static Texture loadTexture (String file) {
         return new Texture(Gdx.files.internal(file));
     }
-
+/**
+ * Initialize the Arrays and adds the Images for Car and Map selection
+ * */
     public static void load(){
         //--------Images for Vehicle and Map Selection
         mapArray = new ArrayList<>();

@@ -1,7 +1,8 @@
 package edu.chl._2DRacingGame.screens;
 
 /**
- * Created by Anton on 2015-05-26.
+ * A class able to restarts or exits the game
+ * @author Anton Ingvarsson
  */
 public interface SinglePlayerFinishedScreenListener extends MainMenuDisplayer {
     void restartRace();

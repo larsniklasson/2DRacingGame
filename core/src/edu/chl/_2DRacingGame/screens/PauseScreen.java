@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 /**
+ * A class which creates a pausescreen
  * @author Anton Ingvarsson
  */
 public class PauseScreen extends GUIScreen {
@@ -59,7 +60,6 @@ public class PauseScreen extends GUIScreen {
         window.setMovable(false);
         window.setSize(table.getWidth() / 3f, table.getHeight() / 1.5f);
         window.setPosition(stage.getWidth() / 2 - window.getWidth() / 2 ,stage.getHeight() / 2 - window.getWidth() / 2);
-
         window.add(table);
     }
 

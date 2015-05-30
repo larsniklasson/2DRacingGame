@@ -8,11 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 /**
+ * A class which creates menu screen with options for car, maps, difficulty, laps and number of opponents.
  * @author Anton Ingvarsson
  */
 public class SinglePlayerMenuScreen extends GUIScreen {
-
-
 
     private SelectBox<Integer> laps;
     private SelectBox<Integer> numberOfOpponents;
@@ -37,6 +36,10 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Creates a table with the selection for laps, number of opponents and difficulty.
+     * @return the table
+     */
     private Table selectTable(){
         Table t = new Table();
         t.bottom();
@@ -61,7 +64,6 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         t.row();
         t.add(difficulty);
         t.bottom();
-
         return t;
     }
 
