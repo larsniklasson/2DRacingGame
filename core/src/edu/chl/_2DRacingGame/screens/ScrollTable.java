@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.ArrayList;
 
 /**
+ * A class creating the
  * @author Anton Ingvarsson
  */
 class ScrollTable {
@@ -15,13 +16,18 @@ class ScrollTable {
 
     final private Skin skin;
     final private Table table;
-     private TextButton previousItemButton;
+    private TextButton previousItemButton;
     private TextButton nextItemButton;
     private Label itemName;
     final private String s;
     final private ArrayList <Image> imageArray;
     private int imageIndex = 0;
 
+    /**
+     *
+     * @param images     The list of images used
+     * @param typeOfSelector    the name of item to choose from
+     */
     public ScrollTable(ArrayList <Image> images, String typeOfSelector) {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         table = new Table();
@@ -30,11 +36,22 @@ class ScrollTable {
         setupSelectorTable();
     }
 
+    /**
+     *
+     * @return the table contaning the different components
+     */
     public Table getTable(){
         return table;
     }
+
+    /**
+     * @return the name of the image currently displayed
+     */
     public String getImageName(){return imageArray.get(imageIndex).getName();}
 
+    /**
+     * Sets up the table with buttons, labels and draws the table
+     */
     private void setupSelectorTable(){
         itemName = new Label(s, skin, "default");
         previousItemButton = new TextButton("<", skin, "default");
@@ -57,6 +74,9 @@ class ScrollTable {
 
     }
 
+    /**
+     * Redraws the table with the current image
+     */
     private void redrawTable(){
         table.reset();
         table.add(itemName).colspan(3).center();
@@ -71,7 +91,7 @@ class ScrollTable {
     }
 
     private void previousItem() {
-       decreaseImageIndex();
+        decreaseImageIndex();
         redrawTable();
     }
 
