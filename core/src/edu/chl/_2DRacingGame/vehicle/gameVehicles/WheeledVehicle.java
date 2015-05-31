@@ -10,7 +10,7 @@ import edu.chl._2DRacingGame.vehicle.AISpeedHolder;
 import edu.chl._2DRacingGame.vehicle.Difficulty;
 import edu.chl._2DRacingGame.vehicle.Drawable;
 import edu.chl._2DRacingGame.vehicle.SpriteUtils;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +46,10 @@ public abstract class WheeledVehicle extends SingleBodyVehicle implements Drawab
     private final List<Boolean> isFrontWheelBooleanList = new ArrayList<>();  //maybe not needed but was used for MP before
 
     /**
-     * Creates a vehicle set in the specified Box2D-world.
+     * Creates a vehicle set in the specified Box2D-game.
      * IMPORTANT NOTE: Calling createBody() is necessary to have a functioning vehicle when subclassing.
      *
-     * @param world the Box2D-world which the vehicle will be created in.
+     * @param world the Box2D-game which the vehicle will be created in.
      */
     public WheeledVehicle(World world) {
         super(world);

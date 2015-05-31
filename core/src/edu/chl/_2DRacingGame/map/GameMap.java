@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
  * Represents a Map used in a race. Contains the different models which is connected to it, such as checkpoints,
  * spawn points etc.
  *
- * TODO way to nested with Shape objects, they should ideally be created in the world. Most models are related to them, making it hard to overcome smoothly.
+ * TODO way to nested with Shape objects, they should ideally be created in the game. Most models are related to them, making it hard to overcome smoothly.
  *
  * @author Daniel Sunnerberg
  */

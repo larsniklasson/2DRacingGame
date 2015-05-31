@@ -23,7 +23,7 @@ import java.util.Set;
  * Controls the process surrounding a single player race, such as choosing map/vehicle/...,
  * controlling the logic flow between modules/other controllers, etc.
  *
- * Be aware that when settings screens/using the world etc, LibGDX expects to be in its own thread.
+ * Be aware that when settings screens/using the game etc, LibGDX expects to be in its own thread.
  * This can be achieved by using: Gdx.app.postRunnable(...).
  *
  * @author Daniel Sunnerberg

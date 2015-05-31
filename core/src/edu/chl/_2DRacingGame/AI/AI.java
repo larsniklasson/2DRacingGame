@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 
 /**

@@ -53,7 +53,7 @@ public class VehicleFactory {
      * in all lower case letters.
      * 
      * NOTE: does not have a steering-system.
-     * @param world The Box2D-world the vehicle will be created in
+     * @param world The Box2D-game the vehicle will be created in
      * @param vehicleType The type of vehicle.
      *
      * @return The created vehicle.
@@ -85,7 +85,7 @@ public class VehicleFactory {
      *
      * NOTE: returns a WheeledVehicle since the AI-system requires a body and wheels.
      *
-     * @param world The Box2D-world the vehicle will be created in
+     * @param world The Box2D-game the vehicle will be created in
      * @param vehicleType The type of vehicle.
      * @param difficulty The difficulty-setting of the AI.
      * @param wayPoints The points the vehicle's AI-system will follow
@@ -107,7 +107,7 @@ public class VehicleFactory {
      * For the type of vehicle use constants defined in this class, or the name of the class
      * in all lower case letters.
      *
-     * @param world The Box2D-world the vehicle will be created in
+     * @param world The Box2D-game the vehicle will be created in
      * @param vehicleType The type of vehicle.
      * @param playerNumber The player-number. (Player 1, Player 2, etc.)
      * @return The created user-controllable vehicle.

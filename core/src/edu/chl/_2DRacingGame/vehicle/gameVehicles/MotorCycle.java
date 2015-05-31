@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.vehicle.AISpeedHolder;
 import edu.chl._2DRacingGame.vehicle.VehicleAssets;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 /**
  * Class for a motorcycle, a fast but weak vehicle.
@@ -35,9 +35,9 @@ public class MotorCycle extends WheeledVehicle {
 
 
     /**
-     * Creates a motorcycle set in the specified Box2D-world.
+     * Creates a motorcycle set in the specified Box2D-game.
      *
-     * @param world the Box2D-world which the motorcycle will be created in.
+     * @param world the Box2D-game which the motorcycle will be created in.
      */
     public MotorCycle(World world) {
         super(world);

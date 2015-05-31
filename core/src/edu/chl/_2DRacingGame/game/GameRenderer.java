@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.world;
+package edu.chl._2DRacingGame.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

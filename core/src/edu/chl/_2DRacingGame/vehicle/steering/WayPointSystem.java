@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * AI-steering-system where the AI-controlled entity is guided along a list of waypoints, coordinates in the 2D-world.
+ * AI-steering-system where the AI-controlled entity is guided along a list of waypoints, coordinates in the 2D-game.
  *
  *@author Lars Niklasson
  */

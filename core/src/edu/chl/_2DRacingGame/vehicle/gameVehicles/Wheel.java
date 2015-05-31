@@ -11,7 +11,7 @@ import edu.chl._2DRacingGame.map.objects.GroundMaterial;
 import edu.chl._2DRacingGame.vehicle.Drawable;
 import edu.chl._2DRacingGame.vehicle.SpriteUtils;
 import edu.chl._2DRacingGame.vehicle.Trackable;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +48,11 @@ public class Wheel implements Drawable, Trackable {
     private final List<GroundMaterial> grounds = new ArrayList<>();
 
     /**
-     * Creates a wheel (a rectangle) in the specified Box2D-world with the specified width, height and density
+     * Creates a wheel (a rectangle) in the specified Box2D-game with the specified width, height and density
      *
      * IMPORTANT NOTE: Calling setCharacteristics is essential and should be done after the object is created.
      *
-     * @param world The Box2D-world the wheel will be created in
+     * @param world The Box2D-game the wheel will be created in
      * @param width The width of the wheel.
      * @param height The height of the wheel.
      * @param density The density of the wheel.

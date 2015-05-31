@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import edu.chl._2DRacingGame.models.ScreenText;
-import edu.chl._2DRacingGame.world.GameRenderer;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameRenderer;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class GameScreen extends GUIScreen implements Screen {
     public void show() {
         startTime = System.nanoTime();
         renderer.retrieveActors();
-        // There is a countdown before the race begins, however the world should still be drawn
+        // There is a countdown before the race begins, however the game should still be drawn
         // and the vehicles spawned.
         world.update(0);
         renderer.render();

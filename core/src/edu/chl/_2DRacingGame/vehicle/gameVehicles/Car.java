@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.vehicle.AISpeedHolder;
 import edu.chl._2DRacingGame.vehicle.VehicleAssets;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 /**
  * Class for a simple racing car, an all-round vehicle.
@@ -37,9 +37,9 @@ public class Car extends WheeledVehicle {
 
 
     /**
-     * Creates a car set in the specified Box2D-world.
+     * Creates a car set in the specified Box2D-game.
      *
-     * @param world the Box2D-world which the car will be created in.
+     * @param world the Box2D-game which the car will be created in.
      */
     public Car(World world) {
         super(world);

@@ -11,7 +11,7 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.models.ScoreBoard;
 import edu.chl._2DRacingGame.models.Settings;
 import edu.chl._2DRacingGame.screens.*;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 import java.util.List;
 
@@ -133,7 +133,7 @@ public class MultiplayerRace extends RaceController implements MultiplayerRaceFi
     }
 
     private void hideVehicle(Player player) {
-        // Since removing bodies from the world while it is active is a potentially dangerous action
+        // Since removing bodies from the game while it is active is a potentially dangerous action
         // according to documentation, we will simply move it outside the map.
         player.getVehicle().getActor().clearActions();
         float hideDelay = 0.2f;

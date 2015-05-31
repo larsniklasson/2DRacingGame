@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.vehicle.AISpeedHolder;
 import edu.chl._2DRacingGame.vehicle.VehicleAssets;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 /**
  * Class for a magic carpet-vehicle, which is a flying vehicle.
@@ -27,9 +27,9 @@ public class MagicCarpet extends WheeledVehicle {
 
 
     /**
-     * Creates a magic carpet set in the specified Box2D-world.
+     * Creates a magic carpet set in the specified Box2D-game.
      *
-     * @param world the Box2D-world which the magic carpet will be created in.
+     * @param world the Box2D-game which the magic carpet will be created in.
      */
     public MagicCarpet(World world) {
         super(world);

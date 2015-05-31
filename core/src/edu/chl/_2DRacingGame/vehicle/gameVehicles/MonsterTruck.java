@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import edu.chl._2DRacingGame.vehicle.AISpeedHolder;
 import edu.chl._2DRacingGame.vehicle.VehicleAssets;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 /**
  * Class for a Monster Truck, a slow but powerful vehicle.
@@ -37,9 +37,9 @@ public class MonsterTruck extends WheeledVehicle {
     private static final float BACKWARDS_FRICTION = -0.03f;
 
     /**
-     * Creates a monster truck set in the specified Box2D-world.
+     * Creates a monster truck set in the specified Box2D-game.
      *
-     * @param world the Box2D-world which the monster truck will be created in.
+     * @param world the Box2D-game which the monster truck will be created in.
      */
     public MonsterTruck(World world) {
         super(world);

@@ -9,7 +9,7 @@ import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;
 import edu.chl._2DRacingGame.screens.GameScreenListener;
 import edu.chl._2DRacingGame.screens.MainMenuDisplayer;
-import edu.chl._2DRacingGame.world.GameWorld;
+import edu.chl._2DRacingGame.game.GameWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public abstract class RaceController implements RaceListener, MainMenuDisplayer,
     }
 
     /**
-     * @return the game world which contains our different game objects
+     * @return the game game which contains our different game objects
      */
     public GameWorld getWorld() {
         return world;

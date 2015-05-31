@@ -12,7 +12,7 @@ import edu.chl._2DRacingGame.gameModes.RaceListener;
 import edu.chl._2DRacingGame.vehicle.gameVehicles.WheeledVehicle;
 import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.models.Player;
-import edu.chl._2DRacingGame.world.UpdateListener;
+import edu.chl._2DRacingGame.game.UpdateListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Will attempt to keep our world in sync with our opponents by sending out update packages to our opponents when
- * found necessary. Also receives corresponding packages from opponents and uses that information to sync their world
+ * Will attempt to keep our game in sync with our opponents by sending out update packages to our opponents when
+ * found necessary. Also receives corresponding packages from opponents and uses that information to sync their game
  * with ours.
  *
  * Be aware that this class will NOT keep the worlds in perfect sync, but rather perform some
@@ -226,7 +226,7 @@ public class MultiplayerWorldSyncer implements UpdateListener, RaceListener {
     }
 
     /**
-     * Callback for when the local world is updated.
+     * Callback for when the local game is updated.
      * Will then send updates to our opponents if necessary.
      */
     @Override

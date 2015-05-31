@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 /**
- * Model for a simple vehicle in a 2D-world.
+ * Model for a simple vehicle in a 2D-game.
  * @author Lars Niklasson
  */
 public abstract class Vehicle implements Actable {

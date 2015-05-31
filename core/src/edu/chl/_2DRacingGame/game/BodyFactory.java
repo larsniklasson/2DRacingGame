@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.models;
+package edu.chl._2DRacingGame.game;
 
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -7,12 +7,12 @@ import com.badlogic.gdx.physics.box2d.*;
  *
  * @author Daniel Sunnerberg
  */
-public class BodyFactory {
+class BodyFactory {
 
     /**
-     * Creates a new static body in the world with the specified properties.
+     * Creates a new static body in the game with the specified properties.
      *
-     * @param world world which the body should be placed in
+     * @param world game which the body should be placed in
      * @param shape the bodies shape
      * @param isSensor whether the body is a sensor or not
      * @return the created body
@@ -22,9 +22,9 @@ public class BodyFactory {
     }
 
     /**
-     * Creates a new static body in the world with the specified properties.
+     * Creates a new static body in the game with the specified properties.
      *
-     * @param world world which the body should be placed in
+     * @param world game which the body should be placed in
      * @param shape the bodies shape
      * @param isSensor whether the body is a sensor or not
      * @param userData the bodies attatched user data

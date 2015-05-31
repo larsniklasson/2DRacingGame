@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.world;
+package edu.chl._2DRacingGame.game;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 /**
- * Holds all the game-objects and other things related to the world.
+ * Holds all the game-objects and other things related to the game.
  * Updates the ones the should be updated each frame.
  *
  * Created by Lars Niklasson on 2015-04-21.
@@ -32,8 +32,8 @@ public class GameWorld implements Disposable {
     private final World b2World;
 
     /**
-     * Creates a world from the specified map
-     * @param gameMap the map this world will use.
+     * Creates a game from the specified map
+     * @param gameMap the map this game will use.
      */
     public GameWorld(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -71,7 +71,7 @@ public class GameWorld implements Disposable {
     }
 
     /**
-     * Adds a player to this world.
+     * Adds a player to this game.
      * @param player The player to be added.
      */
     public void addPlayer(Player player) {
@@ -79,7 +79,7 @@ public class GameWorld implements Disposable {
     }
 
     /**
-     * Adds a list of players to this world.
+     * Adds a list of players to this game.
      * @param players The list of players to be added.
      */
     public void addPlayers(List<Player> players) {
@@ -90,7 +90,7 @@ public class GameWorld implements Disposable {
 
     /**
      *
-     * @return The Box2D-world the GameWorld uses to simulate the physics.
+     * @return The Box2D-game the GameWorld uses to simulate the physics.
      */
     public World getb2World(){
         return b2World;
@@ -137,14 +137,14 @@ public class GameWorld implements Disposable {
 
     /**
      *
-     * @return A list of all the players in this game-world.
+     * @return A list of all the players in this game-game.
      */
     public List<Player> getPlayers() {
         return players;
     }
 
     /**
-     * Adds a listener which will get notified when the world has been updated.
+     * Adds a listener which will get notified when the game has been updated.
      *
      * @param listener listener who request notifications
      */
@@ -153,7 +153,7 @@ public class GameWorld implements Disposable {
     }
 
     /**
-     * Removes a world updated subscriber.
+     * Removes a game updated subscriber.
      *
      * @param listener listener who no longer wants notifications
      */
