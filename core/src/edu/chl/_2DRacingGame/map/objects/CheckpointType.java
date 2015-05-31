@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.map;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  * All possible checkpoint types.
