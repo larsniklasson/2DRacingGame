@@ -57,8 +57,6 @@ public class MultiPlayerMenuScreen extends GUIScreen {
     }
 
     private void create(){
-        mainTable.setDebug(true);
-
         Label multiPlayerLabel = new Label("Multiplayer", skin, "arial40");
         mainTable.add(multiPlayerLabel).colspan(2);
         mainTable.row();
