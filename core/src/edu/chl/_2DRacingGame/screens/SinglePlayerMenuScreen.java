@@ -101,7 +101,6 @@ public class SinglePlayerMenuScreen extends GUIScreen {
         mainTable.row();
         mainTable.add(backButton).left().padTop(50).width(200f).height(30f);
         mainTable.add(startGameButton).colspan(4).right().padTop(50).width(200f).height(30f);
-        mainTable.debug();
         mainTable.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 

@@ -27,7 +27,7 @@ class BodyFactory {
      * @param world game which the body should be placed in
      * @param shape the bodies shape
      * @param isSensor whether the body is a sensor or not
-     * @param userData the bodies attatched user data
+     * @param userData the bodies attached user data
      * @return the created body
      */
     public static Body createStaticBody(World world, Shape shape, boolean isSensor, Object userData) {

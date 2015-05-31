@@ -68,11 +68,11 @@ public class ControlsMenuScreen extends GUIScreen {
     }
 
     private Table createKeyTable(){
-        Table keyTable = keyTable = new Table();
+        Table keyTable = new Table();
 
         Label forwardKey = new Label("Up Arrow", skin);
         Label back_reverseKey = new Label("Down Arrow", skin);
-        Label turn_leftKey = new Label("Left Arriw", skin);
+        Label turn_leftKey = new Label("Left Arrow", skin);
         Label turn_rightKey = new Label("Right Arrow", skin);
         Label pauseKey = new Label("P", skin);
 

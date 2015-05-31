@@ -66,7 +66,6 @@ public class SinglePlayerFinishedScreen extends GUIScreen {
         });
 
         table.setBounds(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.debug();
         table.add(raceFinished).padBottom(30);
         table.row();
         if(scoreList.isHighScore(playerScore))

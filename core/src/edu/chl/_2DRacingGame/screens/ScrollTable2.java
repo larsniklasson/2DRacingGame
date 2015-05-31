@@ -78,8 +78,6 @@ public class ScrollTable2 {
     private void drawTable() {
         table.reset();
 
-        table.setDebug(true);
-
         table.add(chooseTypeLabel).colspan(images.size() + 2);
         table.row();
 

@@ -46,7 +46,6 @@ public class MultiPlayerMenu extends GUIScreen{
         table.add(backButton).padTop(50).width(200f).height(30f);
         table.add(startGameButton).padTop(50).width(200f).height(30f);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.debug();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(table);
 

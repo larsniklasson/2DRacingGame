@@ -22,8 +22,8 @@ public class MainMenuScreen extends GUIScreen {
 
     @Override
     public void show() {
-        final TextButton singlePlayer = new TextButton("Single Player", skin, "default");
-        final TextButton multiPlayer = new TextButton("MultiPlayer", skin, "default");
+        final TextButton singlePlayer = new TextButton("Single player", skin, "default");
+        final TextButton multiPlayer = new TextButton("Multiplayer", skin, "default");
         final TextButton options = new TextButton("Options", skin, "default");
         final TextButton exit = new TextButton("Exit", skin, "default");
         final Label gameTitle = new Label("2D Racing Game!", skin, "arial40");
@@ -77,7 +77,6 @@ public class MainMenuScreen extends GUIScreen {
         table.row();
         table.add(exit).width(150f).height(30f).padTop(30).colspan(2).center();
         table.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        table.debug(); // ger markeringar, ska tas bort
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 

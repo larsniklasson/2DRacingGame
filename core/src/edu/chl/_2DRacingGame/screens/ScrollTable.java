@@ -68,7 +68,6 @@ class ScrollTable {
         table.row();
         table.row();
         table.setBounds(0, 0, table.getMinWidth(), table.getMinHeight());
-        table.debug();
     }
 
     private void previousItem() {

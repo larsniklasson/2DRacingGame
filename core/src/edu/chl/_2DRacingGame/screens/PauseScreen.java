@@ -59,7 +59,6 @@ public class PauseScreen extends GUIScreen {
         table.add(quitRaceButton).padTop(50).width(200f).height(30f);
         table.row();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.debug();
         window.setResizable(false);
         window.setMovable(false);
         window.setSize(table.getWidth() / 3f, table.getHeight() / 1.5f);
