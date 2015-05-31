@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.models;
 import java.util.Date;
 
 /**
- * Created by Victor on 2015-05-07.
+ * @author Victor Christoffersson
  */
 public class Player {
 

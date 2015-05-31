@@ -5,8 +5,13 @@ import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.math.Vector2;
 
+
 /**
- * Created by Kethupflaskaa on 2015-05-08.
+ * Class for ai using libgdx ai lib
+ * Implements the interface Steerable
+ * Intended to be used with "AI" but that class is not in use
+ *
+ * @author Victor Christoffersson
  */
 public class AICar implements Steerable<Vector2> {
 

@@ -15,7 +15,10 @@ import edu.chl._2DRacingGame.game.GameWorld;
 
 
 /**
- * Created by Kethupflaskaa on 2015-05-08.
+ * Class for ai using libgdx ai lib
+ * Currently not in use or fully finishied (therefor no further javadoc)
+ *
+ * @author Victor Christoffersson
  */
 public class AI {
 
