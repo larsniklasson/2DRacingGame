@@ -8,9 +8,6 @@ A runnable JAR can be created by executing:<br />
 `./gradlew desktop:dist` (output can be found in: `desktop/build/libs/`)<br />
 The jar can then be run by simply double clicking it or by running `java -jar path/to/jar.jar`.
 
-### Android / iOS / Web
-Building for Android/iOS/Web is also possible but is somewhat more complicated. You can read more about this in [the official LibGDX documentation](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline#packaging-the-project).
-
 ## Running unit tests
 All unit tests can be run by executing:
 `./gradlew test` (or through your favourite IDE).<br />
