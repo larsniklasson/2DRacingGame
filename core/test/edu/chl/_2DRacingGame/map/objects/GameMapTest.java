@@ -1,5 +1,6 @@
-package edu.chl._2DRacingGame.map;
+package edu.chl._2DRacingGame.map.objects;
 
+import edu.chl._2DRacingGame.map.GameMap;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

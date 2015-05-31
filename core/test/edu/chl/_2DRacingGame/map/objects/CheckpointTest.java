@@ -1,9 +1,9 @@
 package edu.chl._2DRacingGame.map.objects;
 
 import com.badlogic.gdx.math.Vector2;
-import edu.chl._2DRacingGame.map.objects.Checkpoint;
-import edu.chl._2DRacingGame.map.objects.CheckpointDirection;
-import edu.chl._2DRacingGame.map.objects.CheckpointType;
+import edu.chl._2DRacingGame.map.Checkpoint;
+import edu.chl._2DRacingGame.map.CheckpointDirection;
+import edu.chl._2DRacingGame.map.CheckpointType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
