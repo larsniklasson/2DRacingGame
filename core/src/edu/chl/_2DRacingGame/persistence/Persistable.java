@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.persistance;
+package edu.chl._2DRacingGame.persistence;
 
 /**
  * A class, or part of its data, which is persistable.

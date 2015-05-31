@@ -1,7 +1,7 @@
-package edu.chl._2DRacingGame.persistance;
+package edu.chl._2DRacingGame.persistence;
 
 /**
- * Exception which will be thrown when a persistance operation failed.
+ * Exception which will be thrown when a persistence operation failed.
  *
  * @author Daniel Sunnerberg
  */

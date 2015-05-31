@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.controllers.*;
 import edu.chl._2DRacingGame.vehicle.VehicleAssets;
 import edu.chl._2DRacingGame.models.Settings;
-import edu.chl._2DRacingGame.persistance.DiskPersistor;
-import edu.chl._2DRacingGame.persistance.Persistor;
+import edu.chl._2DRacingGame.persistence.DiskPersistor;
+import edu.chl._2DRacingGame.persistence.Persistor;
 import edu.chl._2DRacingGame.screens.*;
 import java.util.Map;
 

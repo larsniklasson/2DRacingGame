@@ -1,9 +1,9 @@
 package edu.chl._2DRacingGame.models;
 
 import com.google.gson.reflect.TypeToken;
-import edu.chl._2DRacingGame.persistance.Persistable;
-import edu.chl._2DRacingGame.persistance.Persistor;
-import edu.chl._2DRacingGame.persistance.PersistorException;
+import edu.chl._2DRacingGame.persistence.Persistable;
+import edu.chl._2DRacingGame.persistence.Persistor;
+import edu.chl._2DRacingGame.persistence.PersistorException;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -50,8 +50,8 @@ public class IdentifiableScores implements Persistable {
         List<Double> scores;
         try {
             Type listType = new TypeToken<ArrayList<Double>>() {}.getType();
-            String persistanceKey = getPersistanceKey();
-            scores = persistor.getPersistedInstance(persistanceKey, listType);
+            String persistenceKey = getPersistenceKey();
+            scores = persistor.getPersistedInstance(persistenceKey, listType);
         } catch (PersistorException e) {
             scores = new ArrayList<>();
         }
@@ -59,7 +59,7 @@ public class IdentifiableScores implements Persistable {
         this.scores = new ScoreList(scoreComparator, scores);
     }
 
-    private String getPersistanceKey() {
+    private String getPersistenceKey() {
         StringBuilder key = new StringBuilder();
         for (Object identifier : identifiers) {
             key.append(identifier.toString());
@@ -80,7 +80,7 @@ public class IdentifiableScores implements Persistable {
             throw new IllegalStateException("No scores loaded. Try to find scores before saving them.");
         }
 
-        String instanceFileName = getPersistanceKey();
+        String instanceFileName = getPersistenceKey();
         persistor.persist(scores, instanceFileName);
     }
 

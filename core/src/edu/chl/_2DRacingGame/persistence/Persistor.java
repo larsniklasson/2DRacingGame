@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.persistance;
+package edu.chl._2DRacingGame.persistence;
 
 import java.lang.reflect.Type;
 

@@ -1,11 +1,11 @@
-package edu.chl._2DRacingGame.persistance;
+package edu.chl._2DRacingGame.persistence;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A simple persistor imitator which stores the instances to a map to mimick persistance.
+ * A simple persistor imitator which stores the instances to a map to mimick persistence.
  * Used for testing purposes.
  *
  * @author Daniel Sunnerberg

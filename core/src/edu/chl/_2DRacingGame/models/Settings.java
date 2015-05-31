@@ -1,9 +1,9 @@
 package edu.chl._2DRacingGame.models;
 
 import com.google.gson.reflect.TypeToken;
-import edu.chl._2DRacingGame.persistance.Persistable;
-import edu.chl._2DRacingGame.persistance.Persistor;
-import edu.chl._2DRacingGame.persistance.PersistorException;
+import edu.chl._2DRacingGame.persistence.Persistable;
+import edu.chl._2DRacingGame.persistence.Persistor;
+import edu.chl._2DRacingGame.persistence.PersistorException;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Keeps track of settings using a simpole map-structure. All keys and values are to be supplied as strings.
- * Can be persisted, see methods #save(), #load(). When using persistance and have multiple instances for different
+ * Can be persisted, see methods #save(), #load(). When using persistence and have multiple instances for different
  * type of settings, make sure to use #Settings(persistor, settingsAlias) constructor to avoid having instances
  * overwriting each other.
  *
