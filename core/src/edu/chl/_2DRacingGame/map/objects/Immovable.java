@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
+package edu.chl._2DRacingGame.map.objects;
 
 
 import com.badlogic.gdx.physics.box2d.*;

@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  * Interface for a ground-material.

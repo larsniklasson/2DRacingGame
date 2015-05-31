@@ -1,6 +1,6 @@
 package edu.chl._2DRacingGame.vehicle;
 
-import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
+import edu.chl._2DRacingGame.map.objects.GroundMaterial;
 
 /**
  * Interface for keeping track what groundmaterials an object is currently touching

@@ -1,7 +1,7 @@
 package edu.chl._2DRacingGame.vehicle.gameVehicles;
 
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
+import edu.chl._2DRacingGame.map.objects.GroundMaterial;
 
 /**
  * Subclass to Wheel used to avoid adding GroundMaterials. (for flying vehicles)

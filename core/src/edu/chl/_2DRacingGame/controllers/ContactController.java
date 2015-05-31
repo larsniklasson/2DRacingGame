@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.vehicle.Trackable;
-import edu.chl._2DRacingGame.mapobjects.TrackSection;
+import edu.chl._2DRacingGame.map.objects.TrackSection;
 import edu.chl._2DRacingGame.models.Vehicle;
 import edu.chl._2DRacingGame.map.Checkpoint;
 

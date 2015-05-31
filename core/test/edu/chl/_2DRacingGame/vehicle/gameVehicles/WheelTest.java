@@ -2,12 +2,11 @@ package edu.chl._2DRacingGame.vehicle.gameVehicles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import edu.chl._2DRacingGame.mapobjects.Dirt;
-import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
-import edu.chl._2DRacingGame.mapobjects.Ice;
+import edu.chl._2DRacingGame.map.objects.Dirt;
+import edu.chl._2DRacingGame.map.objects.GroundMaterial;
+import edu.chl._2DRacingGame.map.objects.Ice;
 import static org.junit.Assert.*;
 
-import edu.chl._2DRacingGame.vehicle.gameVehicles.Wheel;
 import org.junit.Test;
 
 /**

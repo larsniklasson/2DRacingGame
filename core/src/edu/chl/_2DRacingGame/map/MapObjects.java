@@ -3,8 +3,8 @@ package edu.chl._2DRacingGame.map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Array;
-import edu.chl._2DRacingGame.mapobjects.Immovable;
-import edu.chl._2DRacingGame.mapobjects.TrackSection;
+import edu.chl._2DRacingGame.map.objects.Immovable;
+import edu.chl._2DRacingGame.map.objects.TrackSection;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

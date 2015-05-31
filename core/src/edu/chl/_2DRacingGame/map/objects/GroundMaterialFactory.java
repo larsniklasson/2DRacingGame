@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  * Factory which finds and creates a GroundMaterial based on different arguments.

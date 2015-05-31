@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.map.*;
-import edu.chl._2DRacingGame.mapobjects.*;
+import edu.chl._2DRacingGame.map.objects.*;
 import edu.chl._2DRacingGame.models.*;
 
 import java.util.ArrayList;

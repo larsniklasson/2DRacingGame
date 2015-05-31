@@ -1,6 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
-
-import edu.chl._2DRacingGame.mapobjects.GroundMaterial;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  * GroundMaterial for Sand. Like a mild version of dirt.

@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  *GroundMaterial for Dirt. Slows down the vehicle significantly.

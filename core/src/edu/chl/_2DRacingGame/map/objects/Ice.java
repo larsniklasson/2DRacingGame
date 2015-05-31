@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.mapobjects;
+package edu.chl._2DRacingGame.map.objects;
 
 /**
  * GroundMaterial for Ice. Easier to slide/drift but less drag. (friction applied in a backwards direction)
