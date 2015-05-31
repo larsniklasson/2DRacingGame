@@ -3,7 +3,7 @@ package edu.chl._2DRacingGame.controllers;
 import com.badlogic.gdx.utils.Disposable;
 import edu.chl._2DRacingGame.gameModes.GameMode;
 import edu.chl._2DRacingGame.gameModes.RaceListener;
-import edu.chl._2DRacingGame.map.objects.Checkpoint;
+import edu.chl._2DRacingGame.map.Checkpoint;
 import edu.chl._2DRacingGame.map.GameMap;
 import edu.chl._2DRacingGame.models.Player;
 import edu.chl._2DRacingGame.screens.GameScreen;

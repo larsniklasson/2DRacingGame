@@ -2,8 +2,8 @@ package edu.chl._2DRacingGame.controllers;
 
 import com.badlogic.gdx.Gdx;
 import edu.chl._2DRacingGame.gameModes.LapListener;
-import edu.chl._2DRacingGame.map.objects.Checkpoint;
-import edu.chl._2DRacingGame.map.objects.CheckpointType;
+import edu.chl._2DRacingGame.map.Checkpoint;
+import edu.chl._2DRacingGame.map.CheckpointType;
 
 import java.util.HashMap;
 import java.util.List;

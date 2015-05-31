@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import edu.chl._2DRacingGame.vehicle.Trackable;
 import edu.chl._2DRacingGame.map.objects.TrackSection;
 import edu.chl._2DRacingGame.models.Vehicle;
-import edu.chl._2DRacingGame.map.objects.Checkpoint;
+import edu.chl._2DRacingGame.map.Checkpoint;
 
 /**
  * A controller which is responsible for handling logic related to collisions.
