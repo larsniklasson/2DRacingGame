@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Shape;
-import edu.chl._2DRacingGame.helperClasses.ShapeFactory;
+import edu.chl._2DRacingGame.utils.ShapeFactory;
 import edu.chl._2DRacingGame.map.objects.*;
 
 import java.util.Iterator;

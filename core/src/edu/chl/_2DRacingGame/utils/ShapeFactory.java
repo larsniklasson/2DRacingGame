@@ -1,4 +1,4 @@
-package edu.chl._2DRacingGame.helperClasses;
+package edu.chl._2DRacingGame.utils;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
