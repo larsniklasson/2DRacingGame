@@ -3,8 +3,11 @@ A 2D racing game, created for [course TDA367](http://www.cse.chalmers.se/edu/cou
 
 ## Packaging the project
 
-### Runnable jar
-A runnable JAR can be created by executing:<br />
+### How to play?
+Run the jar-file "2DRacingGame.jar" on the root level of this repo.
+
+
+You can also create a runnable JAR yourself by executing:<br />
 `./gradlew desktop:dist` (output can be found in: `desktop/build/libs/`)<br />
 The jar can then be run by simply double clicking it or by running `java -jar path/to/jar.jar`.
 
